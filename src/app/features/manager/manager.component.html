@@ -1,0 +1,32 @@
+<app-toolbar-header [title]="'Gerenciamento de Registros'"></app-toolbar-header>
+
+<div class="content mat-elevation-z4">
+    <mat-tab-group mat-stretch-tabs [class]="'stretched-tabs mat-elevation-z2 selected-tab-{{tabGroup.selectedIndex}}'"
+        [color]="'warn'">
+
+        <mat-tab [routerLink]="'users'" routerLinkActive="active-link">
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">people</mat-icon>
+                Usuários
+            </ng-template>
+
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">room_preferences</mat-icon>
+                Salas
+            </ng-template>
+
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">badge</mat-icon>
+                Cargos
+            </ng-template>
+
+        </mat-tab>
+
+    </mat-tab-group>
+</div>

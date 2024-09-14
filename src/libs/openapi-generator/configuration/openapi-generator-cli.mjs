@@ -3,9 +3,9 @@ import { promisify } from 'util';
 
 const execPromise = promisify(exec);
 
-const OPEN_API_URL = 'libs/openapi/config/api.spec.yml';
+const OPEN_API_URL = 'src/libs/openapi-generator/configuration/api.spec.yml';
 const GENERATOR_TYPE = 'typescript-angular';
-const OUTPUT_DIR = 'libs/openapi';
+const OUTPUT_DIR = 'src/libs/openapi-generator';
 
 async function generateAPI() {
   const command = `openapi-generator-cli generate -i ${OPEN_API_URL} -g ${GENERATOR_TYPE} -o ${OUTPUT_DIR}`;

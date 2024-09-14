@@ -1,0 +1,32 @@
+$primary: #080A0B;
+
+.spacer{
+  flex: 1 1 auto;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+h1.app-name {
+  margin-left: 8px;
+}
+
+.sidenav-container {
+  flex: 1;
+}
+
+.content {
+  padding: 15px;
+}
+
+mat-icon {
+  margin-right: 5px;
+  color: #ECF1F1;
+}

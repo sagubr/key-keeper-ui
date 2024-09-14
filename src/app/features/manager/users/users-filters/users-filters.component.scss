@@ -1,0 +1,35 @@
+.toolbar {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
+  .toolbar-form {
+    flex-wrap: wrap;
+    align-items: center;
+    flex: 1;
+  }
+  
+  .toolbar-form .spacer {
+    margin: 8px;
+    min-width: 150px;
+  }
+  
+  .button-add {
+    height: 56px;
+    margin-left: 8px;
+    margin-bottom: 4px;
+  }
+  
+  @media (max-width: 600px) {
+    .toolbar-form {
+      flex-direction: column;
+      align-items: stretch; 
+    }
+  
+    .button-add {
+      margin: 8px 8px;
+    }
+  }
+  

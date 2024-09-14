@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { Configuration } from '../configuration';
-import { AuthenticationService } from '@app/services/authentication.service';
+import { AuthenticationService } from '@app/core/services/authentication.service';
 
 @Injectable()
 export class CustomConfiguration extends Configuration {

@@ -28,7 +28,7 @@
         "src/app/*"
       ],
       "@openapi/*": [
-        "src/app/libs/openapi-generator/*"
+        "src/libs/openapi-generator/*"
       ]
     }
   },

@@ -1,14 +1,17 @@
+/*Angular Core */
 import { Component, OnInit } from '@angular/core';
-
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatIconModule} from '@angular/material/icon';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {RouterLink} from "@angular/router";
-
-
-import { AuthenticationService } from '@app/core/services/authentication.service';
+import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ToolbarHeaderComponent } from "../../shared/components/toolbar-header/toolbar-header.component";
+
+/*Angular Material Modules*/
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
+/*Custom Components*/
+import { AuthenticationService } from '@app/core/services/authentication.service';
+import { ToolbarHeaderComponent } from '../../shared/components/toolbar-header/toolbar-header.component';
+import { UsersComponent } from './users/users.component';
 
 @Component({
   selector: 'app-manager',
@@ -19,18 +22,10 @@ import { ToolbarHeaderComponent } from "../../shared/components/toolbar-header/t
     MatIconModule,
     MatProgressBarModule,
     RouterLink,
-    ToolbarHeaderComponent
-],
+    ToolbarHeaderComponent,
+    UsersComponent,
+  ],
   templateUrl: './manager.component.html',
-  styleUrl: './manager.component.scss'
+  styleUrl: './manager.component.scss',
 })
-export class ManagerComponent implements OnInit {
-
-  constructor(private readonly _authService: AuthenticationService) {
-  }
-
-  ngOnInit(): void {
-    this._authService.login('gustavo.garcia1', 'password1')
-  }
-
-}
+export class ManagerComponent {}

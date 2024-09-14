@@ -1,0 +1,74 @@
+openapi: 3.0.1
+info:
+  title: core
+  version: "0.0"
+servers:
+  - url: http://localhost:8080/
+security:
+  - Authorization: []
+tags:
+  - name: Users
+    description: Operations related to user management
+paths:
+  /api/users:
+    get:
+      tags:
+        - Users
+      summary: Get All Users
+      operationId: getAllUsers
+      responses:
+        "200":
+          description: Success
+        "500":
+          description: Error
+  /api/users/save:
+    post:
+      tags:
+        - Users
+      summary: Create new user
+      operationId: save
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDto"
+        required: true
+      responses:
+        "200":
+          description: Success
+        "500":
+          description: Error
+components:
+  schemas:
+    Roles:
+      type: string
+      enum:
+        - VIEWER
+        - EDITOR
+        - MODERATOR
+        - MANAGER
+        - SUPER_ADMIN
+    UserDto:
+      required:
+        - password
+        - roles
+        - username
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+        password:
+          type: string
+        username:
+          type: string
+        roles:
+          type: array
+          items:
+            $ref: "#/components/schemas/Roles"
+  securitySchemes:
+    Authorization:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

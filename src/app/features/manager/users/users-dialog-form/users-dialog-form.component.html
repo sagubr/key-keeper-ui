@@ -6,10 +6,10 @@
         <mat-icon>close</mat-icon>
       </button>
     </div>
-  
+
     <div mat-dialog-content>
       <form [formGroup]="form">
-  
+
         <h2 class="subtitle">Informações Pessoais</h2>
         <div class="row">
           <mat-form-field appearance="outline" class="full-width">
@@ -18,7 +18,7 @@
             <mat-error *ngIf="form.get('name')?.invalid">Você deve inserir um valor</mat-error>
           </mat-form-field>
         </div>
-  
+
         <div class="row">
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>E-mail</mat-label>
@@ -26,9 +26,9 @@
             <mat-error *ngIf="form.get('email')?.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
         </div>
-  
+
         <h2 class="subtitle">Autenticação</h2>
-  
+
         <div class="row two-columns">
           <mat-form-field appearance="outline" class="half-width">
             <mat-label>Nome de usuário</mat-label>
@@ -38,18 +38,20 @@
             </button>
             <mat-error *ngIf="form.get('username')?.invalid">Você deve inserir um valor</mat-error>
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Atribuição</mat-label>
             <mat-select formControlName="roles">
-              <mat-option value="one">First option</mat-option>
-              <mat-option value="two">Second option</mat-option>
+              <mat-option [value]="Roles.Editor">Editor</mat-option>
+              <mat-option [value]="Roles.Manager">Gerenciador</mat-option>
+              <mat-option [value]="Roles.Moderator">Moderador</mat-option>
+              <mat-option [value]="Roles.Viewer">Visualizador</mat-option>
             </mat-select>
             <mat-error *ngIf="form.get('roles')?.invalid">Você deve inserir um valor</mat-error>
           </mat-form-field>
-  
+
         </div>
-  
+
         <div class="row two-columns">
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Senha</mat-label>
@@ -61,7 +63,7 @@
             <mat-hint align="end">{{form.get('password')?.value?.length}} dígitos</mat-hint>
             <mat-error *ngIf="form.get('password')?.invalid">Você deve inserir um valor</mat-error>
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Confirmar Senha</mat-label>
             <input matInput formControlName="repeatPassword" [type]="hide ? 'password' : 'text'">
@@ -75,10 +77,9 @@
         </div>
       </form>
     </div>
-  
+
     <div mat-dialog-actions align="end" class="dialog-footer">
       <button mat-stroked-button (click)="onNoClick()">Cancelar</button>
-      <button mat-raised-button [disabled]="form.invalid" color="primary">Salvar</button>
+      <button mat-raised-button [disabled]="form.invalid" color="primary" (click)="onClick()">Salvar</button>
     </div>
   </div>
-  

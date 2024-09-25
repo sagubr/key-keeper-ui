@@ -32,9 +32,6 @@ export class LoginComponent {
 
   login() {
     this._authenticationService.login(this.username, this.password).subscribe({
-      next: (token) => {
-        console.log('Login bem-sucedido! Token:', token);
-      },
       error: (error) => {
         this.errorMessage = 'Falha no login. Verifique suas credenciais.';
         console.error('Erro de login:', error);

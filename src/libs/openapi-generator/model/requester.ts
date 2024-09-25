@@ -9,15 +9,18 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Position } from './position';
 
 
-export type Roles = 'VIEWER' | 'EDITOR' | 'MODERATOR' | 'MANAGER' | 'SUPER_ADMIN';
-
-export const Roles = {
-    Viewer: 'VIEWER' as Roles,
-    Editor: 'EDITOR' as Roles,
-    Moderator: 'MODERATOR' as Roles,
-    Manager: 'MANAGER' as Roles,
-    SuperAdmin: 'SUPER_ADMIN' as Roles
-};
+export interface Requester { 
+    id?: string | null;
+    version?: number | null;
+    active?: boolean;
+    createdAt?: string;
+    updatedAt?: string;
+    name?: string;
+    email?: string;
+    register?: string;
+    position?: Position | null;
+}
 

@@ -1,74 +1,523 @@
 openapi: 3.0.1
 info:
-  title: core
-  version: "0.0"
-servers:
-  - url: http://localhost:8080/
-security:
-  - Authorization: []
+    title: key-keeper
+    version: "0.0"
 tags:
-  - name: Users
-    description: Operations related to user management
+    -   name: Position
+        description: Operações relacionadas a entidade cargo
+    -   name: Environment
+        description: Operações relacionadas a entidade Ambiente
+    -   name: Requesters
+        description: Operações relacionadas a entidade solicitantes
+    -   name: TypeEnvironment
+        description: Operações relacionadas a entidade Tipos de Ambiente
+    -   name: Permissions
+        description: Operações relacionadas a entidade Permissão
+    -   name: Keys
+        description: Operações relacionadas a entidade Chaves
+    -   name: Reservation
+        description: Operações relacionadas a entidade reservas
+    -   name: Places
+        description: Operações relacionadas a entidade lugar
+    -   name: Users
+        description: Operações relacionadas a entidade Usuário
 paths:
-  /api/users:
-    get:
-      tags:
-        - Users
-      summary: Get All Users
-      operationId: getAllUsers
-      responses:
-        "200":
-          description: Success
-        "500":
-          description: Error
-  /api/users/save:
-    post:
-      tags:
-        - Users
-      summary: Create new user
-      operationId: save
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UserDto"
-        required: true
-      responses:
-        "200":
-          description: Success
-        "500":
-          description: Error
+    /api/environment:
+        get:
+            tags:
+                - Environment
+            summary: Obter todos os ambientes
+            operationId: getAllEnvironments
+            responses:
+                "200":
+                    description: Operacao bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Environment"
+                "401":
+                    description: Falha de autenticacao
+                "403":
+                    description: Acesso negado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validacao
+                    content:
+                        application/json:
+                            schema: { }
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: { }
+    /api/keys:
+        get:
+            tags:
+                - Keys
+            summary: Obter todas as chaves
+            operationId: getAllKeys
+            responses:
+                "200":
+                    description: Operacao bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Key"
+                "401":
+                    description: Falha de autenticacao
+                "403":
+                    description: Acesso negado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validacao
+                    content:
+                        application/json:
+                            schema: { }
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: { }
+    /api/permissions:
+        get:
+            tags:
+                - Permissions
+            summary: Obter todas as permissões
+            operationId: getAllPermissions
+            responses:
+                "200":
+                    description: Operacao bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Permission"
+                "401":
+                    description: Falha de autenticacao
+                "403":
+                    description: Acesso negado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validacao
+                    content:
+                        application/json:
+                            schema: { }
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: { }
+    /api/places:
+        get:
+            tags:
+                - Places
+            summary: Obter todos os lugares
+            operationId: getAllPlaces
+            responses:
+                "200":
+                    description: Operacao bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Place"
+                "401":
+                    description: Falha de autenticacao
+                "403":
+                    description: Acesso negado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validacao
+                    content:
+                        application/json:
+                            schema: { }
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: { }
+    /api/positions:
+        get:
+            tags:
+                - Position
+            summary: Obter todos os cargos
+            operationId: getAllPositions
+            responses:
+                "200":
+                    description: Operacao bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Position"
+                "401":
+                    description: Falha de autenticacao
+                "403":
+                    description: Acesso negado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validacao
+                    content:
+                        application/json:
+                            schema: { }
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: { }
+    /api/requesters:
+        get:
+            tags:
+                - Requesters
+            summary: Obter todos os solicitantes
+            operationId: getAllRequesters
+            responses:
+                "200":
+                    description: Operacao bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Requester"
+                "401":
+                    description: Falha de autenticacao
+                "403":
+                    description: Acesso negado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validacao
+                    content:
+                        application/json:
+                            schema: { }
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: { }
+    /api/reservations:
+        get:
+            tags:
+                - Reservation
+            summary: Obter todas as reservas
+            operationId: getAllReservations
+            responses:
+                "200":
+                    description: Operacao bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Reservation"
+                "401":
+                    description: Falha de autenticacao
+                "403":
+                    description: Acesso negado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validacao
+                    content:
+                        application/json:
+                            schema: { }
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: { }
+    /api/type-environments:
+        get:
+            tags:
+                - TypeEnvironment
+            summary: Obter todos os tipos de ambiente
+            operationId: getAllTypeEnvironments
+            responses:
+                "200":
+                    description: Operacao bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/TypeEnvironment"
+                "401":
+                    description: Falha de autenticacao
+                "403":
+                    description: Acesso negado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validacao
+                    content:
+                        application/json:
+                            schema: { }
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: { }
+    /api/users:
+        get:
+            tags:
+                - Users
+            summary: Obter todos os usuários
+            operationId: getAllUsers
+            responses:
+                "200":
+                    description: Operacao bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/User"
+                "401":
+                    description: Falha de autenticacao
+                "403":
+                    description: Acesso negado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validacao
+                    content:
+                        application/json:
+                            schema: { }
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: { }
+    /api/users/save:
+        post:
+            tags:
+                - Users
+            summary: Criar novo usuário
+            operationId: save
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UserDto"
+                required: true
+            responses:
+                "200":
+                    description: Operacao bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/User"
+                "401":
+                    description: Falha de autenticacao
+                "403":
+                    description: Acesso negado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validacao
+                    content:
+                        application/json:
+                            schema: { }
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: { }
 components:
-  schemas:
-    Roles:
-      type: string
-      enum:
-        - VIEWER
-        - EDITOR
-        - MODERATOR
-        - MANAGER
-        - SUPER_ADMIN
-    UserDto:
-      required:
-        - password
-        - roles
-        - username
-      type: object
-      properties:
-        email:
-          type: string
-        name:
-          type: string
-        password:
-          type: string
-        username:
-          type: string
-        roles:
-          type: array
-          items:
-            $ref: "#/components/schemas/Roles"
-  securitySchemes:
-    Authorization:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+    schemas:
+        EntityPattern:
+            type: object
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                    nullable: true
+                version:
+                    type: integer
+                    format: int32
+                    nullable: true
+                active:
+                    type: boolean
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+        Environment:
+            type: object
+            allOf:
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        name:
+                            type: string
+                        place:
+                            nullable: true
+                            allOf:
+                                -   $ref: "#/components/schemas/Place"
+                        typeEnvironment:
+                            nullable: true
+                            allOf:
+                                -   $ref: "#/components/schemas/TypeEnvironment"
+        Key:
+            type: object
+            allOf:
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        description:
+                            type: string
+                        environment:
+                            nullable: true
+                            allOf:
+                                -   $ref: "#/components/schemas/Environment"
+        Permission:
+            type: object
+            allOf:
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        environment:
+                            nullable: true
+                            allOf:
+                                -   $ref: "#/components/schemas/Environment"
+                        requester:
+                            nullable: true
+                            allOf:
+                                -   $ref: "#/components/schemas/Requester"
+                        user:
+                            nullable: true
+                            allOf:
+                                -   $ref: "#/components/schemas/User"
+                        description:
+                            type: string
+                        startDateTime:
+                            type: string
+                            format: date-time
+                        endDateTime:
+                            type: string
+                            format: date-time
+        Place:
+            type: object
+            allOf:
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        name:
+                            type: string
+        Position:
+            type: object
+            allOf:
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        name:
+                            type: string
+        Requester:
+            type: object
+            allOf:
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        name:
+                            type: string
+                        email:
+                            type: string
+                        register:
+                            type: string
+                        position:
+                            nullable: true
+                            allOf:
+                                -   $ref: "#/components/schemas/Position"
+        Reservation:
+            type: object
+            allOf:
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        permission:
+                            nullable: true
+                            allOf:
+                                -   $ref: "#/components/schemas/Permission"
+                        environment:
+                            nullable: true
+                            allOf:
+                                -   $ref: "#/components/schemas/Environment"
+                        user:
+                            nullable: true
+                            allOf:
+                                -   $ref: "#/components/schemas/User"
+                        notes:
+                            type: string
+                        startDateTime:
+                            type: string
+                            format: date-time
+                        endDateTime:
+                            type: string
+                            format: date-time
+                        status:
+                            $ref: "#/components/schemas/Status"
+        Roles:
+            type: string
+            enum:
+                - VIEWER
+                - EDITOR
+                - MODERATOR
+                - MANAGER
+                - SUPER_ADMIN
+        Status:
+            type: string
+            enum:
+                - RESERVATION
+                - AGENDADO
+                - AND_PROGRESS
+        TypeEnvironment:
+            type: object
+            allOf:
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        name:
+                            type: string
+        User:
+            type: object
+            allOf:
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        name:
+                            type: string
+                        username:
+                            type: string
+                        email:
+                            type: string
+                        password:
+                            type: string
+                        roles:
+                            type: array
+                            items:
+                                $ref: "#/components/schemas/Roles"
+        UserDto:
+            required:
+                - password
+                - roles
+                - username
+            type: object
+            properties:
+                email:
+                    type: string
+                name:
+                    type: string
+                password:
+                    type: string
+                username:
+                    type: string
+                roles:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/Roles"

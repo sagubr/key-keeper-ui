@@ -1,7 +1,5 @@
 ## @
 
-The version of the OpenAPI document: 0.0
-
 ### Building
 
 To install the required dependencies and to build the typescript sources run:

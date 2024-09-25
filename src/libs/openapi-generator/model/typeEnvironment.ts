@@ -11,13 +11,12 @@
  */
 
 
-export type Roles = 'VIEWER' | 'EDITOR' | 'MODERATOR' | 'MANAGER' | 'SUPER_ADMIN';
-
-export const Roles = {
-    Viewer: 'VIEWER' as Roles,
-    Editor: 'EDITOR' as Roles,
-    Moderator: 'MODERATOR' as Roles,
-    Manager: 'MANAGER' as Roles,
-    SuperAdmin: 'SUPER_ADMIN' as Roles
-};
+export interface TypeEnvironment { 
+    id?: string | null;
+    version?: number | null;
+    active?: boolean;
+    createdAt?: string;
+    updatedAt?: string;
+    name?: string;
+}
 

@@ -9,15 +9,18 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Place } from './place';
+import { TypeEnvironment } from './typeEnvironment';
 
 
-export type Roles = 'VIEWER' | 'EDITOR' | 'MODERATOR' | 'MANAGER' | 'SUPER_ADMIN';
-
-export const Roles = {
-    Viewer: 'VIEWER' as Roles,
-    Editor: 'EDITOR' as Roles,
-    Moderator: 'MODERATOR' as Roles,
-    Manager: 'MANAGER' as Roles,
-    SuperAdmin: 'SUPER_ADMIN' as Roles
-};
+export interface Environment { 
+    id?: string | null;
+    version?: number | null;
+    active?: boolean;
+    createdAt?: string;
+    updatedAt?: string;
+    name?: string;
+    place?: Place | null;
+    typeEnvironment?: TypeEnvironment | null;
+}
 

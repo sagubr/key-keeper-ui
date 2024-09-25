@@ -11,13 +11,11 @@
  */
 
 
-export type Roles = 'VIEWER' | 'EDITOR' | 'MODERATOR' | 'MANAGER' | 'SUPER_ADMIN';
+export type Status = 'RESERVATION' | 'AGENDADO' | 'AND_PROGRESS';
 
-export const Roles = {
-    Viewer: 'VIEWER' as Roles,
-    Editor: 'EDITOR' as Roles,
-    Moderator: 'MODERATOR' as Roles,
-    Manager: 'MANAGER' as Roles,
-    SuperAdmin: 'SUPER_ADMIN' as Roles
+export const Status = {
+    Reservation: 'RESERVATION' as Status,
+    Agendado: 'AGENDADO' as Status,
+    AndProgress: 'AND_PROGRESS' as Status
 };
 

@@ -9,15 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Roles } from './roles';
 
 
-export type Roles = 'VIEWER' | 'EDITOR' | 'MODERATOR' | 'MANAGER' | 'SUPER_ADMIN';
-
-export const Roles = {
-    Viewer: 'VIEWER' as Roles,
-    Editor: 'EDITOR' as Roles,
-    Moderator: 'MODERATOR' as Roles,
-    Manager: 'MANAGER' as Roles,
-    SuperAdmin: 'SUPER_ADMIN' as Roles
-};
+export interface User { 
+    id?: string | null;
+    version?: number | null;
+    active?: boolean;
+    createdAt?: string;
+    updatedAt?: string;
+    name?: string;
+    username?: string;
+    email?: string;
+    password?: string;
+    roles?: Array<Roles>;
+}
 

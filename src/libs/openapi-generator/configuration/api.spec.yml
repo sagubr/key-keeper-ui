@@ -2,25 +2,29 @@ openapi: 3.0.1
 info:
     title: key-keeper
     version: "0.0"
+servers:
+    - url: http://localhost:8080/
+security:
+    - Authorization: []
 tags:
-    -   name: Position
-        description: Operações relacionadas a entidade cargo
-    -   name: Environment
-        description: Operações relacionadas a entidade Ambiente
-    -   name: Requesters
-        description: Operações relacionadas a entidade solicitantes
-    -   name: TypeEnvironment
-        description: Operações relacionadas a entidade Tipos de Ambiente
-    -   name: Permissions
-        description: Operações relacionadas a entidade Permissão
-    -   name: Keys
-        description: Operações relacionadas a entidade Chaves
-    -   name: Reservation
-        description: Operações relacionadas a entidade reservas
-    -   name: Places
-        description: Operações relacionadas a entidade lugar
-    -   name: Users
-        description: Operações relacionadas a entidade Usuário
+    - name: Environment
+      description: Operações relacionadas a entidade Ambiente
+    - name: Requesters
+      description: Operações relacionadas a entidade solicitantes
+    - name: Places
+      description: Operações relacionadas a entidade lugar
+    - name: Users
+      description: Operações relacionadas a entidade Usuário
+    - name: Reservation
+      description: Operações relacionadas a entidade reservas
+    - name: Permissions
+      description: Operações relacionadas a entidade Permissão
+    - name: Keys
+      description: Operações relacionadas a entidade Chaves
+    - name: Position
+      description: Operações relacionadas a entidade cargo
+    - name: TypeEnvironment
+      description: Operações relacionadas a entidade Tipos de Ambiente
 paths:
     /api/environment:
         get:
@@ -47,12 +51,12 @@ paths:
                     description: Erro de validacao
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
     /api/keys:
         get:
             tags:
@@ -78,12 +82,12 @@ paths:
                     description: Erro de validacao
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
     /api/permissions:
         get:
             tags:
@@ -109,12 +113,12 @@ paths:
                     description: Erro de validacao
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
     /api/places:
         get:
             tags:
@@ -140,12 +144,12 @@ paths:
                     description: Erro de validacao
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
     /api/positions:
         get:
             tags:
@@ -171,12 +175,12 @@ paths:
                     description: Erro de validacao
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
     /api/requesters:
         get:
             tags:
@@ -202,12 +206,12 @@ paths:
                     description: Erro de validacao
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
     /api/reservations:
         get:
             tags:
@@ -233,12 +237,12 @@ paths:
                     description: Erro de validacao
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
     /api/type-environments:
         get:
             tags:
@@ -264,12 +268,12 @@ paths:
                     description: Erro de validacao
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
     /api/users:
         get:
             tags:
@@ -295,12 +299,12 @@ paths:
                     description: Erro de validacao
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
     /api/users/save:
         post:
             tags:
@@ -330,12 +334,12 @@ paths:
                     description: Erro de validacao
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: { }
+                            schema: {}
 components:
     schemas:
         EntityPattern:
@@ -360,110 +364,110 @@ components:
         Environment:
             type: object
             allOf:
-                -   $ref: "#/components/schemas/EntityPattern"
-                -   properties:
-                        name:
-                            type: string
-                        place:
-                            nullable: true
-                            allOf:
-                                -   $ref: "#/components/schemas/Place"
-                        typeEnvironment:
-                            nullable: true
-                            allOf:
-                                -   $ref: "#/components/schemas/TypeEnvironment"
+                - $ref: "#/components/schemas/EntityPattern"
+                - properties:
+                      name:
+                          type: string
+                      place:
+                          nullable: true
+                          allOf:
+                              - $ref: "#/components/schemas/Place"
+                      typeEnvironment:
+                          nullable: true
+                          allOf:
+                              - $ref: "#/components/schemas/TypeEnvironment"
         Key:
             type: object
             allOf:
-                -   $ref: "#/components/schemas/EntityPattern"
-                -   properties:
-                        description:
-                            type: string
-                        environment:
-                            nullable: true
-                            allOf:
-                                -   $ref: "#/components/schemas/Environment"
+                - $ref: "#/components/schemas/EntityPattern"
+                - properties:
+                      description:
+                          type: string
+                      environment:
+                          nullable: true
+                          allOf:
+                              - $ref: "#/components/schemas/Environment"
         Permission:
             type: object
             allOf:
-                -   $ref: "#/components/schemas/EntityPattern"
-                -   properties:
-                        environment:
-                            nullable: true
-                            allOf:
-                                -   $ref: "#/components/schemas/Environment"
-                        requester:
-                            nullable: true
-                            allOf:
-                                -   $ref: "#/components/schemas/Requester"
-                        user:
-                            nullable: true
-                            allOf:
-                                -   $ref: "#/components/schemas/User"
-                        description:
-                            type: string
-                        startDateTime:
-                            type: string
-                            format: date-time
-                        endDateTime:
-                            type: string
-                            format: date-time
+                - $ref: "#/components/schemas/EntityPattern"
+                - properties:
+                      environment:
+                          nullable: true
+                          allOf:
+                              - $ref: "#/components/schemas/Environment"
+                      requester:
+                          nullable: true
+                          allOf:
+                              - $ref: "#/components/schemas/Requester"
+                      user:
+                          nullable: true
+                          allOf:
+                              - $ref: "#/components/schemas/User"
+                      description:
+                          type: string
+                      startDateTime:
+                          type: string
+                          format: date-time
+                      endDateTime:
+                          type: string
+                          format: date-time
         Place:
             type: object
             allOf:
-                -   $ref: "#/components/schemas/EntityPattern"
-                -   properties:
-                        name:
-                            type: string
+                - $ref: "#/components/schemas/EntityPattern"
+                - properties:
+                      name:
+                          type: string
         Position:
             type: object
             allOf:
-                -   $ref: "#/components/schemas/EntityPattern"
-                -   properties:
-                        name:
-                            type: string
+                - $ref: "#/components/schemas/EntityPattern"
+                - properties:
+                      name:
+                          type: string
         Requester:
             type: object
             allOf:
-                -   $ref: "#/components/schemas/EntityPattern"
-                -   properties:
-                        name:
-                            type: string
-                        email:
-                            type: string
-                        register:
-                            type: string
-                        position:
-                            nullable: true
-                            allOf:
-                                -   $ref: "#/components/schemas/Position"
+                - $ref: "#/components/schemas/EntityPattern"
+                - properties:
+                      name:
+                          type: string
+                      email:
+                          type: string
+                      register:
+                          type: string
+                      position:
+                          nullable: true
+                          allOf:
+                              - $ref: "#/components/schemas/Position"
         Reservation:
             type: object
             allOf:
-                -   $ref: "#/components/schemas/EntityPattern"
-                -   properties:
-                        permission:
-                            nullable: true
-                            allOf:
-                                -   $ref: "#/components/schemas/Permission"
-                        environment:
-                            nullable: true
-                            allOf:
-                                -   $ref: "#/components/schemas/Environment"
-                        user:
-                            nullable: true
-                            allOf:
-                                -   $ref: "#/components/schemas/User"
-                        notes:
-                            type: string
-                        startDateTime:
-                            type: string
-                            format: date-time
-                        endDateTime:
-                            type: string
-                            format: date-time
-                        status:
-                            $ref: "#/components/schemas/Status"
+                - $ref: "#/components/schemas/EntityPattern"
+                - properties:
+                      permission:
+                          nullable: true
+                          allOf:
+                              - $ref: "#/components/schemas/Permission"
+                      environment:
+                          nullable: true
+                          allOf:
+                              - $ref: "#/components/schemas/Environment"
+                      user:
+                          nullable: true
+                          allOf:
+                              - $ref: "#/components/schemas/User"
+                      notes:
+                          type: string
+                      startDateTime:
+                          type: string
+                          format: date-time
+                      endDateTime:
+                          type: string
+                          format: date-time
+                      status:
+                          $ref: "#/components/schemas/Status"
         Roles:
             type: string
             enum:
@@ -481,27 +485,27 @@ components:
         TypeEnvironment:
             type: object
             allOf:
-                -   $ref: "#/components/schemas/EntityPattern"
-                -   properties:
-                        name:
-                            type: string
+                - $ref: "#/components/schemas/EntityPattern"
+                - properties:
+                      name:
+                          type: string
         User:
             type: object
             allOf:
-                -   $ref: "#/components/schemas/EntityPattern"
-                -   properties:
-                        name:
-                            type: string
-                        username:
-                            type: string
-                        email:
-                            type: string
-                        password:
-                            type: string
-                        roles:
-                            type: array
-                            items:
-                                $ref: "#/components/schemas/Roles"
+                - $ref: "#/components/schemas/EntityPattern"
+                - properties:
+                      name:
+                          type: string
+                      username:
+                          type: string
+                      email:
+                          type: string
+                      password:
+                          type: string
+                      roles:
+                          type: array
+                          items:
+                              $ref: "#/components/schemas/Roles"
         UserDto:
             required:
                 - password
@@ -521,3 +525,8 @@ components:
                     type: array
                     items:
                         $ref: "#/components/schemas/Roles"
+    securitySchemes:
+        Authorization:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT

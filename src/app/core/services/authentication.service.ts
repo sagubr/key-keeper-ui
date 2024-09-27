@@ -4,7 +4,6 @@ import {Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {environment} from 'src/environments/environment';
-import {CookieService} from "ngx-cookie-service";
 
 @Injectable({
 	providedIn: 'root',
@@ -12,7 +11,7 @@ import {CookieService} from "ngx-cookie-service";
 export class AuthenticationService {
 	private PATH_API_URL = environment.apiUrl;
 
-	constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) {
+	constructor(private http: HttpClient, private router: Router) {
 	}
 
 	login(username: string, password: string): Observable<string> {
@@ -20,27 +19,26 @@ export class AuthenticationService {
 		const headers = new HttpHeaders({'Content-Type': 'application/json'});
 		const body = {username, password};
 
-		return this.http
-			.post<{ access_token: string }>(url, body, {headers})
-			.pipe(
-				map((response) => {
-					const token = response.access_token;
-					this.setCookie('Authorization', token, 1); // Armazenando no cookie
-					this.router.navigate(['/manager']);
-					return token;
-				}),
-				catchError((error) => {
-					return throwError(() => new Error('Login failed'));
-				})
-			);
+		return this.http.post<{ access_token: string }>(url, body, {headers}).pipe(
+			map((response) => {
+				const token = response.access_token;
+				this.setToken(token);
+				console.log(token)
+				this.router.navigate(['/manager']);
+				return token;
+			}),
+			catchError((error) => {
+				return throwError(() => new Error('Login failed'));
+			})
+		);
 	}
 
-	private setCookie(name: string, value: string, days: number): void {
-		this.cookieService.set(name, value, {expires: days});
+	private setToken(token: string): void {
+		localStorage.setItem('Authorization', token);
 	}
 
 	getToken(): string | null {
-		return this.cookieService.get('Authorization');
+		return localStorage.getItem('Authorization');
 	}
 
 	isAuthenticated(): boolean {
@@ -49,7 +47,7 @@ export class AuthenticationService {
 	}
 
 	logout(): void {
-		this.cookieService.delete('Authorization');
+		localStorage.removeItem('Authorization');
 		this.router.navigate(['/login']);
 	}
 }

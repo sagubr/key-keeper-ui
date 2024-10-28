@@ -12,19 +12,21 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AuthenticationService } from '@app/core/services/authentication.service';
 import { ToolbarHeaderComponent } from '../../shared/components/toolbar-header/toolbar-header.component';
 import { UsersComponent } from './users/users.component';
+import {RoomsComponent} from "@app/features/manager/rooms/rooms.component";
 
 @Component({
   selector: 'app-manager',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatTabsModule,
-    MatIconModule,
-    MatProgressBarModule,
-    RouterLink,
-    ToolbarHeaderComponent,
-    UsersComponent,
-  ],
+	imports: [
+		CommonModule,
+		MatTabsModule,
+		MatIconModule,
+		MatProgressBarModule,
+		RouterLink,
+		ToolbarHeaderComponent,
+		UsersComponent,
+		RoomsComponent,
+	],
   templateUrl: './manager.component.html',
   styleUrl: './manager.component.scss',
 })

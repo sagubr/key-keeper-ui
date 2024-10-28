@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {CanActivate, Router} from '@angular/router';
-import {CookieService} from 'ngx-cookie-service';
 import {AuthenticationService} from "@app/core/services/authentication.service";
 
 @Injectable({

@@ -1,0 +1,11 @@
+<table mat-table [dataSource]="dataSource()" class="mat-elevation-z8">
+	@for (column of columns(); track column.columnDef){
+		<ng-container [matColumnDef]="column.columnDef!">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.header! }}</th>
+			<td mat-cell *matCellDef="let element">{{ column.cell!(element) }}</td>
+		</ng-container>
+	}
+
+	<ng-content></ng-content>
+
+</table>

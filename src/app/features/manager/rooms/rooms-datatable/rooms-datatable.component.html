@@ -1,0 +1,76 @@
+<div tabindex="0" class="full-width">
+	<mat-progress-bar mode="query"></mat-progress-bar>
+	<div class="container mat-elevation-z8">
+		<div class="mat-table-container">
+			<div class="table-wrapper">
+				<mat-table [dataSource]="dataSource">
+					<ng-container matColumnDef="name">
+						<mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+						<mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+					</ng-container>
+
+					<ng-container matColumnDef="username">
+						<mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+						<mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
+					</ng-container>
+
+					<ng-container matColumnDef="email">
+						<mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+						<mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+					</ng-container>
+
+					<ng-container matColumnDef="active">
+						<mat-header-cell *matHeaderCellDef> Ativo </mat-header-cell>
+						<mat-cell *matCellDef="let element"> {{element.active ? 'Sim' : 'Não'}} </mat-cell>
+					</ng-container>
+
+					<ng-container matColumnDef="created_at">
+						<mat-header-cell *matHeaderCellDef> Criado em </mat-header-cell>
+						<mat-cell *matCellDef="let element"> {{element.createdAt | date}} </mat-cell>
+					</ng-container>
+
+					<ng-container matColumnDef="updated_at">
+						<mat-header-cell *matHeaderCellDef> Atualizado em </mat-header-cell>
+						<mat-cell *matCellDef="let element"> {{element.updatedAt | date}} </mat-cell>
+					</ng-container>
+
+					<ng-container matColumnDef="star" stickyEnd>
+						<mat-header-cell *matHeaderCellDef aria-label="row actions">Ações</mat-header-cell>
+						<mat-cell *matCellDef="let element">
+							<button mat-icon-button [matMenuTriggerFor]="menu"
+									aria-label="Example icon-button with a menu">
+								<mat-icon>more_vert</mat-icon>
+							</button>
+							<mat-menu #menu="matMenu">
+								<button mat-menu-item>
+									<mat-icon>edit</mat-icon>
+									<span>Editar Registro</span>
+								</button>
+								<button mat-menu-item >
+									<mat-icon>key</mat-icon>
+									<span>Redefinir Senha</span>
+								</button>
+								<button mat-menu-item>
+									<mat-icon>lock</mat-icon>
+									<span>Bloquear</span>
+								</button>
+								<button mat-menu-item disabled>
+									<mat-icon>history</mat-icon>
+									<span>Visualizar Histórico</span>
+								</button>
+							</mat-menu>
+						</mat-cell>
+					</ng-container>
+
+					<mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"
+									style="background-color: #0A957B; color: white;"></mat-header-row>
+					<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+				</mat-table>
+			</div>
+		</div>
+	</div>
+	<div class="paginator">
+		<mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons
+					   aria-label="Select page of periodic elements"></mat-paginator>
+	</div>
+</div>

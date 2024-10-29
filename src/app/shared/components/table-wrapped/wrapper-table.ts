@@ -6,7 +6,7 @@ import {
 	QueryList,
 	ViewChild,
 	ContentChild,
-	input, InputSignal, OnInit,
+	input, InputSignal
 } from '@angular/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import {
@@ -18,7 +18,6 @@ import {
 	MatTableModule,
 } from '@angular/material/table';
 import { NgForOf } from "@angular/common";
-import { Column } from "@app/shared/components/model/column.model";
 
 /**
  * Table component that accepts column and row definitions in its content to be registered to the
@@ -35,7 +34,7 @@ import { Column } from "@app/shared/components/model/column.model";
 	imports: [MatTableModule, MatSortModule, NgForOf],
 	standalone: true
 })
-export class WrapperTable<T> implements AfterContentInit, OnInit {
+export class WrapperTable<T> implements AfterContentInit {
 	@ContentChildren(MatHeaderRowDef) headerRowDefs!: QueryList<MatHeaderRowDef>;
 	@ContentChildren(MatRowDef) rowDefs!: QueryList<MatRowDef<T>>;
 	@ContentChildren(MatColumnDef) columnDefs!: QueryList<MatColumnDef>;
@@ -46,14 +45,6 @@ export class WrapperTable<T> implements AfterContentInit, OnInit {
 
 	readonly columns: InputSignal<Columns[]> = input.required<Columns[]>();
 	readonly dataSource: InputSignal<DataSource<T>> = input.required<DataSource<T>>();
-
-	ngOnInit(){
-		this.columns().forEach(
-			it => {
-				console.log(it.cell)
-			}
-		)
-	}
 
 	ngAfterContentInit() {
 		this.columnDefs.forEach(columnDef => this.table.addColumnDef(columnDef));
@@ -66,5 +57,5 @@ export class WrapperTable<T> implements AfterContentInit, OnInit {
 export interface Columns {
 	columnDef: string;
 	header: string;
-	cell?: (element: any) => string;
+	cell: (element: any) => string;
 }

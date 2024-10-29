@@ -9,8 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 /*Custom Components*/
-import { AuthenticationService } from '@app/core/services/authentication.service';
-import { ToolbarHeaderComponent } from '../../shared/components/toolbar-header/toolbar-header.component';
 import { UsersComponent } from './users/users.component';
 import {RoomsComponent} from "@app/features/manager/rooms/rooms.component";
 
@@ -23,7 +21,6 @@ import {RoomsComponent} from "@app/features/manager/rooms/rooms.component";
 		MatIconModule,
 		MatProgressBarModule,
 		RouterLink,
-		ToolbarHeaderComponent,
 		UsersComponent,
 		RoomsComponent,
 	],

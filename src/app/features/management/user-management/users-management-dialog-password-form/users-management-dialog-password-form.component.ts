@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 
 /* Angular Material */
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DialogData } from '../users-dialog-form/users-dialog-form.component';
+import { DialogData } from '@app/features/management/user-management/users-management-dialog-form/users-management-dialog-form.component';
 
 /*Angular Material Modules */
 import { MatIconModule } from '@angular/material/icon';
@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
-  selector: 'app-users-dialog-password-form',
+  selector: 'app-users-management-dialog-password-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -31,10 +31,10 @@ import { MatRadioModule } from '@angular/material/radio';
     MatRadioModule,
     ReactiveFormsModule,
   ],
-  templateUrl: './users-dialog-password-form.component.html',
-  styleUrl: './users-dialog-password-form.component.scss',
+  templateUrl: './users-management-dialog-password-form.component.html',
+  styleUrl: './users-management-dialog-password-form.component.scss',
 })
-export class UsersDialogPasswordFormComponent {
+export class UsersManagementDialogPasswordFormComponent {
   form = new FormGroup({
     password: new FormControl('', [Validators.required]),
     repeatPassword: new FormControl('', [Validators.required]),
@@ -43,7 +43,7 @@ export class UsersDialogPasswordFormComponent {
   hide = true;
 
   constructor(
-    public dialogRef: MatDialogRef<UsersDialogPasswordFormComponent>,
+    public dialogRef: MatDialogRef<UsersManagementDialogPasswordFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 

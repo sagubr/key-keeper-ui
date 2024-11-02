@@ -9,22 +9,21 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 /*Custom Components*/
-import { UsersComponent } from './users/users.component';
-import {RoomsComponent} from "@app/features/manager/rooms/rooms.component";
+import { UsersManagementComponent } from "@app/features/management/user-management/users-management.component";
 
 @Component({
-  selector: 'app-manager',
-  standalone: true,
+	selector: 'app-management',
+	standalone: true,
 	imports: [
 		CommonModule,
 		MatTabsModule,
 		MatIconModule,
 		MatProgressBarModule,
 		RouterLink,
-		UsersComponent,
-		RoomsComponent,
+		UsersManagementComponent,
 	],
-  templateUrl: './manager.component.html',
-  styleUrl: './manager.component.scss',
+	templateUrl: './management.component.html',
+	styleUrl: './management.component.scss',
 })
-export class ManagerComponent {}
+export class ManagementComponent {
+}

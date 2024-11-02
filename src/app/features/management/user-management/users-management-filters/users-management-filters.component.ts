@@ -15,11 +15,11 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatRadioModule} from '@angular/material/radio';
 
 /*Custom Components*/
-import {UsersDialogFormComponent} from '../users-dialog-form/users-dialog-form.component';
+import {UsersManagementDialogFormComponent} from '@app/features/management/user-management/users-management-dialog-form/users-management-dialog-form.component';
 import {UserFilterService} from './users-filters.service';
 
 @Component({
-	selector: 'app-users-filters',
+	selector: 'app-users-management-filters',
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -31,10 +31,10 @@ import {UserFilterService} from './users-filters.service';
 		MatButtonModule,
 		MatRadioModule,
 	],
-	templateUrl: './users-filters.component.html',
-	styleUrl: './users-filters.component.scss',
+	templateUrl: './users-management-filters.component.html',
+	styleUrl: './users-management-filters.component.scss',
 })
-export class UsersFiltersComponent {
+export class UsersManagementFiltersComponent {
   foods: Food[] = [
     { value: 'steak-0', viewValue: 'Steak' },
     { value: 'pizza-1', viewValue: 'Pizza' },
@@ -51,7 +51,7 @@ export class UsersFiltersComponent {
 	}
 
 	openDialog(): void {
-		const dialogRef = this.dialog.open(UsersDialogFormComponent, {
+		const dialogRef = this.dialog.open(UsersManagementDialogFormComponent, {
 			data: {},
 		});
 

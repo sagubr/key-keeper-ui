@@ -1,6 +1,9 @@
 <div tabindex="0" class="full-width">
+
 	<mat-progress-bar mode="query"></mat-progress-bar>
+
 	<div class="container mat-elevation-z8">
+
 		<div class="mat-table-container">
 			<div class="table-wrapper">
 				<wrapper-table [dataSource]="dataSource" [columns]="columns"
@@ -9,8 +12,7 @@
 					<ng-container matColumnDef="star" stickyEnd>
 						<th mat-header-cell *matHeaderCellDef aria-label="row actions">Ações</th>
 						<td mat-cell *matCellDef="let element">
-							<button mat-icon-button [matMenuTriggerFor]="menu"
-									aria-label="Example icon-button with a menu">
+							<button mat-icon-button [matMenuTriggerFor]="menu">
 								<mat-icon>more_vert</mat-icon>
 							</button>
 							<mat-menu #menu="matMenu">
@@ -38,7 +40,7 @@
 					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
 					<tr class="mat-row" *matNoDataRow>
-						<td class="mat-cell" colspan="7">Sem dados</td>
+						<td class="mat-cell" colspan="7">Não há usuários cadastrados</td>
 					</tr>
 				</wrapper-table>
 			</div>
@@ -46,6 +48,6 @@
 	</div>
 	<div class="paginator">
 		<mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons
-					   aria-label="Select page of periodic elements"></mat-paginator>
+					   aria-label="Selecione a página dos usuários"></mat-paginator>
 	</div>
 </div>

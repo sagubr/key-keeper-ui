@@ -23,10 +23,10 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
 import {UsersService} from "@openapi/api/users.service";
 import {UserDto} from "@openapi/model/userDto";
 import {Roles} from "@openapi/model/roles";
-import {UserCommunicationService} from "@app/features/manager/users/user-communication.service";
+import {UserCommunicationService} from "@app/features/management/user-management/user-communication.service";
 
 @Component({
-	selector: 'app-users-dialog-form',
+	selector: 'app-users-management-dialog-form',
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -38,10 +38,10 @@ import {UserCommunicationService} from "@app/features/manager/users/user-communi
 		ReactiveFormsModule,
 		ClipboardModule,
 	],
-	templateUrl: './users-dialog-form.component.html',
-	styleUrl: './users-dialog-form.component.scss',
+	templateUrl: './users-management-dialog-form.component.html',
+	styleUrl: './users-management-dialog-form.component.scss',
 })
-export class UsersDialogFormComponent {
+export class UsersManagementDialogFormComponent {
 
 	form = new FormGroup({
 		name: new FormControl('', [Validators.required]),
@@ -58,7 +58,7 @@ export class UsersDialogFormComponent {
 	hide = true;
 
 	constructor(
-		public dialogRef: MatDialogRef<UsersDialogFormComponent>,
+		public dialogRef: MatDialogRef<UsersManagementDialogFormComponent>,
 		private readonly _userService: UsersService,
 		private readonly _userCommunicationService: UserCommunicationService,
 		@Inject(MAT_DIALOG_DATA) public data: UserDto

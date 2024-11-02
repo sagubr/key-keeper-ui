@@ -2,11 +2,12 @@ import { DataSource } from '@angular/cdk/collections';
 import {
 	AfterContentInit,
 	Component,
-	ContentChildren,
-	QueryList,
-	ViewChild,
 	ContentChild,
-	input, InputSignal
+	ContentChildren,
+	input,
+	InputSignal,
+	QueryList,
+	ViewChild
 } from '@angular/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import {
@@ -24,8 +25,8 @@ import { NgForOf } from "@angular/common";
  * table.
  */
 @Component({
-	selector: 'wrapper-table',
-	templateUrl: 'wrapper-table.html',
+	selector: 'table-wrapper-table',
+	templateUrl: 'table-wrapper-table.html',
 	styles: `
 		table {
 			width: 100%;
@@ -34,7 +35,8 @@ import { NgForOf } from "@angular/common";
 	imports: [MatTableModule, MatSortModule, NgForOf],
 	standalone: true
 })
-export class WrapperTable<T> implements AfterContentInit {
+export class TableWrapperTable<T> implements AfterContentInit {
+
 	@ContentChildren(MatHeaderRowDef) headerRowDefs!: QueryList<MatHeaderRowDef>;
 	@ContentChildren(MatRowDef) rowDefs!: QueryList<MatRowDef<T>>;
 	@ContentChildren(MatColumnDef) columnDefs!: QueryList<MatColumnDef>;

@@ -59,5 +59,5 @@ export class TableWrapperTable<T> implements AfterContentInit {
 export interface Columns {
 	columnDef: string;
 	header: string;
-	cell: (element: any) => string;
+	cell: (element: any) => any;
 }

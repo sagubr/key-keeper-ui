@@ -1,39 +1,27 @@
-/*Angular Core */
-import {
-	AfterViewInit,
-	Component,
-	OnDestroy,
-	OnInit,
-	ViewChild,
-} from '@angular/core';
-import { Subscription } from 'rxjs';
-import { CommonModule, DatePipe } from '@angular/common';
+/* Angular Core */
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, } from '@angular/core';
+import { finalize, Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 /**Angular Material */
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSort } from "@angular/material/sort";
 
 /**Angular Material Modules */
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 
 /**Custom Components */
 import { UsersService } from '@openapi/api/users.service';
 import {
-	UserFilterService
-} from '@app/features/management/user-management/users-management-filters/users-filters.service';
-import {
 	UsersManagementDialogPasswordFormComponent
 } from '@app/features/management/user-management/users-management-dialog-password-form/users-management-dialog-password-form.component';
-import { UserCommunicationService } from "@app/features/management/user-management/user-communication.service";
 import { User } from "@openapi/model/user";
-import { MatSort } from "@angular/material/sort";
+
 import { Columns, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
 
 @Component({
@@ -41,9 +29,9 @@ import { Columns, TableWrapperTable } from "@app/shared/components/table-wrapped
 	standalone: true,
 	imports: [
 		CommonModule,
-		MatDialogModule,
 		MatTableModule,
 		MatPaginatorModule,
+		MatDialogModule,
 		MatProgressBarModule,
 		MatMenuModule,
 		MatIconModule,
@@ -52,78 +40,64 @@ import { Columns, TableWrapperTable } from "@app/shared/components/table-wrapped
 		TableWrapperTable,
 	],
 	templateUrl: './users-management-datatable.component.html',
-	styleUrl: './users-management-datatable.component.scss',
+	styleUrls: ['./users-management-datatable.component.scss'],
 })
-export class UsersManagementDatatableComponent
-	implements AfterViewInit, OnInit, OnDestroy {
+export class UsersManagementDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 
-	dataSource: MatTableDataSource<User, MatPaginator> = new MatTableDataSource<User>([]);
+	@ViewChild(MatPaginator) paginator!: MatPaginator;
+	@ViewChild(MatSort) sort!: MatSort;
 
+	dataSource: MatTableDataSource<User> = new MatTableDataSource<User>([]);
 	columns: Columns[] = [
-		{ columnDef: 'name', header: 'Name', cell: (element: any) => `${ element.name }` },
-		{ columnDef: 'username', header: 'Username', cell: (element: any) => `${ element.username }` },
-		{ columnDef: 'email', header: 'Email', cell: (element: any) => `${ element.email }` },
-		{ columnDef: 'active', header: 'Active', cell: (element: any) => `${ element.active ? 'Sim' : 'Não' }` },
-		{ columnDef: 'created_at', header: 'Created At', cell: (element: any) => `${ element.created_at }` },
-		{ columnDef: 'updated_at', header: 'Updated At', cell: (element: any) => `${ element.updated_at }` },
+		{ columnDef: 'name', header: 'Name', cell: (user: User) => user.name },
+		{ columnDef: 'username', header: 'Username', cell: (user: User) => user.username },
+		{ columnDef: 'email', header: 'Email', cell: (user: User) => user.email },
+		{ columnDef: 'active', header: 'Active', cell: (user: User) => user.active ? 'Yes' : 'No' },
+		{ columnDef: 'created_at', header: 'Created At', cell: (user: User) => user.createdAt },
+		{ columnDef: 'updated_at', header: 'Updated At', cell: (user: User) => user.updatedAt },
 	];
-
 	displayedColumns: string[] = [...this.columns.map(c => c.columnDef), 'star'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
 
-	@ViewChild(MatPaginator) paginator!: MatPaginator;
-	@ViewChild('sort') sort!: MatSort;
-
-	private _subscription?: Subscription;
+	loading: boolean = false;
+	private subscriptions: Subscription = new Subscription();
 
 	constructor(
-		public dialog: MatDialog,
-		private readonly _filterService: UserFilterService,
-		private readonly _userCommunicationService: UserCommunicationService,
-		private readonly _userService: UsersService,
+		private usersService: UsersService,
+		private dialog: MatDialog,
 	) {
 	}
 
-	ngAfterViewInit() {
+	ngOnInit(): void {
+		this._initializeData();
+	}
+
+	ngAfterViewInit(): void {
 		this.dataSource.paginator = this.paginator;
-		this.dataSource.sort = this.sort
+		this.dataSource.sort = this.sort;
 	}
 
-	ngOnInit() {
-		this._subscription?.add(
-			this._filterService.filter$.subscribe((filter) => {
-				this.applyFilter(filter);
-			})
-		);
-
-		this._subscription?.add(
-			this._userCommunicationService.userSaved$.subscribe(() => {
-				this.fetch();
-			})
-		)
-		this.fetch();
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe();
 	}
 
-	ngOnDestroy() {
-		this._subscription?.unsubscribe();
-	}
-
-	applyFilter(event: String) {
-		this.dataSource.filter = event.trim().toLowerCase();
-	}
-
-	openDialog(): void {
-		const dialogRef = this.dialog.open(UsersManagementDialogPasswordFormComponent, {
-			data: { name: 'this.name', animal: 'this.animal' },
-		});
-		dialogRef.afterClosed().subscribe(() => {
-			console.log('The dialog was closed');
+	openPasswordDialog(user?: User): void {
+		this.dialog.open(UsersManagementDialogPasswordFormComponent, {
+			data: user,
 		});
 	}
 
-	fetch() {
-		this._userService.getAllUsers().subscribe((res) => {
-			this.dataSource.data = res;
-		});
+	private _initializeData(): void {
+		this.loading = true;
+		this.usersService.getAllUsers().pipe(finalize(() => this.loading = false))
+			.subscribe({
+				next: (users) => {
+					this.dataSource.data = users;
+				},
+				error: (err) => {
+					console.error('Error fetching user data:', err);
+				}
+			});
 	}
+
 }

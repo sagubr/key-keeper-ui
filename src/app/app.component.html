@@ -1,34 +1,41 @@
 <div class="container">
 
-  <mat-toolbar style="background: #080A0B;">
-    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <span>Key Keeper</span>
-    <span class="spacer"></span>
-    <button mat-icon-button class="icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon matBadge="15" matBadgeColor="primary">notifications</mat-icon>
-    </button>
-    <span>
+	<mat-toolbar style="background: #080A0B;">
+		<button mat-icon-button (click)="snav.toggle()">
+			<mat-icon>menu</mat-icon>
+		</button>
+		<span>Key Keeper</span>
+		<span class="spacer"></span>
+		<button mat-icon-button class="icon favorite-icon" aria-label="Example icon-button with heart icon">
+			<mat-icon matBadge="15" matBadgeColor="primary">notifications</mat-icon>
+		</button>
+		<span>
       Gustavo Garcia
     </span>
-    <button mat-icon-button class="icon" aria-label="Example icon-button with share icon">
-      <mat-icon>arrow_drop_down</mat-icon>
-    </button>
-  </mat-toolbar>
+		<button mat-icon-button class="icon" aria-label="Example icon-button with share icon">
+			<mat-icon>arrow_drop_down</mat-icon>
+		</button>
+	</mat-toolbar>
 
-  <mat-sidenav-container class="sidenav-container">
+	<mat-sidenav-container class="sidenav-container">
 
-    <mat-sidenav [opened]="true" #snav [mode]="'side'" fixedTopGap="56" style="background: #080A0B;">
-      <mat-nav-list *ngFor="let option of menuOptions">
-        <a mat-list-item routerLink="option.route" routerLinkActive="active"><mat-icon>{{option.icon}}</mat-icon></a>
-      </mat-nav-list>
-    </mat-sidenav>
+		<mat-sidenav [opened]="true" #snav [mode]="'side'" fixedTopGap="56" style="background: #080A0B;">
+			<mat-nav-list *ngFor="let option of menuOptions">
+				<a mat-list-item routerLink="option.route" routerLinkActive="active">
+					<mat-icon>{{ option.icon }}</mat-icon>
+				</a>
+			</mat-nav-list>
+		</mat-sidenav>
 
-    <mat-sidenav-content>
-      <div class="content">
-        <router-outlet></router-outlet>
-      </div>
-    </mat-sidenav-content>
+		<mat-sidenav-content>
+			<div class="content">
+				<router-outlet></router-outlet>
+			</div>
+		</mat-sidenav-content>
 
-  </mat-sidenav-container>
+	</mat-sidenav-container>
 
+	<mat-toolbar style="background: #080A0B;" class="footer">
+		<span>&copy; 2024 Key Keeper</span>
+	</mat-toolbar>
 </div>

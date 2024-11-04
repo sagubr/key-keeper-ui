@@ -9,19 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Roles } from './roles';
 
 
-export interface User { 
+export interface FacilityType { 
     id?: string | null;
     version?: number | null;
     active?: boolean;
     createdAt?: string;
     updatedAt?: string;
     name?: string;
-    username?: string;
-    email?: string;
-    password?: string;
-    roles?: Array<Roles>;
 }
 

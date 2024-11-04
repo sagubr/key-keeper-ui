@@ -7,31 +7,31 @@ servers:
 security:
     - Authorization: []
 tags:
-    - name: Environment
-      description: Operações relacionadas a entidade Ambiente
-    - name: Requesters
-      description: Operações relacionadas a entidade solicitantes
-    - name: Places
-      description: Operações relacionadas a entidade lugar
     - name: Users
       description: Operações relacionadas a entidade Usuário
-    - name: Reservation
-      description: Operações relacionadas a entidade reservas
+    - name: Requesters
+      description: Operações relacionadas a entidade solicitantes
     - name: Permissions
       description: Operações relacionadas a entidade Permissão
+    - name: Places
+      description: Operações relacionadas a entidade lugar
+    - name: FacilityType
+      description: Operações relacionadas a entidade Tipos de Ambiente
     - name: Keys
       description: Operações relacionadas a entidade Chaves
+    - name: Reservation
+      description: Operações relacionadas a entidade reservas
+    - name: Environment
+      description: Operações relacionadas à entidade Ambiente
     - name: Position
       description: Operações relacionadas a entidade cargo
-    - name: TypeEnvironment
-      description: Operações relacionadas a entidade Tipos de Ambiente
 paths:
-    /api/environment:
+    /api/facility:
         get:
             tags:
                 - Environment
             summary: Obter todos os ambientes
-            operationId: getAllEnvironments
+            operationId: listAllEnvironments
             responses:
                 "200":
                     description: Operacao bem sucedida
@@ -40,7 +40,139 @@ paths:
                             schema:
                                 type: array
                                 items:
-                                    $ref: "#/components/schemas/Environment"
+                                    $ref: "#/components/schemas/Facility"
+                "401":
+                    description: Falha de autenticacao
+                "403":
+                    description: Acesso negado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validacao
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+        post:
+            tags:
+                - Environment
+            summary: Criar um novo ambiente
+            operationId: createEnvironment
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Facility"
+                required: true
+            responses:
+                "200":
+                    description: Operacao bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Facility"
+                "401":
+                    description: Falha de autenticacao
+                "403":
+                    description: Acesso negado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validacao
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+    /api/facility-type:
+        get:
+            tags:
+                - FacilityType
+            summary: Obter todos os tipos de ambiente
+            operationId: getAllTypeEnvironments
+            responses:
+                "200":
+                    description: Operacao bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/FacilityType"
+                "401":
+                    description: Falha de autenticacao
+                "403":
+                    description: Acesso negado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validacao
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+    /api/facility/{id}:
+        get:
+            tags:
+                - Environment
+            summary: Obter detalhes de um ambiente por ID
+            operationId: getEnvironmentById
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            responses:
+                "200":
+                    description: Operacao bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Facility"
+                "401":
+                    description: Falha de autenticacao
+                "403":
+                    description: Acesso negado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validacao
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+        delete:
+            tags:
+                - Environment
+            summary: Remover um ambiente por ID
+            operationId: deleteEnvironment
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            responses:
+                "200":
+                    description: Operacao bem sucedida
                 "401":
                     description: Falha de autenticacao
                 "403":
@@ -133,7 +265,7 @@ paths:
                             schema:
                                 type: array
                                 items:
-                                    $ref: "#/components/schemas/Place"
+                                    $ref: "#/components/schemas/Location"
                 "401":
                     description: Falha de autenticacao
                 "403":
@@ -164,7 +296,7 @@ paths:
                             schema:
                                 type: array
                                 items:
-                                    $ref: "#/components/schemas/Position"
+                                    $ref: "#/components/schemas/JobTitle"
                 "401":
                     description: Falha de autenticacao
                 "403":
@@ -227,37 +359,6 @@ paths:
                                 type: array
                                 items:
                                     $ref: "#/components/schemas/Reservation"
-                "401":
-                    description: Falha de autenticacao
-                "403":
-                    description: Acesso negado
-                "404":
-                    description: Recurso não encontrado
-                "422":
-                    description: Erro de validacao
-                    content:
-                        application/json:
-                            schema: {}
-                "500":
-                    description: Erro
-                    content:
-                        application/json:
-                            schema: {}
-    /api/type-environments:
-        get:
-            tags:
-                - TypeEnvironment
-            summary: Obter todos os tipos de ambiente
-            operationId: getAllTypeEnvironments
-            responses:
-                "200":
-                    description: Operacao bem sucedida
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    $ref: "#/components/schemas/TypeEnvironment"
                 "401":
                     description: Falha de autenticacao
                 "403":
@@ -361,21 +462,35 @@ components:
                 updatedAt:
                     type: string
                     format: date-time
-        Environment:
+        Facility:
             type: object
             allOf:
                 - $ref: "#/components/schemas/EntityPattern"
                 - properties:
                       name:
                           type: string
-                      place:
+                      location:
                           nullable: true
                           allOf:
-                              - $ref: "#/components/schemas/Place"
-                      typeEnvironment:
+                              - $ref: "#/components/schemas/Location"
+                      facilityType:
                           nullable: true
                           allOf:
-                              - $ref: "#/components/schemas/TypeEnvironment"
+                              - $ref: "#/components/schemas/FacilityType"
+        FacilityType:
+            type: object
+            allOf:
+                - $ref: "#/components/schemas/EntityPattern"
+                - properties:
+                      name:
+                          type: string
+        JobTitle:
+            type: object
+            allOf:
+                - $ref: "#/components/schemas/EntityPattern"
+                - properties:
+                      name:
+                          type: string
         Key:
             type: object
             allOf:
@@ -383,19 +498,26 @@ components:
                 - properties:
                       description:
                           type: string
-                      environment:
+                      facility:
                           nullable: true
                           allOf:
-                              - $ref: "#/components/schemas/Environment"
+                              - $ref: "#/components/schemas/Facility"
+        Location:
+            type: object
+            allOf:
+                - $ref: "#/components/schemas/EntityPattern"
+                - properties:
+                      name:
+                          type: string
         Permission:
             type: object
             allOf:
                 - $ref: "#/components/schemas/EntityPattern"
                 - properties:
-                      environment:
+                      facility:
                           nullable: true
                           allOf:
-                              - $ref: "#/components/schemas/Environment"
+                              - $ref: "#/components/schemas/Facility"
                       requester:
                           nullable: true
                           allOf:
@@ -412,20 +534,6 @@ components:
                       endDateTime:
                           type: string
                           format: date-time
-        Place:
-            type: object
-            allOf:
-                - $ref: "#/components/schemas/EntityPattern"
-                - properties:
-                      name:
-                          type: string
-        Position:
-            type: object
-            allOf:
-                - $ref: "#/components/schemas/EntityPattern"
-                - properties:
-                      name:
-                          type: string
         Requester:
             type: object
             allOf:
@@ -437,10 +545,10 @@ components:
                           type: string
                       register:
                           type: string
-                      position:
+                      jobTitle:
                           nullable: true
                           allOf:
-                              - $ref: "#/components/schemas/Position"
+                              - $ref: "#/components/schemas/JobTitle"
         Reservation:
             type: object
             allOf:
@@ -450,10 +558,10 @@ components:
                           nullable: true
                           allOf:
                               - $ref: "#/components/schemas/Permission"
-                      environment:
+                      facility:
                           nullable: true
                           allOf:
-                              - $ref: "#/components/schemas/Environment"
+                              - $ref: "#/components/schemas/Facility"
                       user:
                           nullable: true
                           allOf:
@@ -482,13 +590,6 @@ components:
                 - RESERVATION
                 - AGENDADO
                 - AND_PROGRESS
-        TypeEnvironment:
-            type: object
-            allOf:
-                - $ref: "#/components/schemas/EntityPattern"
-                - properties:
-                      name:
-                          type: string
         User:
             type: object
             allOf:

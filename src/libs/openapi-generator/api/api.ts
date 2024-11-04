@@ -1,5 +1,7 @@
 export * from './environment.service';
 import { EnvironmentService } from './environment.service';
+export * from './facilityType.service';
+import { FacilityTypeService } from './facilityType.service';
 export * from './keys.service';
 import { KeysService } from './keys.service';
 export * from './permissions.service';
@@ -12,8 +14,6 @@ export * from './requesters.service';
 import { RequestersService } from './requesters.service';
 export * from './reservation.service';
 import { ReservationService } from './reservation.service';
-export * from './typeEnvironment.service';
-import { TypeEnvironmentService } from './typeEnvironment.service';
 export * from './users.service';
 import { UsersService } from './users.service';
-export const APIS = [EnvironmentService, KeysService, PermissionsService, PlacesService, PositionService, RequestersService, ReservationService, TypeEnvironmentService, UsersService];
+export const APIS = [EnvironmentService, FacilityTypeService, KeysService, PermissionsService, PlacesService, PositionService, RequestersService, ReservationService, UsersService];

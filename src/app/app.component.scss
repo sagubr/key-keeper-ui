@@ -30,3 +30,15 @@ mat-icon {
   margin-right: 5px;
   color: #ECF1F1;
 }
+
+.footer {
+	color: #ECF1F1;
+	position: fixed;
+	align-content: center;
+	justify-content: center;
+	align-items: center;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1000;
+}

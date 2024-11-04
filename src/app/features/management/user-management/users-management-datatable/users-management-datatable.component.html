@@ -3,11 +3,10 @@
 	<mat-progress-bar mode="query"></mat-progress-bar>
 
 	<div class="container mat-elevation-z8">
-
 		<div class="mat-table-container">
 			<div class="table-wrapper">
-				<wrapper-table [dataSource]="dataSource" [columns]="columns"
-							   matSort #sort="matSort">
+				<table-wrapper-table [dataSource]="dataSource" [columns]="columns"
+									 matSort #sort="matSort">
 
 					<ng-container matColumnDef="star" stickyEnd>
 						<th mat-header-cell *matHeaderCellDef aria-label="row actions">Ações</th>
@@ -20,7 +19,7 @@
 									<mat-icon>edit</mat-icon>
 									<span>Editar Registro</span>
 								</button>
-								<button mat-menu-item (click)="openDialog()">
+								<button mat-menu-item (click)="openPasswordDialog()">
 									<mat-icon>key</mat-icon>
 									<span>Redefinir Senha</span>
 								</button>
@@ -42,7 +41,7 @@
 					<tr class="mat-row" *matNoDataRow>
 						<td class="mat-cell" colspan="7">Não há usuários cadastrados</td>
 					</tr>
-				</wrapper-table>
+				</table-wrapper-table>
 			</div>
 		</div>
 	</div>

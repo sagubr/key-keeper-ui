@@ -1,29 +1,23 @@
 /*Angular Core*/
-import {Component, Inject} from '@angular/core';
-import {
-	FormControl,
-	FormGroup,
-	ReactiveFormsModule,
-	Validators,
-} from '@angular/forms';
-import {CommonModule} from '@angular/common';
+import { Component, Inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 /*Angular Material*/
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 /*Angular Material Modules*/
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
-import {MatButtonModule} from '@angular/material/button';
-import {MatRadioModule} from '@angular/material/radio';
-import {ClipboardModule} from '@angular/cdk/clipboard';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRadioModule } from '@angular/material/radio';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 /*Custom Components*/
-import {UsersService} from "@openapi/api/users.service";
-import {UserDto} from "@openapi/model/userDto";
-import {Roles} from "@openapi/model/roles";
-import {UserCommunicationService} from "@app/features/management/user-management/user-communication.service";
+import { UsersService } from "@openapi/api/users.service";
+import { UserDto } from "@openapi/model/userDto";
+import { Roles } from "@openapi/model/roles";
 
 @Component({
 	selector: 'app-users-management-dialog-form',
@@ -60,7 +54,6 @@ export class UsersManagementDialogFormComponent {
 	constructor(
 		public dialogRef: MatDialogRef<UsersManagementDialogFormComponent>,
 		private readonly _userService: UsersService,
-		private readonly _userCommunicationService: UserCommunicationService,
 		@Inject(MAT_DIALOG_DATA) public data: UserDto
 	) {
 	}
@@ -99,7 +92,6 @@ export class UsersManagementDialogFormComponent {
 		this._userService.save(user).subscribe({
 			next: (response) => {
 				this.dialogRef.close(response);
-				this._userCommunicationService.emitUserSaved();
 			},
 			error: (err) => {
 				console.error('Error saving user:', err);
@@ -108,7 +100,3 @@ export class UsersManagementDialogFormComponent {
 	}
 }
 
-export interface DialogData {
-	animal: string;
-	name: string;
-}

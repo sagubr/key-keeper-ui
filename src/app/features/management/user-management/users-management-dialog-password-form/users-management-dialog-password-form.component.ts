@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 
 /* Angular Material */
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DialogData } from '@app/features/management/user-management/users-management-dialog-form/users-management-dialog-form.component';
 
 /*Angular Material Modules */
 import { MatIconModule } from '@angular/material/icon';
@@ -18,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
+import { UserDto } from "@openapi/model/userDto";
 
 @Component({
   selector: 'app-users-management-dialog-password-form',
@@ -44,7 +44,7 @@ export class UsersManagementDialogPasswordFormComponent {
 
   constructor(
     public dialogRef: MatDialogRef<UsersManagementDialogPasswordFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: UserDto
   ) {}
 
   onNoClick(): void {

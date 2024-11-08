@@ -17,6 +17,9 @@ export interface UserDto {
     name?: string;
     password: string;
     username: string;
-    roles: Array<Roles>;
+    roles: Roles;
 }
+export namespace UserDto {
+}
+
 

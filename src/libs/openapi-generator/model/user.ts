@@ -14,14 +14,17 @@ import { Roles } from './roles';
 
 export interface User { 
     id?: string | null;
-    version?: number | null;
+    version?: number;
     active?: boolean;
     createdAt?: string;
     updatedAt?: string;
-    name?: string;
-    username?: string;
-    email?: string;
-    password?: string;
-    roles?: Array<Roles>;
+    name: string;
+    username: string;
+    email: string;
+    password: string;
+    roles: Roles;
 }
+export namespace User {
+}
+
 

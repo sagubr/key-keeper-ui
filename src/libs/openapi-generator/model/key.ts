@@ -9,16 +9,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Facility } from './facility';
+import { Location } from './location';
 
 
 export interface Key { 
     id?: string | null;
-    version?: number | null;
+    version?: number;
     active?: boolean;
     createdAt?: string;
     updatedAt?: string;
-    description?: string;
-    facility?: Facility | null;
+    description: string;
+    location: Location;
 }
 

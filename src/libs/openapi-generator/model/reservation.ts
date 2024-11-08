@@ -12,22 +12,22 @@
 import { Status } from './status';
 import { User } from './user';
 import { Permission } from './permission';
-import { Facility } from './facility';
+import { Location } from './location';
 
 
 export interface Reservation { 
     id?: string | null;
-    version?: number | null;
+    version?: number;
     active?: boolean;
     createdAt?: string;
     updatedAt?: string;
     permission?: Permission | null;
-    facility?: Facility | null;
+    location?: Location | null;
     user?: User | null;
     notes?: string;
-    startDateTime?: string;
-    endDateTime?: string;
-    status?: Status;
+    startDateTime: string;
+    endDateTime: string;
+    status: Status;
 }
 export namespace Reservation {
 }

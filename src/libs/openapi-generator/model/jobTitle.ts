@@ -13,10 +13,10 @@
 
 export interface JobTitle { 
     id?: string | null;
-    version?: number | null;
+    version?: number;
     active?: boolean;
     createdAt?: string;
     updatedAt?: string;
-    name?: string;
+    name: string;
 }
 

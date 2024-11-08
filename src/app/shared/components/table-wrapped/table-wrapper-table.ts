@@ -18,7 +18,7 @@ import {
 	MatTable,
 	MatTableModule,
 } from '@angular/material/table';
-import { NgForOf } from "@angular/common";
+import { DatePipe, NgForOf, NgIf } from "@angular/common";
 
 /**
  * Table component that accepts column and row definitions in its content to be registered to the
@@ -27,12 +27,8 @@ import { NgForOf } from "@angular/common";
 @Component({
 	selector: 'table-wrapper-table',
 	templateUrl: 'table-wrapper-table.html',
-	styles: `
-		table {
-			width: 100%;
-		}
-	`,
-	imports: [MatTableModule, MatSortModule, NgForOf],
+	styleUrl: 'table-wrapper-table.scss',
+	imports: [MatTableModule, MatSortModule, NgForOf, DatePipe, NgIf],
 	standalone: true
 })
 export class TableWrapperTable<T> implements AfterContentInit {
@@ -59,5 +55,6 @@ export class TableWrapperTable<T> implements AfterContentInit {
 export interface Columns {
 	columnDef: string;
 	header: string;
+	type: 'text' | 'number' | 'date';
 	cell: (element: any) => any;
 }

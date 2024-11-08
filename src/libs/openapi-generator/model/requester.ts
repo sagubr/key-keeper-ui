@@ -14,12 +14,12 @@ import { JobTitle } from './jobTitle';
 
 export interface Requester { 
     id?: string | null;
-    version?: number | null;
+    version?: number;
     active?: boolean;
     createdAt?: string;
     updatedAt?: string;
-    name?: string;
-    email?: string;
+    name: string;
+    email: string;
     register?: string;
     jobTitle?: JobTitle | null;
 }

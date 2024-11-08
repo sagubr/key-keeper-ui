@@ -13,7 +13,7 @@
 
 export interface EntityPattern { 
     id?: string | null;
-    version?: number | null;
+    version?: number;
     active?: boolean;
     createdAt?: string;
     updatedAt?: string;

@@ -2,12 +2,11 @@
 README.md
 api.module.ts
 api/api.ts
-api/environment.service.ts
-api/facilityType.service.ts
+api/jobTitle.service.ts
 api/keys.service.ts
+api/location.service.ts
+api/locationType.service.ts
 api/permissions.service.ts
-api/places.service.ts
-api/position.service.ts
 api/requesters.service.ts
 api/reservation.service.ts
 api/users.service.ts
@@ -17,10 +16,10 @@ git_push.sh
 index.ts
 model/entityPattern.ts
 model/facility.ts
-model/facilityType.ts
 model/jobTitle.ts
 model/key.ts
 model/location.ts
+model/locationType.ts
 model/models.ts
 model/permission.ts
 model/requester.ts

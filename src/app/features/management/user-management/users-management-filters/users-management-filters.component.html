@@ -7,23 +7,6 @@
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="spacer">
-            <mat-label>Ativos</mat-label>
-            <mat-select name="food">
-                <mat-option *ngFor="let food of foods" [value]="food.value">
-                    {{ food.viewValue }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="spacer">
-            <mat-label>Ordenar por</mat-label>
-            <mat-select name="food">
-                <mat-option *ngFor="let food of foods" [value]="food.value">
-                    {{ food.viewValue }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
         <button mat-raised-button class="button-add" aria-label="Adicionar" color="primary" type="button" (click)="openDialog()">
             <mat-icon>add_circle</mat-icon>
             <span>Adicionar</span>

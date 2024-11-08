@@ -11,20 +11,20 @@
  */
 import { Requester } from './requester';
 import { User } from './user';
-import { Facility } from './facility';
+import { Location } from './location';
 
 
 export interface Permission { 
     id?: string | null;
-    version?: number | null;
+    version?: number;
     active?: boolean;
     createdAt?: string;
     updatedAt?: string;
-    facility?: Facility | null;
-    requester?: Requester | null;
-    user?: User | null;
+    location: Location;
+    requester: Requester;
+    user: User;
     description?: string;
-    startDateTime?: string;
-    endDateTime?: string;
+    startDateTime: string;
+    endDateTime: string;
 }
 

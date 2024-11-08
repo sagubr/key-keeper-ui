@@ -10,6 +10,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 /*Custom Components*/
 import { UsersManagementComponent } from "@app/features/management/user-management/users-management.component";
+import {
+	LocationManagementComponent
+} from "@app/features/management/location-management/location-management.component";
 
 @Component({
 	selector: 'app-management',
@@ -21,6 +24,7 @@ import { UsersManagementComponent } from "@app/features/management/user-manageme
 		MatProgressBarModule,
 		RouterLink,
 		UsersManagementComponent,
+		LocationManagementComponent,
 	],
 	templateUrl: './management.component.html',
 	styleUrl: './management.component.scss',

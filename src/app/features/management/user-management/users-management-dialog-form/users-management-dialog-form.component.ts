@@ -68,7 +68,7 @@ export class UsersManagementDialogFormComponent {
 			name: this.form.get('name')?.value!,
 			password: this.form.get('password')?.value!,
 			username: this.form.get('username')?.value!,
-			roles: [this.form.get('roles')?.value! as Roles]
+			roles: this.form.get('roles')?.value! as Roles
 		}
 		this._save(user)
 	}

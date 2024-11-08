@@ -14,7 +14,6 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatProgressBar } from "@angular/material/progress-bar";
 import { MatSort } from "@angular/material/sort";
 import { Columns, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
-import { User } from "@openapi/model/user";
 import { Location } from "@openapi/model/location";
 import { finalize, Subscription } from "rxjs";
 import { LocationService } from "@openapi/api/location.service";
@@ -97,7 +96,7 @@ export class LocationManagementDatatableComponent implements OnInit, AfterViewIn
 
 	private _initializeData(): void {
 		this.loading = true;
-		this.locationService.findAll().pipe(finalize(() => this.loading = false))
+		this.locationService.findAllLocations().pipe(finalize(() => this.loading = false))
 			.subscribe({
 				next: (location) => {
 					this.dataSource.data = location;

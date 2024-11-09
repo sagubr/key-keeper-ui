@@ -1,0 +1,17 @@
+export * from './jobTitle.service';
+import { JobTitleService } from './jobTitle.service';
+export * from './keys.service';
+import { KeysService } from './keys.service';
+export * from './location.service';
+import { LocationService } from './location.service';
+export * from './locationType.service';
+import { LocationTypeService } from './locationType.service';
+export * from './permissions.service';
+import { PermissionsService } from './permissions.service';
+export * from './requesters.service';
+import { RequestersService } from './requesters.service';
+export * from './reservation.service';
+import { ReservationService } from './reservation.service';
+export * from './users.service';
+import { UsersService } from './users.service';
+export const APIS = [JobTitleService, KeysService, LocationService, LocationTypeService, PermissionsService, RequestersService, ReservationService, UsersService];

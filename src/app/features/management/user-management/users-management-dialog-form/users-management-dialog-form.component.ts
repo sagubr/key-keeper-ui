@@ -89,7 +89,7 @@ export class UsersManagementDialogFormComponent {
 	}
 
 	private _save(user: UserDto) {
-		this._userService.saveUser(user).subscribe({
+		this._userService.addUser(user).subscribe({
 			next: (response) => {
 				this.dialogRef.close(response);
 			},

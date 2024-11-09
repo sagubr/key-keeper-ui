@@ -2,10 +2,13 @@ table {
 	width: 100%;
 }
 
-.mat-mdc-row:nth-child(odd) {
-	background-color: #F7F6FE;
+
+.mat-mdc-row .mat-mdc-cell {
+	border-bottom: 1px solid transparent;
+	border-top: 1px solid transparent;
+	cursor: pointer;
 }
 
-.mat-mdc-row:nth-child(even) {
-	background-color: red;
+.mat-mdc-row:hover .mat-mdc-cell {
+	border-color: currentColor;
 }

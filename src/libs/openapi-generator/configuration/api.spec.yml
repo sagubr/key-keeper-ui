@@ -9,8 +9,6 @@ security:
 tags:
     - name: Requesters
       description: Operações relacionadas a entidade solicitantes
-    - name: Users
-      description: Operações relacionadas a entidade Usuário
     - name: Reservation
       description: Operações relacionadas a entidade reservas
     - name: Location
@@ -21,6 +19,8 @@ tags:
       description: Operações relacionadas a entidade Chaves
     - name: LocationType
       description: Operações relacionadas a entidade Tipos de Ambiente
+    - name: Users
+      description: Operações relacionadas a entidade Usuário
     - name: JobTitle
       description: Operações relacionadas a entidade cargo
 paths:
@@ -39,6 +39,41 @@ paths:
                                 type: array
                                 items:
                                     $ref: "#/components/schemas/JobTitle"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+    /api/job-title/save:
+        post:
+            tags:
+                - JobTitle
+            summary: Criar novo cargo
+            operationId: addJobTitle
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/JobTitle"
+                required: true
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/JobTitle"
                 "401":
                     description: Falha de autenticação
                 "403":
@@ -313,7 +348,7 @@ paths:
             tags:
                 - Users
             summary: Criar novo usuário
-            operationId: saveUser
+            operationId: addUser
             requestBody:
                 content:
                     application/json:

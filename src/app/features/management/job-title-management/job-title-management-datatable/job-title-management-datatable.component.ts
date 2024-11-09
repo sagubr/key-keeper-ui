@@ -17,6 +17,10 @@ import { MatIcon } from "@angular/material/icon";
 import { MatIconButton } from "@angular/material/button";
 import { MatMenu, MatMenuItem, MatMenuTrigger } from "@angular/material/menu";
 import { MatProgressBar } from "@angular/material/progress-bar";
+import {
+	JobTitleManagementDialogFormComponent
+} from "@app/features/management/job-title-management/job-title-management-dialog-form/job-title-management-dialog-form.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
 	selector: 'app-job-title-management-datatable',
@@ -77,7 +81,10 @@ export class JobTitleManagementDatatableComponent implements OnInit, AfterViewIn
 	loading: boolean = false;
 	private subscriptions: Subscription = new Subscription();
 
-	constructor(private readonly _jobTitleService: JobTitleService) {
+	constructor(
+		private readonly _jobTitleService: JobTitleService,
+		private dialog: MatDialog
+	) {
 	}
 
 	ngOnInit(): void {
@@ -104,6 +111,21 @@ export class JobTitleManagementDatatableComponent implements OnInit, AfterViewIn
 					console.error('Error fetching user data:', err);
 				}
 			});
+	}
+
+	openEditForm(data: JobTitle) {
+		const dialogRef = this.dialog.open(JobTitleManagementDialogFormComponent, {
+			data,
+			width: '540px'
+		});
+
+		dialogRef.afterClosed().subscribe({
+			next: (val) => {
+				if (val) {
+					this._initializeData();
+				}
+			}
+		});
 	}
 }
 

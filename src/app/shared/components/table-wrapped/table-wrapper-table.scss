@@ -1,3 +1,11 @@
 table {
 	width: 100%;
 }
+
+.mat-mdc-row:nth-child(odd) {
+	background-color: #F7F6FE;
+}
+
+.mat-mdc-row:nth-child(even) {
+	background-color: red;
+}

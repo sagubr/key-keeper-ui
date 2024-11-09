@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
 
 /**Angular Material */
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSort } from "@angular/material/sort";
 
 /**Angular Material Modules */
@@ -14,14 +14,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
-import { MatDialogModule } from '@angular/material/dialog';
 
 /**Custom Components */
 import { UsersService } from '@openapi/api/users.service';
-import { UsersManagementDialogPasswordFormComponent } from '@app/features/management/user-management/users-management-dialog-password-form/users-management-dialog-password-form.component';
+import {
+	UsersManagementDialogPasswordFormComponent
+} from '@app/features/management/user-management/users-management-dialog-password-form/users-management-dialog-password-form.component';
 import { User } from "@openapi/model/user";
-import { Columns, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
+import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
 
 @Component({
 	selector: 'app-users-management-datatable',
@@ -47,15 +47,15 @@ export class UsersManagementDatatableComponent implements OnInit, AfterViewInit,
 	@ViewChild(MatSort) sort!: MatSort;
 
 	dataSource: MatTableDataSource<User> = new MatTableDataSource<User>([]);
-	columns: Columns[] = [
-		{ columnDef: 'name', header: 'Name', type: 'text', cell: (user: User) => user.name },
-		{ columnDef: 'username', header: 'Username', type: 'text', cell: (user: User) => user.username },
-		{ columnDef: 'email', header: 'Email', type: 'text', cell: (user: User) => user.email },
-		{ columnDef: 'active', header: 'Ativo', type: 'text', cell: (user: User) => user.active ? 'Sim' : 'Não' },
-		{ columnDef: 'created_at', header: 'Criado em', type: 'date', cell: (user: User) => user.createdAt },
-		{ columnDef: 'updated_at', header: 'Atualizado em', type: 'date', cell: (user: User) => user.updatedAt },
+	columns: Columns<User>[] = [
+		{ definition: 'name', header: 'Name', type: ColumnType.TEXT, cell: (user: User) => user.name },
+		{ definition: 'username', header: 'Username', type: ColumnType.TEXT, cell: (user: User) => user.username },
+		{ definition: 'email', header: 'Email', type: ColumnType.TEXT, cell: (user: User) => user.email },
+		{ definition: 'active', header: 'Ativo', type: ColumnType.TEXT, cell: (user: User) => user.active ? 'Sim' : 'Não' },
+		{ definition: 'created_at', header: 'Criado em', type: ColumnType.DATE, cell: (user: User) => user.createdAt },
+		{ definition: 'updated_at', header: 'Atualizado em', type: ColumnType.DATE, cell: (user: User) => user.updatedAt },
 	];
-	displayedColumns: string[] = [...this.columns.map(c => c.columnDef), 'star'];
+	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'star'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
 
 	loading: boolean = false;

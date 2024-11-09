@@ -13,6 +13,9 @@ import { UsersManagementComponent } from "@app/features/management/user-manageme
 import {
 	LocationManagementComponent
 } from "@app/features/management/location-management/location-management.component";
+import {
+	JobTitleManagementComponent
+} from "@app/features/management/job-title-management/job-title-management.component";
 
 @Component({
 	selector: 'app-management',
@@ -25,6 +28,7 @@ import {
 		RouterLink,
 		UsersManagementComponent,
 		LocationManagementComponent,
+		JobTitleManagementComponent,
 	],
 	templateUrl: './management.component.html',
 	styleUrl: './management.component.scss',

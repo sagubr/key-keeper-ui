@@ -18,7 +18,7 @@ import {
 	MatTable,
 	MatTableModule,
 } from '@angular/material/table';
-import { DatePipe, NgForOf, NgIf } from "@angular/common";
+import { CurrencyPipe, DatePipe, NgForOf, NgIf, UpperCasePipe } from "@angular/common";
 
 /**
  * Table component that accepts column and row definitions in its content to be registered to the
@@ -28,7 +28,7 @@ import { DatePipe, NgForOf, NgIf } from "@angular/common";
 	selector: 'table-wrapper-table',
 	templateUrl: 'table-wrapper-table.html',
 	styleUrl: 'table-wrapper-table.scss',
-	imports: [MatTableModule, MatSortModule, NgForOf, DatePipe, NgIf],
+	imports: [MatTableModule, MatSortModule, NgForOf, DatePipe, NgIf, UpperCasePipe, CurrencyPipe],
 	standalone: true
 })
 export class TableWrapperTable<T> implements AfterContentInit {
@@ -41,7 +41,7 @@ export class TableWrapperTable<T> implements AfterContentInit {
 	@ViewChild(MatTable, { static: true }) table!: MatTable<T>;
 	@ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-	readonly columns: InputSignal<Columns[]> = input.required<Columns[]>();
+	readonly columns: InputSignal<Columns<T>[]> = input.required<Columns<T>[]>();
 	readonly dataSource: InputSignal<DataSource<T>> = input.required<DataSource<T>>();
 
 	ngAfterContentInit() {
@@ -50,11 +50,19 @@ export class TableWrapperTable<T> implements AfterContentInit {
 		this.headerRowDefs.forEach(headerRowDef => this.table.addHeaderRowDef(headerRowDef));
 		this.table.setNoDataRow(this.noDataRow);
 	}
+
+	protected readonly ColumnType = ColumnType;
 }
 
-export interface Columns {
-	columnDef: string;
+export interface Columns<T> {
+	definition: string;
+	type: ColumnType;
 	header: string;
-	type: 'text' | 'number' | 'date';
-	cell: (element: any) => any;
+	cell: (element: T) => any;
+}
+
+export enum ColumnType {
+	TEXT = 'TEXT',
+	DATE = 'DATE',
+	MONEY = 'MONEY',
 }

@@ -13,17 +13,48 @@ tags:
       description: Operações relacionadas a entidade Usuário
     - name: Reservation
       description: Operações relacionadas a entidade reservas
-    - name: JobTitle
-      description: Operações relacionadas a entidade cargo
     - name: Location
       description: Operações relacionadas à entidade Localização
     - name: Permissions
       description: Operações relacionadas a entidade Permissão
-    - name: LocationType
-      description: Operações relacionadas a entidade Tipos de Ambiente
     - name: Keys
       description: Operações relacionadas a entidade Chaves
+    - name: LocationType
+      description: Operações relacionadas a entidade Tipos de Ambiente
+    - name: JobTitle
+      description: Operações relacionadas a entidade cargo
 paths:
+    /api/job-title:
+        get:
+            tags:
+                - JobTitle
+            summary: Obter todos os cargos
+            operationId: findAllJobTitle
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/JobTitle"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
     /api/keys:
         get:
             tags:
@@ -86,40 +117,6 @@ paths:
                     content:
                         application/json:
                             schema: {}
-        post:
-            tags:
-                - Location
-            summary: Criar um novo ambiente
-            operationId: createEnvironment
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Location"
-                required: true
-            responses:
-                "200":
-                    description: Operação bem sucedida
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Location"
-                "401":
-                    description: Falha de autenticação
-                "403":
-                    description: Acesso não autorizado
-                "404":
-                    description: Recurso não encontrado
-                "422":
-                    description: Erro de validação
-                    content:
-                        application/json:
-                            schema: {}
-                "500":
-                    description: Erro
-                    content:
-                        application/json:
-                            schema: {}
     /api/location-type:
         get:
             tags:
@@ -156,7 +153,7 @@ paths:
             tags:
                 - Location
             summary: Obter detalhes de um ambiente por ID
-            operationId: getEnvironmentById
+            operationId: findByIdLocation
             parameters:
                 - name: id
                   in: path
@@ -171,37 +168,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Location"
-                "401":
-                    description: Falha de autenticação
-                "403":
-                    description: Acesso não autorizado
-                "404":
-                    description: Recurso não encontrado
-                "422":
-                    description: Erro de validação
-                    content:
-                        application/json:
-                            schema: {}
-                "500":
-                    description: Erro
-                    content:
-                        application/json:
-                            schema: {}
-        delete:
-            tags:
-                - Location
-            summary: Remover um ambiente por ID
-            operationId: deleteEnvironment
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                      type: string
-                      format: uuid
-            responses:
-                "200":
-                    description: Operação bem sucedida
                 "401":
                     description: Falha de autenticação
                 "403":
@@ -233,37 +199,6 @@ paths:
                                 type: array
                                 items:
                                     $ref: "#/components/schemas/Permission"
-                "401":
-                    description: Falha de autenticação
-                "403":
-                    description: Acesso não autorizado
-                "404":
-                    description: Recurso não encontrado
-                "422":
-                    description: Erro de validação
-                    content:
-                        application/json:
-                            schema: {}
-                "500":
-                    description: Erro
-                    content:
-                        application/json:
-                            schema: {}
-    /api/positions:
-        get:
-            tags:
-                - JobTitle
-            summary: Obter todos os cargos
-            operationId: getAllPositions
-            responses:
-                "200":
-                    description: Operação bem sucedida
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    $ref: "#/components/schemas/JobTitle"
                 "401":
                     description: Falha de autenticação
                 "403":

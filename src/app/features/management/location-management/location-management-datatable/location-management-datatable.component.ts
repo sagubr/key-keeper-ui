@@ -3,9 +3,14 @@ import {
 	MatCell,
 	MatCellDef,
 	MatColumnDef,
-	MatHeaderCell, MatHeaderCellDef,
+	MatHeaderCell,
+	MatHeaderCellDef,
 	MatHeaderRow,
-	MatHeaderRowDef, MatNoDataRow, MatRow, MatRowDef, MatTableDataSource
+	MatHeaderRowDef,
+	MatNoDataRow,
+	MatRow,
+	MatRowDef,
+	MatTableDataSource
 } from "@angular/material/table";
 import { MatIcon } from "@angular/material/icon";
 import { MatIconButton } from "@angular/material/button";
@@ -13,7 +18,7 @@ import { MatMenu, MatMenuItem, MatMenuTrigger } from "@angular/material/menu";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatProgressBar } from "@angular/material/progress-bar";
 import { MatSort } from "@angular/material/sort";
-import { Columns, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
+import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
 import { Location } from "@openapi/model/location";
 import { finalize, Subscription } from "rxjs";
 import { LocationService } from "@openapi/api/location.service";
@@ -51,28 +56,39 @@ export class LocationManagementDatatableComponent implements OnInit, AfterViewIn
 	@ViewChild(MatSort) sort!: MatSort;
 
 	dataSource: MatTableDataSource<Location> = new MatTableDataSource<Location>([]);
-	columns: Columns[] = [
-		{ columnDef: 'name', header: 'Name', type: 'text', cell: (location: Location) => location.name },
+	columns: Columns<Location>[] = [
 		{
-			columnDef: 'facility',
+			definition: 'name',
+			header: 'Name',
+			type: ColumnType.TEXT,
+			cell: (location: Location) => location.name
+		},
+		{
+			definition: 'facility',
 			header: 'Instalação',
-			type: 'text',
+			type: ColumnType.TEXT,
 			cell: (location: Location) => location.facility.name
 		},
 		{
-			columnDef: 'locationType',
+			definition: 'locationType',
 			header: 'Tipo de Local',
-			type: 'text',
+			type: ColumnType.TEXT,
 			cell: (location: Location) => location.locationType.name
 		},
 		{
-			columnDef: 'active',
+			definition: 'active',
 			header: 'Ativo',
-			type: 'text',
+			type: ColumnType.TEXT,
 			cell: (location: Location) => location.active ? 'Yes' : 'No'
 		},
+		{
+			definition: 'create_at',
+			header: 'Criado em',
+			type: ColumnType.DATE,
+			cell: (location: Location) => location.createdAt
+		},
 	];
-	displayedColumns: string[] = [...this.columns.map(c => c.columnDef), 'star'];
+	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'star'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
 
 	loading: boolean = false;

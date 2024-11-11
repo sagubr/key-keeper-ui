@@ -5,11 +5,11 @@ import { ManagementComponent } from './features/management/management.component'
 import { AuthenticationGuard } from './core/guards/authentication.guard';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  {
-    path: 'manager',
-    component: ManagementComponent,
-    canActivate: [AuthenticationGuard],
-  },
+	{ path: 'login', component: LoginComponent },
+	{ path: '', redirectTo: 'login', pathMatch: 'full' },
+	{
+		path: 'manager',
+		component: ManagementComponent,
+		// canActivate: [AuthenticationGuard], //TODO: Reativar segurança da rota
+	},
 ];

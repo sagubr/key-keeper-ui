@@ -1,53 +1,53 @@
 .app-forms-style {
 
-  $font-size-label: 1rem;
-  $input-padding: 4px;
-  $button-margin: 8px;
-  $input-background-color: #f0f0f0;
+	$font-size-label: 1rem;
+	$input-padding: 4px;
+	$button-margin: 8px;
+	$input-background-color: #f0f0f0;
 
-  form {
-    display: grid;
-    gap: 1rem;
-  }
+	form {
+		display: grid;
+		gap: 1rem;
+	}
 
-  .content {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
+	.content {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
 
-  .row {
-    display: flex;
-    flex-direction: column;
-  }
+	.row {
+		display: flex;
+		flex-direction: column;
+	}
 
-  mat-form-field {
-    width: 100%;
-  }
+	mat-form-field {
+		width: 100%;
+	}
 
-  input[matInput] {
-    font-size: 1rem;
-  }
+	input[matInput] {
+		font-size: 1rem;
+	}
 
-  mat-radio-group {
-    flex-direction: row;
-  }
+	mat-radio-group {
+		flex-direction: row;
+	}
 
-  mat-radio-button {
-    font-size: 1rem;
-  }
+	mat-radio-button {
+		font-size: 1rem;
+	}
 
-  mat-dialog-actions {
-    padding: 20px 24px;
-  }
+	mat-dialog-actions {
+		padding: 20px 24px;
+	}
 
-  button[type="submit"] {
-    background-color: #4caf50;
-    color: white;
-  }
+	button[type="submit"] {
+		background-color: #4caf50;
+		color: white;
+	}
 
-  mat-hint {
-    font-size: 12px;
-    color: #888;
-  }
+	mat-hint {
+		font-size: 12px;
+		color: #888;
+	}
 }

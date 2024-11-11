@@ -10,3 +10,24 @@ body {
 	margin: 0;
 	font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+
+/**
+ * Sobreescrevendo estilos globais do Angular Material v17
+ */
+
+$white: #FFF;
+
+mat-tab-group {
+	background-color: $white;
+}
+
+mat-toolbar {
+	background-color: $white;
+}
+
+mat-toolbar-row {
+	background-color: $white;
+	align-items: center;
+	vertical-align: middle;
+}

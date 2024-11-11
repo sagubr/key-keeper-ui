@@ -1,20 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { JobTitleService } from "@openapi/api/jobTitle.service";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatRadioModule } from "@angular/material/radio";
-import { JobTitle } from "@openapi/model/jobTitle";
-import {
-	DateAdapter,
-	MAT_DATE_FORMATS,
-	MAT_NATIVE_DATE_FORMATS,
-	MatNativeDateModule,
-	NativeDateAdapter
-} from "@angular/material/core";
+import { MatNativeDateModule } from "@angular/material/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
+import { JobTitle } from "@openapi/model/jobTitle";
+import { JobTitleService } from "@openapi/api/jobTitle.service";
 
 @Component({
 	selector: 'app-job-title-management-dialog-form',
@@ -28,10 +22,6 @@ import { MatInputModule } from "@angular/material/input";
 		MatButtonModule,
 		MatRadioModule,
 		MatDialogModule
-	],
-	providers: [
-		{ provide: DateAdapter, useClass: NativeDateAdapter },
-		{ provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS },
 	],
 	templateUrl: './job-title-management-dialog-form.component.html',
 	styleUrl: './job-title-management-dialog-form.component.scss'
@@ -48,16 +38,11 @@ export class JobTitleManagementDialogFormComponent implements OnInit {
 	) {
 		this.form = this.formBuilder.group({
 			name: ['', Validators.required],
-			createdAt: ['', Validators.required],
-			updatedAt: ['', Validators.required],
-			active: ['', Validators.required],
 		});
 	}
 
 	ngOnInit(): void {
 		this.form.patchValue(this.data);
-		console.log(this.form.value);
-		console.log(this.data)
 	}
 
 	onSubmit(): void {

@@ -4,12 +4,16 @@ import {AuthenticationService} from '@app/core/services/authentication.service';
 
 @Injectable()
 export class CustomConfiguration extends Configuration {
+
+	//TODO: Solução temporária para teste em ambiente Vercel
     constructor(private readonly _injector: Injector) {
-        super({
-            credentials: {
-                Authorization: () => this._getAccessToken(),
-            },
-        });
+        super(
+			// 	{
+			//     credentials: {
+			//         Authorization: () => this._getAccessToken(),
+			//     },
+			// }
+		);
     }
 
     private _getAuthenticationService(): AuthenticationService {

@@ -4,9 +4,9 @@ import { finalize, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 /**Angular Material */
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from "@angular/material/sort";
 
 /**Angular Material Modules */
@@ -14,6 +14,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 /**Custom Components */
 import { UsersService } from '@openapi/api/users.service';
@@ -22,6 +25,11 @@ import {
 } from '@app/features/management/user-management/users-management-dialog-password-form/users-management-dialog-password-form.component';
 import { User } from "@openapi/model/user";
 import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
+import { UserDto } from "@openapi/model/userDto";
+import {
+	UsersManagementDialogFormComponent
+} from "@app/features/management/user-management/users-management-dialog-form/users-management-dialog-form.component";
+import { UsersManagementService } from "@app/features/management/user-management/users-management.service";
 
 @Component({
 	selector: 'app-users-management-datatable',
@@ -48,14 +56,38 @@ export class UsersManagementDatatableComponent implements OnInit, AfterViewInit,
 
 	dataSource: MatTableDataSource<User> = new MatTableDataSource<User>([]);
 	columns: Columns<User>[] = [
-		{ definition: 'name', header: 'Name', type: ColumnType.TEXT, cell: (user: User) => user.name },
-		{ definition: 'username', header: 'Username', type: ColumnType.TEXT, cell: (user: User) => user.username },
-		{ definition: 'email', header: 'Email', type: ColumnType.TEXT, cell: (user: User) => user.email },
-		{ definition: 'active', header: 'Ativo', type: ColumnType.TEXT, cell: (user: User) => user.active ? 'Sim' : 'Não' },
-		{ definition: 'created_at', header: 'Criado em', type: ColumnType.DATE, cell: (user: User) => user.createdAt },
-		{ definition: 'updated_at', header: 'Atualizado em', type: ColumnType.DATE, cell: (user: User) => user.updatedAt },
+		{
+			definition: 'name',
+			header: 'Name',
+			type: ColumnType.TEXT,
+			cell: (user: User) => user.name
+		},
+		{
+			definition: 'username',
+			header: 'Username',
+			type: ColumnType.TEXT,
+			cell: (user: User) => user.username
+		},
+		{
+			definition: 'email',
+			header: 'Email',
+			type: ColumnType.TEXT,
+			cell: (user: User) => user.email
+		},
+		{
+			definition: 'created_at',
+			header: 'Criado em',
+			type: ColumnType.DATE,
+			cell: (user: User) => user.createdAt
+		},
+		{
+			definition: 'updated_at',
+			header: 'Atualizado em',
+			type: ColumnType.DATE,
+			cell: (user: User) => user.updatedAt
+		},
 	];
-	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'star'];
+	displayedColumns: string[] = ['info', ...this.columns.map(c => c.definition), 'star'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
 
 	loading: boolean = false;
@@ -63,12 +95,15 @@ export class UsersManagementDatatableComponent implements OnInit, AfterViewInit,
 
 	constructor(
 		private usersService: UsersService,
+		private usersManagementService: UsersManagementService,
 		private dialog: MatDialog,
 	) {
 	}
 
 	ngOnInit(): void {
-		this._findAllUsers();
+		this.findAll();
+		this.onSearch();
+		this.onReload();
 	}
 
 	ngAfterViewInit(): void {
@@ -86,7 +121,22 @@ export class UsersManagementDatatableComponent implements OnInit, AfterViewInit,
 		});
 	}
 
-	private _findAllUsers(): void {
+	openEditDialog(data: UserDto) {
+		const dialogRef = this.dialog.open(UsersManagementDialogFormComponent, {
+			data,
+			width: '540px'
+		});
+
+		dialogRef.afterClosed().subscribe({
+			next: (val) => {
+				if (val) {
+					this.findAll();
+				}
+			}
+		});
+	}
+
+	private findAll(): void {
 		this.loading = true;
 		this.usersService.findAllUsers()
 			.pipe(
@@ -99,6 +149,19 @@ export class UsersManagementDatatableComponent implements OnInit, AfterViewInit,
 				console.error('Error fetching user data:', err);
 			}
 		});
+	}
+
+	private onSearch(): void {
+		this.subscriptions = this.usersManagementService.search$.subscribe(
+			(event) => {
+				this.dataSource.filter = event.trim().toLowerCase();
+			});
+	}
+
+	private onReload(): void {
+		this.subscriptions = this.usersManagementService.reload$.subscribe(() => {
+			this.findAll();
+		})
 	}
 
 }

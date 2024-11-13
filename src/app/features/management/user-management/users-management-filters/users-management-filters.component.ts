@@ -17,7 +17,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import {
 	UsersManagementDialogFormComponent
 } from '@app/features/management/user-management/users-management-dialog-form/users-management-dialog-form.component';
-import { UserFilterService } from './users-filters.service';
+import { UsersManagementService } from '../users-management.service';
 import { MatToolbarModule } from "@angular/material/toolbar";
 
 @Component({
@@ -38,18 +38,10 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 	styleUrl: './users-management-filters.component.scss',
 })
 export class UsersManagementFiltersComponent {
-  foods: Food[] = [
-    { value: 'steak-0', viewValue: 'Steak' },
-    { value: 'pizza-1', viewValue: 'Pizza' },
-    { value: 'tacos-2', viewValue: 'Tacos' },
-  ];
-
-  animal: string = '';
-  name: string = '';
 
 	constructor(
 		public dialog: MatDialog,
-		private filterService: UserFilterService
+		private usersManagementService: UsersManagementService
 	) {
 	}
 
@@ -58,18 +50,18 @@ export class UsersManagementFiltersComponent {
 			data: {},
 		});
 
-		dialogRef.afterClosed().subscribe((result) => {
-			console.log("closed")
+		dialogRef.afterClosed().subscribe(() => {
+			this.onReload();
 		});
 	}
 
 	onSearch(event: Event) {
 		const value = (event.target as HTMLInputElement).value;
-		this.filterService.setFilter(value);
+		this.usersManagementService.onSearch(value);
 	}
-}
 
-export interface Food {
-	value: string;
-	viewValue: string;
+	onReload(): void {
+		this.usersManagementService.onReload();
+	}
+
 }

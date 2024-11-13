@@ -21,6 +21,7 @@ import {
 	JobTitleManagementDialogFormComponent
 } from "@app/features/management/job-title-management/job-title-management-dialog-form/job-title-management-dialog-form.component";
 import { MatDialog } from "@angular/material/dialog";
+import { JobTitleManagementService } from "@app/features/management/job-title-management/job-title-management.service";
 
 @Component({
 	selector: 'app-job-title-management-datatable',
@@ -82,13 +83,16 @@ export class JobTitleManagementDatatableComponent implements OnInit, AfterViewIn
 	private subscriptions: Subscription = new Subscription();
 
 	constructor(
-		private readonly _jobTitleService: JobTitleService,
+		private readonly jobTitleService: JobTitleService,
+		private readonly jobTitleManagementService: JobTitleManagementService,
 		private dialog: MatDialog
 	) {
 	}
 
 	ngOnInit(): void {
-		this._initializeData();
+		this.findAll();
+		this.onSearch();
+		this.onReload();
 	}
 
 	ngAfterViewInit(): void {
@@ -100,20 +104,7 @@ export class JobTitleManagementDatatableComponent implements OnInit, AfterViewIn
 		this.subscriptions.unsubscribe();
 	}
 
-	private _initializeData(): void {
-		this.loading = true;
-		this._jobTitleService.findAllJobTitle().pipe(finalize(() => this.loading = false))
-			.subscribe({
-				next: (JobTitle) => {
-					this.dataSource.data = JobTitle;
-				},
-				error: (err) => {
-					console.error('Error fetching user data:', err);
-				}
-			});
-	}
-
-	openEditForm(data: JobTitle) {
+	openEditDialog(data: JobTitle) {
 		const dialogRef = this.dialog.open(JobTitleManagementDialogFormComponent, {
 			data,
 			width: '540px'
@@ -122,10 +113,38 @@ export class JobTitleManagementDatatableComponent implements OnInit, AfterViewIn
 		dialogRef.afterClosed().subscribe({
 			next: (val) => {
 				if (val) {
-					this._initializeData();
+					this.findAll();
 				}
 			}
 		});
 	}
+
+	private findAll(): void {
+		this.loading = true;
+		this.jobTitleService
+			.findAllJobTitle()
+			.pipe(finalize(
+				() => this.loading = false
+			))
+			.subscribe({
+				next: (JobTitle) => {
+					this.dataSource.data = JobTitle;
+				}
+			});
+	}
+
+	private onSearch(): void {
+		this.subscriptions = this.jobTitleManagementService.search$.subscribe(
+			(event) => {
+				this.dataSource.filter = event.trim().toLowerCase();
+			});
+	}
+
+	private onReload(): void {
+		this.subscriptions = this.jobTitleManagementService.reload$.subscribe(() => {
+			this.findAll();
+		})
+	}
+
 }
 

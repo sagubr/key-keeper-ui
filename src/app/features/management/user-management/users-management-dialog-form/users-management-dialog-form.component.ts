@@ -1,10 +1,16 @@
 /*Angular Core*/
-import { Component, Inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 /*Angular Material*/
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+	MAT_DIALOG_DATA,
+	MatDialogActions, MatDialogClose,
+	MatDialogContent, MatDialogModule,
+	MatDialogRef,
+	MatDialogTitle
+} from '@angular/material/dialog';
 
 /*Angular Material Modules*/
 import { MatIconModule } from '@angular/material/icon';
@@ -18,6 +24,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { UsersService } from "@openapi/api/users.service";
 import { UserDto } from "@openapi/model/userDto";
 import { Roles } from "@openapi/model/roles";
+import { JobTitleService } from "@openapi/api/jobTitle.service";
+import { JobTitle } from "@openapi/model/jobTitle";
 
 @Component({
 	selector: 'app-users-management-dialog-form',
@@ -31,46 +39,30 @@ import { Roles } from "@openapi/model/roles";
 		MatRadioModule,
 		ReactiveFormsModule,
 		ClipboardModule,
+		MatDialogModule,
 	],
 	templateUrl: './users-management-dialog-form.component.html',
 	styleUrl: './users-management-dialog-form.component.scss',
 })
-export class UsersManagementDialogFormComponent {
-
-	form = new FormGroup({
-		name: new FormControl('', [Validators.required]),
-		username: new FormControl('', [Validators.required]),
-		email: new FormControl('', [Validators.required, Validators.email]),
-		password: new FormControl('', [Validators.required]),
-		repeatPassword: new FormControl('', [Validators.required]),
-		roles: new FormControl('', [Validators.required]),
-		active: new FormControl(true),
-	});
+export class UsersManagementDialogFormComponent implements OnInit {
 
 	protected readonly Roles = Roles;
 
 	hide = true;
 
+	form!: FormGroup;
+
 	constructor(
 		public dialogRef: MatDialogRef<UsersManagementDialogFormComponent>,
-		private readonly _userService: UsersService,
-		@Inject(MAT_DIALOG_DATA) public data: UserDto
+		private readonly userService: UsersService,
+		private readonly formBuilder: FormBuilder,
+		@Inject(MAT_DIALOG_DATA) public data: UserDto,
 	) {
+		this.buildFormGroup();
 	}
 
-	onNoClick(): void {
-		this.dialogRef.close();
-	}
-
-	onClick(): void {
-		const user: UserDto = {
-			email: this.form.get('email')?.value!,
-			name: this.form.get('name')?.value!,
-			password: this.form.get('password')?.value!,
-			username: this.form.get('username')?.value!,
-			roles: this.form.get('roles')?.value! as Roles
-		}
-		this._save(user)
+	ngOnInit(): void {
+		this.form.patchValue(this.data);
 	}
 
 	getErrorMessage() {
@@ -88,15 +80,46 @@ export class UsersManagementDialogFormComponent {
 		return !(password === repeatPassword);
 	}
 
-	private _save(user: UserDto) {
-		this._userService.addUser(user).subscribe({
-			next: (response) => {
-				this.dialogRef.close(response);
-			},
-			error: (err) => {
-				console.error('Error saving user:', err);
-			}
+	onSubmit(): void {
+		this.validateForm()
+
+		if (this.data) {
+			this.userService.addUser(this.form.value).subscribe({
+				next: () => {
+					this.form.reset();
+					this.dialogRef.close(true);
+				},
+				error: (err: any) => {
+					console.error(err);
+					alert("Error while adding the employee!");
+				},
+			});
+		}
+	}
+
+	get validateForm1(): boolean{
+		return this.form.valid;
+	}
+
+	private validateForm(): void {
+		if (this.form.valid) {
+			return;
+		}
+		this.form.markAllAsTouched();
+		throw new Error();
+	}
+
+	private buildFormGroup(): void {
+		this.form = this.formBuilder.group({
+			name: ['', Validators.required],
+			username: ['', Validators.required],
+			email: ['', [Validators.required, Validators.email]],
+			password: ['', Validators.required],
+			repeatPassword: ['', Validators.required],
+			roles: ['', Validators.required],
+			active: [],
 		});
 	}
+
 }
 

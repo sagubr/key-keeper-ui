@@ -22,6 +22,17 @@ import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/t
 import { Location } from "@openapi/model/location";
 import { finalize, Subscription } from "rxjs";
 import { LocationService } from "@openapi/api/location.service";
+import { UsersService } from "@openapi/api/users.service";
+import { UsersManagementService } from "@app/features/management/user-management/users-management.service";
+import { MatDialog } from "@angular/material/dialog";
+import { User } from "@openapi/model/user";
+import {
+	UsersManagementDialogPasswordFormComponent
+} from "@app/features/management/user-management/users-management-dialog-password-form/users-management-dialog-password-form.component";
+import { UserDto } from "@openapi/model/userDto";
+import {
+	UsersManagementDialogFormComponent
+} from "@app/features/management/user-management/users-management-dialog-form/users-management-dialog-form.component";
 
 @Component({
 	selector: 'app-location-datatable',
@@ -88,17 +99,23 @@ export class LocationManagementDatatableComponent implements OnInit, AfterViewIn
 			cell: (location: Location) => location.createdAt
 		},
 	];
-	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'star'];
+	displayedColumns: string[] = ['info', ...this.columns.map(c => c.definition), 'star'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
 
 	loading: boolean = false;
 	private subscriptions: Subscription = new Subscription();
 
-	constructor(private readonly locationService: LocationService) {
+	constructor(
+		private locationService: LocationService,
+		//private usersManagementService: UsersManagementService,
+		private dialog: MatDialog,
+	) {
 	}
 
 	ngOnInit(): void {
-		this._initializeData();
+		this.findAll();
+		// this.onSearch();
+		// this.onReload();
 	}
 
 	ngAfterViewInit(): void {
@@ -110,16 +127,43 @@ export class LocationManagementDatatableComponent implements OnInit, AfterViewIn
 		this.subscriptions.unsubscribe();
 	}
 
-	private _initializeData(): void {
-		this.loading = true;
-		this.locationService.findAllLocations().pipe(finalize(() => this.loading = false))
-			.subscribe({
-				next: (location) => {
-					this.dataSource.data = location;
-				},
-				error: (err) => {
-					console.error('Error fetching user data:', err);
+	openEditDialog(data: UserDto) {
+		const dialogRef = this.dialog.open(UsersManagementDialogFormComponent, {
+			data,
+			width: '540px'
+		});
+
+		dialogRef.afterClosed().subscribe({
+			next: (val) => {
+				if (val) {
+					this.findAll();
 				}
-			});
+			}
+		});
 	}
+
+	private findAll(): void {
+		this.loading = true;
+		this.locationService.findAllLocations()
+			.pipe(
+				finalize(() => this.loading = false)
+			).subscribe({
+			next: (locations) => {
+				this.dataSource.data = locations;
+			}
+		});
+	}
+
+	// private onSearch(): void {
+	// 	this.subscriptions = this.usersManagementService.search$.subscribe(
+	// 		(event) => {
+	// 			this.dataSource.filter = event.trim().toLowerCase();
+	// 		});
+	// }
+	//
+	// private onReload(): void {
+	// 	this.subscriptions = this.usersManagementService.reload$.subscribe(() => {
+	// 		this.findAll();
+	// 	})
+	// }
 }

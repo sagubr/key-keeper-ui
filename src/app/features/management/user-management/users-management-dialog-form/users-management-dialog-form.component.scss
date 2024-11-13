@@ -1,48 +1,41 @@
+@import '../../../../shared/styles/forms';
+
 $black: #080a0b;
 
 .container {
-  margin: 16px;
+	margin: 16px;
 }
 
 .form-container {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .row {
-  display: flex;
-  margin-bottom: 16px;
-}
-
-.two-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.full-width {
-  width: 100%;
+	display: flex;
+	margin-bottom: 16px;
 }
 
 .dialog-header {
-  display: flex;
-  button {
-    margin-left: auto;
-  }
+	display: flex;
+
+	button {
+		margin-left: auto;
+	}
 }
 
 .title {
-  font-weight: bold;
-  font-size: 1.4rem;
-  color: $black;
+	font-weight: bold;
+	font-size: 1.4rem;
+	color: $black;
 }
 
 .subtitle {
-  font-weight: bold;
-  font-size: 1.2rem;
-  color: $black;
+	font-weight: bold;
+	font-size: 1.2rem;
+	color: $black;
 }
 
 .dialog-footer {
-  margin: 16px;
+	margin: 16px;
 }

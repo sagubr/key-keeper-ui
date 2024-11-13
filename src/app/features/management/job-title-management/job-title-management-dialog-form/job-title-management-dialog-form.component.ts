@@ -28,7 +28,7 @@ import { JobTitleService } from "@openapi/api/jobTitle.service";
 })
 export class JobTitleManagementDialogFormComponent implements OnInit {
 
-	form: FormGroup;
+	form!: FormGroup;
 
 	constructor(
 		private readonly jobTitleService: JobTitleService,
@@ -36,13 +36,11 @@ export class JobTitleManagementDialogFormComponent implements OnInit {
 		private readonly formBuilder: FormBuilder,
 		@Inject(MAT_DIALOG_DATA) public data: JobTitle,
 	) {
-		this.form = this.formBuilder.group({
-			name: ['', Validators.required],
-		});
+		this.buildFormGroup();
 	}
 
 	ngOnInit(): void {
-		this.form.patchValue(this.data);
+		this.form?.patchValue(this.data);
 	}
 
 	onSubmit(): void {
@@ -61,15 +59,20 @@ export class JobTitleManagementDialogFormComponent implements OnInit {
 				},
 			});
 		}
-
 	}
 
-	validateForm(): void {
+	private validateForm(): void {
 		if (this.form.valid) {
 			return;
 		}
 		this.form.markAllAsTouched();
 		throw new Error();
+	}
+
+	private buildFormGroup(): void {
+		this.form = this.formBuilder.group({
+			name: ['', Validators.required],
+		});
 	}
 
 }

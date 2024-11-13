@@ -1,12 +1,25 @@
 <div tabindex="0" class="full-width">
 
-	<mat-progress-bar mode="query"></mat-progress-bar>
+	@if (loading) {
+		<mat-progress-bar mode="query"></mat-progress-bar>
+	}
 
 	<div class="container mat-elevation-z8">
 		<div class="mat-table-container">
 			<div class="table-wrapper">
 				<table-wrapper-table [dataSource]="dataSource" [columns]="columns"
 									 matSort #sort="matSort">
+
+					<ng-container matColumnDef="info">
+						<th mat-header-cell *matHeaderCellDef>Status</th>
+						<td mat-cell *matCellDef="let element">
+							@if (!element.active) {
+								<button mat-menu-item>
+									<mat-icon>lock</mat-icon>
+								</button>
+							}
+						</td>
+					</ng-container>
 
 					<ng-container matColumnDef="star" stickyEnd>
 						<th mat-header-cell *matHeaderCellDef aria-label="row actions">Ações</th>

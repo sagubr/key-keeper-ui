@@ -9,21 +9,89 @@ security:
 tags:
     - name: Requesters
       description: Operações relacionadas a entidade solicitantes
+    - name: Users
+      description: Operações relacionadas a entidade Usuário
     - name: Reservation
       description: Operações relacionadas a entidade reservas
+    - name: JobTitle
+      description: Operações relacionadas a entidade cargo
     - name: Location
-      description: Operações relacionadas à entidade Localização
+      description: Operações relacionadas a entidade Localização
     - name: Permissions
       description: Operações relacionadas a entidade Permissão
     - name: Keys
       description: Operações relacionadas a entidade Chaves
     - name: LocationType
-      description: Operações relacionadas a entidade Tipos de Ambiente
-    - name: Users
-      description: Operações relacionadas a entidade Usuário
-    - name: JobTitle
-      description: Operações relacionadas a entidade cargo
+      description: Operações relacionadas a entidade Tipos de Localização
+    - name: Facility
+      description: Operações relacionadas a entidade lugar
 paths:
+    /api/facility:
+        get:
+            tags:
+                - Facility
+            summary: Obter todas as instalações
+            operationId: findAllFacilities
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Facility"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+    /api/facility/save:
+        post:
+            tags:
+                - Facility
+            summary: Criar nova instalação
+            operationId: addFacility
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Facility"
+                required: true
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Facility"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
     /api/job-title:
         get:
             tags:
@@ -125,7 +193,7 @@ paths:
         get:
             tags:
                 - Location
-            summary: Obter todos as salas
+            summary: Obter todas as localizações
             operationId: findAllLocations
             responses:
                 "200":
@@ -156,8 +224,8 @@ paths:
         get:
             tags:
                 - LocationType
-            summary: Obter todos os tipos de ambiente
-            operationId: getAllTypeEnvironments
+            summary: Obter todos os tipos de localização
+            operationId: findAllLocationTypes
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -183,11 +251,46 @@ paths:
                     content:
                         application/json:
                             schema: {}
+    /api/location/save:
+        post:
+            tags:
+                - Location
+            summary: Criar nova localização
+            operationId: addLocation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Location"
+                required: true
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Location"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
     /api/location/{id}:
         get:
             tags:
                 - Location
-            summary: Obter detalhes de um ambiente por ID
+            summary: Obter detalhes de uma localização por ID
             operationId: findByIdLocation
             parameters:
                 - name: id
@@ -508,10 +611,6 @@ components:
                           nullable: true
                           allOf:
                               - $ref: "#/components/schemas/Permission"
-                      location:
-                          nullable: true
-                          allOf:
-                              - $ref: "#/components/schemas/Location"
                       user:
                           nullable: true
                           allOf:

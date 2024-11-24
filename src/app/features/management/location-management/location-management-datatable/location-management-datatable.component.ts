@@ -22,17 +22,11 @@ import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/t
 import { Location } from "@openapi/model/location";
 import { finalize, Subscription } from "rxjs";
 import { LocationService } from "@openapi/api/location.service";
-import { UsersService } from "@openapi/api/users.service";
-import { UsersManagementService } from "@app/features/management/user-management/users-management.service";
 import { MatDialog } from "@angular/material/dialog";
-import { User } from "@openapi/model/user";
+import { LocationManagementService } from "@app/features/management/location-management/location-management.service";
 import {
-	UsersManagementDialogPasswordFormComponent
-} from "@app/features/management/user-management/users-management-dialog-password-form/users-management-dialog-password-form.component";
-import { UserDto } from "@openapi/model/userDto";
-import {
-	UsersManagementDialogFormComponent
-} from "@app/features/management/user-management/users-management-dialog-form/users-management-dialog-form.component";
+	LocationManagementDialogFormComponent
+} from "@app/features/management/location-management/location-management-dialog-form/location-management-dialog-form.component";
 
 @Component({
 	selector: 'app-location-datatable',
@@ -107,15 +101,15 @@ export class LocationManagementDatatableComponent implements OnInit, AfterViewIn
 
 	constructor(
 		private locationService: LocationService,
-		//private usersManagementService: UsersManagementService,
+		private locationManagementService: LocationManagementService,
 		private dialog: MatDialog,
 	) {
 	}
 
 	ngOnInit(): void {
 		this.findAll();
-		// this.onSearch();
-		// this.onReload();
+		this.onSearch();
+		this.onReload();
 	}
 
 	ngAfterViewInit(): void {
@@ -127,10 +121,9 @@ export class LocationManagementDatatableComponent implements OnInit, AfterViewIn
 		this.subscriptions.unsubscribe();
 	}
 
-	openEditDialog(data: UserDto) {
-		const dialogRef = this.dialog.open(UsersManagementDialogFormComponent, {
-			data,
-			width: '540px'
+	openEditDialog(data: Location) {
+		const dialogRef = this.dialog.open(LocationManagementDialogFormComponent, {
+			data
 		});
 
 		dialogRef.afterClosed().subscribe({
@@ -154,16 +147,16 @@ export class LocationManagementDatatableComponent implements OnInit, AfterViewIn
 		});
 	}
 
-	// private onSearch(): void {
-	// 	this.subscriptions = this.usersManagementService.search$.subscribe(
-	// 		(event) => {
-	// 			this.dataSource.filter = event.trim().toLowerCase();
-	// 		});
-	// }
-	//
-	// private onReload(): void {
-	// 	this.subscriptions = this.usersManagementService.reload$.subscribe(() => {
-	// 		this.findAll();
-	// 	})
-	// }
+	private onSearch(): void {
+		this.subscriptions = this.locationManagementService.search$.subscribe(
+			(event) => {
+				this.dataSource.filter = event.trim().toLowerCase();
+			});
+	}
+
+	private onReload(): void {
+		this.subscriptions = this.locationManagementService.reload$.subscribe(() => {
+			this.findAll();
+		})
+	}
 }

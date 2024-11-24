@@ -48,14 +48,12 @@ export class JobTitleManagementDialogFormComponent implements OnInit {
 
 		if (this.data) {
 			this.jobTitleService.addJobTitle(this.form.value).subscribe({
-				next: (val: any) => {
-					alert('Employee added successfully!');
+				next: () => {
 					this.form.reset();
 					this.dialogRef.close(true);
 				},
 				error: (err: any) => {
 					console.error(err);
-					alert("Error while adding the employee!");
 				},
 			});
 		}

@@ -1,1 +1,19 @@
-<p>location-management-filters works!</p>
+<mat-toolbar class="toolbar">
+	<mat-toolbar-row class="toolbar-row">
+		<mat-form-field appearance="outline">
+			<mat-label>Buscar</mat-label>
+			<input class="input" matInput (keyup)="onSearch($event)" placeholder="Pesquisar usuários...">
+			<mat-icon matSuffix>search</mat-icon>
+		</mat-form-field>
+		<span class="spacer"></span>
+		<button mat-button type="button" class="button" aria-label="Recarregar"
+				(click)="onReload()">
+			<mat-icon>refresh</mat-icon>
+		</button>
+		<button mat-button extended type="button" class="button" aria-label="Adicionar"
+				(click)="openDialog()">
+			<mat-icon>add_circle</mat-icon>
+			<span>Adicionar</span>
+		</button>
+	</mat-toolbar-row>
+</mat-toolbar>

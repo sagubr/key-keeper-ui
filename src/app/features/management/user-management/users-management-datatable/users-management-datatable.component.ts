@@ -123,8 +123,7 @@ export class UsersManagementDatatableComponent implements OnInit, AfterViewInit,
 
 	openEditDialog(data: UserDto) {
 		const dialogRef = this.dialog.open(UsersManagementDialogFormComponent, {
-			data,
-			width: '540px'
+			data
 		});
 
 		dialogRef.afterClosed().subscribe({

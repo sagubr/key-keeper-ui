@@ -12,7 +12,6 @@
 import { Status } from './status';
 import { User } from './user';
 import { Permission } from './permission';
-import { Location } from './location';
 
 
 export interface Reservation { 
@@ -22,7 +21,6 @@ export interface Reservation {
     createdAt?: string;
     updatedAt?: string;
     permission?: Permission | null;
-    location?: Location | null;
     user?: User | null;
     notes?: string;
     startDateTime: string;

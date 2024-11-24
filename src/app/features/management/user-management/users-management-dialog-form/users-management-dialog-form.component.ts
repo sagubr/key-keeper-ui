@@ -1,16 +1,10 @@
 /*Angular Core*/
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 /*Angular Material*/
-import {
-	MAT_DIALOG_DATA,
-	MatDialogActions, MatDialogClose,
-	MatDialogContent, MatDialogModule,
-	MatDialogRef,
-	MatDialogTitle
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 /*Angular Material Modules*/
 import { MatIconModule } from '@angular/material/icon';
@@ -24,8 +18,6 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { UsersService } from "@openapi/api/users.service";
 import { UserDto } from "@openapi/model/userDto";
 import { Roles } from "@openapi/model/roles";
-import { JobTitleService } from "@openapi/api/jobTitle.service";
-import { JobTitle } from "@openapi/model/jobTitle";
 
 @Component({
 	selector: 'app-users-management-dialog-form',
@@ -91,14 +83,9 @@ export class UsersManagementDialogFormComponent implements OnInit {
 				},
 				error: (err: any) => {
 					console.error(err);
-					alert("Error while adding the employee!");
 				},
 			});
 		}
-	}
-
-	get validateForm1(): boolean{
-		return this.form.valid;
 	}
 
 	private validateForm(): void {

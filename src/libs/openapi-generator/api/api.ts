@@ -1,3 +1,5 @@
+export * from './facility.service';
+import { FacilityService } from './facility.service';
 export * from './jobTitle.service';
 import { JobTitleService } from './jobTitle.service';
 export * from './keys.service';
@@ -14,4 +16,4 @@ export * from './reservation.service';
 import { ReservationService } from './reservation.service';
 export * from './users.service';
 import { UsersService } from './users.service';
-export const APIS = [JobTitleService, KeysService, LocationService, LocationTypeService, PermissionsService, RequestersService, ReservationService, UsersService];
+export const APIS = [FacilityService, JobTitleService, KeysService, LocationService, LocationTypeService, PermissionsService, RequestersService, ReservationService, UsersService];

@@ -2,6 +2,7 @@
 README.md
 api.module.ts
 api/api.ts
+api/facility.service.ts
 api/jobTitle.service.ts
 api/keys.service.ts
 api/location.service.ts

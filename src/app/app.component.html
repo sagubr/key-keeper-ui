@@ -1,7 +1,7 @@
 <div class="container">
 
 	<mat-toolbar style="background: #080A0B;">
-		<button mat-icon-button (click)="snav.toggle()">
+		<button mat-icon-button (click)="toggleExpand()">
 			<mat-icon>menu</mat-icon>
 		</button>
 		<span>Key Keeper</span>
@@ -19,11 +19,23 @@
 
 	<mat-sidenav-container class="sidenav-container">
 
-		<mat-sidenav [opened]="true" #snav [mode]="'side'" fixedTopGap="56" style="background: #080A0B;">
-			<mat-nav-list *ngFor="let option of menuOptions">
-				<a mat-list-item routerLink="option.route" routerLinkActive="active">
-					<mat-icon>{{ option.icon }}</mat-icon>
-				</a>
+		<mat-sidenav
+			[opened]="true"
+			#snav [mode]="'side'"
+			fixedTopGap="56"
+			disableClose="true"
+			style="background: #080A0B;"
+			>
+			<mat-nav-list>
+				@for (option of menuOptions; track $index) {
+					<mat-list-item [routerLink]="option.route" routerLinkActive="active">
+						<mat-icon matListIcon>{{ option.icon }}</mat-icon>
+						@if (isExpanded) {
+							<h4 matLine class="title">{{ option.title }}</h4>
+						}
+					</mat-list-item>
+				}
+
 			</mat-nav-list>
 		</mat-sidenav>
 
@@ -35,7 +47,4 @@
 
 	</mat-sidenav-container>
 
-	<mat-toolbar style="background: #080A0B;" class="footer">
-		<span>&copy; 2024 Key Keeper</span>
-	</mat-toolbar>
 </div>

@@ -21,18 +21,19 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 /**Custom Components */
 import { UsersService } from '@openapi/api/users.service';
 import {
-	UsersManagementDialogPasswordFormComponent
-} from '@app/features/management/user-management/users-management-dialog-password-form/users-management-dialog-password-form.component';
+	UserManagementDialogPasswordFormComponent
+} from '@app/features/management/user-management/user-management-dialog-password-form/user-management-dialog-password-form.component';
 import { User } from "@openapi/model/user";
 import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
 import { UserDto } from "@openapi/model/userDto";
 import {
-	UsersManagementDialogFormComponent
-} from "@app/features/management/user-management/users-management-dialog-form/users-management-dialog-form.component";
-import { UsersManagementService } from "@app/features/management/user-management/users-management.service";
+	UserManagementDialogFormComponent
+} from "@app/features/management/user-management/user-management-dialog-form/user-management-dialog-form.component";
+import { UserManagementService } from "@app/features/management/user-management/user-management.service";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-	selector: 'app-users-management-datatable',
+	selector: 'app-user-management-datatable',
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -45,11 +46,12 @@ import { UsersManagementService } from "@app/features/management/user-management
 		MatButtonModule,
 		MatSort,
 		TableWrapperTable,
+		TranslateModule
 	],
-	templateUrl: './users-management-datatable.component.html',
-	styleUrls: ['./users-management-datatable.component.scss'],
+	templateUrl: './user-management-datatable.component.html',
+	styleUrls: ['./user-management-datatable.component.scss'],
 })
-export class UsersManagementDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
+export class UserManagementDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	@ViewChild(MatPaginator) paginator!: MatPaginator;
 	@ViewChild(MatSort) sort!: MatSort;
@@ -75,12 +77,6 @@ export class UsersManagementDatatableComponent implements OnInit, AfterViewInit,
 			cell: (user: User) => user.email
 		},
 		{
-			definition: 'created_at',
-			header: 'Criado em',
-			type: ColumnType.DATE,
-			cell: (user: User) => user.createdAt
-		},
-		{
 			definition: 'updated_at',
 			header: 'Atualizado em',
 			type: ColumnType.DATE,
@@ -95,7 +91,7 @@ export class UsersManagementDatatableComponent implements OnInit, AfterViewInit,
 
 	constructor(
 		private usersService: UsersService,
-		private usersManagementService: UsersManagementService,
+		private usersManagementService: UserManagementService,
 		private dialog: MatDialog,
 	) {
 	}
@@ -116,13 +112,13 @@ export class UsersManagementDatatableComponent implements OnInit, AfterViewInit,
 	}
 
 	openPasswordDialog(user?: User): void {
-		this.dialog.open(UsersManagementDialogPasswordFormComponent, {
+		this.dialog.open(UserManagementDialogPasswordFormComponent, {
 			data: user,
 		});
 	}
 
 	openEditDialog(data: UserDto) {
-		const dialogRef = this.dialog.open(UsersManagementDialogFormComponent, {
+		const dialogRef = this.dialog.open(UserManagementDialogFormComponent, {
 			data
 		});
 

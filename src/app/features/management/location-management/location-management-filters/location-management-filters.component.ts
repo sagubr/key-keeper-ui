@@ -5,20 +5,14 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
-import { UsersManagementService } from "@app/features/management/user-management/users-management.service";
-import {
-	UsersManagementDialogFormComponent
-} from "@app/features/management/user-management/users-management-dialog-form/users-management-dialog-form.component";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
 import { MatRadioModule } from "@angular/material/radio";
-import {
-	LocationManagementComponent
-} from "@app/features/management/location-management/location-management.component";
-import { LocationManagementService } from "@app/features/management/location-management/location-management.service";
+
 import {
 	LocationManagementDialogFormComponent
 } from "@app/features/management/location-management/location-management-dialog-form/location-management-dialog-form.component";
+import { LocationManagementService } from "@app/features/management/location-management/location-management.service";
 
 @Component({
 	selector: 'app-location-management-filters',

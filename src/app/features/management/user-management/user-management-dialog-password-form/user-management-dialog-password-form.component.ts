@@ -20,7 +20,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { UserDto } from "@openapi/model/userDto";
 
 @Component({
-  selector: 'app-users-management-dialog-password-form',
+  selector: 'app-user-management-dialog-password-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -31,10 +31,10 @@ import { UserDto } from "@openapi/model/userDto";
     MatRadioModule,
     ReactiveFormsModule,
   ],
-  templateUrl: './users-management-dialog-password-form.component.html',
-  styleUrl: './users-management-dialog-password-form.component.scss',
+  templateUrl: './user-management-dialog-password-form.component.html',
+  styleUrl: './user-management-dialog-password-form.component.scss',
 })
-export class UsersManagementDialogPasswordFormComponent {
+export class UserManagementDialogPasswordFormComponent {
   form = new FormGroup({
     password: new FormControl('', [Validators.required]),
     repeatPassword: new FormControl('', [Validators.required]),
@@ -43,7 +43,7 @@ export class UsersManagementDialogPasswordFormComponent {
   hide = true;
 
   constructor(
-    public dialogRef: MatDialogRef<UsersManagementDialogPasswordFormComponent>,
+    public dialogRef: MatDialogRef<UserManagementDialogPasswordFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: UserDto
   ) {}
 

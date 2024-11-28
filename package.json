@@ -7,6 +7,7 @@
 		"build": "ng build",
 		"watch": "ng build --watch --configuration development",
 		"test": "ng test",
+		"i18n:extract": "ng xi18n",
 		"serve:ssr:key-keeper-ui": "node dist/key-keeper-ui/server/server.mjs",
 		"openapi-generator": "ts-node src/libs/openapi-generator/configuration/openapi-generator-cli.mjs"
 	},
@@ -24,6 +25,8 @@
 		"@angular/platform-server": "^17.3.0",
 		"@angular/router": "^17.3.0",
 		"@angular/ssr": "^17.3.8",
+		"@ngx-translate/core": "^16.0.3",
+		"@ngx-translate/http-loader": "^16.0.0",
 		"@openapitools/openapi-generator-cli": "^2.13.4",
 		"express": "^4.18.2",
 		"jwt-decode": "^4.0.0",

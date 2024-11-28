@@ -4,7 +4,7 @@ api.module.ts
 api/api.ts
 api/facility.service.ts
 api/jobTitle.service.ts
-api/keys.service.ts
+api/key.service.ts
 api/location.service.ts
 api/locationType.service.ts
 api/permissions.service.ts

@@ -15,13 +15,13 @@ import { MatRadioModule } from '@angular/material/radio';
 
 /*Custom Components*/
 import {
-	UsersManagementDialogFormComponent
-} from '@app/features/management/user-management/users-management-dialog-form/users-management-dialog-form.component';
-import { UsersManagementService } from '../users-management.service';
+	UserManagementDialogFormComponent
+} from '@app/features/management/user-management/user-management-dialog-form/user-management-dialog-form.component';
+import { UserManagementService } from '../user-management.service';
 import { MatToolbarModule } from "@angular/material/toolbar";
 
 @Component({
-	selector: 'app-users-management-filters',
+	selector: 'app-user-management-filters',
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -34,19 +34,19 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 		MatRadioModule,
 		MatToolbarModule,
 	],
-	templateUrl: './users-management-filters.component.html',
-	styleUrl: './users-management-filters.component.scss',
+	templateUrl: './user-management-filters.component.html',
+	styleUrl: './user-management-filters.component.scss',
 })
-export class UsersManagementFiltersComponent {
+export class UserManagementFiltersComponent {
 
 	constructor(
 		public dialog: MatDialog,
-		private usersManagementService: UsersManagementService
+		private usersManagementService: UserManagementService
 	) {
 	}
 
 	openDialog(): void {
-		const dialogRef = this.dialog.open(UsersManagementDialogFormComponent, {
+		const dialogRef = this.dialog.open(UserManagementDialogFormComponent, {
 			data: {},
 		});
 

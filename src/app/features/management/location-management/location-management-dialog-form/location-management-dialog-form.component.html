@@ -19,7 +19,7 @@
 			<div class="col">
 				<mat-form-field appearance="outline" class="full-width">
 					<mat-label>Tipo de Localização</mat-label>
-					<mat-select formControlName="locationType">
+					<mat-select formControlName="locationType" [compareWith]="compareById" >
 						@for (element of locationTypes; track $index) {
 							<mat-option [value]="element">{{ element.name }}</mat-option>
 						}
@@ -37,7 +37,7 @@
 			<div class="col">
 				<mat-form-field appearance="outline" class="full-width">
 					<mat-label>Instalação</mat-label>
-					<mat-select formControlName="facility">
+					<mat-select formControlName="facility" [compareWith]="compareById">
 						@for (element of facilities; track $index) {
 							<mat-option [value]="element">{{ element.name }}</mat-option>
 						}
@@ -46,7 +46,8 @@
 				</mat-form-field>
 			</div>
 			<div class="col">
-				<button mat-button type="button" class="button" aria-label="Recarregar">
+				<button mat-button type="button" class="button"
+						(click)="openDialogFacility()">
 					<mat-icon>add</mat-icon>
 				</button>
 			</div>

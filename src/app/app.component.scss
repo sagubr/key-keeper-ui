@@ -22,6 +22,10 @@ h1.app-name {
   flex: 1;
 }
 
+.title{
+	color: white;
+}
+
 .content {
   padding: 15px;
 }
@@ -41,4 +45,8 @@ mat-icon {
 	left: 0;
 	width: 100%;
 	z-index: 1000;
+}
+
+mat-line{
+	display: flex; 
 }

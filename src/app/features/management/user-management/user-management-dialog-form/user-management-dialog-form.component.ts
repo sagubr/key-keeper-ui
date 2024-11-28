@@ -20,7 +20,7 @@ import { UserDto } from "@openapi/model/userDto";
 import { Roles } from "@openapi/model/roles";
 
 @Component({
-	selector: 'app-users-management-dialog-form',
+	selector: 'app-user-management-dialog-form',
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -33,10 +33,10 @@ import { Roles } from "@openapi/model/roles";
 		ClipboardModule,
 		MatDialogModule,
 	],
-	templateUrl: './users-management-dialog-form.component.html',
-	styleUrl: './users-management-dialog-form.component.scss',
+	templateUrl: './user-management-dialog-form.component.html',
+	styleUrl: './user-management-dialog-form.component.scss',
 })
-export class UsersManagementDialogFormComponent implements OnInit {
+export class UserManagementDialogFormComponent implements OnInit {
 
 	protected readonly Roles = Roles;
 
@@ -45,7 +45,7 @@ export class UsersManagementDialogFormComponent implements OnInit {
 	form!: FormGroup;
 
 	constructor(
-		public dialogRef: MatDialogRef<UsersManagementDialogFormComponent>,
+		public dialogRef: MatDialogRef<UserManagementDialogFormComponent>,
 		private readonly userService: UsersService,
 		private readonly formBuilder: FormBuilder,
 		@Inject(MAT_DIALOG_DATA) public data: UserDto,
@@ -86,6 +86,10 @@ export class UsersManagementDialogFormComponent implements OnInit {
 				},
 			});
 		}
+	}
+
+	onCancel(): void {
+		this.dialogRef.close(); // Fecha o diálogo quando o botão Cancelar é clicado
 	}
 
 	private validateForm(): void {

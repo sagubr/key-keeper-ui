@@ -1,5 +1,8 @@
-<div mat-dialog-title>
+<div mat-dialog-title class="dialog-header">
 	<h1>Registro</h1>
+	<button mat-icon-button (click)="onCancel()" mat-dialog-close class="close-button">
+		<mat-icon>close</mat-icon>
+	</button>
 </div>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">

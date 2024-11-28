@@ -19,12 +19,12 @@ tags:
       description: Operações relacionadas a entidade Localização
     - name: Permissions
       description: Operações relacionadas a entidade Permissão
-    - name: Keys
-      description: Operações relacionadas a entidade Chaves
-    - name: LocationType
-      description: Operações relacionadas a entidade Tipos de Localização
     - name: Facility
       description: Operações relacionadas a entidade lugar
+    - name: LocationType
+      description: Operações relacionadas a entidade Tipos de Localização
+    - name: Key
+      description: Operações relacionadas a entidade Chaves
 paths:
     /api/facility:
         get:
@@ -158,12 +158,49 @@ paths:
                     content:
                         application/json:
                             schema: {}
-    /api/keys:
+    /api/key:
         get:
             tags:
-                - Keys
+                - Key
             summary: Obter todas as chaves
-            operationId: getAllKeys
+            operationId: findAllKeys
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Key"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+    /api/key/location:
+        post:
+            tags:
+                - Key
+            summary: Obter chaves por localização
+            operationId: findByLocation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Location"
+                required: true
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -327,7 +364,7 @@ paths:
             tags:
                 - Permissions
             summary: Obter todas as permissões
-            operationId: getAllPermissions
+            operationId: findAllPermissions
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -353,12 +390,47 @@ paths:
                     content:
                         application/json:
                             schema: {}
+    /api/permissions/save:
+        post:
+            tags:
+                - Permissions
+            summary: Criar nova instalação
+            operationId: addFacility_1
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Permission"
+                required: true
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Permission"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
     /api/requesters:
         get:
             tags:
                 - Requesters
             summary: Obter todos os solicitantes
-            operationId: getAllRequesters
+            operationId: findAllRequesters
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -368,6 +440,41 @@ paths:
                                 type: array
                                 items:
                                     $ref: "#/components/schemas/Requester"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+    /api/requesters/save:
+        post:
+            tags:
+                - Requesters
+            summary: Criar novo solicitante
+            operationId: addRequester
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Requester"
+                required: true
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Requester"
                 "401":
                     description: Falha de autenticação
                 "403":

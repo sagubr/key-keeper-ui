@@ -12,21 +12,23 @@ import {
 	MatRowDef,
 	MatTableDataSource
 } from "@angular/material/table";
-import { MatIcon } from "@angular/material/icon";
-import { MatIconButton } from "@angular/material/button";
-import { MatMenu, MatMenuItem, MatMenuTrigger } from "@angular/material/menu";
+import { MatIconModule } from "@angular/material/icon";
+import { MatMenuModule, MatMenuTrigger } from "@angular/material/menu";
 import { MatPaginator } from "@angular/material/paginator";
-import { MatProgressBar } from "@angular/material/progress-bar";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatSort } from "@angular/material/sort";
 import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
 import { Location } from "@openapi/model/location";
 import { finalize, Subscription } from "rxjs";
 import { LocationService } from "@openapi/api/location.service";
 import { MatDialog } from "@angular/material/dialog";
-import { LocationManagementService } from "@app/features/management/location-management/location-management.service";
+
 import {
 	LocationManagementDialogFormComponent
 } from "@app/features/management/location-management/location-management-dialog-form/location-management-dialog-form.component";
+import { MatButtonModule } from "@angular/material/button";
+import { LocationManagementService } from "@app/features/management/location-management/location-management.service";
+import { KeyManagementComponent } from "@app/features/management/key-management/key-management.component";
 
 @Component({
 	selector: 'app-location-datatable',
@@ -38,12 +40,11 @@ import {
 		MatHeaderCell,
 		MatHeaderRow,
 		MatHeaderRowDef,
-		MatIcon,
-		MatIconButton,
-		MatMenu,
-		MatMenuItem,
+		MatIconModule,
+		MatMenuModule,
+		MatButtonModule,
 		MatPaginator,
-		MatProgressBar,
+		MatProgressBarModule,
 		MatRow,
 		MatRowDef,
 		MatSort,
@@ -81,14 +82,8 @@ export class LocationManagementDatatableComponent implements OnInit, AfterViewIn
 			cell: (location: Location) => location.locationType.name
 		},
 		{
-			definition: 'active',
-			header: 'Ativo',
-			type: ColumnType.TEXT,
-			cell: (location: Location) => location.active ? 'Yes' : 'No'
-		},
-		{
-			definition: 'create_at',
-			header: 'Criado em',
+			definition: 'update_at',
+			header: 'Atualizado em',
 			type: ColumnType.DATE,
 			cell: (location: Location) => location.createdAt
 		},
@@ -133,6 +128,20 @@ export class LocationManagementDatatableComponent implements OnInit, AfterViewIn
 				}
 			}
 		});
+	}
+
+	openKeyDialog(data: Location) {
+		const dialogRef = this.dialog.open(KeyManagementComponent, {
+			data
+		});
+
+		// dialogRef.afterClosed().subscribe({
+		// 	next: (val) => {
+		// 		if (val) {
+		// 			this.findAll();
+		// 		}
+		// 	}
+		// });
 	}
 
 	private findAll(): void {

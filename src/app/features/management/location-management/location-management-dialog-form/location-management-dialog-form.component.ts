@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
@@ -14,6 +14,10 @@ import { LocationType } from "@openapi/model/locationType";
 import { Facility } from "@openapi/model/facility";
 import { LocationTypeService } from "@openapi/api/locationType.service";
 import { Location } from "@openapi/model/location";
+import { compareById } from "@app/core/utils/utils";
+import {
+	FacilityManagementDialogFormComponent
+} from "@app/features/management/facility-management/facility-management-dialog-form/facility-management-dialog-form.component";
 
 @Component({
 	selector: 'app-location-management-dialog-form',
@@ -34,13 +38,15 @@ import { Location } from "@openapi/model/location";
 })
 export class LocationManagementDialogFormComponent implements OnInit {
 
-	form!: FormGroup;
+	compareById: (o1: any, o2: any) => boolean = compareById;
 
+	form!: FormGroup;
 	locationTypes: LocationType[] = [];
 	facilities: Facility[] = [];
 
 	constructor(
 		public dialogRef: MatDialogRef<LocationManagementDialogFormComponent>,
+		private readonly dialog: MatDialog,
 		private readonly locationService: LocationService,
 		private readonly facilityService: FacilityService,
 		private readonly locationTypeService: LocationTypeService,
@@ -69,9 +75,15 @@ export class LocationManagementDialogFormComponent implements OnInit {
 		}
 	}
 
+	openDialogFacility(): void {
+		const dialogRef = this.dialog.open(FacilityManagementDialogFormComponent, {
+			data: {},
+		});
+	}
+
 	private findAllFacilities(): void {
 		this.facilityService.findAllFacilities().subscribe({
-				next: (res) => {
+				next: (res: Facility[]) => {
 					this.facilities = res;
 				}
 			}
@@ -80,7 +92,7 @@ export class LocationManagementDialogFormComponent implements OnInit {
 
 	private findAllLocationTypes(): void {
 		this.locationTypeService.findAllLocationTypes().subscribe({
-				next: (res) => {
+				next: (res: LocationType[]) => {
 					this.locationTypes = res;
 				}
 			}

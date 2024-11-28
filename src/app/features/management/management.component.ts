@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 /*Custom Components*/
-import { UsersManagementComponent } from "@app/features/management/user-management/users-management.component";
+import { UserManagementComponent } from "@app/features/management/user-management/user-management.component";
 import {
 	LocationManagementComponent
 } from "@app/features/management/location-management/location-management.component";
@@ -26,7 +26,7 @@ import {
 		MatIconModule,
 		MatProgressBarModule,
 		RouterLink,
-		UsersManagementComponent,
+		UserManagementComponent,
 		LocationManagementComponent,
 		JobTitleManagementComponent,
 	],

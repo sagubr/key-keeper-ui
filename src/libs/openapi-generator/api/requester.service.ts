@@ -19,7 +19,7 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
-import { Permission } from '../model/permission';
+import { Requester } from '../model/requester';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -30,7 +30,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({
   providedIn: 'root'
 })
-export class PermissionsService {
+export class RequesterService {
 
     protected basePath = 'http://localhost:8080';
     public defaultHeaders = new HttpHeaders();
@@ -93,17 +93,17 @@ export class PermissionsService {
     }
 
     /**
-     * Criar nova instalação
-     * @param permission 
+     * Criar novo solicitante
+     * @param requester 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addFacility1(permission: Permission, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Permission>;
-    public addFacility1(permission: Permission, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Permission>>;
-    public addFacility1(permission: Permission, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Permission>>;
-    public addFacility1(permission: Permission, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (permission === null || permission === undefined) {
-            throw new Error('Required parameter permission was null or undefined when calling addFacility1.');
+    public addRequester(requester: Requester, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Requester>;
+    public addRequester(requester: Requester, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Requester>>;
+    public addRequester(requester: Requester, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Requester>>;
+    public addRequester(requester: Requester, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (requester === null || requester === undefined) {
+            throw new Error('Required parameter requester was null or undefined when calling addRequester.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -158,11 +158,11 @@ export class PermissionsService {
             }
         }
 
-        let localVarPath = `/api/permissions/save`;
-        return this.httpClient.request<Permission>('post', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/api/requesters/save`;
+        return this.httpClient.request<Requester>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: permission,
+                body: requester,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
@@ -174,14 +174,14 @@ export class PermissionsService {
     }
 
     /**
-     * Obter todas as permissões
+     * Obter todos os solicitantes
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllPermissions(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<Permission>>;
-    public findAllPermissions(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<Permission>>>;
-    public findAllPermissions(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<Permission>>>;
-    public findAllPermissions(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public findAllRequesters(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<Requester>>;
+    public findAllRequesters(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<Requester>>>;
+    public findAllRequesters(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<Requester>>>;
+    public findAllRequesters(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -226,8 +226,8 @@ export class PermissionsService {
             }
         }
 
-        let localVarPath = `/api/permissions`;
-        return this.httpClient.request<Array<Permission>>('get', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/api/requesters`;
+        return this.httpClient.request<Array<Requester>>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,

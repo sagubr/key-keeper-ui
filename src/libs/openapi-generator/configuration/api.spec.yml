@@ -7,24 +7,24 @@ servers:
 security:
     - Authorization: []
 tags:
-    - name: Requesters
+    - name: Requester
       description: Operações relacionadas a entidade solicitantes
     - name: Users
       description: Operações relacionadas a entidade Usuário
-    - name: Reservation
-      description: Operações relacionadas a entidade reservas
     - name: JobTitle
       description: Operações relacionadas a entidade cargo
     - name: Location
       description: Operações relacionadas a entidade Localização
-    - name: Permissions
-      description: Operações relacionadas a entidade Permissão
     - name: Facility
       description: Operações relacionadas a entidade lugar
-    - name: LocationType
-      description: Operações relacionadas a entidade Tipos de Localização
     - name: Key
       description: Operações relacionadas a entidade Chaves
+    - name: LocationType
+      description: Operações relacionadas a entidade Tipos de Localização
+    - name: Permission
+      description: Operações relacionadas a entidade Permissão
+    - name: Reservation
+      description: Operações relacionadas a entidade reservas
 paths:
     /api/facility:
         get:
@@ -226,6 +226,76 @@ paths:
                     content:
                         application/json:
                             schema: {}
+    /api/key/save:
+        post:
+            tags:
+                - Key
+            summary: Criar novo cargo
+            operationId: addKey
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Key"
+                required: true
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Key"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+    /api/key/update:
+        post:
+            tags:
+                - Key
+            summary: Atualizar cargo existente
+            operationId: updateKey
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Key"
+                required: true
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Key"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
     /api/location:
         get:
             tags:
@@ -362,7 +432,7 @@ paths:
     /api/permissions:
         get:
             tags:
-                - Permissions
+                - Permission
             summary: Obter todas as permissões
             operationId: findAllPermissions
             responses:
@@ -393,9 +463,9 @@ paths:
     /api/permissions/save:
         post:
             tags:
-                - Permissions
+                - Permission
             summary: Criar nova instalação
-            operationId: addFacility_1
+            operationId: addPermission
             requestBody:
                 content:
                     application/json:
@@ -428,7 +498,7 @@ paths:
     /api/requesters:
         get:
             tags:
-                - Requesters
+                - Requester
             summary: Obter todos os solicitantes
             operationId: findAllRequesters
             responses:
@@ -459,7 +529,7 @@ paths:
     /api/requesters/save:
         post:
             tags:
-                - Requesters
+                - Requester
             summary: Criar novo solicitante
             operationId: addRequester
             requestBody:
@@ -668,7 +738,6 @@ components:
                 - location
                 - requester
                 - startDateTime
-                - user
             type: object
             allOf:
                 - $ref: "#/components/schemas/EntityPattern"
@@ -678,7 +747,9 @@ components:
                       requester:
                           $ref: "#/components/schemas/Requester"
                       user:
-                          $ref: "#/components/schemas/User"
+                          nullable: true
+                          allOf:
+                              - $ref: "#/components/schemas/User"
                       description:
                           type: string
                       startDateTime:

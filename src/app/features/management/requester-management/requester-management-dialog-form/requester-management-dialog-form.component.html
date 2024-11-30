@@ -4,10 +4,11 @@
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
 	<mat-dialog-content>
+		<h2 class="subtitle">Informações Pessoais</h2>
 		<div class="row">
 			<div class="col">
 				<mat-form-field appearance="outline" class="full-width">
-					<mat-label>Localização/Sala</mat-label>
+					<mat-label>Nome Completo</mat-label>
 					<input matInput maxlength="256" formControlName="name">
 					<mat-error *ngIf="form.get('name')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
@@ -17,36 +18,37 @@
 		<div class="row">
 			<div class="col">
 				<mat-form-field appearance="outline" class="full-width">
-					<mat-label>Tipo de Localização</mat-label>
-					<mat-select formControlName="locationType" [compareWith]="compareById" >
-						@for (element of locationTypes; track $index) {
+					<mat-label>E-mail</mat-label>
+					<input matInput maxlength="256" formControlName="email">
+					<mat-error *ngIf="form.get('email')?.invalid">Você deve inserir um valor</mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Registro/Identificação</mat-label>
+					<input matInput maxlength="256" formControlName="register">
+					<mat-error *ngIf="form.get('register')?.invalid">Você deve inserir um valor</mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Tipo de Cargo</mat-label>
+					<mat-select formControlName="jobTitle" [compareWith]="compareById" >
+						@for (element of jobTitles; track $index) {
 							<mat-option [value]="element">{{ element.name }}</mat-option>
 						}
 					</mat-select>
-					<mat-error *ngIf="form.get('locationType')?.invalid">Você deve inserir um valor</mat-error>
+					<mat-error *ngIf="form.get('jobTitle')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
 			<div class="col">
 				<button mat-button type="button" class="button" aria-label="Recarregar">
-					<mat-icon>add</mat-icon>
-				</button>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<mat-form-field appearance="outline" class="full-width">
-					<mat-label>Instalação</mat-label>
-					<mat-select formControlName="facility" [compareWith]="compareById">
-						@for (element of facilities; track $index) {
-							<mat-option [value]="element">{{ element.name }}</mat-option>
-						}
-					</mat-select>
-					<mat-error *ngIf="form.get('facility')?.invalid">Você deve inserir um valor</mat-error>
-				</mat-form-field>
-			</div>
-			<div class="col">
-				<button mat-button type="button" class="button"
-						(click)="openDialogFacility()">
 					<mat-icon>add</mat-icon>
 				</button>
 			</div>

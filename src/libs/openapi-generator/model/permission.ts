@@ -22,7 +22,7 @@ export interface Permission {
     updatedAt?: string;
     location: Location;
     requester: Requester;
-    user: User;
+    user?: User | null;
     description?: string;
     startDateTime: string;
     endDateTime: string;

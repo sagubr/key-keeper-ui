@@ -3,7 +3,10 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
 import { ManagementComponent } from './features/management/management.component';
 import { AuthenticationGuard } from './core/guards/authentication.guard';
-import { RequesterManagementComponent } from "@app/features/requester-management/requester-management.component";
+import { RequesterManagementComponent } from "@app/features/management/requester-management/requester-management.component";
+import {
+	PermissionManagementComponent
+} from "@app/features/management/permission-management/permission-management.component";
 
 export const routes: Routes = [
 	{ path: 'login', component: LoginComponent },
@@ -20,7 +23,7 @@ export const routes: Routes = [
 	},
 	{
 		path: 'solicitantes',
-		component: RequesterManagementComponent,
+		component: PermissionManagementComponent,
 		// canActivate: [AuthenticationGuard], //TODO: Reativar segurança da rota
 	},
 ];

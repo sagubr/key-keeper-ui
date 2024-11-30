@@ -32,14 +32,6 @@
 									<mat-icon>edit</mat-icon>
 									<span>Editar Registro</span>
 								</button>
-								<button mat-menu-item (click)="openPasswordDialog()">
-									<mat-icon>key</mat-icon>
-									<span>Redefinir Senha</span>
-								</button>
-								<button mat-menu-item>
-									<mat-icon>lock</mat-icon>
-									<span>Bloquear</span>
-								</button>
 								<button mat-menu-item disabled>
 									<mat-icon>history</mat-icon>
 									<span>Visualizar Histórico</span>
@@ -48,8 +40,7 @@
 						</td>
 					</ng-container>
 
-					<tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
 					<tr class="mat-row" *matNoDataRow>

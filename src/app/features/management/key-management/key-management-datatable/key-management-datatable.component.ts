@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, input, InputSignal, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, input, InputSignal, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
 	MatCell,
 	MatCellDef,
@@ -30,6 +30,7 @@ import { MatDialog } from "@angular/material/dialog";
 import {
 	KeyManagementDialogFormComponent
 } from "@app/features/management/key-management/key-management-dialog-form/key-management-dialog-form.component";
+import { KeyManagementService } from "@app/features/management/key-management/key-management.service";
 
 @Component({
 	selector: 'app-key-management-datatable',
@@ -57,7 +58,7 @@ import {
 	templateUrl: './key-management-datatable.component.html',
 	styleUrl: './key-management-datatable.component.scss'
 })
-export class KeyManagementDatatableComponent implements OnInit, AfterViewInit {
+export class KeyManagementDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	@ViewChild(MatPaginator) paginator!: MatPaginator;
 	@ViewChild(MatSort) sort!: MatSort;
@@ -81,17 +82,24 @@ export class KeyManagementDatatableComponent implements OnInit, AfterViewInit {
 
 	constructor(
 		private keyService: KeyService,
+		private keyManagementService: KeyManagementService,
 		private dialog: MatDialog,
 	) {
 	}
 
 	ngOnInit(): void {
 		this.findAll(this.location());
+		this.onSearch();
+		this.onReload();
 	}
 
 	ngAfterViewInit(): void {
 		this.dataSource.paginator = this.paginator;
 		this.dataSource.sort = this.sort;
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe();
 	}
 
 	openEditDialog(data: Location) {
@@ -110,5 +118,18 @@ export class KeyManagementDatatableComponent implements OnInit, AfterViewInit {
 				this.dataSource.data = element;
 			}
 		});
+	}
+
+	private onSearch(): void {
+		this.subscriptions = this.keyManagementService.search$.subscribe(
+			(event) => {
+				this.dataSource.filter = event.trim().toLowerCase();
+			});
+	}
+
+	private onReload(): void {
+		this.subscriptions = this.keyManagementService.reload$.subscribe(() => {
+			this.findAll(this.location());
+		})
 	}
 }

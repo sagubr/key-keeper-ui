@@ -7,8 +7,8 @@ api/jobTitle.service.ts
 api/key.service.ts
 api/location.service.ts
 api/locationType.service.ts
-api/permissions.service.ts
-api/requesters.service.ts
+api/permission.service.ts
+api/requester.service.ts
 api/reservation.service.ts
 api/users.service.ts
 configuration.ts

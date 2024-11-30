@@ -21,21 +21,20 @@ import {
 import { JobTitleManagementService } from "@app/features/management/job-title-management/job-title-management.service";
 
 @Component({
-	selector: 'app-job-title-management-filters',
-	standalone: true,
-	imports: [
-		CommonModule,
-		MatDialogModule,
-		MatFormFieldModule,
-		MatSelectModule,
-		MatIconModule,
-		MatInputModule,
-		MatButtonModule,
-		MatRadioModule,
-		MatToolbarModule,
-	],
-	templateUrl: './job-title-management-filters.component.html',
-	styleUrl: './job-title-management-filters.component.scss',
+    selector: 'app-job-title-management-filters',
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatIconModule,
+        MatInputModule,
+        MatButtonModule,
+        MatRadioModule,
+        MatToolbarModule,
+    ],
+    templateUrl: './job-title-management-filters.component.html',
+    styleUrl: './job-title-management-filters.component.scss'
 })
 export class JobTitleManagementFiltersComponent {
 

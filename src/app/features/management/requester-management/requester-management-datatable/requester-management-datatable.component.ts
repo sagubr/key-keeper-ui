@@ -19,22 +19,21 @@ import {
 import { RequesterService } from "@openapi/api/requester.service";
 
 @Component({
-  selector: 'app-requester-management-datatable',
-  standalone: true,
-  imports: [
-	  CommonModule,
-	  MatTableModule,
-	  MatPaginatorModule,
-	  MatDialogModule,
-	  MatProgressBarModule,
-	  MatMenuModule,
-	  MatIconModule,
-	  MatButtonModule,
-	  MatSort,
-	  TableWrapperTable,
-  ],
-  templateUrl: './requester-management-datatable.component.html',
-  styleUrl: './requester-management-datatable.component.scss'
+    selector: 'app-requester-management-datatable',
+    imports: [
+        CommonModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatDialogModule,
+        MatProgressBarModule,
+        MatMenuModule,
+        MatIconModule,
+        MatButtonModule,
+        MatSort,
+        TableWrapperTable,
+    ],
+    templateUrl: './requester-management-datatable.component.html',
+    styleUrl: './requester-management-datatable.component.scss'
 })
 export class RequesterManagementDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 

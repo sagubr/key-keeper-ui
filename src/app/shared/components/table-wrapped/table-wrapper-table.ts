@@ -25,11 +25,10 @@ import { CurrencyPipe, DatePipe, NgForOf, NgIf, UpperCasePipe } from "@angular/c
  * table.
  */
 @Component({
-	selector: 'table-wrapper-table',
-	templateUrl: 'table-wrapper-table.html',
-	styleUrl: 'table-wrapper-table.scss',
-	imports: [MatTableModule, MatSortModule, DatePipe, UpperCasePipe, CurrencyPipe],
-	standalone: true
+    selector: 'table-wrapper-table',
+    templateUrl: 'table-wrapper-table.html',
+    styleUrl: 'table-wrapper-table.scss',
+    imports: [MatTableModule, MatSortModule, DatePipe, UpperCasePipe, CurrencyPipe]
 })
 export class TableWrapperTable<T> implements AfterContentInit {
 

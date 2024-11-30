@@ -33,23 +33,22 @@ import { UserManagementService } from "@app/features/management/user-management/
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-	selector: 'app-user-management-datatable',
-	standalone: true,
-	imports: [
-		CommonModule,
-		MatTableModule,
-		MatPaginatorModule,
-		MatDialogModule,
-		MatProgressBarModule,
-		MatMenuModule,
-		MatIconModule,
-		MatButtonModule,
-		MatSort,
-		TableWrapperTable,
-		TranslateModule
-	],
-	templateUrl: './user-management-datatable.component.html',
-	styleUrls: ['./user-management-datatable.component.scss'],
+    selector: 'app-user-management-datatable',
+    imports: [
+        CommonModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatDialogModule,
+        MatProgressBarModule,
+        MatMenuModule,
+        MatIconModule,
+        MatButtonModule,
+        MatSort,
+        TableWrapperTable,
+        TranslateModule
+    ],
+    templateUrl: './user-management-datatable.component.html',
+    styleUrls: ['./user-management-datatable.component.scss']
 })
 export class UserManagementDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 

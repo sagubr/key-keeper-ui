@@ -8,23 +8,22 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 
 @Component({
-	selector: 'app-root',
-	standalone: true,
-	imports: [
-		RouterOutlet,
-		CommonModule,
-		MatToolbarModule,
-		MatButtonModule,
-		MatIconModule,
-		MatSidenavModule,
-		MatListModule,
-		MatToolbarModule,
-		MatButtonModule,
-		MatIconModule,
-		RouterLink,
-	],
-	templateUrl: './app.component.html',
-	styleUrl: './app.component.scss',
+    selector: 'app-root',
+    imports: [
+        RouterOutlet,
+        CommonModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatListModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        RouterLink,
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent {
 	menuOptions: MenuOptions[] = MENU_OPTIONS;

@@ -31,30 +31,29 @@ import { LocationManagementService } from "@app/features/management/location-man
 import { KeyManagementComponent } from "@app/features/management/key-management/key-management.component";
 
 @Component({
-	selector: 'app-location-datatable',
-	standalone: true,
-	imports: [
-		MatCell,
-		MatCellDef,
-		MatColumnDef,
-		MatHeaderCell,
-		MatHeaderRow,
-		MatHeaderRowDef,
-		MatIconModule,
-		MatMenuModule,
-		MatButtonModule,
-		MatPaginator,
-		MatProgressBarModule,
-		MatRow,
-		MatRowDef,
-		MatSort,
-		TableWrapperTable,
-		MatMenuTrigger,
-		MatHeaderCellDef,
-		MatNoDataRow
-	],
-	templateUrl: './location-management-datatable.component.html',
-	styleUrl: './location-management-datatable.component.scss'
+    selector: 'app-location-datatable',
+    imports: [
+        MatCell,
+        MatCellDef,
+        MatColumnDef,
+        MatHeaderCell,
+        MatHeaderRow,
+        MatHeaderRowDef,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatPaginator,
+        MatProgressBarModule,
+        MatRow,
+        MatRowDef,
+        MatSort,
+        TableWrapperTable,
+        MatMenuTrigger,
+        MatHeaderCellDef,
+        MatNoDataRow
+    ],
+    templateUrl: './location-management-datatable.component.html',
+    styleUrl: './location-management-datatable.component.scss'
 })
 export class LocationManagementDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 

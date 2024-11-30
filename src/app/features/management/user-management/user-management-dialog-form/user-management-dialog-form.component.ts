@@ -20,21 +20,20 @@ import { UserDto } from "@openapi/model/userDto";
 import { Roles } from "@openapi/model/roles";
 
 @Component({
-	selector: 'app-user-management-dialog-form',
-	standalone: true,
-	imports: [
-		CommonModule,
-		MatSelectModule,
-		MatInputModule,
-		MatIconModule,
-		MatButtonModule,
-		MatRadioModule,
-		ReactiveFormsModule,
-		ClipboardModule,
-		MatDialogModule,
-	],
-	templateUrl: './user-management-dialog-form.component.html',
-	styleUrl: './user-management-dialog-form.component.scss',
+    selector: 'app-user-management-dialog-form',
+    imports: [
+        CommonModule,
+        MatSelectModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        ClipboardModule,
+        MatDialogModule,
+    ],
+    templateUrl: './user-management-dialog-form.component.html',
+    styleUrl: './user-management-dialog-form.component.scss'
 })
 export class UserManagementDialogFormComponent implements OnInit {
 

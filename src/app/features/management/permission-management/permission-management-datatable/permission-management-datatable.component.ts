@@ -32,30 +32,29 @@ import { PermissionService } from "@openapi/api/permission.service";
 
 
 @Component({
-	selector: 'app-permission-management-datatable',
-	standalone: true,
-	imports: [
-		MatCell,
-		MatCellDef,
-		MatColumnDef,
-		MatHeaderCell,
-		MatHeaderRow,
-		MatHeaderRowDef,
-		MatIconModule,
-		MatMenuModule,
-		MatButtonModule,
-		MatPaginator,
-		MatProgressBarModule,
-		MatRow,
-		MatRowDef,
-		MatSort,
-		TableWrapperTable,
-		MatMenuTrigger,
-		MatHeaderCellDef,
-		MatNoDataRow,
-	],
-	templateUrl: './permission-management-datatable.component.html',
-	styleUrl: './permission-management-datatable.component.scss'
+    selector: 'app-permission-management-datatable',
+    imports: [
+        MatCell,
+        MatCellDef,
+        MatColumnDef,
+        MatHeaderCell,
+        MatHeaderRow,
+        MatHeaderRowDef,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatPaginator,
+        MatProgressBarModule,
+        MatRow,
+        MatRowDef,
+        MatSort,
+        TableWrapperTable,
+        MatMenuTrigger,
+        MatHeaderCellDef,
+        MatNoDataRow,
+    ],
+    templateUrl: './permission-management-datatable.component.html',
+    styleUrl: './permission-management-datatable.component.scss'
 })
 export class PermissionManagementDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 

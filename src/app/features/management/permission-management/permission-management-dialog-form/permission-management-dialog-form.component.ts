@@ -23,25 +23,24 @@ import { range } from "rxjs";
 import { MatFormFieldModule } from "@angular/material/form-field";
 
 @Component({
-	selector: 'app-permission-management-dialog-form',
-	standalone: true,
-	imports: [
-		CommonModule,
-		MatSelectModule,
-		MatInputModule,
-		MatIconModule,
-		MatButtonModule,
-		MatRadioModule,
-		ReactiveFormsModule,
-		ClipboardModule,
-		MatDialogModule,
-		MatDatepickerModule,
-		MatFormFieldModule,
-		FormsModule
-	],
-	providers: [provideNativeDateAdapter()],
-	templateUrl: './permission-management-dialog-form.component.html',
-	styleUrl: './permission-management-dialog-form.component.scss'
+    selector: 'app-permission-management-dialog-form',
+    imports: [
+        CommonModule,
+        MatSelectModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        ClipboardModule,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        FormsModule
+    ],
+    providers: [provideNativeDateAdapter()],
+    templateUrl: './permission-management-dialog-form.component.html',
+    styleUrl: './permission-management-dialog-form.component.scss'
 })
 export class PermissionManagementDialogFormComponent implements OnInit {
 

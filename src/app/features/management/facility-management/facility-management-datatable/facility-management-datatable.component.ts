@@ -24,30 +24,29 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatPaginator } from "@angular/material/paginator";
 
 @Component({
-	selector: 'app-facility-management-datatable',
-	standalone: true,
-	imports: [
-		MatCell,
-		MatCellDef,
-		MatColumnDef,
-		MatHeaderCell,
-		MatHeaderRow,
-		MatHeaderRowDef,
-		MatIconModule,
-		MatMenuModule,
-		MatProgressBarModule,
-		MatButtonModule,
-		MatRow,
-		MatRowDef,
-		MatSort,
-		TableWrapperTable,
-		MatMenuTrigger,
-		MatHeaderCellDef,
-		MatNoDataRow,
-		MatPaginator
-	],
-	templateUrl: './facility-management-datatable.component.html',
-	styleUrl: './facility-management-datatable.component.scss'
+    selector: 'app-facility-management-datatable',
+    imports: [
+        MatCell,
+        MatCellDef,
+        MatColumnDef,
+        MatHeaderCell,
+        MatHeaderRow,
+        MatHeaderRowDef,
+        MatIconModule,
+        MatMenuModule,
+        MatProgressBarModule,
+        MatButtonModule,
+        MatRow,
+        MatRowDef,
+        MatSort,
+        TableWrapperTable,
+        MatMenuTrigger,
+        MatHeaderCellDef,
+        MatNoDataRow,
+        MatPaginator
+    ],
+    templateUrl: './facility-management-datatable.component.html',
+    styleUrl: './facility-management-datatable.component.scss'
 })
 export class FacilityManagementDatatableComponent implements OnInit, AfterViewInit {
 

@@ -15,21 +15,20 @@ import {
 import { LocationManagementService } from "@app/features/management/location-management/location-management.service";
 
 @Component({
-	selector: 'app-location-management-filters',
-	standalone: true,
-	imports: [
-		CommonModule,
-		MatDialogModule,
-		MatFormFieldModule,
-		MatSelectModule,
-		MatIconModule,
-		MatInputModule,
-		MatButtonModule,
-		MatRadioModule,
-		MatToolbarModule,
-	],
-	templateUrl: './location-management-filters.component.html',
-	styleUrl: './location-management-filters.component.scss'
+    selector: 'app-location-management-filters',
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatIconModule,
+        MatInputModule,
+        MatButtonModule,
+        MatRadioModule,
+        MatToolbarModule,
+    ],
+    templateUrl: './location-management-filters.component.html',
+    styleUrl: './location-management-filters.component.scss'
 })
 export class LocationManagementFiltersComponent {
 

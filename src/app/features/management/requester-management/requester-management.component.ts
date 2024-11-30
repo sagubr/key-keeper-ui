@@ -10,15 +10,14 @@ import {
 } from "@app/features/management/requester-management/requester-management-filters/requester-management-filters.component";
 
 @Component({
-  selector: 'app-requester',
-  standalone: true,
-	imports: [
-		RequesterManagementDatatableComponent,
-		LocationManagementFiltersComponent,
-		RequesterManagementFiltersComponent
-	],
-  templateUrl: './requester-management.component.html',
-  styleUrl: './requester-management.component.scss'
+    selector: 'app-requester',
+    imports: [
+        RequesterManagementDatatableComponent,
+        LocationManagementFiltersComponent,
+        RequesterManagementFiltersComponent
+    ],
+    templateUrl: './requester-management.component.html',
+    styleUrl: './requester-management.component.scss'
 })
 export class RequesterManagementComponent {
 

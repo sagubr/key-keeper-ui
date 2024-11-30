@@ -7,14 +7,13 @@ import {
 } from "@app/features/management/permission-management/permission-management-filters/permission-management-filters.component";
 
 @Component({
-  selector: 'app-permission-management',
-  standalone: true,
-	imports: [
-		PermissionManagementDatatableComponent,
-		PermissionManagementFiltersComponent
-	],
-  templateUrl: './permission-management.component.html',
-  styleUrl: './permission-management.component.scss'
+    selector: 'app-permission-management',
+    imports: [
+        PermissionManagementDatatableComponent,
+        PermissionManagementFiltersComponent
+    ],
+    templateUrl: './permission-management.component.html',
+    styleUrl: './permission-management.component.scss'
 })
 export class PermissionManagementComponent {
 

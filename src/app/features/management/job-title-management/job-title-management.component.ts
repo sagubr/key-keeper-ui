@@ -7,14 +7,13 @@ import {
 } from "@app/features/management/job-title-management/job-title-management-filters/job-title-management-filters.component";
 
 @Component({
-  selector: 'app-job-title-management',
-  standalone: true,
-	imports: [
-		JobTitleManagementDatatableComponent,
-		JobTitleManagementFiltersComponent
-	],
-  templateUrl: './job-title-management.component.html',
-  styleUrl: './job-title-management.component.scss'
+    selector: 'app-job-title-management',
+    imports: [
+        JobTitleManagementDatatableComponent,
+        JobTitleManagementFiltersComponent
+    ],
+    templateUrl: './job-title-management.component.html',
+    styleUrl: './job-title-management.component.scss'
 })
 export class JobTitleManagementComponent {
 

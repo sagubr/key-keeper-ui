@@ -18,21 +18,20 @@ import { ClipboardModule } from "@angular/cdk/clipboard";
 import { RequesterService } from "@openapi/api/requester.service";
 
 @Component({
-  selector: 'app-requester-management-dialog-form',
-  standalone: true,
-	imports: [
-		CommonModule,
-		MatSelectModule,
-		MatInputModule,
-		MatIconModule,
-		MatButtonModule,
-		MatRadioModule,
-		ReactiveFormsModule,
-		ClipboardModule,
-		MatDialogModule,
-	],
-  templateUrl: './requester-management-dialog-form.component.html',
-  styleUrl: './requester-management-dialog-form.component.scss'
+    selector: 'app-requester-management-dialog-form',
+    imports: [
+        CommonModule,
+        MatSelectModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        ClipboardModule,
+        MatDialogModule,
+    ],
+    templateUrl: './requester-management-dialog-form.component.html',
+    styleUrl: './requester-management-dialog-form.component.scss'
 })
 export class RequesterManagementDialogFormComponent implements OnInit{
 

@@ -11,20 +11,19 @@ import { JobTitle } from "@openapi/model/jobTitle";
 import { JobTitleService } from "@openapi/api/jobTitle.service";
 
 @Component({
-	selector: 'app-job-title-management-dialog-form',
-	standalone: true,
-	imports: [
-		ReactiveFormsModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatDatepickerModule,
-		MatNativeDateModule,
-		MatButtonModule,
-		MatRadioModule,
-		MatDialogModule
-	],
-	templateUrl: './job-title-management-dialog-form.component.html',
-	styleUrl: './job-title-management-dialog-form.component.scss'
+    selector: 'app-job-title-management-dialog-form',
+    imports: [
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        MatRadioModule,
+        MatDialogModule
+    ],
+    templateUrl: './job-title-management-dialog-form.component.html',
+    styleUrl: './job-title-management-dialog-form.component.scss'
 })
 export class JobTitleManagementDialogFormComponent implements OnInit {
 

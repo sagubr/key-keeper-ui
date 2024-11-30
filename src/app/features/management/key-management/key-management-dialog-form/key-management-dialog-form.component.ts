@@ -14,23 +14,22 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { KeyService } from "@openapi/api/key.service";
 
 @Component({
-  selector: 'app-key-management-dialog-form',
-  standalone: true,
-	imports: [
-		ReactiveFormsModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatDatepickerModule,
-		MatNativeDateModule,
-		MatButtonModule,
-		MatRadioModule,
-		MatDialogModule,
-		MatIconModule,
-		MatMenuModule,
-		MatProgressBarModule,
-	],
-  templateUrl: './key-management-dialog-form.component.html',
-  styleUrl: './key-management-dialog-form.component.scss'
+    selector: 'app-key-management-dialog-form',
+    imports: [
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        MatRadioModule,
+        MatDialogModule,
+        MatIconModule,
+        MatMenuModule,
+        MatProgressBarModule,
+    ],
+    templateUrl: './key-management-dialog-form.component.html',
+    styleUrl: './key-management-dialog-form.component.scss'
 })
 export class KeyManagementDialogFormComponent implements OnInit {
 

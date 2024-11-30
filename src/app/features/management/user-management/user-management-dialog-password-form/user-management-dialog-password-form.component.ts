@@ -20,19 +20,18 @@ import { MatRadioModule } from '@angular/material/radio';
 import { UserDto } from "@openapi/model/userDto";
 
 @Component({
-  selector: 'app-user-management-dialog-password-form',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatSelectModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatRadioModule,
-    ReactiveFormsModule,
-  ],
-  templateUrl: './user-management-dialog-password-form.component.html',
-  styleUrl: './user-management-dialog-password-form.component.scss',
+    selector: 'app-user-management-dialog-password-form',
+    imports: [
+        CommonModule,
+        MatSelectModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+    ],
+    templateUrl: './user-management-dialog-password-form.component.html',
+    styleUrl: './user-management-dialog-password-form.component.scss'
 })
 export class UserManagementDialogPasswordFormComponent {
   form = new FormGroup({

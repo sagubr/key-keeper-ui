@@ -10,18 +10,17 @@ import {CommonModule} from '@angular/common';
 import {} from '@angular/common/http';
 
 @Component({
-	selector: 'app-login',
-	standalone: true,
-	imports: [
-		CommonModule,
-		MatInputModule,
-		MatButtonModule,
-		MatCardModule,
-		MatFormFieldModule,
-		FormsModule,
-	],
-	templateUrl: './login.component.html',
-	styleUrl: './login.component.scss',
+    selector: 'app-login',
+    imports: [
+        CommonModule,
+        MatInputModule,
+        MatButtonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        FormsModule,
+    ],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 	username = '';

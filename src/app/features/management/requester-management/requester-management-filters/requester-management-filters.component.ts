@@ -14,21 +14,20 @@ import {
 } from "@app/features/management/requester-management/requester-management-dialog-form/requester-management-dialog-form.component";
 
 @Component({
-	selector: 'app-requester-management-filters',
-	standalone: true,
-	imports: [
-		CommonModule,
-		MatDialogModule,
-		MatFormFieldModule,
-		MatSelectModule,
-		MatIconModule,
-		MatInputModule,
-		MatButtonModule,
-		MatRadioModule,
-		MatToolbarModule,
-	],
-	templateUrl: './requester-management-filters.component.html',
-	styleUrl: './requester-management-filters.component.scss'
+    selector: 'app-requester-management-filters',
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatIconModule,
+        MatInputModule,
+        MatButtonModule,
+        MatRadioModule,
+        MatToolbarModule,
+    ],
+    templateUrl: './requester-management-filters.component.html',
+    styleUrl: './requester-management-filters.component.scss'
 })
 export class RequesterManagementFiltersComponent {
 

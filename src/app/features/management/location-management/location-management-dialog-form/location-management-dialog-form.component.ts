@@ -20,21 +20,20 @@ import {
 } from "@app/features/management/facility-management/facility-management-dialog-form/facility-management-dialog-form.component";
 
 @Component({
-	selector: 'app-location-management-dialog-form',
-	standalone: true,
-	imports: [
-		CommonModule,
-		MatSelectModule,
-		MatInputModule,
-		MatIconModule,
-		MatButtonModule,
-		MatRadioModule,
-		ReactiveFormsModule,
-		ClipboardModule,
-		MatDialogModule,
-	],
-	templateUrl: './location-management-dialog-form.component.html',
-	styleUrl: './location-management-dialog-form.component.scss'
+    selector: 'app-location-management-dialog-form',
+    imports: [
+        CommonModule,
+        MatSelectModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        ClipboardModule,
+        MatDialogModule,
+    ],
+    templateUrl: './location-management-dialog-form.component.html',
+    styleUrl: './location-management-dialog-form.component.scss'
 })
 export class LocationManagementDialogFormComponent implements OnInit {
 

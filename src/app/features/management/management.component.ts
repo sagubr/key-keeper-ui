@@ -18,20 +18,19 @@ import {
 } from "@app/features/management/job-title-management/job-title-management.component";
 
 @Component({
-	selector: 'app-management',
-	standalone: true,
-	imports: [
-		CommonModule,
-		MatTabsModule,
-		MatIconModule,
-		MatProgressBarModule,
-		RouterLink,
-		UserManagementComponent,
-		LocationManagementComponent,
-		JobTitleManagementComponent,
-	],
-	templateUrl: './management.component.html',
-	styleUrl: './management.component.scss',
+    selector: 'app-management',
+    imports: [
+        CommonModule,
+        MatTabsModule,
+        MatIconModule,
+        MatProgressBarModule,
+        RouterLink,
+        UserManagementComponent,
+        LocationManagementComponent,
+        JobTitleManagementComponent,
+    ],
+    templateUrl: './management.component.html',
+    styleUrl: './management.component.scss'
 })
 export class ManagementComponent {
 }

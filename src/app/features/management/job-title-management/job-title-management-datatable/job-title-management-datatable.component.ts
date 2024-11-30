@@ -24,31 +24,30 @@ import { MatDialog } from "@angular/material/dialog";
 import { JobTitleManagementService } from "@app/features/management/job-title-management/job-title-management.service";
 
 @Component({
-	selector: 'app-job-title-management-datatable',
-	standalone: true,
-	imports: [
-		MatCell,
-		MatCellDef,
-		MatColumnDef,
-		MatHeaderCell,
-		MatHeaderRow,
-		MatHeaderRowDef,
-		MatIcon,
-		MatIconButton,
-		MatMenu,
-		MatMenuItem,
-		MatPaginator,
-		MatProgressBar,
-		MatRow,
-		MatRowDef,
-		MatSort,
-		TableWrapperTable,
-		MatMenuTrigger,
-		MatHeaderCellDef,
-		MatNoDataRow
-	],
-	templateUrl: './job-title-management-datatable.component.html',
-	styleUrl: './job-title-management-datatable.component.scss'
+    selector: 'app-job-title-management-datatable',
+    imports: [
+        MatCell,
+        MatCellDef,
+        MatColumnDef,
+        MatHeaderCell,
+        MatHeaderRow,
+        MatHeaderRowDef,
+        MatIcon,
+        MatIconButton,
+        MatMenu,
+        MatMenuItem,
+        MatPaginator,
+        MatProgressBar,
+        MatRow,
+        MatRowDef,
+        MatSort,
+        TableWrapperTable,
+        MatMenuTrigger,
+        MatHeaderCellDef,
+        MatNoDataRow
+    ],
+    templateUrl: './job-title-management-datatable.component.html',
+    styleUrl: './job-title-management-datatable.component.scss'
 })
 export class JobTitleManagementDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 

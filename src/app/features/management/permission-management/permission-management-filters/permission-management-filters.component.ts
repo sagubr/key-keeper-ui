@@ -20,8 +20,7 @@ import {
 } from "@app/features/management/permission-management/permission-management.service";
 
 @Component({
-  selector: 'app-permission-management-filters',
-  standalone: true,
+    selector: 'app-permission-management-filters',
     imports: [
         MatButton,
         MatFormField,
@@ -32,8 +31,8 @@ import {
         MatToolbar,
         MatToolbarRow
     ],
-  templateUrl: './permission-management-filters.component.html',
-  styleUrl: './permission-management-filters.component.scss'
+    templateUrl: './permission-management-filters.component.html',
+    styleUrl: './permission-management-filters.component.scss'
 })
 export class PermissionManagementFiltersComponent {
 

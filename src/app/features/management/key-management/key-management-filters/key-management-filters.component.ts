@@ -14,21 +14,20 @@ import {
 import { KeyManagementService } from "@app/features/management/key-management/key-management.service";
 
 @Component({
-	selector: 'app-key-management-filters',
-	standalone: true,
-	imports: [
-		CommonModule,
-		MatDialogModule,
-		MatFormFieldModule,
-		MatSelectModule,
-		MatIconModule,
-		MatInputModule,
-		MatButtonModule,
-		MatRadioModule,
-		MatToolbarModule,
-	],
-	templateUrl: './key-management-filters.component.html',
-	styleUrl: './key-management-filters.component.scss'
+    selector: 'app-key-management-filters',
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatIconModule,
+        MatInputModule,
+        MatButtonModule,
+        MatRadioModule,
+        MatToolbarModule,
+    ],
+    templateUrl: './key-management-filters.component.html',
+    styleUrl: './key-management-filters.component.scss'
 })
 export class KeyManagementFiltersComponent {
 	constructor(

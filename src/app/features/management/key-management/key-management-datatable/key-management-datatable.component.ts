@@ -33,30 +33,29 @@ import {
 import { KeyManagementService } from "@app/features/management/key-management/key-management.service";
 
 @Component({
-	selector: 'app-key-management-datatable',
-	standalone: true,
-	imports: [
-		MatCell,
-		MatCellDef,
-		MatColumnDef,
-		MatHeaderCell,
-		MatHeaderRow,
-		MatHeaderRowDef,
-		MatIconModule,
-		MatMenuModule,
-		MatProgressBarModule,
-		MatButtonModule,
-		MatRow,
-		MatRowDef,
-		MatSort,
-		TableWrapperTable,
-		MatMenuTrigger,
-		MatHeaderCellDef,
-		MatNoDataRow,
-		MatPaginator
-	],
-	templateUrl: './key-management-datatable.component.html',
-	styleUrl: './key-management-datatable.component.scss'
+    selector: 'app-key-management-datatable',
+    imports: [
+        MatCell,
+        MatCellDef,
+        MatColumnDef,
+        MatHeaderCell,
+        MatHeaderRow,
+        MatHeaderRowDef,
+        MatIconModule,
+        MatMenuModule,
+        MatProgressBarModule,
+        MatButtonModule,
+        MatRow,
+        MatRowDef,
+        MatSort,
+        TableWrapperTable,
+        MatMenuTrigger,
+        MatHeaderCellDef,
+        MatNoDataRow,
+        MatPaginator
+    ],
+    templateUrl: './key-management-datatable.component.html',
+    styleUrl: './key-management-datatable.component.scss'
 })
 export class KeyManagementDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 

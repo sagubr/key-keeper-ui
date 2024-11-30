@@ -17,24 +17,23 @@ import {
 } from "@app/features/management/facility-management/facility-management-datatable/facility-management-datatable.component";
 
 @Component({
-  selector: 'app-facility-management-dialog-form',
-  standalone: true,
-	imports: [
-		ReactiveFormsModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatDatepickerModule,
-		MatNativeDateModule,
-		MatButtonModule,
-		MatRadioModule,
-		MatDialogModule,
-		MatIconModule,
-		MatMenuModule,
-		MatProgressBarModule,
-		FacilityManagementDatatableComponent
-	],
-  templateUrl: './facility-management-dialog-form.component.html',
-  styleUrl: './facility-management-dialog-form.component.scss'
+    selector: 'app-facility-management-dialog-form',
+    imports: [
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        MatRadioModule,
+        MatDialogModule,
+        MatIconModule,
+        MatMenuModule,
+        MatProgressBarModule,
+        FacilityManagementDatatableComponent
+    ],
+    templateUrl: './facility-management-dialog-form.component.html',
+    styleUrl: './facility-management-dialog-form.component.scss'
 })
 export class FacilityManagementDialogFormComponent implements OnInit {
 

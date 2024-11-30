@@ -10,11 +10,10 @@ import {
 } from "@app/features/management/user-management/user-management-filters/user-management-filters.component";
 
 @Component({
-	selector: 'app-user-management',
-	standalone: true,
-	imports: [UserManagementDatatableComponent, UserManagementFiltersComponent],
-	templateUrl: './user-management.component.html',
-	styleUrl: './user-management.component.scss',
+    selector: 'app-user-management',
+    imports: [UserManagementDatatableComponent, UserManagementFiltersComponent],
+    templateUrl: './user-management.component.html',
+    styleUrl: './user-management.component.scss'
 })
 export class UserManagementComponent {
 

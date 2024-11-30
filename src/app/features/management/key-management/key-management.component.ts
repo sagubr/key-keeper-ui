@@ -9,14 +9,13 @@ import {
 } from "@app/features/management/key-management/key-management-filters/key-management-filters.component";
 
 @Component({
-	selector: 'app-key-management',
-	standalone: true,
-	imports: [
-		KeyManagementDatatableComponent,
-		KeyManagementFiltersComponent
-	],
-	templateUrl: './key-management.component.html',
-	styleUrl: './key-management.component.scss'
+    selector: 'app-key-management',
+    imports: [
+        KeyManagementDatatableComponent,
+        KeyManagementFiltersComponent
+    ],
+    templateUrl: './key-management.component.html',
+    styleUrl: './key-management.component.scss'
 })
 export class KeyManagementComponent {
 

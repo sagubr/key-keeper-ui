@@ -21,21 +21,20 @@ import { UserManagementService } from '../user-management.service';
 import { MatToolbarModule } from "@angular/material/toolbar";
 
 @Component({
-	selector: 'app-user-management-filters',
-	standalone: true,
-	imports: [
-		CommonModule,
-		MatDialogModule,
-		MatFormFieldModule,
-		MatSelectModule,
-		MatIconModule,
-		MatInputModule,
-		MatButtonModule,
-		MatRadioModule,
-		MatToolbarModule,
-	],
-	templateUrl: './user-management-filters.component.html',
-	styleUrl: './user-management-filters.component.scss',
+    selector: 'app-user-management-filters',
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatIconModule,
+        MatInputModule,
+        MatButtonModule,
+        MatRadioModule,
+        MatToolbarModule,
+    ],
+    templateUrl: './user-management-filters.component.html',
+    styleUrl: './user-management-filters.component.scss'
 })
 export class UserManagementFiltersComponent {
 

@@ -1,0 +1,35 @@
+<div>
+	<h1>Gerenciamento de Registros</h1>
+</div>
+
+<div class="content">
+	<mat-tab-group mat-stretch-tabs [class]="'stretched-tabs mat-elevation-z2 selected-tab-{{tabGroup.selectedIndex}}'"
+				   [color]="'warn'">
+
+		<mat-tab [routerLink]="'users'" routerLinkActive="active-link">
+			<ng-template mat-tab-label>
+				<mat-icon class="tab-icon">people</mat-icon>
+				Usuários
+			</ng-template>
+			<app-user-management></app-user-management>
+		</mat-tab>
+
+		<mat-tab>
+			<ng-template mat-tab-label>
+				<mat-icon class="tab-icon">room_preferences</mat-icon>
+				Salas
+			</ng-template>
+			<app-location-management></app-location-management>
+
+		</mat-tab>
+
+		<mat-tab>
+			<ng-template mat-tab-label>
+				<mat-icon class="tab-icon">badge</mat-icon>
+				Cargos
+			</ng-template>
+			<app-job-title-management></app-job-title-management>
+		</mat-tab>
+
+	</mat-tab-group>
+</div>

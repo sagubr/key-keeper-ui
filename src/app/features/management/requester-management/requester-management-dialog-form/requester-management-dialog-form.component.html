@@ -1,0 +1,67 @@
+<div mat-dialog-title>
+	<h1>Registro</h1>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+	<mat-dialog-content>
+		<h2 class="subtitle">Informações Pessoais</h2>
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Nome Completo</mat-label>
+					<input matInput maxlength="256" formControlName="name">
+					<mat-error *ngIf="form.get('name')?.invalid">Você deve inserir um valor</mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>E-mail</mat-label>
+					<input matInput maxlength="256" formControlName="email">
+					<mat-error *ngIf="form.get('email')?.invalid">Você deve inserir um valor</mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Registro/Identificação</mat-label>
+					<input matInput maxlength="256" formControlName="register">
+					<mat-error *ngIf="form.get('register')?.invalid">Você deve inserir um valor</mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Tipo de Cargo</mat-label>
+					<mat-select formControlName="jobTitle" [compareWith]="compareById" >
+						@for (element of jobTitles; track $index) {
+							<mat-option [value]="element">{{ element.name }}</mat-option>
+						}
+					</mat-select>
+					<mat-error *ngIf="form.get('jobTitle')?.invalid">Você deve inserir um valor</mat-error>
+				</mat-form-field>
+			</div>
+			<div class="col">
+				<button mat-button type="button" class="button" aria-label="Recarregar">
+					<mat-icon>add</mat-icon>
+				</button>
+			</div>
+		</div>
+
+	</mat-dialog-content>
+	<mat-dialog-actions align="end">
+		<button mat-raised-button type="submit" [disabled]="form.invalid">
+			{{ data ? 'Atualizar' : 'Salvar' }}
+		</button>
+		<button mat-raised-button type="button" [mat-dialog-close]="true">
+			Cancelar
+		</button>
+	</mat-dialog-actions>
+</form>
+

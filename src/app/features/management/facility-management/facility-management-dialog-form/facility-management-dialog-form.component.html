@@ -1,0 +1,28 @@
+<div mat-dialog-title>
+	<h1>Registro</h1>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+	<mat-dialog-content>
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Instalação</mat-label>
+					<input matInput type="text" placeholder="Nome da instalação" formControlName="name">
+				</mat-form-field>
+			</div>
+		</div>
+		<app-facility-management-datatable
+			(row)="onRowClick($event)">
+		</app-facility-management-datatable>
+	</mat-dialog-content>
+
+	<mat-dialog-actions align="end">
+		<button mat-raised-button type="submit">
+			{{ isEditing ? 'Atualizar' : 'Salvar' }}
+		</button>
+		<button mat-raised-button type="button" [mat-dialog-close]="false">
+			Cancelar
+		</button>
+	</mat-dialog-actions>
+</form>

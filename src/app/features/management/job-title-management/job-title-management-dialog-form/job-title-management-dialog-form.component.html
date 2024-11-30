@@ -1,0 +1,25 @@
+<div mat-dialog-title>
+	<h1>Registro</h1>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+	<mat-dialog-content>
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Cargo</mat-label>
+					<input matInput type="text" placeholder="Nome do cargo" formControlName="name">
+				</mat-form-field>
+			</div>
+		</div>
+	</mat-dialog-content>
+	<mat-dialog-actions align="end">
+		<button mat-raised-button type="submit">
+			{{ data ? 'Atualizar' : 'Salvar' }}
+		</button>
+		<button mat-raised-button type="button" [mat-dialog-close]="false">
+			Cancelar
+		</button>
+	</mat-dialog-actions>
+</form>
+

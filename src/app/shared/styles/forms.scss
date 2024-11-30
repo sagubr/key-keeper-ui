@@ -1,0 +1,63 @@
+$font-size-label: 1rem;
+$input-padding: 4px;
+$button-margin: 8px;
+$input-background-color: #f0f0f0;
+
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	margin-right: -15px;
+	margin-left: -15px;
+}
+
+.col {
+	flex: 1 0 0%;
+	max-width: 100%;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+.col-6 {
+	flex: 0 0 50%;
+	max-width: 50%;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+.col-5 {
+	flex: 0 0 41.66667%; /* Aproximadamente 5/12 */
+	max-width: 41.66667%;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+input[matInput] {
+	font-size: 1rem;
+}
+
+button[type="submit"] {
+	background-color: #4caf50;
+	color: white;
+}
+
+/**
+* Sobreescrita estilos globais Angular Material
+ */
+
+mat-radio-group {
+	flex-direction: row;
+}
+
+mat-radio-button {
+	font-size: 1rem;
+}
+
+mat-dialog-actions {
+	padding: 20px 24px;
+}
+
+mat-hint {
+	font-size: 12px;
+	color: #888;
+}
+

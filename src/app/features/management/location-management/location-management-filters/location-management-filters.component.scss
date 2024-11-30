@@ -1,0 +1,26 @@
+.toolbar {
+	margin-top: 10px;
+}
+
+.toolbar-row {
+	height: 78px;
+	align-items: flex-start;
+}
+
+.spacer {
+	flex: 1 1 auto;
+}
+
+.button {
+	height: 56px;
+}
+
+@media (max-width: 600px) {
+	.toolbar-form {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+}
+
+

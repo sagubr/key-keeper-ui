@@ -1,0 +1,12 @@
+<mat-sidenav #snav [mode]="'side'" [opened]="true">
+	<mat-nav-list>
+		@for (option of menuOptions; track $index) {
+			<mat-list-item [routerLink]="option.route" routerLinkActive="active">
+				<mat-icon matListIcon>{{ option.icon }}</mat-icon>
+				<span matLine class="title">{{ option.title }}</span>
+			</mat-list-item>
+		}
+	</mat-nav-list>
+</mat-sidenav>
+
+

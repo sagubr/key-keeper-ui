@@ -1,0 +1,27 @@
+<div class="content">
+	<div class="title">
+		Gerenciamento de Registros
+	</div>
+
+	<mat-tab-group mat-stretch-tabs [class]="'stretched-tabs mat-elevation-z2 selected-tab-{{tabGroup.selectedIndex}}'"
+				   [color]="'warn'">
+
+		<mat-tab>
+			<ng-template mat-tab-label>
+				<mat-icon class="tab-icon">room_preferences</mat-icon>
+				Solicitantes
+			</ng-template>
+			<app-requester-management></app-requester-management>
+
+		</mat-tab>
+
+		<mat-tab>
+			<ng-template mat-tab-label>
+				<mat-icon class="tab-icon">badge</mat-icon>
+				Permissões
+			</ng-template>
+			<app-permission-management></app-permission-management>
+		</mat-tab>
+
+	</mat-tab-group>
+</div>

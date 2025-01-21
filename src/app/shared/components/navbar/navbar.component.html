@@ -1,0 +1,14 @@
+<mat-toolbar class="toolbar">
+	<button mat-icon-button (click)="toggle.emit()">
+		<mat-icon>menu</mat-icon>
+	</button>
+	<span>{{ title }}</span>
+	<span class="spacer"></span>
+	<button mat-icon-button class="icon favorite-icon" aria-label="Example icon-button with heart icon">
+		<mat-icon matBadge="15" matBadgeColor="primary">notifications</mat-icon>
+	</button>
+	<span>Gustavo Garcia</span>
+	<button mat-icon-button class="icon" aria-label="Example icon-button with share icon">
+		<mat-icon>arrow_drop_down</mat-icon>
+	</button>
+</mat-toolbar>

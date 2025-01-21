@@ -1,0 +1,41 @@
+@use '../../../../app/shared/styles/forms';
+
+$black: #080a0b;
+
+.container {
+	margin: 16px;
+}
+
+.form-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.dialog-header {
+	display: flex;
+
+	button {
+		margin-left: auto;
+	}
+}
+
+.title {
+	font-weight: bold;
+	font-size: 1.4rem;
+	color: $black;
+}
+
+.subtitle {
+	font-weight: bold;
+	font-size: 1.2rem;
+	color: $black;
+}
+
+.dialog-footer {
+	margin: 16px;
+}
+
+.button {
+	height: 56px;
+}
+

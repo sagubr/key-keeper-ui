@@ -63,5 +63,6 @@ export interface Columns<T> {
 export enum ColumnType {
 	TEXT = 'TEXT',
 	DATE = 'DATE',
+	DATETIME = 'DATETIME',
 	MONEY = 'MONEY',
 }

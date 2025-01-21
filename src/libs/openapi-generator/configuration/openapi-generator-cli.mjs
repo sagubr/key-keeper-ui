@@ -22,4 +22,4 @@ async function generateAPI() {
   }
 }
 
-generateAPI();
+generateAPI().then(r => r);

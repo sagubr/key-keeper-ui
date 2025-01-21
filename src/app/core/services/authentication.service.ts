@@ -24,7 +24,7 @@ export class AuthenticationService {
 			map((response) => {
 				const token = response.access_token;
 				this.setToken(token);
-				this.router.navigate(['/manager']);
+				this.router.navigate(['/recursos']);
 				return token;
 			}),
 			catchError(() => {

@@ -1,26 +1,45 @@
-<div class="login-container">
-    <mat-card class="login-card">
-        <mat-card-title>Login</mat-card-title>
-        <mat-card-content>
-            <form (ngSubmit)="login()">
-                <mat-form-field appearance="fill" class="full-width">
-                    <mat-label>Usuário</mat-label>
-                    <input matInput [(ngModel)]="username" name="username" required />
-                </mat-form-field>
+<div class="login-page">
+	<div class="login-banner">
+		<div class="banner-content">
+			<img src="/icon.svg" alt="Guardião de Chaves Logo"/>
+			<h1>Guardião de Chaves</h1>
+			<p>Gestão e Controle de Acesso</p>
+		</div>
+	</div>
 
-                <mat-form-field appearance="fill" class="full-width">
-                    <mat-label>Senha</mat-label>
-                    <input matInput type="password" [(ngModel)]="password" name="password" required />
-                </mat-form-field>
+	<div class="login-form">
+		<mat-card>
+			<mat-card-title>Autenticação</mat-card-title>
+			<mat-card-content>
+				<!--\\TODO: Adicionar form builder -->
+				<form (ngSubmit)="login()">
+					<mat-form-field appearance="outline" class="full-width">
+						<mat-label>Nome de usuário</mat-label>
+						<input matInput [(ngModel)]="username" name="username" placeholder="nome.sobrenome" required/>
+					</mat-form-field>
 
-                <button mat-raised-button color="primary" type="submit">
-                    Entrar
-                </button>
+					<mat-form-field appearance="outline" class="full-width">
+						<mat-label>Senha</mat-label>
+						<input matInput type="password" [(ngModel)]="password" name="password" [type]="hide ? 'password' : 'text'"
+							   placeholder="Insira sua senha" required/>
+						<button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Exibir senha'"
+								[attr.aria-pressed]="hide">
+							<mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+						</button>
+					</mat-form-field>
 
-                <div *ngIf="errorMessage" class="error-message">
-                    {{ errorMessage }}
-                </div>
-            </form>
-        </mat-card-content>
-    </mat-card>
+					<div *ngIf="errorMessage" class="error-message">
+						{{ errorMessage }}
+					</div>
+
+					<a href="#" class="forgot-password">esqueceu a senha?</a>
+
+					<button mat-raised-button color="primary" type="submit" class="login-button">
+						Login
+					</button>
+
+				</form>
+			</mat-card-content>
+		</mat-card>
+	</div>
 </div>

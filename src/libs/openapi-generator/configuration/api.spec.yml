@@ -15,14 +15,14 @@ tags:
       description: Operações relacionadas a entidade cargo
     - name: Location
       description: Operações relacionadas a entidade Localização
+    - name: Permission
+      description: Operações relacionadas a entidade Permissão
     - name: Facility
       description: Operações relacionadas a entidade lugar
     - name: Key
       description: Operações relacionadas a entidade Chaves
     - name: LocationType
       description: Operações relacionadas a entidade Tipos de Localização
-    - name: Permission
-      description: Operações relacionadas a entidade Permissão
     - name: Reservation
       description: Operações relacionadas a entidade reservas
 paths:
@@ -460,6 +460,43 @@ paths:
                     content:
                         application/json:
                             schema: {}
+    /api/permissions/requester:
+        post:
+            tags:
+                - Permission
+            summary: Obter todas as permissões por solicitante
+            operationId: findByRequester
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Requester"
+                required: true
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Permission"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
     /api/permissions/save:
         post:
             tags:
@@ -566,7 +603,110 @@ paths:
             tags:
                 - Reservation
             summary: Obter todas as reservas
-            operationId: getAllReservations
+            operationId: findAllReservation
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Reservation"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+    /api/reservations/active:
+        post:
+            tags:
+                - Reservation
+            summary: Obter todas as reservas
+            operationId: updateActiveReservation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Reservation"
+                required: true
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+    /api/reservations/save:
+        post:
+            tags:
+                - Reservation
+            summary: Obter todas as reservas
+            operationId: addReservation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Reservation"
+                required: true
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Reservation"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+    /api/reservations/status:
+        get:
+            tags:
+                - Reservation
+            summary: Obter todas as reservas
+            operationId: findAllByStatusReservation
+            parameters:
+                - name: status
+                  in: query
+                  required: true
+                  schema:
+                      $ref: "#/components/schemas/Status"
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -814,9 +954,9 @@ components:
         Status:
             type: string
             enum:
-                - RESERVATION
-                - AGENDADO
-                - AND_PROGRESS
+                - LOAN
+                - SCHEDULED
+                - COMPLETED
         User:
             required:
                 - email

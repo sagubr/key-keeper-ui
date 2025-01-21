@@ -11,6 +11,9 @@
 					@case (ColumnType.DATE) {
 						{{ column.cell(element) | date:'dd/MM/yyyy' }}
 					}
+					@case (ColumnType.DATETIME) {
+						{{ column.cell(element) | date:'dd/MM/yyyy \'às\' HH:mm' }}
+					}
 					@case (ColumnType.MONEY) {
 						{{ column.cell(element) | currency }}
 					}

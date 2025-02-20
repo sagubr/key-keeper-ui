@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
-import { RouterLink } from "@angular/router";
-import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatSidenav, MatSidenavModule } from "@angular/material/sidenav";
 import { CommonModule } from "@angular/common";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { RouterLink, RouterOutlet } from "@angular/router";
 
 @Component({
 	selector: 'app-sidenav',
@@ -19,14 +20,23 @@ import { MatButtonModule } from "@angular/material/button";
 		MatToolbarModule,
 		MatButtonModule,
 		MatIconModule,
+		MatExpansionModule,
+		RouterOutlet,
 		RouterLink,
-
 	],
 	templateUrl: './sidenav.component.html',
 	styleUrl: './sidenav.component.scss'
 })
 export class SidenavComponent {
-	menuOptions: MenuOptions[] = MENU_OPTIONS;
+
+	@ViewChild('drawer') sidenav!: MatSidenav;
+	opened = true;
+	title = 'Guardião de Chaves';
+	menuOptions = MENU_OPTIONS;
+
+	toggleDrawer(): void {
+		this.opened = !this.opened;
+	}
 }
 
 export interface MenuOptions {

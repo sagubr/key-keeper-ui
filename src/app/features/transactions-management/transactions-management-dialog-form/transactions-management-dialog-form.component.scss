@@ -11,8 +11,14 @@ $black: #080a0b;
 	flex-direction: column;
 }
 
+.row {
+	display: flex;
+	margin-bottom: 16px;
+}
+
 .dialog-header {
 	display: flex;
+	padding: 10px;
 
 	button {
 		margin-left: auto;
@@ -34,8 +40,3 @@ $black: #080a0b;
 .dialog-footer {
 	margin: 16px;
 }
-
-.button {
-	height: 56px;
-}
-

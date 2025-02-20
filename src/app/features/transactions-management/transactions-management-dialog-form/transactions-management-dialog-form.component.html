@@ -1,5 +1,8 @@
-<div mat-dialog-title>
-	<h1>Registro</h1>
+<div class="dialog-header">
+	<h2 mat-dialog-title>Informações do Empréstimo</h2>
+	<button mat-icon-button mat-dialog-close class="close-button">
+		<mat-icon>close</mat-icon>
+	</button>
 </div>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -17,22 +20,6 @@
 						</mat-option>
 					</mat-select>
 					<mat-error *ngIf="form.get('requester')?.invalid">Você deve inserir um valor</mat-error>
-				</mat-form-field>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<mat-form-field appearance="outline" class="full-width">
-					<mat-label>Permissão</mat-label>
-					<mat-select
-						formControlName="permission"
-						[compareWith]="compareById"
-						[disabled]="!this.form.get('permission')">
-						<mat-option *ngFor="let element of permission" [value]="element">
-							{{ element.location.name }} - {{ element.location.facility.name }}
-						</mat-option>
-					</mat-select>
-					<mat-error *ngIf="form.get('permission')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
 		</div>
@@ -92,11 +79,43 @@
 				</mat-form-field>
 			</div>
 		</div>
+
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Status</mat-label>
+					<mat-select formControlName="status" [compareWith]="compareById">
+						@for (element of status; track $index) {
+							<mat-option [value]="element.value">{{ element.label }}</mat-option>
+						}
+					</mat-select>
+					<mat-error *ngIf="form.get('status')?.invalid">Você deve inserir um valor</mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Permissão</mat-label>
+					<mat-select
+						formControlName="permission"
+						[compareWith]="compareById"
+						[disabled]="!this.form.get('permission')">
+						<mat-option *ngFor="let element of permission" [value]="element">
+							{{ element.location.name }} - {{ element.location.facility.name }}
+						</mat-option>
+					</mat-select>
+					<mat-error *ngIf="form.get('permission')?.invalid">Você deve inserir um valor</mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+
 	</mat-dialog-content>
 
 	<mat-dialog-actions align="end">
 		<button mat-raised-button type="submit">
-			{{ data ? 'Atualizar' : 'Salvar' }}
+			{{ data ? 'Salvar' : 'Salvar' }}
 		</button>
 		<button mat-raised-button type="button" [mat-dialog-close]="true">
 			Cancelar

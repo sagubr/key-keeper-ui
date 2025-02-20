@@ -50,6 +50,11 @@ import { MatRadioModule } from "@angular/material/radio";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { Status } from "@openapi/model/status";
 
+export interface StatusEnum {
+	value?: Status,
+	label?: string
+}
+
 @Component({
 	selector: 'app-transactions-management-dialog-form',
 	providers: [provideNativeDateAdapter()],
@@ -80,6 +85,16 @@ export class TransactionsManagementDialogFormComponent implements OnInit {
 	reservation: Reservation[] = [];
 	permission: Permission[] = [];
 	requester: Requester[] = [];
+	status: StatusEnum[] = [
+		{
+			value: Status.Loan,
+			label: 'EMPRÉSTIMO'
+		},
+		{
+			value: Status.Scheduled,
+			label: "RESERVADO"
+		}
+	]
 	permissionsEnabled = false;
 
 	constructor(

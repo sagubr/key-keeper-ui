@@ -1,12 +1,49 @@
-<mat-sidenav #snav [mode]="'side'" [opened]="true">
-	<mat-nav-list>
-		@for (option of menuOptions; track $index) {
-			<mat-list-item [routerLink]="option.route" routerLinkActive="active">
+<mat-toolbar color="primary" class="toolbar">
+	<button mat-icon-button (click)="toggleDrawer()">
+		<mat-icon>menu</mat-icon>
+	</button>
+	<span>{{ title }}</span>
+	<span class="spacer"></span>
+	<button mat-icon-button class="icon favorite-icon" aria-label="Example icon-button with heart icon">
+		<mat-icon matBadge="15" matBadgeColor="primary">notifications</mat-icon>
+	</button>
+	<span>Gustavo Garcia</span>
+	<button mat-icon-button class="icon" aria-label="Example icon-button with share icon">
+		<mat-icon>arrow_drop_down</mat-icon>
+	</button>
+</mat-toolbar>
+
+<mat-drawer-container class="sidenav-container" autosize>
+	<!-- Menu Lateral -->
+	<mat-drawer class="sidenav" mode="side" [ngClass]="{'narrow': !opened}" opened>
+		<mat-nav-list>
+			<mat-list-item *ngFor="let option of menuOptions" [routerLink]="option.route" routerLinkActive="active">
 				<mat-icon matListIcon>{{ option.icon }}</mat-icon>
-				<span matLine class="title">{{ option.title }}</span>
+				<span *ngIf="opened" matLine class="title">{{ option.title }}</span>
 			</mat-list-item>
-		}
-	</mat-nav-list>
-</mat-sidenav>
 
+			<mat-expansion-panel class="collapse" *ngIf="opened">
+				<mat-expansion-panel-header>
+					<mat-icon>settings</mat-icon>
+					<mat-panel-title>Configuração</mat-panel-title>
+				</mat-expansion-panel-header>
+				<mat-nav-list>
+					<mat-list-item routerLink="/configuracoes/definicoes">
+						<mat-icon matListIcon>settings</mat-icon>
+						<span *ngIf="opened" matLine>Parametrizações</span>
+					</mat-list-item>
+					<mat-list-item routerLink="/configuracoes/registros">
+						<mat-icon matListIcon>log</mat-icon>
+						<span *ngIf="opened" matLine>Registros</span>
+					</mat-list-item>
 
+				</mat-nav-list>
+			</mat-expansion-panel>
+		</mat-nav-list>
+	</mat-drawer>
+
+	<mat-drawer-content class="content">
+		<!-- Área de Conteúdo -->
+		<router-outlet></router-outlet>
+	</mat-drawer-content>
+</mat-drawer-container>

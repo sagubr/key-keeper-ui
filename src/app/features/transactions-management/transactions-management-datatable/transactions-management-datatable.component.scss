@@ -1,0 +1,44 @@
+.container {
+	height: 400px;
+	width: 100%;
+	overflow: auto;
+}
+
+.mat-table-container {
+	width: 100%;
+	overflow-x: auto;
+}
+
+.table-wrapper {
+	min-width: 600px;
+}
+
+.full-width {
+	width: 100%;
+}
+
+.paginator {
+	border-radius: 10px;
+}
+
+.mat-mdc-table-sticky-border-elem-right {
+	border-left: 1px solid #e0e0e0;
+}
+
+.mat-mdc-table-sticky-border-elem-left {
+	border-right: 1px solid #e0e0e0;
+}
+
+.mat-header-cell {
+	font-weight: bold;
+}
+
+.mat-row{
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+}
+
+
+
+

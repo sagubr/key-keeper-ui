@@ -21,7 +21,7 @@ import { MatProgressBar } from "@angular/material/progress-bar";
 import { Status } from "@openapi/model/status";
 
 @Component({
-  selector: 'app-transactions-management-datatable',
+	selector: 'app-transactions-management-datatable',
 	imports: [
 		MatCell,
 		MatCellDef,
@@ -44,8 +44,8 @@ import { Status } from "@openapi/model/status";
 		MatMenuTrigger,
 		MatNoDataRow
 	],
-  templateUrl: './transactions-management-datatable.component.html',
-  styleUrl: './transactions-management-datatable.component.scss'
+	templateUrl: './transactions-management-datatable.component.html',
+	styleUrl: './transactions-management-datatable.component.scss'
 })
 export class TransactionsManagementDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -108,6 +108,13 @@ export class TransactionsManagementDatatableComponent implements OnInit, AfterVi
 		this.subscriptions.unsubscribe();
 	}
 
+	changeStatus(element: Reservation): void {
+		this.reservationService.changeStatusReservation(element).subscribe({
+			next: (response) => console.log('Requisição bem-sucedida:', response),
+			error: (err) => console.error('Erro na requisição:', err),
+		});
+	}
+
 	openEditDialog(data: Reservation) {
 		// const dialogRef = this.dialog.open(, {
 		// 	data,
@@ -150,4 +157,6 @@ export class TransactionsManagementDatatableComponent implements OnInit, AfterVi
 		// 	this.findAll();
 		// })
 	}
+
+	protected readonly Status = Status;
 }

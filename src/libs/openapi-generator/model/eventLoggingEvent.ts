@@ -8,10 +8,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Reservation } from './reservation';
+import { LoggingEvent } from './loggingEvent';
 
 
-export interface UpdateActiveReservationRequest { 
-    reservation?: Reservation;
+export interface EventLoggingEvent { 
+    data?: LoggingEvent;
+    id?: string;
+    name?: string;
+    comment?: string;
+    retry?: string;
 }
 

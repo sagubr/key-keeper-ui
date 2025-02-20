@@ -26,10 +26,7 @@ h1.app-name {
 .sidenav-container {
 	flex: 1;
 
-	@include mat.sidenav-overrides((
-		container-width: 200px,
-		container-shape: 0px
-	));
+
 }
 
 .title {

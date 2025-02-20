@@ -9,8 +9,8 @@ security:
 tags:
     - name: Requester
       description: Operações relacionadas a entidade solicitantes
-    - name: Users
-      description: Operações relacionadas a entidade Usuário
+    - name: Reservation
+      description: Operações relacionadas a entidade reservas
     - name: JobTitle
       description: Operações relacionadas a entidade cargo
     - name: Location
@@ -21,10 +21,14 @@ tags:
       description: Operações relacionadas a entidade lugar
     - name: Key
       description: Operações relacionadas a entidade Chaves
+    - name: Users
+      description: Operações relacionadas a entidade Usuário
+    - name: Notifications
+      description: Operações relacionadas a entidade Permissão
+    - name: Logging
+      description: Operações relacionadas a entidade Permissão
     - name: LocationType
       description: Operações relacionadas a entidade Tipos de Localização
-    - name: Reservation
-      description: Operações relacionadas a entidade reservas
 paths:
     /api/facility:
         get:
@@ -660,6 +664,37 @@ paths:
                     content:
                         application/json:
                             schema: {}
+    /api/reservations/change-status:
+        post:
+            tags:
+                - Reservation
+            summary: Obter todas as reservas
+            operationId: changeStatusReservation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Reservation"
+                required: true
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
     /api/reservations/save:
         post:
             tags:
@@ -798,6 +833,49 @@ paths:
                     content:
                         application/json:
                             schema: {}
+    /logging/get:
+        get:
+            tags:
+                - Logging
+            operationId: streamLogging
+            responses:
+                "200":
+                    description: streamLogging 200 response
+                    content:
+                        text/event-stream:
+                            schema:
+                                $ref: "#/components/schemas/Event_LoggingEvent_"
+    /mail/send:
+        post:
+            operationId: send
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                to:
+                                    type: string
+                required: true
+            responses:
+                "200":
+                    description: send 200 response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+    /notifications/pop-up:
+        get:
+            tags:
+                - Notifications
+            operationId: streamNotifications
+            responses:
+                "200":
+                    description: streamNotifications 200 response
+                    content:
+                        text/event-stream:
+                            schema:
+                                $ref: "#/components/schemas/Event_NotifierEvent_"
 components:
     schemas:
         EntityPattern:
@@ -818,6 +896,32 @@ components:
                 updatedAt:
                     type: string
                     format: date-time
+        Event_LoggingEvent_:
+            type: object
+            properties:
+                data:
+                    $ref: "#/components/schemas/LoggingEvent"
+                id:
+                    type: string
+                name:
+                    type: string
+                comment:
+                    type: string
+                retry:
+                    type: string
+        Event_NotifierEvent_:
+            type: object
+            properties:
+                data:
+                    $ref: "#/components/schemas/NotifierEvent"
+                id:
+                    type: string
+                name:
+                    type: string
+                comment:
+                    type: string
+                retry:
+                    type: string
         Facility:
             required:
                 - name
@@ -872,6 +976,26 @@ components:
                 - properties:
                       name:
                           type: string
+        LoggingEvent:
+            required:
+                - level
+                - message
+            type: object
+            properties:
+                level:
+                    type: string
+                message:
+                    type: string
+        NotifierEvent:
+            required:
+                - message
+                - recipient
+            type: object
+            properties:
+                recipient:
+                    type: string
+                message:
+                    type: string
         Permission:
             required:
                 - endDateTime

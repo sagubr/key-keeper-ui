@@ -8,14 +8,14 @@
 			<mat-icon class="tab-icon">room_preferences</mat-icon>
 			Empŕestimos
 		</ng-template>
-		<app-transactions-management-datatable [status]="Status.Loan"></app-transactions-management-datatable>
+		<app-transactions-datatable-progress [status]="Status.Loan"></app-transactions-datatable-progress>
 	</mat-tab>
 	<mat-tab>
 		<ng-template mat-tab-label>
 			<mat-icon class="tab-icon">history</mat-icon>
 			Histórico
 		</ng-template>
-		<app-transactions-management-datatable [status]="Status.Completed"></app-transactions-management-datatable>
+		<app-transactions-datatable-history [status]="Status.Completed"></app-transactions-datatable-history>
 	</mat-tab>
 </mat-tab-group>
 

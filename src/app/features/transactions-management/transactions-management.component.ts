@@ -1,19 +1,23 @@
 import { Component } from '@angular/core';
-import { MatIcon } from "@angular/material/icon";
-import { MatTab, MatTabGroup, MatTabLabel } from "@angular/material/tabs";
-import {
-	TransactionsManagementDatatableComponent
-} from "@app/features/transactions-management/transactions-management-datatable/transactions-management-datatable.component";
+import { MatIcon, MatIconModule } from "@angular/material/icon";
+import { MatTab, MatTabGroup, MatTabLabel, MatTabsModule } from "@angular/material/tabs";
 import { Status } from "@openapi/model/status";
+import {
+	TransactionsDatatableProgressComponent
+} from "@app/features/transactions-management/transactions-management-datatable/transactions-datatable-progress/transactions-datatable-progress.component";
+import {
+	TransactionsDatatableHistoryComponent
+} from "@app/features/transactions-management/transactions-management-datatable/transactions-datatable-history/transactions-datatable-history.component";
+import { MatTableModule } from "@angular/material/table";
 
 @Component({
 	selector: 'app-transactions-management',
 	imports: [
-		MatIcon,
-		MatTab,
-		MatTabGroup,
-		MatTabLabel,
-		TransactionsManagementDatatableComponent,
+		MatIconModule,
+		MatTableModule,
+		MatTabsModule,
+		TransactionsDatatableProgressComponent,
+		TransactionsDatatableHistoryComponent,
 	],
 	templateUrl: './transactions-management.component.html',
 	styleUrl: './transactions-management.component.scss'

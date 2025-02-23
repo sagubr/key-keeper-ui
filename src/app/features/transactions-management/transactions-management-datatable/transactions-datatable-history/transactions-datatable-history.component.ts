@@ -1,67 +1,43 @@
 import { AfterViewInit, Component, input, InputSignal, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort, MatSortHeader } from "@angular/material/sort";
-import {
-	MatCell,
-	MatCellDef,
-	MatColumnDef,
-	MatHeaderCell, MatHeaderCellDef,
-	MatHeaderRow, MatHeaderRowDef, MatNoDataRow, MatRow, MatRowDef,
-	MatTableDataSource
-} from "@angular/material/table";
+import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
+import { MatSort, MatSortModule } from "@angular/material/sort";
+import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { Reservation } from "@openapi/model/reservation";
 import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
 import { finalize, Subscription } from "rxjs";
 import { ReservationService } from "@openapi/api/reservation.service";
 import { MatDialog } from "@angular/material/dialog";
-import { MatIcon } from "@angular/material/icon";
-import { MatButton, MatFabButton, MatIconButton } from "@angular/material/button";
-import { MatMenu, MatMenuItem, MatMenuTrigger } from "@angular/material/menu";
-import { MatProgressBar } from "@angular/material/progress-bar";
+import { MatIconModule } from "@angular/material/icon";
+import { MatButtonModule } from "@angular/material/button";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { Status } from "@openapi/model/status";
-import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";
-import { MatInput } from "@angular/material/input";
-import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatToolbarModule } from "@angular/material/toolbar";
 import {
 	TransactionsManagementDialogFormComponent
 } from "@app/features/transactions-management/transactions-management-dialog-form/transactions-management-dialog-form.component";
 
 @Component({
-	selector: 'app-transactions-management-datatable',
+	selector: 'app-transactions-datatable-history',
 	imports: [
-		MatCell,
-		MatCellDef,
-		MatColumnDef,
-		MatHeaderCell,
-		MatHeaderRow,
-		MatHeaderRowDef,
-		MatIcon,
-		MatIconButton,
-		MatMenu,
-		MatMenuItem,
-		MatPaginator,
-		MatProgressBar,
-		MatRow,
-		MatRowDef,
-		MatSort,
-		MatSortHeader,
+		MatTableModule,
+		MatIconModule,
+		MatButtonModule,
+		MatMenuModule,
+		MatPaginatorModule,
+		MatProgressBarModule,
+		MatSortModule,
 		TableWrapperTable,
-		MatHeaderCellDef,
-		MatMenuTrigger,
-		MatNoDataRow,
-		MatButton,
-		MatFormField,
-		MatInput,
-		MatLabel,
-		MatSuffix,
-		MatToolbar,
-		MatToolbarRow,
-		MatFabButton
+		MatFormFieldModule,
+		MatInputModule,
+		MatToolbarModule,
 	],
-	templateUrl: './transactions-management-datatable.component.html',
-	styleUrl: './transactions-management-datatable.component.scss'
+	templateUrl: './transactions-datatable-history.component.html',
+	styleUrl: './transactions-datatable-history.component.scss'
 })
-export class TransactionsManagementDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TransactionsDatatableHistoryComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	@ViewChild(MatPaginator) paginator!: MatPaginator;
 	@ViewChild(MatSort) sort!: MatSort;

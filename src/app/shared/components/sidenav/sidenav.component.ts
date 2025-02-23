@@ -65,12 +65,12 @@ export const MENU_OPTIONS: MenuOptions[] = [
 	},
 	{
 		title: 'Relatórios',
-		icon: 'description',
+		icon: 'dashboard',
 		route: '.',
 	},
 	{
 		title: 'Gerenciar',
-		icon: 'group_add',
+		icon: 'folder',
 		route: '/recursos',
 	},
 ];

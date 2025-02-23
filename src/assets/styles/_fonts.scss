@@ -1,0 +1,36 @@
+@mixin font(
+	$fontSize: medium,
+	$fontWeight: medium,
+	$lineHeight: normal,
+	$letterSpacing: normal
+) {
+	font-size: $fontSize;
+	font-weight: $fontWeight;
+	font-family: 'Poppins', sans-serif;
+	line-height: $lineHeight;
+	letter-spacing: $letterSpacing;
+}
+
+.h1 {
+	@include font(32px, bold, 36px, -1);
+}
+
+.h2 {
+	@include font(20px, bold, 22px, -0.63);
+}
+
+.h3 {
+	@include font(16px, bold, 24px, -0.8);
+}
+
+.h4 {
+	@include font(12px, bold, 15px, -0.25);
+}
+
+.body-1 {
+	@include font(12px, medium, 15px, -0.25);
+}
+
+.body-2 {
+	@include font(11px, medium, 18px, -0.23);
+}

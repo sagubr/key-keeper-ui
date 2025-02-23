@@ -17,9 +17,11 @@ import {
 import {
 	PermissionManagementComponent
 } from "@app/features/authorization-management/permission-management/permission-management.component";
-import { UserManagementComponent } from "@app/features/resource-management/user-management/user-management.component";
-import { RegistersManagementComponent } from "@app/settings/registers-management/registers-management.component";
-import { DefinitionsManagementComponent } from "@app/settings/definitions-management/definitions-management.component";
+import {
+	UserManagementComponent
+} from "@app/features/settings/user-management/user-management.component";
+import { RegistersManagementComponent } from "@app/features/settings/registers-management/registers-management.component";
+import { DefinitionsManagementComponent } from "@app/features/settings/definitions-management/definitions-management.component";
 
 export const routes: Routes = [
 	{
@@ -31,28 +33,36 @@ export const routes: Routes = [
 		component: SidenavComponent,
 		canActivate: [AuthenticationGuard],
 		children: [
-			{ path: 'recursos', component: ResourceManagementComponent },
+			{ path: 'recursos', component: ResourceManagementComponent, canActivate: [AuthenticationGuard] },
 			{
 				path: 'autorizacoes',
 				component: AuthorizationManagementComponent,
+				canActivate: [AuthenticationGuard],
 				children: [
 					{
 						path: 'solicitantes',
-						component: RequesterManagementComponent
+						component: RequesterManagementComponent,
+						canActivate: [AuthenticationGuard]
 					},
 					{
 						path: 'permissoes',
-						component: PermissionManagementComponent
+						component: PermissionManagementComponent,
+						canActivate: [AuthenticationGuard]
 					}
 				]
 			},
-			{ path: 'transacoes', component: TransactionsManagementComponent },
+			{ path: 'transacoes', component: TransactionsManagementComponent, canActivate: [AuthenticationGuard] },
 			{
 				path: 'configuracoes',
+				canActivate: [AuthenticationGuard],
 				children: [
-					{ path: 'definicoes', component: DefinitionsManagementComponent },
-					{ path: 'usuarios', component: UserManagementComponent },
-					{ path: 'registros', component: RegistersManagementComponent }
+					{
+						path: 'definicoes',
+						component: DefinitionsManagementComponent,
+						canActivate: [AuthenticationGuard]
+					},
+					{ path: 'usuarios', component: UserManagementComponent, canActivate: [AuthenticationGuard] },
+					{ path: 'registros', component: RegistersManagementComponent, canActivate: [AuthenticationGuard] }
 				]
 			},
 			{ path: '', redirectTo: 'recursos', pathMatch: 'full' }

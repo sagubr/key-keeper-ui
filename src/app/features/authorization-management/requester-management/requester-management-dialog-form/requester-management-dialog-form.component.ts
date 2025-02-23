@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, inject, Inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { Location } from "@openapi/model/location";
@@ -16,6 +16,16 @@ import { CommonModule } from "@angular/common";
 import { MatRadioModule } from "@angular/material/radio";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { RequesterService } from "@openapi/api/requester.service";
+import {
+	MatChipEditedEvent,
+	MatChipGrid,
+	MatChipInput,
+	MatChipInputEvent,
+	MatChipRemove,
+	MatChipRow
+} from "@angular/material/chips";
+import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import { LiveAnnouncer } from "@angular/cdk/a11y";
 
 @Component({
     selector: 'app-requester-management-dialog-form',
@@ -29,6 +39,10 @@ import { RequesterService } from "@openapi/api/requester.service";
         ReactiveFormsModule,
         ClipboardModule,
         MatDialogModule,
+        MatChipGrid,
+        MatChipInput,
+        MatChipRemove,
+        MatChipRow,
     ],
     templateUrl: './requester-management-dialog-form.component.html',
     styleUrl: './requester-management-dialog-form.component.scss'
@@ -54,6 +68,57 @@ export class RequesterManagementDialogFormComponent implements OnInit{
 
 	ngOnInit(): void {
 		this.form.patchValue(this.data);
+	}
+
+
+	readonly addOnBlur = true;
+	readonly separatorKeysCodes = [ENTER, COMMA] as const;
+	readonly fruits = signal<String[]>([]);
+	readonly announcer = inject(LiveAnnouncer);
+
+	add(event: MatChipInputEvent): void {
+		const value = (event.value || '').trim();
+
+		// Add our fruit
+		if (value) {
+			this.fruits.update(fruits => [...fruits, value]);
+		}
+
+		// Clear the input value
+		event.chipInput!.clear();
+	}
+
+	remove(fruit: String): void {
+		this.fruits.update(fruits => {
+			const index = fruits.indexOf(fruit);
+			if (index < 0) {
+				return fruits;
+			}
+
+			fruits.splice(index, 1);
+			this.announcer.announce(`Removed ${fruit}`);
+			return [...fruits];
+		});
+	}
+
+	edit(fruit: String, event: MatChipEditedEvent) {
+		const value = event.value.trim();
+
+		// Remove fruit if it no longer has a name
+		if (!value) {
+			this.remove(fruit);
+			return;
+		}
+
+		// Edit existing fruit
+		this.fruits.update(fruits => {
+			const index = fruits.indexOf(fruit);
+			if (index >= 0) {
+				fruits[index] = value;
+				return [...fruits];
+			}
+			return fruits;
+		});
 	}
 
 	onSubmit(): void {

@@ -1084,6 +1084,7 @@ components:
         User:
             required:
                 - email
+                - firstAccess
                 - name
                 - password
                 - roles
@@ -1102,6 +1103,8 @@ components:
                           type: string
                       roles:
                           $ref: "#/components/schemas/Roles"
+                      firstAccess:
+                          type: boolean
         UserDto:
             required:
                 - password

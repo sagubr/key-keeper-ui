@@ -1,5 +1,5 @@
 /*Angular Core*/
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, inject, Inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -18,29 +18,37 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { UsersService } from "@openapi/api/users.service";
 import { UserDto } from "@openapi/model/userDto";
 import { Roles } from "@openapi/model/roles";
+import {
+	MatChipEditedEvent,
+	MatChipGrid,
+	MatChipInputEvent,
+	MatChipRow,
+	MatChipsModule
+} from "@angular/material/chips";
+import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { COMMA, ENTER } from "@angular/cdk/keycodes";
 
 @Component({
-    selector: 'app-user-management-dialog-form',
-    imports: [
-        CommonModule,
-        MatSelectModule,
-        MatInputModule,
-        MatIconModule,
-        MatButtonModule,
-        MatRadioModule,
-        ReactiveFormsModule,
-        ClipboardModule,
-        MatDialogModule,
-    ],
-    templateUrl: './user-management-dialog-form.component.html',
-    styleUrl: './user-management-dialog-form.component.scss'
+	selector: 'app-user-management-dialog-form',
+	imports: [
+		CommonModule,
+		MatSelectModule,
+		MatInputModule,
+		MatIconModule,
+		MatButtonModule,
+		MatRadioModule,
+		ReactiveFormsModule,
+		ClipboardModule,
+		MatDialogModule,
+		MatChipsModule,
+
+	],
+	templateUrl: './user-management-dialog-form.component.html',
+	styleUrl: './user-management-dialog-form.component.scss'
 })
 export class UserManagementDialogFormComponent implements OnInit {
 
 	protected readonly Roles = Roles;
-
-	hide = true;
-
 	form!: FormGroup;
 
 	constructor(
@@ -63,12 +71,6 @@ export class UserManagementDialogFormComponent implements OnInit {
 		return this.form.get('email')?.hasError('email')
 			? 'Não é um e-mail válido'
 			: '';
-	}
-
-	checkPasswords() {
-		const password = this.form.get('password')?.value;
-		const repeatPassword = this.form.get('repeatPassword')?.value;
-		return !(password === repeatPassword);
 	}
 
 	onSubmit(): void {
@@ -104,8 +106,6 @@ export class UserManagementDialogFormComponent implements OnInit {
 			name: ['', Validators.required],
 			username: ['', Validators.required],
 			email: ['', [Validators.required, Validators.email]],
-			password: ['', Validators.required],
-			repeatPassword: ['', Validators.required],
 			roles: ['', Validators.required],
 			active: [],
 		});

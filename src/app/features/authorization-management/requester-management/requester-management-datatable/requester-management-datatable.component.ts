@@ -4,7 +4,6 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
 import { finalize, Subscription } from "rxjs";
-import { UserManagementService } from "@app/features/resource-management/user-management/user-management.service";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { UserDto } from "@openapi/model/userDto";
 import { CommonModule } from "@angular/common";
@@ -75,15 +74,12 @@ export class RequesterManagementDatatableComponent implements OnInit, AfterViewI
 
 	constructor(
 		private requesterService: RequesterService,
-		private usersManagementService: UserManagementService,
 		private dialog: MatDialog,
 	) {
 	}
 
 	ngOnInit(): void {
 		this.findAll();
-		this.onSearch();
-		this.onReload();
 	}
 
 	ngAfterViewInit(): void {
@@ -124,16 +120,4 @@ export class RequesterManagementDatatableComponent implements OnInit, AfterViewI
 		});
 	}
 
-	private onSearch(): void {
-		this.subscriptions = this.usersManagementService.search$.subscribe(
-			(event) => {
-				this.dataSource.filter = event.trim().toLowerCase();
-			});
-	}
-
-	private onReload(): void {
-		this.subscriptions = this.usersManagementService.reload$.subscribe(() => {
-			this.findAll();
-		})
-	}
 }

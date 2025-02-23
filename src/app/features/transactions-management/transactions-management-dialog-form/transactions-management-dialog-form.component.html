@@ -5,121 +5,131 @@
 	</button>
 </div>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-	<mat-dialog-content>
-		<div class="row">
-			<div class="col">
-				<mat-form-field appearance="outline" class="full-width">
-					<mat-label>Solicitante</mat-label>
-					<mat-select
-						formControlName="requester"
-						[compareWith]="compareById"
-						(selectionChange)="onRequesterChange($event.value)">
-						<mat-option *ngFor="let element of requester" [value]="element">
-							{{ element.name }}
-						</mat-option>
-					</mat-select>
-					<mat-error *ngIf="form.get('requester')?.invalid">Você deve inserir um valor</mat-error>
-				</mat-form-field>
-			</div>
-		</div>
+<mat-dialog-content>
+		<mat-stepper linear #stepper>
+		<mat-step [stepControl]="firstFormGroup">
+			<form [formGroup]="firstFormGroup">
+				<ng-template matStepLabel>Informações</ng-template>
+				<div class="row">
+					<div class="col">
+						<mat-form-field appearance="outline" class="full-width">
+							<mat-label>Solicitante</mat-label>
+							<mat-select
+								formControlName="requester"
+								[compareWith]="compareById"
+								(selectionChange)="onRequesterChange($event.value)">
+								<mat-option *ngFor="let element of requester" [value]="element">
+									{{ element.name }}
+								</mat-option>
+							</mat-select>
+							<mat-error *ngIf="form.get('requester')?.invalid">Você deve inserir um valor</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<mat-form-field appearance="outline" class="full-width">
+							<mat-label>Status</mat-label>
+							<mat-select formControlName="status" [compareWith]="compareById">
+								@for (element of status; track $index) {
+									<mat-option [value]="element.value">{{ element.label }}</mat-option>
+								}
+							</mat-select>
+							<mat-error *ngIf="form.get('status')?.invalid">Você deve inserir um valor</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
 
-		<div class="row">
-			<div class="col">
+				<div class="row">
+					<div class="col">
+						<mat-form-field appearance="outline" class="full-width">
+							<mat-label>Permissão</mat-label>
+							<mat-select
+								formControlName="permission"
+								[compareWith]="compareById"
+								[disabled]="!this.form.get('permission')">
+								<mat-option *ngFor="let element of permission" [value]="element">
+									{{ element.location.name }} - {{ element.location.facility.name }}
+								</mat-option>
+							</mat-select>
+							<mat-error *ngIf="form.get('permission')?.invalid">Você deve inserir um valor
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
 
-				<mat-form-field appearance="outline">
-					<mat-label>Data de início</mat-label>
-					<input matInput
-						   [matDatepicker]="datepickerStartDateTime"
-						   formControlName="startDateTime">
-					<mat-datepicker #datepickerStartDateTime/>
-					<mat-datepicker-toggle [for]="datepickerStartDateTime" matSuffix/>
-				</mat-form-field>
 
-			</div>
-			<div class="col">
-				<mat-form-field appearance="outline">
-					<mat-label>Horário de início</mat-label>
-					<input matInput
-						   [matTimepicker]="timepickerStartDateTime"
-						   formControlName="startDateTime"
-						   matTimepickerMin="06:00"
-						   matTimepickerMax="23:00"
-					>
-					<mat-timepicker #timepickerStartDateTime/>
-					<mat-timepicker-toggle [for]="timepickerStartDateTime" matSuffix/>
-				</mat-form-field>
-			</div>
-		</div>
+				<div>
+					<button mat-button matStepperNext>Next</button>
+				</div>
+			</form>
+		</mat-step>
+		<mat-step [stepControl]="secondFormGroup">
+			<form [formGroup]="secondFormGroup">
+				<ng-template matStepLabel>Período</ng-template>
+				<div class="row">
+					<div class="col">
 
-		<div class="row">
-			<div class="col">
+						<mat-form-field appearance="outline">
+							<mat-label>Data de início</mat-label>
+							<input matInput
+								   [matDatepicker]="datepickerStartDateTime"
+								   formControlName="startDateTime">
+							<mat-datepicker #datepickerStartDateTime/>
+							<mat-datepicker-toggle [for]="datepickerStartDateTime" matSuffix/>
+						</mat-form-field>
 
-				<mat-form-field appearance="outline">
-					<mat-label>Data final</mat-label>
-					<input matInput
-						   [matDatepicker]="datepickerEndDateTime"
-						   formControlName="endDateTime">
-					<mat-datepicker #datepickerEndDateTime/>
-					<mat-datepicker-toggle [for]="datepickerEndDateTime" matSuffix/>
-				</mat-form-field>
+					</div>
+					<div class="col">
+						<mat-form-field appearance="outline">
+							<mat-label>Horário de início</mat-label>
+							<input matInput
+								   [matTimepicker]="timepickerStartDateTime"
+								   formControlName="startDateTime"
+								   matTimepickerMin="06:00"
+								   matTimepickerMax="23:00"
+							>
+							<mat-timepicker #timepickerStartDateTime/>
+							<mat-timepicker-toggle [for]="timepickerStartDateTime" matSuffix/>
+						</mat-form-field>
+					</div>
+				</div>
 
-			</div>
-			<div class="col">
-				<mat-form-field appearance="outline">
-					<mat-label>Horário final</mat-label>
-					<input matInput
-						   [matTimepicker]="timepickerEndDateTime"
-						   formControlName="endDateTime"
-						   matTimepickerMin="06:00"
-						   matTimepickerMax="23:00"
-					>
-					<mat-timepicker #timepickerEndDateTime/>
-					<mat-timepicker-toggle [for]="timepickerEndDateTime" matSuffix/>
-				</mat-form-field>
-			</div>
-		</div>
+				<div class="row">
+					<div class="col">
 
-		<div class="row">
-			<div class="col">
-				<mat-form-field appearance="outline" class="full-width">
-					<mat-label>Status</mat-label>
-					<mat-select formControlName="status" [compareWith]="compareById">
-						@for (element of status; track $index) {
-							<mat-option [value]="element.value">{{ element.label }}</mat-option>
-						}
-					</mat-select>
-					<mat-error *ngIf="form.get('status')?.invalid">Você deve inserir um valor</mat-error>
-				</mat-form-field>
-			</div>
-		</div>
+						<mat-form-field appearance="outline">
+							<mat-label>Data final</mat-label>
+							<input matInput
+								   [matDatepicker]="datepickerEndDateTime"
+								   formControlName="endDateTime">
+							<mat-datepicker #datepickerEndDateTime/>
+							<mat-datepicker-toggle [for]="datepickerEndDateTime" matSuffix/>
+						</mat-form-field>
 
-		<div class="row">
-			<div class="col">
-				<mat-form-field appearance="outline" class="full-width">
-					<mat-label>Permissão</mat-label>
-					<mat-select
-						formControlName="permission"
-						[compareWith]="compareById"
-						[disabled]="!this.form.get('permission')">
-						<mat-option *ngFor="let element of permission" [value]="element">
-							{{ element.location.name }} - {{ element.location.facility.name }}
-						</mat-option>
-					</mat-select>
-					<mat-error *ngIf="form.get('permission')?.invalid">Você deve inserir um valor</mat-error>
-				</mat-form-field>
-			</div>
-		</div>
+					</div>
+					<div class="col">
+						<mat-form-field appearance="outline">
+							<mat-label>Horário final</mat-label>
+							<input matInput
+								   [matTimepicker]="timepickerEndDateTime"
+								   formControlName="endDateTime"
+								   matTimepickerMin="06:00"
+								   matTimepickerMax="23:00"
+							>
+							<mat-timepicker #timepickerEndDateTime/>
+							<mat-timepicker-toggle [for]="timepickerEndDateTime" matSuffix/>
+						</mat-form-field>
+					</div>
+				</div>
 
-	</mat-dialog-content>
+				<div>
+					<button mat-button matStepperPrevious mat-dialog-close>Back</button>
+					<button mat-button matStepperNext>Next</button>
+				</div>
+			</form>
+		</mat-step>
+	</mat-stepper>
+</mat-dialog-content>
 
-	<mat-dialog-actions align="end">
-		<button mat-raised-button type="submit">
-			{{ data ? 'Salvar' : 'Salvar' }}
-		</button>
-		<button mat-raised-button type="button" [mat-dialog-close]="true">
-			Cancelar
-		</button>
-	</mat-dialog-actions>
-</form>
 

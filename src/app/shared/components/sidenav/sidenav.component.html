@@ -28,22 +28,28 @@
 					<mat-panel-title>Configuração</mat-panel-title>
 				</mat-expansion-panel-header>
 				<mat-nav-list>
-					<mat-list-item routerLink="/configuracoes/definicoes">
+					<mat-list-item routerLink="/configuracoes/definicoes" routerLinkActive="active">
 						<mat-icon matListIcon>settings</mat-icon>
 						<span *ngIf="opened" matLine>Parametrizações</span>
 					</mat-list-item>
-					<mat-list-item routerLink="/configuracoes/registros">
-						<mat-icon matListIcon>log</mat-icon>
+					<mat-list-item routerLink="/configuracoes/usuarios" routerLinkActive="active">
+						<mat-icon matListIcon>badge</mat-icon>
+						<span *ngIf="opened" matLine>Usuários</span>
+					</mat-list-item>
+					<mat-list-item routerLink="/configuracoes/registros" routerLinkActive="active">
+						<mat-icon matListIcon>manage_search</mat-icon>
 						<span *ngIf="opened" matLine>Registros</span>
 					</mat-list-item>
-
 				</mat-nav-list>
 			</mat-expansion-panel>
 		</mat-nav-list>
 	</mat-drawer>
 
-	<mat-drawer-content class="content">
-		<!-- Área de Conteúdo -->
-		<router-outlet></router-outlet>
+	<mat-drawer-content class="mat-drawer-content">
+		<div class="content">
+			<!-- Área de Conteúdo -->
+			<router-outlet></router-outlet>
+		</div>
 	</mat-drawer-content>
+
 </mat-drawer-container>

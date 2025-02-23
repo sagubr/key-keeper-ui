@@ -1,4 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap');
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: 'Poppins', sans-serif;
+}
+
+.full-width {
+	width: 100%;
+}
+
+html {
+	@include mat.theme((
+		typography: Poppins,
+		density: 0
+	));
+}

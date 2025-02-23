@@ -6,15 +6,14 @@ $input-background-color: #f0f0f0;
 .row {
 	display: flex;
 	flex-wrap: wrap;
-	margin-right: -15px;
-	margin-left: -15px;
+	margin: 10px;
+	gap: 10px;
 }
 
 .col {
 	flex: 1 0 0%;
 	max-width: 100%;
-	padding-right: 15px;
-	padding-left: 15px;
+
 }
 
 .col-6 {
@@ -38,10 +37,6 @@ input[matInput] {
 button[type="submit"] {
 	background-color: #4caf50;
 	color: white;
-}
-
-.full-width {
-	width: 100%;
 }
 
 /**

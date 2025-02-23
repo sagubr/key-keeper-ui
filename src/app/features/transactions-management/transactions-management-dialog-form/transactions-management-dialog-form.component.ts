@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatButton, MatButtonModule } from "@angular/material/button";
 import {
@@ -49,6 +49,7 @@ import {
 import { MatRadioModule } from "@angular/material/radio";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { Status } from "@openapi/model/status";
+import { MatStep, MatStepperModule } from "@angular/material/stepper";
 
 export interface StatusEnum {
 	value?: Status,
@@ -72,6 +73,7 @@ export interface StatusEnum {
 		MatFormFieldModule,
 		MatTimepickerModule,
 		FormsModule,
+		MatStepperModule,
 	],
 	templateUrl: './transactions-management-dialog-form.component.html',
 	styleUrl: './transactions-management-dialog-form.component.scss',
@@ -80,6 +82,20 @@ export interface StatusEnum {
 export class TransactionsManagementDialogFormComponent implements OnInit {
 
 	compareById: (o1: any, o2: any) => boolean = compareById;
+
+
+	private _formBuilder = inject(FormBuilder);
+
+	firstFormGroup = this._formBuilder.group({
+		requester: ['', Validators.required],
+		permission: [{ value: '', disabled: true }, Validators.required],
+		status: [Status.Loan, Validators.required],
+	});
+	secondFormGroup = this._formBuilder.group({
+		startDateTime: ['', Validators.required],
+		endDateTime: ['', Validators.required]
+	});
+
 
 	form!: FormGroup;
 	reservation: Reservation[] = [];

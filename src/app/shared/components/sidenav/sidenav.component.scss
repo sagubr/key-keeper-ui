@@ -6,7 +6,7 @@
 
 .toolbar{
 	@include mat.toolbar-overrides((
-
+		container-background-color: orange,
 	));
 }
 
@@ -20,7 +20,7 @@
 
 .sidenav {
 
-	height: 100vh;
+	height: 93vh;
 
 	@include mat.sidenav-overrides((
 		container-background-color: orange,
@@ -36,10 +36,19 @@
 
 
 
-.content {
-	height: 100vh;
-	padding: 15px;
+.mat-drawer-content {
+	display: flex;
+	flex-direction: column;
+	height: 100vh; /* Isso garante que o conteúdo ocupe a altura total da tela */
+	padding: 20px; /* Ajuste o padding conforme necessário */
+	box-sizing: border-box;
 }
+
+.content {
+	flex-grow: 1; /* Faz com que o conteúdo ocupe o restante da altura disponível */
+
+}
+
 
 mat-icon {
 	margin-right: 5px;

@@ -1,0 +1,29 @@
+@use '@angular/material' as mat;
+@use 'colors';
+
+.table {
+	width: 100%;
+	border: 1px solid var(--primary);
+	border-radius: 10px;
+
+	@include mat.table-overrides((
+		header-headline-weight: bold,
+		background-color: none,
+	));
+}
+
+.mat-header-cell {
+	background-color: var(--header-background);
+}
+
+.mat-row:nth-child(odd) {
+	background-color: var(--row-odd-bg);
+}
+
+.mat-row:nth-child(even) {
+	background-color: var(--row-even-bg);
+}
+
+.mat-row:hover {
+	background-color: var(--row-hover);
+}

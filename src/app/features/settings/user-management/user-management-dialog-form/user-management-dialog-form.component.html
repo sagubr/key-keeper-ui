@@ -1,5 +1,5 @@
 <div class="dialog-header">
-	<h2 mat-dialog-title>Informações do Empréstimo</h2>
+	<h2 class="h2" mat-dialog-title>Informações do Usuário</h2>
 	<button mat-icon-button (click)="onCancel()" mat-dialog-close class="close-button">
 		<mat-icon>close</mat-icon>
 	</button>
@@ -51,34 +51,6 @@
 				</mat-form-field>
 			</div>
 		</div>
-
-			<div class="row">
-				<div class="col">
-					<mat-form-field appearance="outline" class="full-width">
-						<mat-label>Senha</mat-label>
-						<input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
-						<button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Exibir senha'"
-								[attr.aria-pressed]="hide">
-							<mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-						</button>
-						<mat-hint align="end">5 dígitos</mat-hint>
-						<mat-error *ngIf="form.get('password')?.invalid">Você deve inserir um valor</mat-error>
-					</mat-form-field>
-				</div>
-				<div class="col">
-					<mat-form-field appearance="outline" class="full-width">
-						<mat-label>Confirmar Senha</mat-label>
-						<input matInput formControlName="repeatPassword" [type]="hide ? 'password' : 'text'">
-						<button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Exibir senha'"
-								[attr.aria-pressed]="hide">
-							<mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-						</button>
-						<mat-hint align="end">0 dígitos</mat-hint>
-						<mat-error *ngIf="checkPasswords()">As senhas não são equivalentes</mat-error>
-					</mat-form-field>
-				</div>
-			</div>
-
 	</mat-dialog-content>
 	<mat-dialog-actions align="end">
 		<button mat-raised-button type="submit" [disabled]="form.invalid">

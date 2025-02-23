@@ -87,7 +87,7 @@ export class LocationManagementDatatableComponent implements OnInit, AfterViewIn
 			cell: (location: Location) => location.createdAt
 		},
 	];
-	displayedColumns: string[] = ['info', ...this.columns.map(c => c.definition), 'star'];
+	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'star'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
 
 	loading: boolean = false;

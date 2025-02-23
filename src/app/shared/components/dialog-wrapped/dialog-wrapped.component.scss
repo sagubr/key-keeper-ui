@@ -1,0 +1,38 @@
+@use '@angular/material' as mat;
+@use 'colors';
+@use 'fonts';
+
+.dialog-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+
+	button {
+		margin-left: auto;
+	}
+}
+
+:root {
+	@include mat.dialog-overrides((
+		container-color: orange,
+		subhead-color: red,
+	));
+}
+
+.icon-danger {
+	color: var(--danger);
+}
+
+.icon-warning {
+	color: var(--warning);
+}
+
+.icon-success {
+	color: var(--success);
+}
+
+.icon-info {
+	color: var(--info);
+}
+

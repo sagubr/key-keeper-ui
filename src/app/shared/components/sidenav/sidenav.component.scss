@@ -38,6 +38,7 @@
 
 	&.narrow {
 		text-align: center;
+		padding-left: 10px;
 
 		@include mat.sidenav-overrides((
 			container-width: 80px

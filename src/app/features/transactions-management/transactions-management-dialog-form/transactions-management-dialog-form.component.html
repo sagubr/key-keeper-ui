@@ -1,12 +1,12 @@
 <div class="dialog-header">
-	<h2 mat-dialog-title>Informações do Empréstimo</h2>
-	<button mat-icon-button mat-dialog-close class="close-button">
+	<h2 class="h2" mat-dialog-title>Informações do Empréstimo</h2>
+	<button mat-icon-button mat-dialog-close>
 		<mat-icon>close</mat-icon>
 	</button>
 </div>
 
 <mat-dialog-content>
-		<mat-stepper linear #stepper>
+	<mat-stepper linear #stepper>
 		<mat-step [stepControl]="firstFormGroup">
 			<form [formGroup]="firstFormGroup">
 				<ng-template matStepLabel>Informações</ng-template>
@@ -39,7 +39,6 @@
 						</mat-form-field>
 					</div>
 				</div>
-
 				<div class="row">
 					<div class="col">
 						<mat-form-field appearance="outline" class="full-width">
@@ -58,9 +57,13 @@
 					</div>
 				</div>
 
-
-				<div>
-					<button mat-button matStepperNext>Next</button>
+				<div class="align-end">
+					<button
+						mat-button
+						class="button-primary"
+						matStepperNext>
+						Avançar
+					</button>
 				</div>
 			</form>
 		</mat-step>
@@ -69,8 +72,7 @@
 				<ng-template matStepLabel>Período</ng-template>
 				<div class="row">
 					<div class="col">
-
-						<mat-form-field appearance="outline">
+						<mat-form-field appearance="outline" class="full-width">
 							<mat-label>Data de início</mat-label>
 							<input matInput
 								   [matDatepicker]="datepickerStartDateTime"
@@ -78,10 +80,9 @@
 							<mat-datepicker #datepickerStartDateTime/>
 							<mat-datepicker-toggle [for]="datepickerStartDateTime" matSuffix/>
 						</mat-form-field>
-
 					</div>
 					<div class="col">
-						<mat-form-field appearance="outline">
+						<mat-form-field appearance="outline" class="full-width">
 							<mat-label>Horário de início</mat-label>
 							<input matInput
 								   [matTimepicker]="timepickerStartDateTime"
@@ -97,8 +98,7 @@
 
 				<div class="row">
 					<div class="col">
-
-						<mat-form-field appearance="outline">
+						<mat-form-field appearance="outline" class="full-width">
 							<mat-label>Data final</mat-label>
 							<input matInput
 								   [matDatepicker]="datepickerEndDateTime"
@@ -106,10 +106,9 @@
 							<mat-datepicker #datepickerEndDateTime/>
 							<mat-datepicker-toggle [for]="datepickerEndDateTime" matSuffix/>
 						</mat-form-field>
-
 					</div>
 					<div class="col">
-						<mat-form-field appearance="outline">
+						<mat-form-field appearance="outline" class="full-width">
 							<mat-label>Horário final</mat-label>
 							<input matInput
 								   [matTimepicker]="timepickerEndDateTime"
@@ -123,9 +122,19 @@
 					</div>
 				</div>
 
-				<div>
-					<button mat-button matStepperPrevious mat-dialog-close>Back</button>
-					<button mat-button matStepperNext>Next</button>
+				<div class="align-end">
+					<button
+						mat-button
+						class="button-secondary"
+						matStepperPrevious mat-dialog-close>
+						Voltar
+					</button>
+					<button
+						mat-button
+						class="button-primary"
+						matStepperNext>
+						Salvar
+					</button>
 				</div>
 			</form>
 		</mat-step>

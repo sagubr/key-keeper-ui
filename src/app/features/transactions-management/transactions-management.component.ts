@@ -5,39 +5,32 @@ import {
 	TransactionsManagementDatatableComponent
 } from "@app/features/transactions-management/transactions-management-datatable/transactions-management-datatable.component";
 import { Status } from "@openapi/model/status";
-import {
-	TransactionsManagementFiltersComponent
-} from "@app/features/transactions-management/transactions-management-filters/transactions-management-filters.component";
 
 @Component({
-  selector: 'app-transactions-management',
+	selector: 'app-transactions-management',
 	imports: [
 		MatIcon,
 		MatTab,
 		MatTabGroup,
 		MatTabLabel,
 		TransactionsManagementDatatableComponent,
-		TransactionsManagementFiltersComponent
 	],
-  templateUrl: './transactions-management.component.html',
-  styleUrl: './transactions-management.component.scss'
+	templateUrl: './transactions-management.component.html',
+	styleUrl: './transactions-management.component.scss'
 })
 export class TransactionsManagementComponent {
 
-
-	activeTabIndex = 0; // Índice da tab ativa
-	tabs = ['in-progress', 'scheduled', 'completed']; // Identificadores para cada tab
+	activeTabIndex = 0;
+	tabs = ['in-progress', 'scheduled', 'completed'];
 
 	onTabChange(index: number): void {
-		this.activeTabIndex = index; // Atualiza o índice da tab ativa
-		const activeTab = this.tabs[index]; // Identifica a tab pelo índice
-
-		// Faça a requisição correta com base na tab ativa
+		this.activeTabIndex = index;
+		const activeTab = this.tabs[index];
 		this.loadDataForTab(activeTab);
 	}
 
 	loadDataForTab(tab: string): void {
-		console.log(`Carregando dados para a aba: ${tab}`);
+		console.log(`Carregando dados para a aba: ${ tab }`);
 		switch (tab) {
 			case 'in-progress':
 				this.fetchInProgressData();
@@ -54,17 +47,14 @@ export class TransactionsManagementComponent {
 	}
 
 	fetchInProgressData(): void {
-		// Lógica para buscar dados de empréstimos em andamento
 		console.log('Buscando dados de empréstimos em andamento...');
 	}
 
 	fetchScheduledData(): void {
-		// Lógica para buscar dados de reservas agendadas
 		console.log('Buscando dados de reservas agendadas...');
 	}
 
 	fetchCompletedData(): void {
-		// Lógica para buscar dados do histórico de reservas
 		console.log('Buscando dados do histórico de reservas...');
 	}
 

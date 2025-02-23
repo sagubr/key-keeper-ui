@@ -15,10 +15,16 @@ import { finalize, Subscription } from "rxjs";
 import { ReservationService } from "@openapi/api/reservation.service";
 import { MatDialog } from "@angular/material/dialog";
 import { MatIcon } from "@angular/material/icon";
-import { MatIconButton } from "@angular/material/button";
+import { MatButton, MatFabButton, MatIconButton } from "@angular/material/button";
 import { MatMenu, MatMenuItem, MatMenuTrigger } from "@angular/material/menu";
 import { MatProgressBar } from "@angular/material/progress-bar";
 import { Status } from "@openapi/model/status";
+import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";
+import { MatInput } from "@angular/material/input";
+import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
+import {
+	TransactionsManagementDialogFormComponent
+} from "@app/features/transactions-management/transactions-management-dialog-form/transactions-management-dialog-form.component";
 
 @Component({
 	selector: 'app-transactions-management-datatable',
@@ -42,7 +48,15 @@ import { Status } from "@openapi/model/status";
 		TableWrapperTable,
 		MatHeaderCellDef,
 		MatMenuTrigger,
-		MatNoDataRow
+		MatNoDataRow,
+		MatButton,
+		MatFormField,
+		MatInput,
+		MatLabel,
+		MatSuffix,
+		MatToolbar,
+		MatToolbarRow,
+		MatFabButton
 	],
 	templateUrl: './transactions-management-datatable.component.html',
 	styleUrl: './transactions-management-datatable.component.scss'
@@ -53,6 +67,7 @@ export class TransactionsManagementDatatableComponent implements OnInit, AfterVi
 	@ViewChild(MatSort) sort!: MatSort;
 
 	readonly status: InputSignal<Status> = input.required<Status>();
+	protected readonly Status = Status;
 
 	dataSource: MatTableDataSource<Reservation> = new MatTableDataSource<Reservation>([]);
 	columns: Columns<Reservation>[] = [
@@ -95,8 +110,6 @@ export class TransactionsManagementDatatableComponent implements OnInit, AfterVi
 
 	ngOnInit(): void {
 		this.findAll();
-		this.onSearch();
-		this.onReload();
 	}
 
 	ngAfterViewInit(): void {
@@ -106,6 +119,26 @@ export class TransactionsManagementDatatableComponent implements OnInit, AfterVi
 
 	ngOnDestroy(): void {
 		this.subscriptions.unsubscribe();
+	}
+
+	onSearch(event: Event) {
+		const value = (event.target as HTMLInputElement).value;
+		this.dataSource.filter = value.trim().toLowerCase();
+	}
+
+	onReload(): void {
+		this.findAll();
+	}
+
+	openCreateDialog(): void {
+		const dialogRef = this.dialog.open(TransactionsManagementDialogFormComponent, {
+			minWidth: '540px',
+			data: {},
+		});
+
+		dialogRef.afterClosed().subscribe(() => {
+			this.onReload();
+		});
 	}
 
 	changeStatus(element: Reservation): void {
@@ -145,18 +178,4 @@ export class TransactionsManagementDatatableComponent implements OnInit, AfterVi
 			});
 	}
 
-	private onSearch(): void {
-		// this.subscriptions = this.reservationManagementService.search$.subscribe(
-		// 	(event) => {
-		// 		this.dataSource.filter = event.trim().toLowerCase();
-		// 	});
-	}
-
-	private onReload(): void {
-		// this.subscriptions = this.reservationManagementService.reload$.subscribe(() => {
-		// 	this.findAll();
-		// })
-	}
-
-	protected readonly Status = Status;
 }

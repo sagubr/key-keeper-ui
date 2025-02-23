@@ -48,11 +48,11 @@ mat-radio-button {
 }
 
 mat-dialog-actions {
-	padding: 20px 24px;
+	padding-right: 36px;
 }
 
 mat-hint {
 	font-size: 12px;
-	color: #888;
+	color: var(--text-primary);
 }
 

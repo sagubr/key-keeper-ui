@@ -1,31 +1,11 @@
 @use 'forms';
-
-$black: #080a0b;
-
-.mat-stepper-horizontal {
-	margin-top: 8px;
-}
-
-.mat-mdc-form-field {
-	margin-top: 16px;
-}
-
-.container {
-	margin: 16px;
-}
-
-.form-container {
-	display: flex;
-	flex-direction: column;
-}
-
-.row {
-	display: flex;
-	margin-bottom: 16px;
-}
+@use 'fonts';
+@use 'buttons';
 
 .dialog-header {
 	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	padding: 10px;
 
 	button {
@@ -33,18 +13,14 @@ $black: #080a0b;
 	}
 }
 
-.title {
-	font-weight: bold;
-	font-size: 1.4rem;
-	color: $black;
-}
-
-.subtitle {
-	font-weight: bold;
-	font-size: 1.2rem;
-	color: $black;
-}
-
 .dialog-footer {
 	margin: 16px;
 }
+
+.align-end {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	padding-top: 16px;
+}
+

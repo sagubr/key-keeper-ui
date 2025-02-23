@@ -28,7 +28,10 @@
 				@if (opened) {
 					<mat-list-item [routerLink]="option.route"
 								   routerLinkActive="active"
-								   [disabled]="option.disabled">
+								   [disabled]="option.disabled"
+								   [matTooltip]=option.description
+								   matTooltipPosition="right"
+					>
 						<mat-icon matListItemIcon>{{ option.icon }}</mat-icon>
 						<div matListItemTitle>{{ option.title }}</div>
 						<div matListItemLine>{{ option.description }}</div>
@@ -50,13 +53,20 @@
 			}
 			@for (option of menuOptionsSettings; track option) {
 				@if (opened) {
-					<mat-list-item [routerLink]="option.route" routerLinkActive="active">
+					<mat-list-item [routerLink]="option.route"
+								   routerLinkActive="active"
+								   [disabled]="option.disabled"
+								   [matTooltip]=option.description
+								   matTooltipPosition="right"
+					>
 						<mat-icon matListItemIcon>{{ option.icon }}</mat-icon>
 						<div matListItemTitle>{{ option.title }}</div>
 						<div matListItemLine>{{ option.description }}</div>
 					</mat-list-item>
 				} @else {
-					<mat-list-item [routerLink]="option.route" routerLinkActive="active">
+					<mat-list-item [routerLink]="option.route"
+								   routerLinkActive="active"
+								   [disabled]="option.disabled">
 						<mat-icon matListItemIcon
 								  [matTooltip]=option.title
 								  matTooltipPosition="right"

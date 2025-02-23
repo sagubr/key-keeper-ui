@@ -1,21 +1,16 @@
 @use 'table';
-
-.toolbar {
-	margin-top: 10px;
-}
+@use 'buttons';
 
 .toolbar-row {
-	height: 78px;
 	align-items: flex-start;
+	margin-bottom: 10px;
+	padding: 0;
 }
 
 .spacer {
 	flex: 1 1 auto;
 }
 
-.button {
-	height: 56px;
-}
 
 @media (max-width: 600px) {
 	.toolbar-form {
@@ -54,6 +49,12 @@
 
 .mat-mdc-table-sticky-border-elem-left {
 	border-right: 1px solid #e0e0e0;
+}
+
+.actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
 }
 
 

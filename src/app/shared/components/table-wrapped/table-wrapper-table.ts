@@ -64,5 +64,5 @@ export enum ColumnType {
 	TEXT = 'TEXT',
 	DATE = 'DATE',
 	DATETIME = 'DATETIME',
-	MONEY = 'MONEY',
+	CURRENCY = 'CURRENCY',
 }

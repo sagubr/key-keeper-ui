@@ -1,0 +1,50 @@
+@mixin icon-size($size: 24px) {
+	font-size: $size;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	height: $size;
+	width: $size;
+}
+
+@mixin icon-color($color: #000) {
+	color: $color;
+}
+
+@mixin icon($size: 24px, $color: #000) {
+	@include icon-size($size);
+	@include icon-color($color);
+}
+
+.icon-danger {
+	@include icon(24px, var(--danger));
+}
+
+.icon-warning {
+	@include icon(24px, var(--warning));
+}
+
+.icon-success {
+	@include icon(24px, var(--success));
+}
+
+.icon-info {
+	@include icon(24px, var(--info));
+}
+
+.icon-small {
+	@include icon(16px, #000);
+}
+
+.icon-medium {
+	@include icon(24px, #000);
+}
+
+.icon-large {
+	@include icon(32px, #000);
+}
+
+.icon-extra-large {
+	@include icon(48px, #000);
+}

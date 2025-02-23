@@ -16,7 +16,7 @@
 					@case (ColumnType.DATETIME) {
 						{{ column.cell(element) | date:'dd/MM/yyyy \'às\' HH:mm' }}
 					}
-					@case (ColumnType.MONEY) {
+					@case (ColumnType.CURRENCY) {
 						{{ column.cell(element) | currency }}
 					}
 					@default {

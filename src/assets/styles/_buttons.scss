@@ -1,0 +1,66 @@
+@mixin button(
+	$bgColor: #4caf50,
+	$textColor: #fff,
+	$hoverColor: darken($bgColor, 10%),
+	$border: none
+) {
+	background-color: $bgColor;
+	color: $textColor;
+	border: $border;
+	border-radius: 8px;
+	padding: 8px 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+
+	&:hover {
+		background-color: $hoverColor;
+	}
+
+	&:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+}
+
+.button-warning {
+	@include button(#ffc107, #000);
+}
+
+.button-danger {
+	@include button(#f44336, #fff);
+}
+
+.button-info {
+	@include button(#2196f3, #fff);
+}
+
+.button-secondary {
+	@include button(#EFF2F1, #0E151C, #d3d8d7, 2px solid #0E151C);
+}
+
+.button-primary {
+	@include button(#37CCB9, #fff);
+}
+
+.button-cancel {
+	@include button(#EFF2F1, #0E151C);
+}
+
+.button-success {
+	@include button(#2e7d32, #fff);
+}
+
+.button-link {
+	@include button(transparent, #37CCB9, rgba(55, 204, 185, 0.1));
+}
+
+.button-small {
+	@include button(#37CCB9, #fff);
+	padding: 4px 8px;
+	font-size: 12px;
+}
+
+.button-disabled {
+	@include button(#b0bec5, #fff);
+	pointer-events: none;
+}

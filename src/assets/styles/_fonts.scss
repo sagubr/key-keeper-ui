@@ -34,3 +34,28 @@
 .body-2 {
 	@include font(11px, medium, 18px, -0.23);
 }
+
+.body-3 {
+	@include font(14px, normal, 20px, 0);
+}
+
+.paragraph {
+	@include font(14px, normal, 21px, 0.1px);
+	color: var(--text-primary, #333);
+}
+
+.paragraph-small {
+	@include font(12px, normal, 18px, 0);
+	color: var(--text-secondary, #666);
+}
+
+.tooltip {
+	@include font(10px, normal, 14px, 0);
+	color: var(--tooltip-text, #fff);
+}
+
+.label {
+	@include font(12px, bold, 16px, 0.5px);
+	text-transform: uppercase;
+}
+

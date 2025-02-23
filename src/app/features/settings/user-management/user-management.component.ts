@@ -6,18 +6,18 @@ import {
 	UserManagementDatatableComponent
 } from '@app/features/settings/user-management/user-management-datatable/user-management-datatable.component';
 import {
-	MatAccordion,
+	MatAccordion, MatExpansionModule,
 	MatExpansionPanel,
 	MatExpansionPanelDescription,
 	MatExpansionPanelHeader
 } from "@angular/material/expansion";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
-import { MatIcon } from "@angular/material/icon";
-import { MatInput } from "@angular/material/input";
+import { MatFormField, MatFormFieldModule, MatLabel } from "@angular/material/form-field";
+import { MatIcon, MatIconModule } from "@angular/material/icon";
+import { MatInput, MatInputModule } from "@angular/material/input";
 
 @Component({
 	selector: 'app-user-management',
-	imports: [UserManagementDatatableComponent, MatAccordion, MatExpansionPanel, MatExpansionPanelDescription, MatExpansionPanelHeader, MatFormField, MatIcon, MatInput, MatLabel],
+	imports: [UserManagementDatatableComponent, MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule],
 	templateUrl: './user-management.component.html',
 	styleUrl: './user-management.component.scss'
 })

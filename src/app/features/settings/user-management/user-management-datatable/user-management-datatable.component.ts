@@ -141,10 +141,12 @@ export class UserManagementDatatableComponent implements OnInit, AfterViewInit, 
 				data: {
 					title: 'Tem certeza que deseja redefinir a senha?',
 					message: `A senha atual será redefinida e a nova senha será enviada para o e-mail cadastrado: ${ element.email }`,
-					icon: 'warn',
+					icon: 'warning',
 					color: 'warn',
-					confirmText: 'Ok',
-				}
+					confirmText: 'Confirmar',
+					hideCancel: true
+				},
+				width: '400px'
 			});
 		dialogRef.afterClosed().subscribe(res => {
 			console.log(res);

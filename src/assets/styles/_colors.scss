@@ -1,20 +1,92 @@
 @mixin theme-colors() {
-	--primary: #1e88e5; // Azul
-	--secondary: #43a047; // Verde
-	--accent: #fbc02d; // Amarelo
-	--danger: #e53935; // Vermelho
-	--warning: #fb8c00; // Laranja
-	--success: #4caf50; // Verde claro
-	--info: #29b6f6; // Azul claro
-	--background: #f5f5f5; // Cinza claro
-	--text-primary: #212121; // Preto
-	--text-secondary: #757575; // Cinza escuro
-	--header-background: #2196f3; // Azul escuro para cabeçalho
-	--row-hover: #e0f7fa; // Azul claro para o hover da linha
-	--row-odd-bg: #f1f1f1; // Fundo para linhas ímpares
-	--row-even-bg: #ffffff; // Fundo para linhas pares
+	--primary: #37CCB9;
+	--secondary: #0E151C;
+	--accent: #EFF2F1;
+	--danger: #f44336;
+	--warning: #ffc107;
+	--success: #2e7d32;
+	--info: #2196f3;
+	--background: #f5f5f5;
+	--text-primary: #212121;
+	--text-secondary: #757575;
+	--tooltip-text: #ffffff;
+	--header-background: #2196f3;
+	--row-hover: #e0f7fa;
+	--row-odd-bg: #f1f1f1;
+	--row-even-bg: #ffffff;
 }
 
 :root {
 	@include theme-colors();
+}
+
+
+@mixin color-class($color-name) {
+	&.bg-#{$color-name} {
+		background-color: var(--#{$color-name});
+	}
+
+	&.text-#{$color-name} {
+		color: var(--#{$color-name});
+	}
+}
+
+.bg-primary {
+	@include color-class(primary);
+}
+
+.bg-secondary {
+	@include color-class(secondary);
+}
+
+.bg-accent {
+	@include color-class(accent);
+}
+
+.bg-danger {
+	@include color-class(danger);
+}
+
+.bg-warning {
+	@include color-class(warning);
+}
+
+.bg-success {
+	@include color-class(success);
+}
+
+.bg-info {
+	@include color-class(info);
+}
+
+.bg-background {
+	@include color-class(background);
+}
+
+.bg-text-primary {
+	@include color-class(text-primary);
+}
+
+.bg-text-secondary {
+	@include color-class(text-secondary);
+}
+
+.bg-tooltip-text {
+	@include color-class(tooltip-text);
+}
+
+.bg-header-background {
+	@include color-class(header-background);
+}
+
+.bg-row-hover {
+	@include color-class(row-hover);
+}
+
+.bg-row-odd-bg {
+	@include color-class(row-odd-bg);
+}
+
+.bg-row-even-bg {
+	@include color-class(row-even-bg);
 }

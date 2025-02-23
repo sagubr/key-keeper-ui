@@ -1,48 +1,71 @@
-<mat-toolbar color="primary" class="toolbar">
-	<button mat-icon-button (click)="toggleDrawer()">
+<mat-toolbar class="toolbar">
+	<button mat-icon-button
+			class="icon-extra-large"
+			(click)="toggleDrawer()">
 		<mat-icon>menu</mat-icon>
 	</button>
-	<span class="h2">{{ title }}</span>
+	<span class="h2">Guardião de Chaves</span>
 	<span class="spacer"></span>
-	<button mat-icon-button class="icon favorite-icon">
-		<mat-icon matBadge="15" matBadgeColor="primary">notifications</mat-icon>
+	<button mat-icon-button class="icon-extra-large">
+		<mat-icon matBadge="15">notifications</mat-icon>
 	</button>
-	<span>Gustavo Garcia</span>
+	<span class="paragraph">Gustavo Garcia</span>
+	<button mat-icon-button class="icon-extra-large">
+		<mat-icon class="icon-medium">account_circle</mat-icon>
+	</button>
 	<button mat-icon-button class="icon" aria-label="Example icon-button with share icon">
 		<mat-icon>arrow_drop_down</mat-icon>
 	</button>
 </mat-toolbar>
-
 <mat-drawer-container class="sidenav-container" autosize>
 	<!-- Menu Lateral -->
 	<mat-drawer class="sidenav" mode="side" [ngClass]="{'narrow': !opened}" opened>
-		<mat-nav-list>
-			<mat-list-item *ngFor="let option of menuOptions" [routerLink]="option.route" routerLinkActive="active">
-				<mat-icon matListIcon>{{ option.icon }}</mat-icon>
-				<span *ngIf="opened" matLine class="title">{{ option.title }}</span>
-			</mat-list-item>
-
-			<mat-expansion-panel class="collapse" *ngIf="opened">
-				<mat-expansion-panel-header>
-					<mat-icon>settings</mat-icon>
-					<mat-panel-title>Configuração</mat-panel-title>
-				</mat-expansion-panel-header>
-				<mat-nav-list>
-					<mat-list-item routerLink="/configuracoes/definicoes" routerLinkActive="active">
-						<mat-icon matListIcon>settings</mat-icon>
-						<span *ngIf="opened" matLine>Parametrizações</span>
+		<mat-list>
+			@if (opened) {
+				<div mat-subheader>Gestão de Processos</div>
+			}
+			@for (option of menuOptions; track option) {
+				@if (opened) {
+					<mat-list-item [routerLink]="option.route"
+								   routerLinkActive="active"
+								   [disabled]="option.disabled">
+						<mat-icon matListItemIcon>{{ option.icon }}</mat-icon>
+						<div matListItemTitle>{{ option.title }}</div>
+						<div matListItemLine>{{ option.description }}</div>
 					</mat-list-item>
-					<mat-list-item routerLink="/configuracoes/usuarios" routerLinkActive="active">
-						<mat-icon matListIcon>badge</mat-icon>
-						<span *ngIf="opened" matLine>Usuários</span>
+				} @else {
+					<mat-list-item [routerLink]="option.route"
+								   routerLinkActive="active"
+								   [disabled]="option.disabled">
+						<mat-icon matListItemIcon
+								  [matTooltip]=option.title
+								  matTooltipPosition="right"
+						>{{ option.icon }}
+						</mat-icon>
 					</mat-list-item>
-					<mat-list-item routerLink="/configuracoes/registros" routerLinkActive="active">
-						<mat-icon matListIcon>manage_search</mat-icon>
-						<span *ngIf="opened" matLine>Registros</span>
+				}
+			}
+			@if (opened) {
+				<div mat-subheader>Configurações</div>
+			}
+			@for (option of menuOptionsSettings; track option) {
+				@if (opened) {
+					<mat-list-item [routerLink]="option.route" routerLinkActive="active">
+						<mat-icon matListItemIcon>{{ option.icon }}</mat-icon>
+						<div matListItemTitle>{{ option.title }}</div>
+						<div matListItemLine>{{ option.description }}</div>
 					</mat-list-item>
-				</mat-nav-list>
-			</mat-expansion-panel>
-		</mat-nav-list>
+				} @else {
+					<mat-list-item [routerLink]="option.route" routerLinkActive="active">
+						<mat-icon matListItemIcon
+								  [matTooltip]=option.title
+								  matTooltipPosition="right"
+						>{{ option.icon }}
+						</mat-icon>
+					</mat-list-item>
+				}
+			}
+		</mat-list>
 	</mat-drawer>
 
 	<mat-drawer-content class="mat-drawer-content">
@@ -51,5 +74,4 @@
 			<router-outlet></router-outlet>
 		</div>
 	</mat-drawer-content>
-
 </mat-drawer-container>

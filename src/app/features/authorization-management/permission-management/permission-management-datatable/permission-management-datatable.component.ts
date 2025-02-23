@@ -23,38 +23,44 @@ import { finalize, Subscription } from "rxjs";
 import { MatDialog } from "@angular/material/dialog";
 import { Permission } from "@openapi/model/permission";
 import {
-	PermissionManagementService
-} from "@app/features/authorization-management/permission-management/permission-management.service";
-import {
 	PermissionManagementDialogFormComponent
 } from "@app/features/authorization-management/permission-management/permission-management-dialog-form/permission-management-dialog-form.component";
 import { PermissionService } from "@openapi/api/permission.service";
+import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";
+import { MatInput } from "@angular/material/input";
+import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
 
 
 @Component({
-    selector: 'app-permission-management-datatable',
-    imports: [
-        MatCell,
-        MatCellDef,
-        MatColumnDef,
-        MatHeaderCell,
-        MatHeaderRow,
-        MatHeaderRowDef,
-        MatIconModule,
-        MatMenuModule,
-        MatButtonModule,
-        MatPaginator,
-        MatProgressBarModule,
-        MatRow,
-        MatRowDef,
-        MatSort,
-        TableWrapperTable,
-        MatMenuTrigger,
-        MatHeaderCellDef,
-        MatNoDataRow,
-    ],
-    templateUrl: './permission-management-datatable.component.html',
-    styleUrl: './permission-management-datatable.component.scss'
+	selector: 'app-permission-management-datatable',
+	imports: [
+		MatCell,
+		MatCellDef,
+		MatColumnDef,
+		MatHeaderCell,
+		MatHeaderRow,
+		MatHeaderRowDef,
+		MatIconModule,
+		MatMenuModule,
+		MatButtonModule,
+		MatPaginator,
+		MatProgressBarModule,
+		MatRow,
+		MatRowDef,
+		MatSort,
+		TableWrapperTable,
+		MatMenuTrigger,
+		MatHeaderCellDef,
+		MatNoDataRow,
+		MatFormField,
+		MatInput,
+		MatLabel,
+		MatSuffix,
+		MatToolbar,
+		MatToolbarRow,
+	],
+	templateUrl: './permission-management-datatable.component.html',
+	styleUrl: './permission-management-datatable.component.scss'
 })
 export class PermissionManagementDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -102,15 +108,12 @@ export class PermissionManagementDatatableComponent implements OnInit, AfterView
 
 	constructor(
 		private permissionService: PermissionService,
-		private permissionManagementService: PermissionManagementService,
 		private dialog: MatDialog,
 	) {
 	}
 
 	ngOnInit(): void {
 		this.findAll();
-		this.onSearch();
-		this.onReload();
 	}
 
 	ngAfterViewInit(): void {
@@ -120,6 +123,25 @@ export class PermissionManagementDatatableComponent implements OnInit, AfterView
 
 	ngOnDestroy(): void {
 		this.subscriptions.unsubscribe();
+	}
+
+	onSearch(event: Event) {
+		const value = (event.target as HTMLInputElement).value;
+		this.dataSource.filter = value.trim().toLowerCase();
+	}
+
+	onReload(): void {
+		this.findAll();
+	}
+
+	openCreateDialog(): void {
+		const dialogRef = this.dialog.open(PermissionManagementDialogFormComponent, {
+			data: {},
+		});
+
+		dialogRef.afterClosed().subscribe(() => {
+			this.onReload();
+		});
 	}
 
 	openEditDialog(data: Permission) {
@@ -146,18 +168,5 @@ export class PermissionManagementDatatableComponent implements OnInit, AfterView
 				this.dataSource.data = permissions;
 			}
 		});
-	}
-
-	private onSearch(): void {
-		this.subscriptions = this.permissionManagementService.search$.subscribe(
-			(event) => {
-				this.dataSource.filter = event.trim().toLowerCase();
-			});
-	}
-
-	private onReload(): void {
-		this.subscriptions = this.permissionManagementService.reload$.subscribe(() => {
-			this.findAll();
-		})
 	}
 }

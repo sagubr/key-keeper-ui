@@ -1,11 +1,18 @@
 @use '@angular/material' as mat;
 @use 'fonts';
+@use 'icons';
 
 .spacer {
 	flex: 1 1 auto;
 }
 
-.toolbar{
+.toolbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1000;
+
 	@include mat.toolbar-overrides((
 		container-background-color: orange,
 	));
@@ -20,62 +27,40 @@
 }
 
 .sidenav {
-
-	height: 93vh;
+	height: 100vh;
+	padding-top: 64px;
 
 	@include mat.sidenav-overrides((
+		container-shape: none,
 		container-background-color: orange,
 		container-width: 250px
 	));
 
 	&.narrow {
+		text-align: center;
+
 		@include mat.sidenav-overrides((
-			container-width: 60px
+			container-width: 80px
 		));
 	}
 }
 
-
+.sidenav-container {
+	display: flex;
+	flex-direction: row;
+	height: 100vh;
+	padding-top: 64px;
+}
 
 .mat-drawer-content {
 	display: flex;
 	flex-direction: column;
-	height: 100vh; /* Isso garante que o conteúdo ocupe a altura total da tela */
-	padding: 20px; /* Ajuste o padding conforme necessário */
-	box-sizing: border-box;
+	flex-grow: 1;
+	padding: 20px;
+	overflow-y: auto;
 }
 
 .content {
-	flex-grow: 1; /* Faz com que o conteúdo ocupe o restante da altura disponível */
-
+	flex-grow: 1;
+	padding-bottom: 60px;
 }
-
-
-mat-icon {
-	margin-right: 5px;
-}
-
-.footer {
-	position: fixed;
-	align-content: center;
-	justify-content: center;
-	align-items: center;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	z-index: 1000;
-}
-
-mat-line {
-	display: flex;
-}
-
-mat-drawer {
-	border-radius: 0px !important;
-}
-
-.full-width {
-	width: 100%;
-}
-
-

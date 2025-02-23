@@ -7,6 +7,8 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { RouterLink, RouterOutlet } from "@angular/router";
+import { MatBadgeModule } from "@angular/material/badge";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @Component({
 	selector: 'app-sidenav',
@@ -14,15 +16,14 @@ import { RouterLink, RouterOutlet } from "@angular/router";
 		CommonModule,
 		MatToolbarModule,
 		MatButtonModule,
-		MatIconModule,
 		MatSidenavModule,
 		MatListModule,
-		MatToolbarModule,
-		MatButtonModule,
+		MatBadgeModule,
 		MatIconModule,
 		MatExpansionModule,
 		RouterOutlet,
 		RouterLink,
+		MatTooltipModule,
 	],
 	templateUrl: './sidenav.component.html',
 	styleUrl: './sidenav.component.scss'
@@ -30,48 +31,79 @@ import { RouterLink, RouterOutlet } from "@angular/router";
 export class SidenavComponent {
 
 	@ViewChild('drawer') sidenav!: MatSidenav;
+
 	opened = true;
-	title = 'Guardião de Chaves';
-	menuOptions = MENU_OPTIONS;
+	menuOptions: Section[] = MENU_OPTIONS;
+	menuOptionsSettings: Section[] = MENU_OPTIONS_SETTINGS;
 
 	toggleDrawer(): void {
 		this.opened = !this.opened;
 	}
+
 }
 
-export interface MenuOptions {
-	title: string;
-	icon: string;
-	route: string;
-	subMenu?: MenuOptions[];
-	permission?: string[];
+export interface Section {
+	title: string,
+	description?: string,
+	icon: string,
+	route: string,
+	permission?: string[],
+	disabled?: boolean
 }
 
-export const MENU_OPTIONS: MenuOptions[] = [
+export const MENU_OPTIONS: Section[] = [
 	{
 		title: 'Empréstimos',
-		icon: 'schedule',
+		description: 'Gestão de solicitações',
+		icon: 'assignment_return',
 		route: '/transacoes',
 	},
 	{
 		title: 'Agendamentos',
-		icon: 'calendar_month',
+		description: 'Calendário de eventos',
+		icon: 'event',
 		route: '.',
+		disabled: true
 	},
 	{
-		title: 'Solicitantes',
-		icon: 'work',
+		title: 'Autorizações',
+		description: 'Gestão de solicitações',
+		icon: 'verified_user',
 		route: '/autorizacoes',
 	},
 	{
 		title: 'Relatórios',
-		icon: 'dashboard',
+		description: 'Relatórios de uso',
+		icon: 'bar_chart',
 		route: '.',
+		disabled: true
 	},
 	{
-		title: 'Gerenciar',
-		icon: 'folder',
+		title: 'Recursos',
+		description: 'Gestão de recursos',
+		icon: 'inventory',
 		route: '/recursos',
 	},
+];
+
+export const MENU_OPTIONS_SETTINGS: Section[] = [
+	{
+		title: 'Parametrizações',
+		description: 'Configurações da aplicação',
+		icon: 'tune',
+		route: '/configuracoes/definicoes',
+	},
+	{
+		title: 'Usuários',
+		description: 'Gestão de usuários e atribuições',
+		icon: 'people',
+		route: '/configuracoes/usuarios',
+	},
+	{
+		title: 'Registros',
+		description: 'Armazena registros de eventos',
+		icon: 'receipt_long',
+		route: '/configuracoes/registros',
+	}
 ];
 

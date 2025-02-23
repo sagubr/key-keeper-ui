@@ -1,7 +1,9 @@
-<div mat-dialog-title>
-	<h1>Registro</h1>
+<div class="dialog-header">
+	<h2 class="h2" mat-dialog-title>Informações da Permissão</h2>
+	<button mat-icon-button mat-dialog-close>
+		<mat-icon>close</mat-icon>
+	</button>
 </div>
-
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
 	<mat-dialog-content>
 		<div class="row">
@@ -26,11 +28,6 @@
 					<mat-error *ngIf="form.get('location')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
-			<div class="col">
-				<button mat-button type="button" class="button" aria-label="Recarregar">
-					<mat-icon>add</mat-icon>
-				</button>
-			</div>
 		</div>
 
 		<div class="row">
@@ -45,16 +42,11 @@
 					<mat-error *ngIf="form.get('requester')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
-			<div class="col">
-				<button mat-button type="button" class="button" aria-label="Recarregar">
-					<mat-icon>add</mat-icon>
-				</button>
-			</div>
 		</div>
 
 		<div class="row">
 			<div class="col">
-				<mat-form-field appearance="outline">
+				<mat-form-field appearance="outline" class="full-width">
 					<mat-label>Enter a date range</mat-label>
 					<mat-date-range-input [rangePicker]="picker">
 						<input matStartDate formControlName="startDateTime" placeholder="Início da Validade">
@@ -71,30 +63,19 @@
 						<mat-error>Fim inválido</mat-error>
 					}
 				</mat-form-field>
-
-				<!--				<div class="col">-->
-				<!--					<mat-form-field appearance="outline">-->
-				<!--						<mat-label>Horário da validade</mat-label>-->
-				<!--						<input matInput-->
-				<!--							   [matTimepicker]="minutesPicker"-->
-				<!--							   matTimepickerMin="06:00"-->
-				<!--							   matTimepickerMax="23:00"-->
-				<!--						>-->
-				<!--						<mat-timepicker-toggle matIconSuffix [for]="minutesPicker"/>-->
-				<!--						<mat-timepicker interval="45min" #minutesPicker/>-->
-				<!--					</mat-form-field>-->
-				<!--				</div>-->
-
 			</div>
 		</div>
-
 	</mat-dialog-content>
 	<mat-dialog-actions align="end">
-		<button mat-raised-button type="submit" [disabled]="form.invalid">
-			{{ data ? 'Atualizar' : 'Salvar' }}
-		</button>
-		<button mat-raised-button type="button" [mat-dialog-close]="true">
+		<button mat-raised-button
+				class="button-secondary"
+				type="button" [mat-dialog-close]="true">
 			Cancelar
+		</button>
+		<button mat-raised-button
+				class="button-primary"
+				type="submit" [disabled]="form.invalid">
+			Salvar
 		</button>
 	</mat-dialog-actions>
 </form>

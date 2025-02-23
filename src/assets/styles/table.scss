@@ -7,9 +7,7 @@ table.mat-elevation-z8 {
 	border-radius: 10px;
 	overflow: hidden;
 
-	@include mat.table-overrides((
-		background-color: none,
-	));
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
 	.mat-header-cell {
 		background-color: var(--header-background);
@@ -27,4 +25,9 @@ table.mat-elevation-z8 {
 		background-color: var(--row-hover);
 	}
 
+	.mat-row-no-data {
+		display: flex;
+		justify-content: center;
+		text-align: center;
+	}
 }

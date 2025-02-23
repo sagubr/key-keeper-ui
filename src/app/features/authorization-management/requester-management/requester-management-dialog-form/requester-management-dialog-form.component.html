@@ -1,10 +1,11 @@
-<div mat-dialog-title>
-	<h1>Registro</h1>
+<div class="dialog-header">
+	<h2 class="h2" mat-dialog-title>Informações do Solicitante</h2>
+	<button mat-icon-button mat-dialog-close>
+		<mat-icon>close</mat-icon>
+	</button>
 </div>
-
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
 	<mat-dialog-content>
-		<h2 class="subtitle">Informações Pessoais</h2>
 		<div class="row">
 			<div class="col">
 				<mat-form-field appearance="outline" class="full-width">
@@ -19,34 +20,43 @@
 			<div class="col">
 				<mat-form-field appearance="outline" class="full-width">
 					<mat-label>E-mail</mat-label>
-					<input matInput maxlength="256" formControlName="email">
-					<mat-error *ngIf="form.get('email')?.invalid">Você deve inserir um valor</mat-error>
+					<mat-chip-grid #chipGrid>
+						@for (fruit of fruits(); track fruit) {
+							<mat-chip-row
+								(removed)="remove(fruit)"
+								[editable]="true"
+								(edited)="edit(fruit, $event)"
+								[aria-description]="'press enter to edit ' + fruit"
+							>
+								{{ fruit }}
+								<button matChipRemove [attr.aria-label]="'remove ' + fruit">
+									<mat-icon>cancel</mat-icon>
+								</button>
+							</mat-chip-row>
+						}
+						<input
+							[matChipInputFor]="chipGrid"
+							[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+							[matChipInputAddOnBlur]="addOnBlur"
+							(matChipInputTokenEnd)="add($event)"
+						/>
+					</mat-chip-grid>
 				</mat-form-field>
 			</div>
-			<mat-form-field appearance="outline" class="full-width">
-				<mat-label>E-mail</mat-label>
-				<mat-chip-grid #chipGrid>
-					@for (fruit of fruits(); track fruit) {
-						<mat-chip-row
-							(removed)="remove(fruit)"
-							[editable]="true"
-							(edited)="edit(fruit, $event)"
-							[aria-description]="'press enter to edit ' + fruit"
-						>
-							{{fruit}}
-							<button matChipRemove [attr.aria-label]="'remove ' + fruit">
-								<mat-icon>cancel</mat-icon>
-							</button>
-						</mat-chip-row>
-					}
-					<input
-						[matChipInputFor]="chipGrid"
-						[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-						[matChipInputAddOnBlur]="addOnBlur"
-						(matChipInputTokenEnd)="add($event)"
-					/>
-				</mat-chip-grid>
-			</mat-form-field>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Tipo de Cargo</mat-label>
+					<mat-select formControlName="jobTitle" [compareWith]="compareById">
+						@for (element of jobTitles; track $index) {
+							<mat-option [value]="element">{{ element.name }}</mat-option>
+						}
+					</mat-select>
+					<mat-error *ngIf="form.get('jobTitle')?.invalid">Você deve inserir um valor</mat-error>
+				</mat-form-field>
+			</div>
 		</div>
 
 		<div class="row">
@@ -61,30 +71,30 @@
 
 		<div class="row">
 			<div class="col">
-				<mat-form-field appearance="outline" class="full-width">
-					<mat-label>Tipo de Cargo</mat-label>
-					<mat-select formControlName="jobTitle" [compareWith]="compareById" >
-						@for (element of jobTitles; track $index) {
-							<mat-option [value]="element">{{ element.name }}</mat-option>
-						}
-					</mat-select>
-					<mat-error *ngIf="form.get('jobTitle')?.invalid">Você deve inserir um valor</mat-error>
-				</mat-form-field>
-			</div>
-			<div class="col">
-				<button mat-button type="button" class="button" aria-label="Recarregar">
-					<mat-icon>add</mat-icon>
-				</button>
+				<div class="slide-toggle-wrapper">
+					<mat-slide-toggle formControlName="responsible">
+						Elegível para ser responsável
+					</mat-slide-toggle>
+					<mat-icon class="icon-medium"
+							  matTooltip="Um solicitante responsável pode ser atribuído a uma sala"
+							  matTooltipPosition="right">
+						info
+					</mat-icon>
+				</div>
 			</div>
 		</div>
 
 	</mat-dialog-content>
 	<mat-dialog-actions align="end">
-		<button mat-raised-button type="submit" [disabled]="form.invalid">
-			{{ data ? 'Atualizar' : 'Salvar' }}
-		</button>
-		<button mat-raised-button type="button" [mat-dialog-close]="true">
+		<button mat-raised-button
+				class="button-secondary"
+				type="button" [mat-dialog-close]="true">
 			Cancelar
+		</button>
+		<button mat-raised-button
+				class="button-primary"
+				type="submit" [disabled]="form.invalid">
+			Salvar
 		</button>
 	</mat-dialog-actions>
 </form>

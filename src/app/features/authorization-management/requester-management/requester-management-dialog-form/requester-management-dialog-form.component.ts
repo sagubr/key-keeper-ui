@@ -16,38 +16,32 @@ import { CommonModule } from "@angular/common";
 import { MatRadioModule } from "@angular/material/radio";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { RequesterService } from "@openapi/api/requester.service";
-import {
-	MatChipEditedEvent,
-	MatChipGrid,
-	MatChipInput,
-	MatChipInputEvent,
-	MatChipRemove,
-	MatChipRow
-} from "@angular/material/chips";
+import { MatChipEditedEvent, MatChipInputEvent, MatChipsModule } from "@angular/material/chips";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @Component({
-    selector: 'app-requester-management-dialog-form',
-    imports: [
-        CommonModule,
-        MatSelectModule,
-        MatInputModule,
-        MatIconModule,
-        MatButtonModule,
-        MatRadioModule,
-        ReactiveFormsModule,
-        ClipboardModule,
-        MatDialogModule,
-        MatChipGrid,
-        MatChipInput,
-        MatChipRemove,
-        MatChipRow,
-    ],
-    templateUrl: './requester-management-dialog-form.component.html',
-    styleUrl: './requester-management-dialog-form.component.scss'
+	selector: 'app-requester-management-dialog-form',
+	imports: [
+		CommonModule,
+		MatSelectModule,
+		MatInputModule,
+		MatIconModule,
+		MatButtonModule,
+		MatRadioModule,
+		ReactiveFormsModule,
+		ClipboardModule,
+		MatDialogModule,
+		MatChipsModule,
+		MatSlideToggleModule,
+		MatTooltipModule,
+	],
+	templateUrl: './requester-management-dialog-form.component.html',
+	styleUrl: './requester-management-dialog-form.component.scss'
 })
-export class RequesterManagementDialogFormComponent implements OnInit{
+export class RequesterManagementDialogFormComponent implements OnInit {
 
 	compareById: (o1: any, o2: any) => boolean = compareById;
 
@@ -96,7 +90,7 @@ export class RequesterManagementDialogFormComponent implements OnInit{
 			}
 
 			fruits.splice(index, 1);
-			this.announcer.announce(`Removed ${fruit}`);
+			this.announcer.announce(`Removed ${ fruit }`);
 			return [...fruits];
 		});
 	}
@@ -162,7 +156,8 @@ export class RequesterManagementDialogFormComponent implements OnInit{
 			name: ['', Validators.required],
 			email: [''],
 			register: ['', Validators.required],
-			jobTitle: ['', Validators.required]
+			jobTitle: ['', Validators.required],
+			responsible: [false]
 		});
 	}
 }

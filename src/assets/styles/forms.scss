@@ -10,10 +10,11 @@ $input-background-color: #f0f0f0;
 	gap: 10px;
 }
 
+
 .col {
 	flex: 1 0 0%;
 	max-width: 100%;
-
+	vertical-align: middle;
 }
 
 .col-6 {

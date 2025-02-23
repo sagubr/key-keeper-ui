@@ -1,4 +1,4 @@
-<mat-toolbar class="toolbar">
+<mat-toolbar>
 	<mat-toolbar-row class="toolbar-row">
 		<mat-form-field appearance="outline">
 			<mat-label>Buscar</mat-label>
@@ -76,8 +76,8 @@
 
 					<tr class="mat-row" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-					<tr class="mat-row" *matNoDataRow>
-						<td class="mat-cell" colspan="4">Não foram encontrados usuários na fonte de dados.</td>
+					<tr class="mat-row-no-data" *matNoDataRow>
+						<td colspan="4">Não foram encontrados usuários na fonte de dados.</td>
 					</tr>
 				</table-wrapper-table>
 			</div>

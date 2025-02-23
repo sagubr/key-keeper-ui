@@ -16,23 +16,32 @@ import {
 	RequesterManagementDialogFormComponent
 } from "@app/features/authorization-management/requester-management/requester-management-dialog-form/requester-management-dialog-form.component";
 import { RequesterService } from "@openapi/api/requester.service";
+import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";
+import { MatInput } from "@angular/material/input";
+import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
 
 @Component({
-    selector: 'app-requester-management-datatable',
-    imports: [
-        CommonModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatDialogModule,
-        MatProgressBarModule,
-        MatMenuModule,
-        MatIconModule,
-        MatButtonModule,
-        MatSort,
-        TableWrapperTable,
-    ],
-    templateUrl: './requester-management-datatable.component.html',
-    styleUrl: './requester-management-datatable.component.scss'
+	selector: 'app-requester-management-datatable',
+	imports: [
+		CommonModule,
+		MatTableModule,
+		MatPaginatorModule,
+		MatDialogModule,
+		MatProgressBarModule,
+		MatMenuModule,
+		MatIconModule,
+		MatButtonModule,
+		MatSort,
+		TableWrapperTable,
+		MatFormField,
+		MatInput,
+		MatLabel,
+		MatSuffix,
+		MatToolbar,
+		MatToolbarRow,
+	],
+	templateUrl: './requester-management-datatable.component.html',
+	styleUrl: './requester-management-datatable.component.scss'
 })
 export class RequesterManagementDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -58,13 +67,7 @@ export class RequesterManagementDatatableComponent implements OnInit, AfterViewI
 			header: 'Email',
 			type: ColumnType.TEXT,
 			cell: (requester: Requester) => requester.email
-		},
-		{
-			definition: 'updated_at',
-			header: 'Atualizado em',
-			type: ColumnType.DATE,
-			cell: (requester: Requester) => requester.updatedAt
-		},
+		}
 	];
 	displayedColumns: string[] = ['info', ...this.columns.map(c => c.definition), 'star'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
@@ -89,6 +92,25 @@ export class RequesterManagementDatatableComponent implements OnInit, AfterViewI
 
 	ngOnDestroy(): void {
 		this.subscriptions.unsubscribe();
+	}
+
+	onSearch(event: Event) {
+		const value = (event.target as HTMLInputElement).value;
+		this.dataSource.filter = value.trim().toLowerCase();
+	}
+
+	onReload(): void {
+		this.findAll();
+	}
+
+	openCreateDialog(): void {
+		const dialogRef = this.dialog.open(RequesterManagementDialogFormComponent, {
+			data: {},
+		});
+
+		dialogRef.afterClosed().subscribe(() => {
+			this.onReload();
+		});
 	}
 
 	openEditDialog(data: UserDto) {

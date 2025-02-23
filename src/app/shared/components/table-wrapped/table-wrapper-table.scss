@@ -1,14 +1,2 @@
-@use '@angular/material' as mat;
 @use 'table';
-
-table {
-	width: 100%;
-	border: 1px solid #080a0b;
-	border-radius: 10px;
-
-	@include mat.table-overrides((
-		header-headline-weight: bold,
-		background-color: none,
-	));
-}
-
+@use 'fonts';

@@ -19,7 +19,7 @@
 					class="button-primary"
 					type="button"
 					aria-label="Adicionar"
-					(click)="openDialog()">
+					(click)="openCreateDialog()">
 				<mat-icon>add_circle</mat-icon>
 				<span>Adicionar</span>
 			</button>
@@ -48,15 +48,19 @@
 								<mat-icon>more_vert</mat-icon>
 							</button>
 							<mat-menu #menu="matMenu">
-								<button mat-menu-item (click)="openEditDialog(element)">
+								<button mat-menu-item
+										(click)="openEditDialog(element)">
 									<mat-icon>edit</mat-icon>
 									<span>Editar Registro</span>
 								</button>
-								<button mat-menu-item (click)="openResetPasswordDialog(element)">
+								<button mat-menu-item
+										(click)="openResetPasswordDialog(element)">
 									<mat-icon>key</mat-icon>
 									<span>Redefinir Senha</span>
 								</button>
-								<button mat-menu-item>
+								<button mat-menu-item
+										(click)="openBlockUserDialog(element)"
+								>
 									<mat-icon>lock</mat-icon>
 									<span>Bloquear</span>
 								</button>
@@ -73,7 +77,7 @@
 					<tr class="mat-row" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
 					<tr class="mat-row" *matNoDataRow>
-						<td class="mat-cell" colspan="7">Não há usuários cadastrados</td>
+						<td class="mat-cell" colspan="4">Não foram encontrados usuários na fonte de dados.</td>
 					</tr>
 				</table-wrapper-table>
 			</div>

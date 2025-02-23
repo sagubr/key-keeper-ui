@@ -35,11 +35,11 @@
 }
 
 .button-secondary {
-	@include button(#EFF2F1, #0E151C, #d3d8d7, 2px solid #0E151C);
+	@include button(#EFF2F1, #0E151C, #d3d8d7);
 }
 
 .button-primary {
-	@include button(#37CCB9, #fff);
+	@include button(#37CCB9, #080a0b);
 }
 
 .button-cancel {

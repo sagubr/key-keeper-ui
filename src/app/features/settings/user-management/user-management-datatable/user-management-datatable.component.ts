@@ -1,21 +1,14 @@
-/* Angular Core */
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, } from '@angular/core';
 import { finalize, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
-
-/**Angular Material */
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSort } from "@angular/material/sort";
-
-/**Angular Material Modules */
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
-
-/**Custom Components */
 import { UsersService } from '@openapi/api/users.service';
 import { User } from "@openapi/model/user";
 import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
@@ -102,16 +95,6 @@ export class UserManagementDatatableComponent implements OnInit, AfterViewInit, 
 		this.subscriptions.unsubscribe();
 	}
 
-	openDialog(): void {
-		const dialogRef = this.dialog.open(UserManagementDialogFormComponent, {
-			data: {},
-		});
-
-		dialogRef.afterClosed().subscribe(() => {
-			this.onReload();
-		});
-	}
-
 	onSearch(event: Event) {
 		const value = (event.target as HTMLInputElement).value;
 		this.dataSource.filter = value.trim().toLowerCase();
@@ -119,6 +102,15 @@ export class UserManagementDatatableComponent implements OnInit, AfterViewInit, 
 
 	onReload(): void {
 		this.findAll();
+	}
+
+	openCreateDialog(): void {
+		const dialogRef = this.dialog.open(UserManagementDialogFormComponent, {
+			data: {},
+		});
+		dialogRef.afterClosed().subscribe(() => {
+			this.onReload();
+		});
 	}
 
 	openEditDialog(data: UserDto) {
@@ -152,6 +144,25 @@ export class UserManagementDatatableComponent implements OnInit, AfterViewInit, 
 			console.log(res);
 		})
 	}
+
+	openBlockUserDialog(element: UserDto): void {
+		const dialogRef = this.dialog.open(DialogWrappedComponent,
+			{
+				data: {
+					title: 'Tem certeza que deseja bloquear o usuário?',
+					message: `O usuário ${ element.username } não consiguirá acessar a aplicação. Esta ação só poderá ser revertida via banco de dados.`,
+					icon: 'warning',
+					color: 'warn',
+					confirmText: 'Confirmar',
+					hideCancel: true
+				},
+				width: '400px'
+			});
+		dialogRef.afterClosed().subscribe(res => {
+			console.log(res);
+		})
+	}
+
 
 	private findAll(): void {
 		this.loading = true;

@@ -1,4 +1,3 @@
-@use 'table';
 @use 'buttons';
 
 .toolbar-row {
@@ -7,17 +6,14 @@
 	padding: 0;
 }
 
-.spacer {
-	flex: 1 1 auto;
+.actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
 }
 
-
-@media (max-width: 600px) {
-	.toolbar-form {
-		flex-direction: column;
-		align-items: stretch;
-	}
-
+.spacer {
+	flex: 1 1 auto;
 }
 
 .container {
@@ -35,27 +31,10 @@
 	min-width: 600px;
 }
 
-.full-width {
-	width: 100%;
-}
-
 .paginator {
 	border-radius: 10px;
 }
 
-.mat-mdc-table-sticky-border-elem-right {
-	border-left: 1px solid #e0e0e0;
-}
-
-.mat-mdc-table-sticky-border-elem-left {
-	border-right: 1px solid #e0e0e0;
-}
-
-.actions {
-	display: flex;
-	justify-content: flex-end;
-	gap: 10px;
-}
 
 
 

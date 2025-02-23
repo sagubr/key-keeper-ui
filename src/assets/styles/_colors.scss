@@ -1,4 +1,5 @@
 @mixin theme-colors() {
+	--border: #080a0b;
 	--primary: #37CCB9;
 	--secondary: #0E151C;
 	--accent: #EFF2F1;
@@ -10,8 +11,8 @@
 	--text-primary: #212121;
 	--text-secondary: #757575;
 	--tooltip-text: #ffffff;
-	--header-background: #2196f3;
-	--row-hover: #e0f7fa;
+	--header-background: #e3f2fd;
+	--row-hover: #b3e5fc;
 	--row-odd-bg: #f1f1f1;
 	--row-even-bg: #ffffff;
 }
@@ -19,7 +20,6 @@
 :root {
 	@include theme-colors();
 }
-
 
 @mixin color-class($color-name) {
 	&.bg-#{$color-name} {

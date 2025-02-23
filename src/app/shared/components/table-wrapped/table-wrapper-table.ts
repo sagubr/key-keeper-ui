@@ -7,7 +7,8 @@ import {
 	input,
 	InputSignal,
 	QueryList,
-	ViewChild
+	ViewChild,
+	ViewEncapsulation
 } from '@angular/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import {
@@ -18,17 +19,18 @@ import {
 	MatTable,
 	MatTableModule,
 } from '@angular/material/table';
-import { CurrencyPipe, DatePipe, NgForOf, NgIf, UpperCasePipe } from "@angular/common";
+import { CurrencyPipe, DatePipe, UpperCasePipe } from "@angular/common";
 
 /**
  * Table component that accepts column and row definitions in its content to be registered to the
  * table.
  */
 @Component({
-    selector: 'table-wrapper-table',
-    templateUrl: 'table-wrapper-table.html',
-    styleUrl: 'table-wrapper-table.scss',
-    imports: [MatTableModule, MatSortModule, DatePipe, UpperCasePipe, CurrencyPipe]
+	selector: 'table-wrapper-table',
+	templateUrl: 'table-wrapper-table.html',
+	styleUrl: 'table-wrapper-table.scss',
+	imports: [MatTableModule, MatSortModule, DatePipe, UpperCasePipe, CurrencyPipe],
+	encapsulation: ViewEncapsulation.None
 })
 export class TableWrapperTable<T> implements AfterContentInit {
 

@@ -1,7 +1,7 @@
 <table mat-table [dataSource]="dataSource()" class="mat-elevation-z8">
 	@for (column of columns(); track $index) {
 		<ng-container [matColumnDef]="column.definition">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header-cell">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header-cell h3">
 				{{ column.header }}
 			</th>
 

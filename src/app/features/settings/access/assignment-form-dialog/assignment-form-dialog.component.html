@@ -1,11 +1,11 @@
 <div class="dialog-header">
 	<h2 class="h2" mat-dialog-title>Informações da Atribuição</h2>
-	<button mat-icon-button (click)="onCancel()" mat-dialog-close>
+	<button mat-icon-button mat-dialog-close>
 		<mat-icon>close</mat-icon>
 	</button>
 </div>
 
-<form [formGroup]="formGroup" (ngSubmit)="alertFormValues(formGroup)">
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
 	<mat-dialog-content>
 
 		<div class="row">
@@ -24,12 +24,12 @@
 				<div
 					cdkDropList
 					#todoList="cdkDropList"
-					[cdkDropListData]="todo"
+					[cdkDropListData]="notGranted"
 					[cdkDropListConnectedTo]="[doneList]"
-					class="example-list"
+					class="list"
 					(cdkDropListDropped)="drop($event)">
-					@for (item of todo; track item) {
-						<div class="example-box" cdkDrag>
+					@for (item of notGranted; track item) {
+						<div class="box" cdkDrag>
 							{{ item }}
 							<mat-icon>drag_indicator</mat-icon>
 						</div>
@@ -43,12 +43,12 @@
 				<div
 					cdkDropList
 					#doneList="cdkDropList"
-					[cdkDropListData]="done"
+					[cdkDropListData]="granted"
 					[cdkDropListConnectedTo]="[todoList]"
-					class="example-list"
+					class="list"
 					(cdkDropListDropped)="drop($event)">
-					@for (item of done; track item) {
-						<div class="example-box" cdkDrag>
+					@for (item of granted; track item) {
+						<div class="box" cdkDrag>
 							{{ item }}
 							<mat-icon>drag_indicator</mat-icon>
 						</div>

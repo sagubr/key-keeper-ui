@@ -8,16 +8,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Screen } from './screen';
+import { Assignment } from './assignment';
 
 
-export interface Assignment { 
-    id?: string | null;
-    version?: number;
-    active?: boolean;
-    createdAt?: string;
-    updatedAt?: string;
+export interface UserSummaryDto { 
     name: string;
-    screens?: Array<Screen>;
+    username: string;
+    email: string;
+    assignment: Assignment;
 }
 

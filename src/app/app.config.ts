@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -10,6 +10,8 @@ import { CustomConfiguration } from '@openapi/configuration/custom-configuration
 import { Configuration as GRClientConfiguration } from '@openapi/configuration';
 import { MAT_DATE_LOCALE } from "@angular/material/core";
 import { MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material/dialog";
+import { MatPaginatorIntl } from "@angular/material/paginator";
+import { CustomPaginatorIntl } from "@app/shared/material-locale-pt";
 
 export const appConfig: ApplicationConfig = {
 	providers: [
@@ -20,6 +22,8 @@ export const appConfig: ApplicationConfig = {
 		provideHttpClient(withFetch()),
 		{ provide: GRClientConfiguration, useClass: CustomConfiguration },
 		{ provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+		{ provide: LOCALE_ID, useValue: 'pt-BR' },
+		{ provide: MatPaginatorIntl, useClass: CustomPaginatorIntl }
 	]
 };
 

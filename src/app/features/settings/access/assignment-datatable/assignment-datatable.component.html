@@ -51,22 +51,12 @@
 								<button mat-menu-item
 										(click)="openEditDialog(element)">
 									<mat-icon>edit</mat-icon>
-									<span>Editar Registro</span>
+									<span>Editar registro</span>
 								</button>
 								<button mat-menu-item
-										(click)="openResetPasswordDialog(element)">
-									<mat-icon>key</mat-icon>
-									<span>Redefinir Senha</span>
-								</button>
-								<button mat-menu-item
-										(click)="openBlockUserDialog(element)"
-								>
-									<mat-icon>lock</mat-icon>
-									<span>Bloquear</span>
-								</button>
-								<button mat-menu-item disabled>
-									<mat-icon>history</mat-icon>
-									<span>Visualizar Histórico</span>
+										(click)="openEditDialog(element)">
+									<mat-icon>delete</mat-icon>
+									<span>Excluir registro</span>
 								</button>
 							</mat-menu>
 						</td>
@@ -77,14 +67,13 @@
 					<tr class="mat-row" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
 					<tr class="mat-row-no-data" *matNoDataRow>
-						<td colspan="4">Não foram encontrados usuários na fonte de dados.</td>
+						<td colspan="4">Não foram encontrados registros de atribuições na fonte de dados.</td>
 					</tr>
 				</table-wrapper-table>
 			</div>
 		</div>
 	</div>
 	<div class="paginator">
-		<mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons
-					   aria-label="Selecione a página dos usuários"></mat-paginator>
+		<mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
 	</div>
 </div>

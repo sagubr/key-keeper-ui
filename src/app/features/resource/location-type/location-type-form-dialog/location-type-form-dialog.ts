@@ -1,14 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatButton, MatButtonModule } from "@angular/material/button";
-import {
-	MAT_DIALOG_DATA,
-	MatDialogActions,
-	MatDialogContent, MatDialogModule,
-	MatDialogRef,
-	MatDialogTitle
-} from "@angular/material/dialog";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
-import { MatInput, MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from "@angular/material/button";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MatInputModule } from "@angular/material/input";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { UsersService } from "@openapi/api/users.service";
 import { UserDto } from "@openapi/model/userDto";
@@ -67,7 +60,7 @@ export class LocationTypeFormDialog implements OnInit {
 		this.validateForm()
 
 		if (this.data) {
-			this.userService.addUser(this.form.value).subscribe({
+			this.userService.createUser(this.form.value).subscribe({
 				next: () => {
 					this.form.reset();
 					this.dialogRef.close(true);

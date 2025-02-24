@@ -1,17 +1,18 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { MatRadioModule } from '@angular/material/radio';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { UsersService } from "@openapi/api/users.service";
 import { UserDto } from "@openapi/model/userDto";
-import { Roles } from "@openapi/model/roles";
-import { MatChipsModule } from "@angular/material/chips";
+import { AssignmentService } from "@openapi/api/assignment.service";
+import { Assignment } from "@openapi/model/assignment";
+import { compareById } from "@app/core/utils/utils";
+import { DialogWrappedComponent } from "@app/shared/components/dialog-wrapped/dialog-wrapped.component";
 
 @Component({
 	selector: 'app-user-form-dialog',
@@ -21,27 +22,28 @@ import { MatChipsModule } from "@angular/material/chips";
 		MatInputModule,
 		MatIconModule,
 		MatButtonModule,
-		MatRadioModule,
 		ReactiveFormsModule,
 		ClipboardModule,
 		MatDialogModule,
-		MatChipsModule,
 	],
 	templateUrl: './user-form-dialog.component.html',
 	styleUrl: './user-form-dialog.component.scss'
 })
 export class UserFormDialogComponent implements OnInit {
 
-	protected readonly Roles = Roles;
 	form!: FormGroup;
+	assignment: Assignment[] = [];
 
 	constructor(
-		public dialogRef: MatDialogRef<UserFormDialogComponent>,
+		private readonly dialogRef: MatDialogRef<UserFormDialogComponent>,
+		private readonly dialog: MatDialog,
 		private readonly userService: UsersService,
+		private readonly assignmentService: AssignmentService,
 		private readonly formBuilder: FormBuilder,
 		@Inject(MAT_DIALOG_DATA) public data: UserDto,
 	) {
 		this.buildFormGroup();
+		this.findAllAssignment();
 	}
 
 	ngOnInit(): void {
@@ -61,20 +63,18 @@ export class UserFormDialogComponent implements OnInit {
 		this.validateForm()
 
 		if (this.data) {
-			this.userService.addUser(this.form.value).subscribe({
+			this.userService.createUser(this.form.value).subscribe({
 				next: () => {
 					this.form.reset();
 					this.dialogRef.close(true);
+					this.openDialogFeedback(true);
 				},
 				error: (err: any) => {
 					console.error(err);
+					this.openDialogFeedback(false);
 				},
 			});
 		}
-	}
-
-	onCancel(): void {
-		this.dialogRef.close(); // Fecha o diálogo quando o botão Cancelar é clicado
 	}
 
 	private validateForm(): void {
@@ -90,10 +90,50 @@ export class UserFormDialogComponent implements OnInit {
 			name: ['', Validators.required],
 			username: ['', Validators.required],
 			email: ['', [Validators.required, Validators.email]],
-			roles: ['', Validators.required],
+			assignment: ['', Validators.required],
 			active: [],
 		});
 	}
 
+	private findAllAssignment(): void {
+		this.assignmentService.findAllAssignment().subscribe({
+			next: (res) => {
+				this.assignment = res;
+			},
+			error: (err) => {
+				console.error('Error:', err);
+			}
+		});
+	}
+
+	private openDialogFeedback(arg: boolean): void {
+		if (arg) {
+			this.dialog.open(DialogWrappedComponent, {
+				data: {
+					title: 'Atribuição salva com sucesso',
+					message: `Este registro já pode ser atribuído para usuários da aplicação.`,
+					icon: 'success',
+					color: 'primary',
+					confirmText: 'Confirmar',
+					hideCancel: false,
+				},
+				width: '400px'
+			});
+		} else {
+			this.dialog.open(DialogWrappedComponent, {
+				data: {
+					title: 'Não foi possível concluir o registro',
+					message: `Tente novamente mais tarde.`,
+					icon: 'danger',
+					color: 'primary',
+					confirmText: 'Confirmar',
+					hideCancel: false,
+				},
+				width: '400px'
+			});
+		}
+	}
+
+	protected readonly compareById = compareById;
 }
 

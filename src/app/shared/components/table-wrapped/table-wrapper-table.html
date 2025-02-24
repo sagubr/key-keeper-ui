@@ -19,6 +19,9 @@
 					@case (ColumnType.CURRENCY) {
 						{{ column.cell(element) | currency }}
 					}
+					@case (ColumnType.ARRAY) {
+						{{ column.cell(element) | join:', ' }}
+					}
 					@default {
 						Unknown column type
 					}

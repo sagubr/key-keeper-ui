@@ -2,6 +2,7 @@
 README.md
 api.module.ts
 api/api.ts
+api/assignment.service.ts
 api/default.service.ts
 api/facility.service.ts
 api/jobTitle.service.ts
@@ -35,10 +36,10 @@ model/permission.ts
 model/requester.ts
 model/requesterEmail.ts
 model/reservation.ts
-model/roles.ts
+model/screen.ts
 model/sendRequest.ts
 model/status.ts
 model/user.ts
-model/userDto.ts
+model/userSummaryDto.ts
 param.ts
 variables.ts

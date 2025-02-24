@@ -1,3 +1,5 @@
+export * from './assignment.service';
+import { AssignmentService } from './assignment.service';
 export * from './default.service';
 import { DefaultService } from './default.service';
 export * from './facility.service';
@@ -22,4 +24,4 @@ export * from './reservation.service';
 import { ReservationService } from './reservation.service';
 export * from './users.service';
 import { UsersService } from './users.service';
-export const APIS = [DefaultService, FacilityService, JobTitleService, KeyService, LocationService, LocationTypeService, LoggingService, NotificationsService, PermissionService, RequesterService, ReservationService, UsersService];
+export const APIS = [AssignmentService, DefaultService, FacilityService, JobTitleService, KeyService, LocationService, LocationTypeService, LoggingService, NotificationsService, PermissionService, RequesterService, ReservationService, UsersService];

@@ -20,6 +20,7 @@ import {
 	MatTableModule,
 } from '@angular/material/table';
 import { CurrencyPipe, DatePipe, UpperCasePipe } from "@angular/common";
+import { JoinPipe } from "@app/core/pipes/JoinPipe";
 
 /**
  * Table component that accepts column and row definitions in its content to be registered to the
@@ -29,7 +30,7 @@ import { CurrencyPipe, DatePipe, UpperCasePipe } from "@angular/common";
 	selector: 'table-wrapper-table',
 	templateUrl: 'table-wrapper-table.html',
 	styleUrl: 'table-wrapper-table.scss',
-	imports: [MatTableModule, MatSortModule, DatePipe, UpperCasePipe, CurrencyPipe],
+	imports: [MatTableModule, MatSortModule, DatePipe, UpperCasePipe, CurrencyPipe, JoinPipe],
 	encapsulation: ViewEncapsulation.None
 })
 export class TableWrapperTable<T> implements AfterContentInit {
@@ -67,4 +68,5 @@ export enum ColumnType {
 	DATE = 'DATE',
 	DATETIME = 'DATETIME',
 	CURRENCY = 'CURRENCY',
+	ARRAY = 'ARRAY'
 }

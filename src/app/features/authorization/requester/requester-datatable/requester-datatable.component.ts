@@ -66,7 +66,7 @@ export class RequesterDatatableComponent implements OnInit, AfterViewInit, OnDes
 			definition: 'email',
 			header: 'Email',
 			type: ColumnType.TEXT,
-			cell: (requester: Requester) => requester.email
+			cell: (requester: Requester) => requester.emails
 		}
 	];
 	displayedColumns: string[] = ['info', ...this.columns.map(c => c.definition), 'star'];

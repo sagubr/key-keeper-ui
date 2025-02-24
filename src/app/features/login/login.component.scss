@@ -1,15 +1,17 @@
+@use 'colors';
+
 .login-page {
 	display: flex;
 	height: 100%;
-	background-color: #f4f6f9;
+	background-color: var(--background);
 
 	.login-banner {
 		flex: 1;
-		background-color: #1dd3b0;
+		background-color: var(--primary);
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		color: white;
+		color: var(--background);
 		text-align: center;
 		padding: 20px;
 
@@ -57,7 +59,7 @@
 				display: block;
 				text-align: right;
 				font-size: 14px;
-				color: #1dd3b0;
+				color: var(--primary);
 				margin-bottom: 20px;
 				text-decoration: none;
 
@@ -67,17 +69,17 @@
 			}
 
 			.login-button {
-				background-color: #1dd3b0;
-				color: white;
+				background-color: var(--primary);
+				color: var(--background);
 				width: 100%;
 
 				&:hover {
-					background-color: #17b49a;
+					background-color: var(--primary);
 				}
 			}
 
 			.error-message {
-				color: red;
+				color: var(--danger);
 				text-align: center;
 			}
 		}

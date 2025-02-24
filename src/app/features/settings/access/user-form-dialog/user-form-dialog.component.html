@@ -1,6 +1,6 @@
 <div class="dialog-header">
 	<h2 class="h2" mat-dialog-title>Informações do Usuário</h2>
-	<button mat-icon-button (click)="onCancel()" mat-dialog-close>
+	<button mat-icon-button mat-dialog-close>
 		<mat-icon>close</mat-icon>
 	</button>
 </div>
@@ -42,10 +42,10 @@
 			<div class="col">
 				<mat-form-field appearance="outline" class="full-width">
 					<mat-label>Atribuição</mat-label>
-					<mat-select formControlName="roles">
-						<mat-option [value]="Roles.Editor">Portaria</mat-option>
-						<mat-option [value]="Roles.Manager">Secretaria</mat-option>
-						<mat-option [value]="Roles.Moderator">Administrador</mat-option>
+					<mat-select formControlName="assignment" [compareWith]="compareById">
+						@for (element of assignment; track $index) {
+							<mat-option [value]="element">{{ element.name }}</mat-option>
+						}
 					</mat-select>
 					<mat-error *ngIf="form.get('roles')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>

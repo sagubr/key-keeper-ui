@@ -8,6 +8,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { RequesterEmail } from './requesterEmail';
 import { JobTitle } from './jobTitle';
 
 
@@ -18,8 +19,9 @@ export interface Requester {
     createdAt?: string;
     updatedAt?: string;
     name: string;
-    email: string;
+    emails: Array<RequesterEmail>;
     register?: string;
     jobTitle?: JobTitle | null;
+    responsible?: boolean;
 }
 

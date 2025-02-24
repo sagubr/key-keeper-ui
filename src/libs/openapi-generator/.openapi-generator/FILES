@@ -18,12 +18,14 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
+model/assignment.ts
 model/entityPattern.ts
 model/eventLoggingEvent.ts
 model/eventNotifierEvent.ts
 model/facility.ts
 model/jobTitle.ts
 model/key.ts
+model/keyType.ts
 model/location.ts
 model/locationType.ts
 model/loggingEvent.ts
@@ -31,6 +33,7 @@ model/models.ts
 model/notifierEvent.ts
 model/permission.ts
 model/requester.ts
+model/requesterEmail.ts
 model/reservation.ts
 model/roles.ts
 model/sendRequest.ts

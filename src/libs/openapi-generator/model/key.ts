@@ -8,6 +8,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { KeyType } from './keyType';
 import { Location } from './location';
 
 
@@ -17,7 +18,12 @@ export interface Key {
     active?: boolean;
     createdAt?: string;
     updatedAt?: string;
+    code: number;
     description: string;
     location: Location;
+    keyType: KeyType;
 }
+export namespace Key {
+}
+
 

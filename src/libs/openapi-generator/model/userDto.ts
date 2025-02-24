@@ -8,7 +8,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Roles } from './roles';
+import { Assignment } from './assignment';
 
 
 export interface UserDto { 
@@ -16,9 +16,6 @@ export interface UserDto {
     name?: string;
     password: string;
     username: string;
-    roles: Roles;
+    assignment: Assignment;
 }
-export namespace UserDto {
-}
-
 

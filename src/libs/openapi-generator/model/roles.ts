@@ -10,13 +10,19 @@
  */
 
 
-export type Roles = 'VIEWER' | 'EDITOR' | 'MODERATOR' | 'MANAGER' | 'SUPER_ADMIN';
+export type Roles = 'EMPRESTIMOS' | 'HISTORICO' | 'SOLICITANTES' | 'PERMISSOES' | 'SALAS' | 'TIPO_AMBIENTE' | 'INSTALACOES' | 'CARGOS' | 'CONFIGURACAO' | 'USUARIOS' | 'ATRIBUICOES';
 
 export const Roles = {
-    Viewer: 'VIEWER' as Roles,
-    Editor: 'EDITOR' as Roles,
-    Moderator: 'MODERATOR' as Roles,
-    Manager: 'MANAGER' as Roles,
-    SuperAdmin: 'SUPER_ADMIN' as Roles
+    Emprestimos: 'EMPRESTIMOS' as Roles,
+    Historico: 'HISTORICO' as Roles,
+    Solicitantes: 'SOLICITANTES' as Roles,
+    Permissoes: 'PERMISSOES' as Roles,
+    Salas: 'SALAS' as Roles,
+    TipoAmbiente: 'TIPO_AMBIENTE' as Roles,
+    Instalacoes: 'INSTALACOES' as Roles,
+    Cargos: 'CARGOS' as Roles,
+    Configuracao: 'CONFIGURACAO' as Roles,
+    Usuarios: 'USUARIOS' as Roles,
+    Atribuicoes: 'ATRIBUICOES' as Roles
 };
 

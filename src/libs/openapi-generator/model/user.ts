@@ -8,7 +8,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Roles } from './roles';
+import { Assignment } from './assignment';
 
 
 export interface User { 
@@ -21,10 +21,7 @@ export interface User {
     username: string;
     email: string;
     password: string;
-    roles: Roles;
     firstAccess: boolean;
+    assignments?: Array<Assignment>;
 }
-export namespace User {
-}
-
 

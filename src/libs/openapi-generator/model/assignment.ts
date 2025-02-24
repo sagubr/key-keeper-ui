@@ -8,14 +8,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Notifier } from './notifier';
+import { Roles } from './roles';
 
 
-export interface EventNotifier { 
-    data?: Notifier;
-    id?: string;
-    name?: string;
-    comment?: string;
-    retry?: string;
+export interface Assignment { 
+    id?: string | null;
+    version?: number;
+    active?: boolean;
+    createdAt?: string;
+    updatedAt?: string;
+    name: string;
+    roles?: Array<Roles>;
 }
 

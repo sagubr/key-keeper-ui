@@ -17,5 +17,6 @@ export interface JobTitle {
     createdAt?: string;
     updatedAt?: string;
     name: string;
+    description?: string;
 }
 

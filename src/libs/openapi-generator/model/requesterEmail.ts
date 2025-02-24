@@ -8,10 +8,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Requester } from './requester';
 
 
-export interface Notifier { 
-    recipient: string;
-    message: string;
+export interface RequesterEmail { 
+    id?: string | null;
+    version?: number;
+    active?: boolean;
+    createdAt?: string;
+    updatedAt?: string;
+    emails: string;
+    requester?: Requester | null;
 }
 

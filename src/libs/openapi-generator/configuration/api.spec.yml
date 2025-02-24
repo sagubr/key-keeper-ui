@@ -3,32 +3,32 @@ info:
     title: key-keeper
     version: "0.0"
 servers:
-    - url: http://localhost:8080/
+    -   url: http://localhost:8080/
 security:
-    - Authorization: []
+    -   Authorization: [ ]
 tags:
-    - name: Requester
-      description: Operações relacionadas a entidade solicitantes
-    - name: Reservation
-      description: Operações relacionadas a entidade reservas
-    - name: JobTitle
-      description: Operações relacionadas a entidade cargo
-    - name: Location
-      description: Operações relacionadas a entidade Localização
-    - name: Permission
-      description: Operações relacionadas a entidade Permissão
-    - name: Facility
-      description: Operações relacionadas a entidade lugar
-    - name: Key
-      description: Operações relacionadas a entidade Chaves
-    - name: Users
-      description: Operações relacionadas a entidade Usuário
-    - name: Notifications
-      description: Operações relacionadas a entidade Permissão
-    - name: Logging
-      description: Operações relacionadas a entidade Permissão
-    - name: LocationType
-      description: Operações relacionadas a entidade Tipos de Localização
+    -   name: Requester
+        description: Operações relacionadas a entidade solicitantes
+    -   name: JobTitle
+        description: Operações relacionadas a entidade cargo
+    -   name: Location
+        description: Operações relacionadas a entidade Localização
+    -   name: Facility
+        description: Operações relacionadas a entidade lugar
+    -   name: Key
+        description: Operações relacionadas a entidade Chaves
+    -   name: Notifications
+        description: Operações relacionadas a entidade Permissão
+    -   name: Logging
+        description: Operações relacionadas a entidade Permissão
+    -   name: LocationType
+        description: Operações relacionadas a entidade Tipos de Localização
+    -   name: Permission
+        description: Operações relacionadas a entidade Permissão
+    -   name: Reservation
+        description: Operações relacionadas a entidade reservas
+    -   name: Users
+        description: Operações relacionadas a entidade Usuário
 paths:
     /api/facility:
         get:
@@ -55,12 +55,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/facility/save:
         post:
             tags:
@@ -90,12 +90,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/job-title:
         get:
             tags:
@@ -121,12 +121,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/job-title/save:
         post:
             tags:
@@ -156,12 +156,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/key:
         get:
             tags:
@@ -187,12 +187,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/key/location:
         post:
             tags:
@@ -224,12 +224,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/key/save:
         post:
             tags:
@@ -259,12 +259,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/key/update:
         post:
             tags:
@@ -294,12 +294,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/location:
         get:
             tags:
@@ -325,12 +325,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/location-type:
         get:
             tags:
@@ -356,12 +356,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/location/save:
         post:
             tags:
@@ -391,12 +391,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/location/{id}:
         get:
             tags:
@@ -404,12 +404,12 @@ paths:
             summary: Obter detalhes de uma localização por ID
             operationId: findByIdLocation
             parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                      type: string
-                      format: uuid
+                -   name: id
+                    in: path
+                    required: true
+                    schema:
+                        type: string
+                        format: uuid
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -427,12 +427,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/permissions:
         get:
             tags:
@@ -458,12 +458,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/permissions/requester:
         post:
             tags:
@@ -495,12 +495,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/permissions/save:
         post:
             tags:
@@ -530,12 +530,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/requesters:
         get:
             tags:
@@ -561,12 +561,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/requesters/save:
         post:
             tags:
@@ -596,12 +596,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/reservations:
         get:
             tags:
@@ -627,12 +627,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/reservations/active:
         post:
             tags:
@@ -658,12 +658,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/reservations/change-status:
         post:
             tags:
@@ -689,12 +689,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/reservations/save:
         post:
             tags:
@@ -724,12 +724,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/reservations/status:
         get:
             tags:
@@ -737,11 +737,11 @@ paths:
             summary: Obter todas as reservas
             operationId: findAllByStatusReservation
             parameters:
-                - name: status
-                  in: query
-                  required: true
-                  schema:
-                      $ref: "#/components/schemas/Status"
+                -   name: status
+                    in: query
+                    required: true
+                    schema:
+                        $ref: "#/components/schemas/Status"
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -761,12 +761,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/users:
         get:
             tags:
@@ -792,12 +792,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /api/users/save:
         post:
             tags:
@@ -827,12 +827,12 @@ paths:
                     description: Erro de validação
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
                 "500":
                     description: Erro
                     content:
                         application/json:
-                            schema: {}
+                            schema: { }
     /logging/get:
         get:
             tags:
@@ -878,6 +878,19 @@ paths:
                                 $ref: "#/components/schemas/Event_NotifierEvent_"
 components:
     schemas:
+        Assignment:
+            required:
+                - name
+            type: object
+            allOf:
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        name:
+                            type: string
+                        roles:
+                            type: array
+                            items:
+                                $ref: "#/components/schemas/Roles"
         EntityPattern:
             type: object
             properties:
@@ -927,31 +940,47 @@ components:
                 - name
             type: object
             allOf:
-                - $ref: "#/components/schemas/EntityPattern"
-                - properties:
-                      name:
-                          type: string
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        name:
+                            type: string
+                        description:
+                            type: string
         JobTitle:
             required:
                 - name
             type: object
             allOf:
-                - $ref: "#/components/schemas/EntityPattern"
-                - properties:
-                      name:
-                          type: string
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        name:
+                            type: string
+                        description:
+                            type: string
         Key:
             required:
+                - code
                 - description
+                - keyType
                 - location
             type: object
             allOf:
-                - $ref: "#/components/schemas/EntityPattern"
-                - properties:
-                      description:
-                          type: string
-                      location:
-                          $ref: "#/components/schemas/Location"
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        code:
+                            type: integer
+                            format: int64
+                        description:
+                            type: string
+                        location:
+                            $ref: "#/components/schemas/Location"
+                        keyType:
+                            $ref: "#/components/schemas/KeyType"
+        KeyType:
+            type: string
+            enum:
+                - PRINCIPAL
+                - SECUNDARIA
         Location:
             required:
                 - facility
@@ -959,23 +988,42 @@ components:
                 - name
             type: object
             allOf:
-                - $ref: "#/components/schemas/EntityPattern"
-                - properties:
-                      name:
-                          type: string
-                      facility:
-                          $ref: "#/components/schemas/Facility"
-                      locationType:
-                          $ref: "#/components/schemas/LocationType"
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        name:
+                            type: string
+                        description:
+                            type: string
+                        facility:
+                            $ref: "#/components/schemas/Facility"
+                        locationType:
+                            $ref: "#/components/schemas/LocationType"
+                        maxCapacity:
+                            type: integer
+                            format: int32
+                        restricted:
+                            type: boolean
+                        openingTime:
+                            type: string
+                            format: partial-time
+                        closingTime:
+                            type: string
+                            format: partial-time
+                        responsibles:
+                            type: array
+                            items:
+                                $ref: "#/components/schemas/Requester"
         LocationType:
             required:
                 - name
             type: object
             allOf:
-                - $ref: "#/components/schemas/EntityPattern"
-                - properties:
-                      name:
-                          type: string
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        name:
+                            type: string
+                        description:
+                            type: string
         LoggingEvent:
             required:
                 - level
@@ -1004,42 +1052,59 @@ components:
                 - startDateTime
             type: object
             allOf:
-                - $ref: "#/components/schemas/EntityPattern"
-                - properties:
-                      location:
-                          $ref: "#/components/schemas/Location"
-                      requester:
-                          $ref: "#/components/schemas/Requester"
-                      user:
-                          nullable: true
-                          allOf:
-                              - $ref: "#/components/schemas/User"
-                      description:
-                          type: string
-                      startDateTime:
-                          type: string
-                          format: date-time
-                      endDateTime:
-                          type: string
-                          format: date-time
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        location:
+                            $ref: "#/components/schemas/Location"
+                        requester:
+                            $ref: "#/components/schemas/Requester"
+                        user:
+                            nullable: true
+                            allOf:
+                                -   $ref: "#/components/schemas/User"
+                        description:
+                            type: string
+                        startDateTime:
+                            type: string
+                            format: date-time
+                        endDateTime:
+                            type: string
+                            format: date-time
         Requester:
             required:
-                - email
+                - emails
                 - name
             type: object
             allOf:
-                - $ref: "#/components/schemas/EntityPattern"
-                - properties:
-                      name:
-                          type: string
-                      email:
-                          type: string
-                      register:
-                          type: string
-                      jobTitle:
-                          nullable: true
-                          allOf:
-                              - $ref: "#/components/schemas/JobTitle"
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        name:
+                            type: string
+                        emails:
+                            type: array
+                            items:
+                                $ref: "#/components/schemas/RequesterEmail"
+                        register:
+                            type: string
+                        jobTitle:
+                            nullable: true
+                            allOf:
+                                -   $ref: "#/components/schemas/JobTitle"
+                        responsible:
+                            type: boolean
+        RequesterEmail:
+            required:
+                - emails
+            type: object
+            allOf:
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        emails:
+                            type: string
+                        requester:
+                            nullable: true
+                            allOf:
+                                -   $ref: "#/components/schemas/Requester"
         Reservation:
             required:
                 - endDateTime
@@ -1047,34 +1112,40 @@ components:
                 - status
             type: object
             allOf:
-                - $ref: "#/components/schemas/EntityPattern"
-                - properties:
-                      permission:
-                          nullable: true
-                          allOf:
-                              - $ref: "#/components/schemas/Permission"
-                      user:
-                          nullable: true
-                          allOf:
-                              - $ref: "#/components/schemas/User"
-                      notes:
-                          type: string
-                      startDateTime:
-                          type: string
-                          format: date-time
-                      endDateTime:
-                          type: string
-                          format: date-time
-                      status:
-                          $ref: "#/components/schemas/Status"
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        permission:
+                            nullable: true
+                            allOf:
+                                -   $ref: "#/components/schemas/Permission"
+                        user:
+                            nullable: true
+                            allOf:
+                                -   $ref: "#/components/schemas/User"
+                        notes:
+                            type: string
+                        startDateTime:
+                            type: string
+                            format: date-time
+                        endDateTime:
+                            type: string
+                            format: date-time
+                        status:
+                            $ref: "#/components/schemas/Status"
         Roles:
             type: string
             enum:
-                - VIEWER
-                - EDITOR
-                - MODERATOR
-                - MANAGER
-                - SUPER_ADMIN
+                - EMPRESTIMOS
+                - HISTORICO
+                - SOLICITANTES
+                - PERMISSOES
+                - SALAS
+                - TIPO_AMBIENTE
+                - INSTALACOES
+                - CARGOS
+                - CONFIGURACAO
+                - USUARIOS
+                - ATRIBUICOES
         Status:
             type: string
             enum:
@@ -1087,28 +1158,29 @@ components:
                 - firstAccess
                 - name
                 - password
-                - roles
                 - username
             type: object
             allOf:
-                - $ref: "#/components/schemas/EntityPattern"
-                - properties:
-                      name:
-                          type: string
-                      username:
-                          type: string
-                      email:
-                          type: string
-                      password:
-                          type: string
-                      roles:
-                          $ref: "#/components/schemas/Roles"
-                      firstAccess:
-                          type: boolean
+                -   $ref: "#/components/schemas/EntityPattern"
+                -   properties:
+                        name:
+                            type: string
+                        username:
+                            type: string
+                        email:
+                            type: string
+                        password:
+                            type: string
+                        firstAccess:
+                            type: boolean
+                        assignments:
+                            type: array
+                            items:
+                                $ref: "#/components/schemas/Assignment"
         UserDto:
             required:
+                - assignment
                 - password
-                - roles
                 - username
             type: object
             properties:
@@ -1120,8 +1192,8 @@ components:
                     type: string
                 username:
                     type: string
-                roles:
-                    $ref: "#/components/schemas/Roles"
+                assignment:
+                    $ref: "#/components/schemas/Assignment"
     securitySchemes:
         Authorization:
             type: http

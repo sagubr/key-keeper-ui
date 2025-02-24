@@ -8,6 +8,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Requester } from './requester';
 import { Facility } from './facility';
 import { LocationType } from './locationType';
 
@@ -19,7 +20,13 @@ export interface Location {
     createdAt?: string;
     updatedAt?: string;
     name: string;
+    description?: string;
     facility: Facility;
     locationType: LocationType;
+    maxCapacity?: number;
+    restricted?: boolean;
+    openingTime?: string;
+    closingTime?: string;
+    responsibles?: Array<Requester>;
 }
 

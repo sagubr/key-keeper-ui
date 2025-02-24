@@ -17,5 +17,6 @@ export interface LocationType {
     createdAt?: string;
     updatedAt?: string;
     name: string;
+    description?: string;
 }
 

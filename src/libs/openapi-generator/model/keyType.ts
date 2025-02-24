@@ -10,7 +10,10 @@
  */
 
 
-export interface EventObject { 
-    source: any | null;
-}
+export type KeyType = 'PRINCIPAL' | 'SECUNDARIA';
+
+export const KeyType = {
+    Principal: 'PRINCIPAL' as KeyType,
+    Secundaria: 'SECUNDARIA' as KeyType
+};
 

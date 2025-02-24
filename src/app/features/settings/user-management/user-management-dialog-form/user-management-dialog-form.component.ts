@@ -1,32 +1,17 @@
-/*Angular Core*/
-import { Component, inject, Inject, OnInit, signal } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
-/*Angular Material*/
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-
-/*Angular Material Modules*/
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-
-/*Custom Components*/
 import { UsersService } from "@openapi/api/users.service";
 import { UserDto } from "@openapi/model/userDto";
 import { Roles } from "@openapi/model/roles";
-import {
-	MatChipEditedEvent,
-	MatChipGrid,
-	MatChipInputEvent,
-	MatChipRow,
-	MatChipsModule
-} from "@angular/material/chips";
-import { LiveAnnouncer } from "@angular/cdk/a11y";
-import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import { MatChipsModule } from "@angular/material/chips";
 
 @Component({
 	selector: 'app-user-management-dialog-form',

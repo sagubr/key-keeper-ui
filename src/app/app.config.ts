@@ -20,7 +20,6 @@ export const appConfig: ApplicationConfig = {
 		provideHttpClient(withFetch()),
 		{ provide: GRClientConfiguration, useClass: CustomConfiguration },
 		{ provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
-		{ provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { width: '540px' } }
 	]
 };
 

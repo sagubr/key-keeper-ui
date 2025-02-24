@@ -23,7 +23,7 @@ import { LocationTypeService } from "@openapi/api/locationType.service";
 import { Location } from "@openapi/model/location";
 import {
 	FacilityManagementDialogFormComponent
-} from "@app/features/resource-management/facility-management/facility-management-dialog-form/facility-management-dialog-form.component";
+} from "@app/features/resource/facility-management/facility-management-dialog-form/facility-management-dialog-form.component";
 import { compareById } from "@app/core/utils/utils";
 import { PermissionService } from "@openapi/api/permission.service";
 import { ReservationService } from "@openapi/api/reservation.service";

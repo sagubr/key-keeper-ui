@@ -3,20 +3,20 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
 import { AuthenticationGuard } from './core/guards/authentication.guard';
 
-import { ResourceManagementComponent } from '@app/features/resource-management/resource-management.component';
+import { ResourceComponent } from '@app/features/resource/resource-component';
 import {
 	AuthorizationManagementComponent
-} from "@app/features/authorization-management/authorization-management.component";
+} from "@app/features/authorization/authorization-management.component";
 import {
 	TransactionsManagementComponent
 } from "@app/features/transactions-management/transactions-management.component";
 import { SidenavComponent } from "@app/shared/components/sidenav/sidenav.component";
 import {
 	RequesterManagementComponent
-} from "@app/features/authorization-management/requester-management/requester-management.component";
+} from "@app/features/authorization/requester-management/requester-management.component";
 import {
 	PermissionManagementComponent
-} from "@app/features/authorization-management/permission-management/permission-management.component";
+} from "@app/features/authorization/permission-management/permission-management.component";
 import {
 	UserManagementComponent
 } from "@app/features/settings/user-management/user-management.component";
@@ -33,7 +33,7 @@ export const routes: Routes = [
 		component: SidenavComponent,
 		canActivate: [AuthenticationGuard],
 		children: [
-			{ path: 'recursos', component: ResourceManagementComponent, canActivate: [AuthenticationGuard] },
+			{ path: 'recursos', component: ResourceComponent, canActivate: [AuthenticationGuard] },
 			{
 				path: 'autorizacoes',
 				component: AuthorizationManagementComponent,

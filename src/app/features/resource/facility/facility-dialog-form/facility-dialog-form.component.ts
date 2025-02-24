@@ -4,25 +4,17 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/materia
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { Key } from "@openapi/model/key";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatNativeDateModule, MatOption, MatOptionModule } from "@angular/material/core";
+import { MatNativeDateModule } from "@angular/material/core";
 import { MatRadioModule } from "@angular/material/radio";
+import { Facility } from "@openapi/model/facility";
+import { FacilityService } from "@openapi/api/facility.service";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { KeyService } from "@openapi/api/key.service";
-import { MatSelect, MatSelectModule } from "@angular/material/select";
-import { NgIf } from "@angular/common";
-import { compareById } from "@app/core/utils/utils";
-
-export enum TypeOfImportance {
-	PRINCIPAL = 'PRINCIPAL',
-	SECUNDARIA = 'SECUNDARIA'
-}
 
 @Component({
-	selector: 'app-key-form-dialog',
+	selector: 'app-facility-dialog-form',
 	imports: [
 		ReactiveFormsModule,
 		MatFormFieldModule,
@@ -34,43 +26,38 @@ export enum TypeOfImportance {
 		MatDialogModule,
 		MatIconModule,
 		MatMenuModule,
-		MatProgressBarModule,
-		MatOptionModule,
-		MatSelectModule,
-		NgIf,
+		MatProgressBarModule
 	],
-	templateUrl: './key-form-dialog.component.html',
-	styleUrl: './key-form-dialog.component.scss'
+	templateUrl: './facility-dialog-form.component.html',
+	styleUrl: './facility-dialog-form.component.scss'
 })
-export class KeyFormDialogComponent implements OnInit {
+export class FacilityDialogFormComponent implements OnInit {
 
 	form!: FormGroup;
 	isEditing: boolean = false;
-	timestampCode: number = 0;
-
-	protected readonly TypeOfImportance = TypeOfImportance;
 
 	constructor(
-		private readonly keyService: KeyService,
-		private readonly dialogRef: MatDialogRef<KeyFormDialogComponent>,
+		private readonly facilityService: FacilityService,
+		private readonly dialogRef: MatDialogRef<FacilityDialogFormComponent>,
 		private readonly formBuilder: FormBuilder,
-		@Inject(MAT_DIALOG_DATA) public data: Key,
+		@Inject(MAT_DIALOG_DATA) public data: Facility,
 	) {
-		this.timestampCode = Date.now();
 		this.buildFormGroup();
 	}
 
 	ngOnInit(): void {
 		if (this.data) {
+			this.isEditing = true;
 			this.form.patchValue(this.data);
 		}
+
 	}
 
 	onSubmit(): void {
 		this.validateForm()
 
 		if (this.data) {
-			this.keyService.addKey(this.form.value).subscribe({
+			this.facilityService.addFacility(this.form.value).subscribe({
 				next: () => {
 					this.form.reset();
 					this.dialogRef.close(true);
@@ -80,6 +67,11 @@ export class KeyFormDialogComponent implements OnInit {
 				},
 			});
 		}
+	}
+
+	onRowClick(item: Facility): void {
+		this.isEditing = true;
+		this.form.patchValue(item);
 	}
 
 	private validateForm(): void {
@@ -92,12 +84,9 @@ export class KeyFormDialogComponent implements OnInit {
 
 	private buildFormGroup(): void {
 		this.form = this.formBuilder.group({
-			code: [{ value: this.timestampCode, disabled: true }, Validators.required],
-			location: ['', Validators.required],
-			description: ['', Validators.required],
+			name: ['', Validators.required],
+			description: ['']
 		});
 	}
 
-	protected readonly compareById = compareById;
-	protected readonly Date = Date;
 }

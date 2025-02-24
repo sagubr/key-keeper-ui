@@ -1,0 +1,34 @@
+<mat-accordion class="example-headers-align" multi>
+	<mat-expansion-panel>
+		<mat-expansion-panel-header>
+			<mat-panel-title class="h2">Funções do Sistema</mat-panel-title>
+			<mat-panel-description>
+				<span></span>
+				<mat-icon>account_circle</mat-icon>
+			</mat-panel-description>
+		</mat-expansion-panel-header>
+
+		<mat-form-field>
+			<mat-label>First name</mat-label>
+			<input matInput/>
+		</mat-form-field>
+
+		<mat-form-field>
+			<mat-label>Age</mat-label>
+			<input matInput type="number" min="1"/>
+		</mat-form-field>
+	</mat-expansion-panel>
+
+	<mat-expansion-panel expanded>
+		<mat-expansion-panel-header>
+			<mat-panel-title class="h2">Usuários do Sistema</mat-panel-title>
+			<mat-panel-description class="icon">
+				<span></span>
+				<mat-icon>account_circle</mat-icon>
+			</mat-panel-description>
+		</mat-expansion-panel-header>
+
+		<app-user-datatable></app-user-datatable>
+
+	</mat-expansion-panel>
+</mat-accordion>

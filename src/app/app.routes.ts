@@ -8,20 +8,20 @@ import {
 	AuthorizationManagementComponent
 } from "@app/features/authorization/authorization-management.component";
 import {
-	TransactionsManagementComponent
-} from "@app/features/transactions-management/transactions-management.component";
+	TransactionsComponent
+} from "@app/features/transactions/transactions-component";
 import { SidenavComponent } from "@app/shared/components/sidenav/sidenav.component";
 import {
-	RequesterManagementComponent
-} from "@app/features/authorization/requester-management/requester-management.component";
+	UserComponent
+} from "@app/features/settings/user/user.component";
+import { RegistersComponent } from "@app/features/settings/registers/registers.component";
+import { DefinitionsComponent } from "@app/features/settings/definitions/definitions.component";
 import {
-	PermissionManagementComponent
-} from "@app/features/authorization/permission-management/permission-management.component";
+	RequesterDatatableComponent
+} from "@app/features/authorization/requester/requester-datatable/requester-datatable.component";
 import {
-	UserManagementComponent
-} from "@app/features/settings/user-management/user-management.component";
-import { RegistersManagementComponent } from "@app/features/settings/registers-management/registers-management.component";
-import { DefinitionsManagementComponent } from "@app/features/settings/definitions-management/definitions-management.component";
+	PermissionDatatableComponent
+} from "@app/features/authorization/permission/permission-datatable/permission-datatable.component";
 
 export const routes: Routes = [
 	{
@@ -41,28 +41,28 @@ export const routes: Routes = [
 				children: [
 					{
 						path: 'solicitantes',
-						component: RequesterManagementComponent,
+						component: RequesterDatatableComponent,
 						canActivate: [AuthenticationGuard]
 					},
 					{
 						path: 'permissoes',
-						component: PermissionManagementComponent,
+						component: PermissionDatatableComponent,
 						canActivate: [AuthenticationGuard]
 					}
 				]
 			},
-			{ path: 'transacoes', component: TransactionsManagementComponent, canActivate: [AuthenticationGuard] },
+			{ path: 'transacoes', component: TransactionsComponent, canActivate: [AuthenticationGuard] },
 			{
 				path: 'configuracoes',
 				canActivate: [AuthenticationGuard],
 				children: [
 					{
 						path: 'definicoes',
-						component: DefinitionsManagementComponent,
+						component: DefinitionsComponent,
 						canActivate: [AuthenticationGuard]
 					},
-					{ path: 'usuarios', component: UserManagementComponent, canActivate: [AuthenticationGuard] },
-					{ path: 'registros', component: RegistersManagementComponent, canActivate: [AuthenticationGuard] }
+					{ path: 'usuarios', component: UserComponent, canActivate: [AuthenticationGuard] },
+					{ path: 'registros', component: RegistersComponent, canActivate: [AuthenticationGuard] }
 				]
 			},
 			{ path: '', redirectTo: 'recursos', pathMatch: 'full' }

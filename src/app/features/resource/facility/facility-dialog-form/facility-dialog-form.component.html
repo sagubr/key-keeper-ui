@@ -1,0 +1,41 @@
+<div class="dialog-header">
+	<h2 class="h2" mat-dialog-title>Informações da Instalação</h2>
+	<button mat-icon-button
+			mat-dialog-close>
+		<mat-icon>close</mat-icon>
+	</button>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+	<mat-dialog-content>
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Denominação da Instalação</mat-label>
+					<input matInput type="text" placeholder="Tipo de Ambiente" formControlName="name">
+				</mat-form-field>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Descrição</mat-label>
+					<input matInput type="text" placeholder="Descrição" formControlName="description">
+				</mat-form-field>
+			</div>
+		</div>
+	</mat-dialog-content>
+	<mat-dialog-actions align="end">
+		<button mat-raised-button
+				class="button-secondary"
+				type="button" [mat-dialog-close]="true">
+			Cancelar
+		</button>
+		<button mat-raised-button
+				class="button-primary"
+				type="submit" [disabled]="form.invalid">
+			Salvar
+		</button>
+	</mat-dialog-actions>
+</form>
+

@@ -4,24 +4,24 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { CommonModule } from "@angular/common";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import {
-	PermissionManagementComponent
-} from "@app/features/authorization/permission-management/permission-management.component";
+	PermissionDatatableComponent
+} from "@app/features/authorization/permission/permission-datatable/permission-datatable.component";
 import {
-	RequesterManagementComponent
-} from "@app/features/authorization/requester-management/requester-management.component";
+	RequesterDatatableComponent
+} from "@app/features/authorization/requester/requester-datatable/requester-datatable.component";
 
 @Component({
-  selector: 'app-authorization-management',
+	selector: 'app-authorization-management',
 	imports: [
 		CommonModule,
 		MatTabsModule,
 		MatIconModule,
 		MatProgressBarModule,
-		PermissionManagementComponent,
-		RequesterManagementComponent,
+		PermissionDatatableComponent,
+		RequesterDatatableComponent,
 	],
-  templateUrl: './authorization-management.component.html',
-  styleUrl: './authorization-management.component.scss'
+	templateUrl: './authorization-management.component.html',
+	styleUrl: './authorization-management.component.scss'
 })
 export class AuthorizationManagementComponent {
 

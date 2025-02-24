@@ -16,8 +16,8 @@ import { LocationTypeService } from "@openapi/api/locationType.service";
 import { Location } from "@openapi/model/location";
 import { compareById } from "@app/core/utils/utils";
 import {
-	FacilityManagementDialogFormComponent
-} from "@app/features/resource/facility-management/facility-management-dialog-form/facility-management-dialog-form.component";
+	FacilityDialogFormComponent
+} from "@app/features/resource/facility/facility-dialog-form/facility-dialog-form.component";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatSlideToggle, MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatTooltip, MatTooltipModule } from "@angular/material/tooltip";
@@ -85,7 +85,7 @@ export class LocationFormDialogComponent implements OnInit {
 	}
 
 	openDialogFacility(): void {
-		const dialogRef = this.dialog.open(FacilityManagementDialogFormComponent, {
+		const dialogRef = this.dialog.open(FacilityDialogFormComponent, {
 			data: {},
 		});
 	}

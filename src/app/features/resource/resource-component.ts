@@ -12,8 +12,8 @@ import {
 	JobTitleManagementComponent
 } from "@app/features/resource/job-title-management/job-title-management.component";
 import {
-	FacilityManagementDatatableComponent
-} from "@app/features/resource/facility-management/facility-management-datatable/facility-management-datatable.component";
+	FacilityDatatableComponent
+} from "@app/features/resource/facility/facility-datatable/facility-datatable.component";
 import {
 	LocationDatatableComponent
 } from "@app/features/resource/location/location-datatable/location-datatable.component";
@@ -29,7 +29,7 @@ import {
 		MatIconModule,
 		MatProgressBarModule,
 		JobTitleManagementComponent,
-		FacilityManagementDatatableComponent,
+		FacilityDatatableComponent,
 		LocationDatatableComponent,
 		LocationTypeDatatableComponent,
 	],

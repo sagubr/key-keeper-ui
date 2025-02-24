@@ -1,5 +1,5 @@
 @mixin button(
-	$bgColor: #4caf50,
+	$bgColor: #3A86FF, // Azul claro
 	$textColor: #fff,
 	$hoverColor: darken($bgColor, 10%),
 	$border: none
@@ -23,15 +23,15 @@
 }
 
 .button-warning {
-	@include button(#ffc107, #000);
+	@include button(#FFBB33, #000);
 }
 
 .button-danger {
-	@include button(#f44336, #fff);
+	@include button(#FF4C4C, #fff);
 }
 
 .button-info {
-	@include button(#2196f3, #fff);
+	@include button(#17A2B8, #fff);
 }
 
 .button-secondary {
@@ -39,7 +39,7 @@
 }
 
 .button-primary {
-	@include button(#37CCB9, #080a0b);
+	@include button(#3A86FF, #fff);
 }
 
 .button-cancel {
@@ -47,15 +47,15 @@
 }
 
 .button-success {
-	@include button(#2e7d32, #fff);
+	@include button(#28A745, #fff);
 }
 
 .button-link {
-	@include button(transparent, #37CCB9, rgba(55, 204, 185, 0.1));
+	@include button(transparent, #3A86FF, rgba(58, 134, 255, 0.1));
 }
 
 .button-small {
-	@include button(#37CCB9, #fff);
+	@include button(#3A86FF, #fff);
 	padding: 4px 8px;
 	font-size: 12px;
 }

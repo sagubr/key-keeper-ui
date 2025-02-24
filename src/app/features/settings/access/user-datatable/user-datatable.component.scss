@@ -1,0 +1,37 @@
+@use 'buttons';
+
+.toolbar-row {
+	align-items: flex-start;
+	padding: 0;
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
+.actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+}
+
+.spacer {
+	flex: 1 1 auto;
+}
+
+.container {
+	height: 400px;
+	width: 100%;
+	overflow: auto;
+}
+
+.mat-table-container {
+	width: 100%;
+	overflow-x: auto;
+}
+
+.table-wrapper {
+	min-width: 600px;
+}
+
+.paginator {
+	border-radius: 10px;
+}

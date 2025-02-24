@@ -9,6 +9,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { RouterLink, RouterOutlet } from "@angular/router";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatMenuModule } from "@angular/material/menu";
 
 @Component({
 	selector: 'app-sidenav',
@@ -24,6 +25,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 		RouterOutlet,
 		RouterLink,
 		MatTooltipModule,
+		MatMenuModule
 	],
 	templateUrl: './sidenav.component.html',
 	styleUrl: './sidenav.component.scss'
@@ -94,10 +96,10 @@ export const MENU_OPTIONS_SETTINGS: Section[] = [
 		route: '/configuracoes/definicoes',
 	},
 	{
-		title: 'Usuários',
-		description: 'Gestão de usuários e atribuições',
-		icon: 'people',
-		route: '/configuracoes/usuarios',
+		title: 'Gestão de Acessos',
+		description: 'Configurações de usuários e suas permissões de acesso',
+		icon: 'admin_panel_settings',
+		route: '/configuracoes/acessos',
 	},
 	{
 		title: 'Registros',

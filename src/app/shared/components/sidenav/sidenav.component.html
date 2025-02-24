@@ -1,22 +1,32 @@
 <mat-toolbar class="toolbar">
-	<button mat-icon-button
-			class="icon-extra-large"
-			(click)="toggleDrawer()">
+	<button mat-icon-button class="icon-extra-large" (click)="toggleDrawer()">
 		<mat-icon>menu</mat-icon>
 	</button>
+
 	<span class="h2">Guardião de Chaves</span>
 	<span class="spacer"></span>
+
 	<button mat-icon-button class="icon-extra-large">
 		<mat-icon matBadge="15">notifications</mat-icon>
 	</button>
-	<span class="paragraph">Gustavo Garcia</span>
-	<button mat-icon-button class="icon-extra-large">
-		<mat-icon class="icon-medium">account_circle</mat-icon>
-	</button>
-	<button mat-icon-button class="icon" aria-label="Example icon-button with share icon">
+
+	<button mat-button [matMenuTriggerFor]="userMenu" class="user-menu">
+		Gustavo Garcia
 		<mat-icon>arrow_drop_down</mat-icon>
 	</button>
+
+	<mat-menu #userMenu="matMenu">
+		<button mat-menu-item>
+			 Alterar Perfil
+			<mat-icon>settings</mat-icon>
+		</button>
+		<button mat-menu-item>
+			Sair
+			<mat-icon>logout</mat-icon>
+		</button>
+	</mat-menu>
 </mat-toolbar>
+
 <mat-drawer-container class="sidenav-container" autosize>
 	<!-- Menu Lateral -->
 	<mat-drawer class="sidenav" mode="side" [ngClass]="{'narrow': !opened}" opened>

@@ -1,20 +1,22 @@
 @mixin theme-colors() {
-	--border: #080a0b;
-	--primary: #37CCB9;
-	--secondary: #0E151C;
-	--accent: #EFF2F1;
-	--danger: #f44336;
-	--warning: #ffc107;
-	--success: #2e7d32;
-	--info: #2196f3;
-	--background: #f5f5f5;
+	--border: #4B4B4B;
+	--primary: #3A86FF;
+	--primary-light: #6EC4FF;
+	--primary-dark: #2277CC;
+	--secondary: #2E2E2E;
+	--accent: #FF9F00;
+	--danger: #FF4C4C;
+	--warning: #FFBB33;
+	--success: #28A745;
+	--info: #17A2B8;
+	--background: #F8F9FA;
 	--text-primary: #212121;
 	--text-secondary: #757575;
-	--tooltip-text: #ffffff;
-	--header-background: #e3f2fd;
-	--row-hover: #b3e5fc;
-	--row-odd-bg: #f1f1f1;
-	--row-even-bg: #ffffff;
+	--tooltip-text: #FFFFFF;
+	--header-background: #6EC4FF;
+	--row-hover: #A6D8FF;
+	--row-odd-bg: #F1F1F1;
+	--row-even-bg: #FFFFFF;
 }
 
 :root {

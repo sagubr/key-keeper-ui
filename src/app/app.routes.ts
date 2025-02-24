@@ -61,7 +61,7 @@ export const routes: Routes = [
 						component: DefinitionsComponent,
 						canActivate: [AuthenticationGuard]
 					},
-					{ path: 'usuarios', component: AccessComponent, canActivate: [AuthenticationGuard] },
+					{ path: 'acessos', component: AccessComponent, canActivate: [AuthenticationGuard] },
 					{ path: 'registros', component: RegistersComponent, canActivate: [AuthenticationGuard] }
 				]
 			},

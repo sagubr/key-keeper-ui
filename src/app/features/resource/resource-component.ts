@@ -14,7 +14,8 @@ import {
 } from "@app/features/resource/location-type/location-type-datatable/location-type-datatable.component";
 import {
 	JobTitleDatatableComponent
-} from "@app/features/resource/job-title-management/job-title-datatable/job-title-datatable.component";
+} from "@app/features/resource/job-title/job-title-datatable/job-title-datatable.component";
+import { NgModel } from "@angular/forms";
 
 @Component({
 	selector: 'app-resource-management',
@@ -27,6 +28,7 @@ import {
 		LocationDatatableComponent,
 		LocationTypeDatatableComponent,
 		JobTitleDatatableComponent,
+
 	],
 	templateUrl: './resource-component.html',
 	styleUrl: './resource-component.scss'

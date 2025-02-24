@@ -8,6 +8,7 @@ $input-background-color: #f0f0f0;
 	flex-wrap: wrap;
 	margin: 10px;
 	gap: 10px;
+	align-items: center;
 }
 
 
@@ -15,6 +16,7 @@ $input-background-color: #f0f0f0;
 	flex: 1 0 0%;
 	max-width: 100%;
 	vertical-align: middle;
+	align-items: center;
 }
 
 .col-6 {

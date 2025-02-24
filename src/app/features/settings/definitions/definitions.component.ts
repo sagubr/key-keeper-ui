@@ -7,7 +7,9 @@ import { MatInputModule } from "@angular/material/input";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { MatCard, MatCardActions, MatCardHeader, MatCardModule } from "@angular/material/card";
+import { MatCardModule } from "@angular/material/card";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatSelectModule } from "@angular/material/select";
 
 @Component({
 	imports: [
@@ -22,6 +24,8 @@ import { MatCard, MatCardActions, MatCardHeader, MatCardModule } from "@angular/
 		MatButtonModule,
 		ReactiveFormsModule,
 		MatCardModule,
+		MatTooltipModule,
+		MatSelectModule,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'app-definitions',
@@ -32,13 +36,28 @@ export class DefinitionsComponent {
 
 	private _formBuilder = inject(FormBuilder);
 
-	isChecked = true;
+	submitForm(form: FormGroup): void {
+
+	}
+
 	formGroup = this._formBuilder.group({
-		enableWifi: '',
-		acceptTerms: ['', Validators.requiredTrue],
+		autoEmail: [false],
+		blockPending: [false, Validators.requiredTrue],
+		tolerancePeriod: [{ value: 0, disabled: true }, [Validators.required, Validators.min(0)]],
+		enableLogs: [false],
+		maxLoanPeriod: [{ value: 7, disabled: true }, [Validators.required, Validators.min(1)]],
 	});
 
+	fieldEnabled(field: any): void {
+		if (field.disabled) {
+			field.enable();
+		} else {
+			field.disable();
+		}
+	}
+
 	alertFormValues(formGroup: FormGroup) {
+		console.log(formGroup.get('tolerancePeriodEnabled'))
 		alert(JSON.stringify(formGroup.value, null, 2));
 	}
 

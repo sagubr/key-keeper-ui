@@ -24,7 +24,7 @@ import { MatMenu, MatMenuItem, MatMenuTrigger } from "@angular/material/menu";
 import { MatProgressBar } from "@angular/material/progress-bar";
 import {
 	JobTitleDialogFormComponent
-} from "@app/features/resource/job-title-management/job-title-form-dialog/job-title-dialog-form.component";
+} from "@app/features/resource/job-title/job-title-form-dialog/job-title-dialog-form.component";
 import { MatDialog } from "@angular/material/dialog";
 import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";
 import { MatInput } from "@angular/material/input";

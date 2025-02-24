@@ -1,5 +1,20 @@
+@use 'buttons';
+@use 'fonts';
+@use 'forms';
 
-.example-form mat-slide-toggle {
-	margin: 8px 0;
-	display: block;
+.content {
+	padding-bottom: 30px;
+}
+
+.slide-toggle-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	margin-bottom: 16px;
+}
+
+.actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
 }

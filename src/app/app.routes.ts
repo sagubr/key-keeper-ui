@@ -12,8 +12,8 @@ import {
 } from "@app/features/transactions/transactions-component";
 import { SidenavComponent } from "@app/shared/components/sidenav/sidenav.component";
 import {
-	UserComponent
-} from "@app/features/settings/user/user.component";
+	AccessComponent
+} from "@app/features/settings/access/access.component";
 import { RegistersComponent } from "@app/features/settings/registers/registers.component";
 import { DefinitionsComponent } from "@app/features/settings/definitions/definitions.component";
 import {
@@ -61,7 +61,7 @@ export const routes: Routes = [
 						component: DefinitionsComponent,
 						canActivate: [AuthenticationGuard]
 					},
-					{ path: 'usuarios', component: UserComponent, canActivate: [AuthenticationGuard] },
+					{ path: 'usuarios', component: AccessComponent, canActivate: [AuthenticationGuard] },
 					{ path: 'registros', component: RegistersComponent, canActivate: [AuthenticationGuard] }
 				]
 			},

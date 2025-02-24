@@ -68,7 +68,7 @@
 				<div class="col">
 					<div class="slide-toggle-wrapper">
 						<mat-slide-toggle
-							(change)="fieldEnabled(formGroup.get('tolerancePeriod'))">
+							(change)="fieldEnabled(formGroup.get('maxLoanPeriod'))">
 							Habilitar Período Máximo de Empréstimo
 						</mat-slide-toggle>
 						<mat-icon class="icon-medium"
@@ -81,7 +81,7 @@
 					<mat-form-field appearance="outline" class="full-width">
 						<mat-label>Período Máximo de Empréstimo (dias)</mat-label>
 						<input matInput type="number" formControlName="maxLoanPeriod"
-							   [disabled]="!formGroup.get('maxLoanPeriodEnabled')?.value"
+							   [disabled]="!formGroup.get('maxLoanPeriod')?.value"
 							   min="1">
 					</mat-form-field>
 				</div>

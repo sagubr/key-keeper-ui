@@ -29,7 +29,7 @@ import { MatDialog } from "@angular/material/dialog";
 import {
 	FacilityDialogFormComponent
 } from "@app/features/resource/facility/facility-dialog-form/facility-dialog-form.component";
-import { UserFormDialogComponent } from "@app/features/settings/user/user-form-dialog/user-form-dialog.component";
+import { UserFormDialogComponent } from "@app/features/settings/access/user-form-dialog/user-form-dialog.component";
 import { Location } from "@openapi/model/location";
 import {
 	LocationTypeFormDialog

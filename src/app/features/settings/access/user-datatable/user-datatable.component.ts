@@ -13,7 +13,7 @@ import { UsersService } from '@openapi/api/users.service';
 import { User } from "@openapi/model/user";
 import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
 import { UserDto } from "@openapi/model/userDto";
-import { UserFormDialogComponent } from "@app/features/settings/user/user-form-dialog/user-form-dialog.component";
+import { UserFormDialogComponent } from "@app/features/settings/access/user-form-dialog/user-form-dialog.component";
 import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";
 import { MatInput } from "@angular/material/input";
 import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";

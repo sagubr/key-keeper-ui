@@ -92,8 +92,8 @@ export class TransactionsFormDialogComponent implements OnInit {
 		status: [Status.Loan, Validators.required],
 	});
 	secondFormGroup = this._formBuilder.group({
-		startDateTime: ['', Validators.required],
-		endDateTime: ['', Validators.required]
+		startDateTime: [new Date(), Validators.required],
+		endDateTime: [new Date(), Validators.required]
 	});
 
 
@@ -183,8 +183,8 @@ export class TransactionsFormDialogComponent implements OnInit {
 			requester: ['', Validators.required],
 			permission: [{ value: '', disabled: true }, Validators.required],
 			status: [Status.Loan, Validators.required],
-			startDateTime: ['', Validators.required],
-			endDateTime: ['', Validators.required]
+			startDateTime: [new Date(), Validators.required],
+			endDateTime: [new Date(), Validators.required]
 		});
 	}
 }

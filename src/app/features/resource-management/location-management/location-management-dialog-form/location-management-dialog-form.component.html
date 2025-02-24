@@ -1,5 +1,8 @@
-<div mat-dialog-title>
-	<h1>Registro</h1>
+<div class="dialog-header">
+	<h2 class="h2" mat-dialog-title>Informações de Salas</h2>
+	<button mat-icon-button mat-dialog-close>
+		<mat-icon>close</mat-icon>
+	</button>
 </div>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -7,29 +10,32 @@
 		<div class="row">
 			<div class="col">
 				<mat-form-field appearance="outline" class="full-width">
-					<mat-label>Localização/Sala</mat-label>
+					<mat-label>Sala</mat-label>
 					<input matInput maxlength="256" formControlName="name">
 					<mat-error *ngIf="form.get('name')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
 		</div>
-
 		<div class="row">
 			<div class="col">
 				<mat-form-field appearance="outline" class="full-width">
-					<mat-label>Tipo de Localização</mat-label>
-					<mat-select formControlName="locationType" [compareWith]="compareById" >
+					<mat-label>Descrição</mat-label>
+					<input matInput maxlength="256" formControlName="name">
+					<mat-error *ngIf="form.get('name')?.invalid">Você deve inserir um valor</mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Tipo de Ambiente</mat-label>
+					<mat-select formControlName="locationType" [compareWith]="compareById">
 						@for (element of locationTypes; track $index) {
 							<mat-option [value]="element">{{ element.name }}</mat-option>
 						}
 					</mat-select>
 					<mat-error *ngIf="form.get('locationType')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
-			</div>
-			<div class="col">
-				<button mat-button type="button" class="button" aria-label="Recarregar">
-					<mat-icon>add</mat-icon>
-				</button>
 			</div>
 		</div>
 		<div class="row">
@@ -44,21 +50,86 @@
 					<mat-error *ngIf="form.get('facility')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
+		</div>
+		<div class="row">
 			<div class="col">
-				<button mat-button type="button" class="button"
-						(click)="openDialogFacility()">
-					<mat-icon>add</mat-icon>
-				</button>
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Responsáveis</mat-label>
+					<mat-select
+						formControlName="facility"
+						[compareWith]="compareById"
+						multiple>
+						@for (element of facilities; track $index) {
+							<mat-option [value]="element">{{ element.name }}</mat-option>
+						}
+					</mat-select>
+					<mat-error *ngIf="form.get('facility')?.invalid">Você deve inserir um valor</mat-error>
+				</mat-form-field>
 			</div>
 		</div>
-
+		<div class="row">
+			<div class="col">
+				<mat-accordion>
+					<mat-expansion-panel>
+						<mat-expansion-panel-header>
+							<mat-panel-title> Informações Adicionais</mat-panel-title>
+						</mat-expansion-panel-header>
+						<div class="row">
+							<div class="col">
+								<mat-form-field appearance="outline" class="full-width">
+									<mat-label>Capacidade Máxima</mat-label>
+									<input matInput type="number" formControlName="name">
+									<mat-error *ngIf="form.get('name')?.invalid">Você deve inserir um valor</mat-error>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div class="slide-toggle-wrapper">
+									<mat-slide-toggle formControlName="responsible">
+										Sala restrita
+									</mat-slide-toggle>
+									<mat-icon class="icon-medium"
+											  matTooltip="Sala restrita apenas para responsáveis"
+											  matTooltipPosition="right">
+										info
+									</mat-icon>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<mat-form-field appearance="outline" class="full-width">
+									<mat-label>Abertura</mat-label>
+									<input matInput [matTimepicker]="pickerTimeStart">
+									<mat-timepicker-toggle matIconSuffix [for]="pickerTimeStart"/>
+									<mat-timepicker #pickerTimeStart/>
+								</mat-form-field>
+							</div>
+							<div class="col">
+								<mat-form-field appearance="outline" class="full-width">
+									<mat-label>Fechamento</mat-label>
+									<input matInput [matTimepicker]="pickerTimeEnd">
+									<mat-timepicker-toggle matIconSuffix [for]="pickerTimeEnd"/>
+									<mat-timepicker #pickerTimeEnd/>
+								</mat-form-field>
+							</div>
+						</div>
+					</mat-expansion-panel>
+				</mat-accordion>
+			</div>
+		</div>
 	</mat-dialog-content>
 	<mat-dialog-actions align="end">
-		<button mat-raised-button type="submit" [disabled]="form.invalid">
-			{{ data ? 'Atualizar' : 'Salvar' }}
-		</button>
-		<button mat-raised-button type="button" [mat-dialog-close]="true">
+		<button mat-raised-button
+				class="button-secondary"
+				type="button" [mat-dialog-close]="true">
 			Cancelar
+		</button>
+		<button mat-raised-button
+				class="button-primary"
+				type="submit" [disabled]="form.invalid">
+			Salvar
 		</button>
 	</mat-dialog-actions>
 </form>

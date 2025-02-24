@@ -27,31 +27,39 @@ import {
 	LocationManagementDialogFormComponent
 } from "@app/features/resource-management/location-management/location-management-dialog-form/location-management-dialog-form.component";
 import { MatButtonModule } from "@angular/material/button";
-import { LocationManagementService } from "@app/features/resource-management/location-management/location-management.service";
 import { KeyManagementComponent } from "@app/features/resource-management/key-management/key-management.component";
+import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";
+import { MatInput } from "@angular/material/input";
+import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
 
 @Component({
     selector: 'app-location-datatable',
-    imports: [
-        MatCell,
-        MatCellDef,
-        MatColumnDef,
-        MatHeaderCell,
-        MatHeaderRow,
-        MatHeaderRowDef,
-        MatIconModule,
-        MatMenuModule,
-        MatButtonModule,
-        MatPaginator,
-        MatProgressBarModule,
-        MatRow,
-        MatRowDef,
-        MatSort,
-        TableWrapperTable,
-        MatMenuTrigger,
-        MatHeaderCellDef,
-        MatNoDataRow
-    ],
+	imports: [
+		MatCell,
+		MatCellDef,
+		MatColumnDef,
+		MatHeaderCell,
+		MatHeaderRow,
+		MatHeaderRowDef,
+		MatIconModule,
+		MatMenuModule,
+		MatButtonModule,
+		MatPaginator,
+		MatProgressBarModule,
+		MatRow,
+		MatRowDef,
+		MatSort,
+		TableWrapperTable,
+		MatMenuTrigger,
+		MatHeaderCellDef,
+		MatNoDataRow,
+		MatFormField,
+		MatInput,
+		MatLabel,
+		MatSuffix,
+		MatToolbar,
+		MatToolbarRow
+	],
     templateUrl: './location-management-datatable.component.html',
     styleUrl: './location-management-datatable.component.scss'
 })
@@ -95,15 +103,12 @@ export class LocationManagementDatatableComponent implements OnInit, AfterViewIn
 
 	constructor(
 		private locationService: LocationService,
-		private locationManagementService: LocationManagementService,
 		private dialog: MatDialog,
 	) {
 	}
 
 	ngOnInit(): void {
 		this.findAll();
-		this.onSearch();
-		this.onReload();
 	}
 
 	ngAfterViewInit(): void {
@@ -113,6 +118,25 @@ export class LocationManagementDatatableComponent implements OnInit, AfterViewIn
 
 	ngOnDestroy(): void {
 		this.subscriptions.unsubscribe();
+	}
+
+	onSearch(event: Event) {
+		const value = (event.target as HTMLInputElement).value;
+		this.dataSource.filter = value.trim().toLowerCase();
+	}
+
+	onReload(): void {
+		this.findAll();
+	}
+
+	openCreateDialog(): void {
+		const dialogRef = this.dialog.open(LocationManagementDialogFormComponent, {
+			data: {},
+		});
+
+		dialogRef.afterClosed().subscribe(() => {
+			this.onReload();
+		});
 	}
 
 	openEditDialog(data: Location) {
@@ -153,18 +177,5 @@ export class LocationManagementDatatableComponent implements OnInit, AfterViewIn
 				this.dataSource.data = locations;
 			}
 		});
-	}
-
-	private onSearch(): void {
-		this.subscriptions = this.locationManagementService.search$.subscribe(
-			(event) => {
-				this.dataSource.filter = event.trim().toLowerCase();
-			});
-	}
-
-	private onReload(): void {
-		this.subscriptions = this.locationManagementService.reload$.subscribe(() => {
-			this.findAll();
-		})
 	}
 }

@@ -18,20 +18,30 @@ import { compareById } from "@app/core/utils/utils";
 import {
 	FacilityManagementDialogFormComponent
 } from "@app/features/resource-management/facility-management/facility-management-dialog-form/facility-management-dialog-form.component";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatSlideToggle, MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatTooltip, MatTooltipModule } from "@angular/material/tooltip";
+import { MatTimepickerModule } from "@angular/material/timepicker";
+import { provideNativeDateAdapter } from "@angular/material/core";
 
 @Component({
     selector: 'app-location-management-dialog-form',
-    imports: [
-        CommonModule,
-        MatSelectModule,
-        MatInputModule,
-        MatIconModule,
-        MatButtonModule,
-        MatRadioModule,
-        ReactiveFormsModule,
-        ClipboardModule,
-        MatDialogModule,
-    ],
+	imports: [
+		CommonModule,
+		MatSelectModule,
+		MatInputModule,
+		MatIconModule,
+		MatButtonModule,
+		MatRadioModule,
+		ReactiveFormsModule,
+		ClipboardModule,
+		MatDialogModule,
+		MatExpansionModule,
+		MatSlideToggleModule,
+		MatTooltipModule,
+		MatTimepickerModule
+	],
+	providers: [provideNativeDateAdapter()],
     templateUrl: './location-management-dialog-form.component.html',
     styleUrl: './location-management-dialog-form.component.scss'
 })

@@ -9,29 +9,31 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { JobTitle } from "@openapi/model/jobTitle";
 import { JobTitleService } from "@openapi/api/jobTitle.service";
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
-    selector: 'app-job-title-management-dialog-form',
-    imports: [
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatButtonModule,
-        MatRadioModule,
-        MatDialogModule
-    ],
-    templateUrl: './job-title-management-dialog-form.component.html',
-    styleUrl: './job-title-management-dialog-form.component.scss'
+	selector: 'app-job-title-form-dialog',
+	imports: [
+		ReactiveFormsModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatDatepickerModule,
+		MatNativeDateModule,
+		MatButtonModule,
+		MatRadioModule,
+		MatDialogModule,
+		MatIcon
+	],
+	templateUrl: './job-title-dialog-form.component.html',
+	styleUrl: './job-title-dialog-form.component.scss'
 })
-export class JobTitleManagementDialogFormComponent implements OnInit {
+export class JobTitleDialogFormComponent implements OnInit {
 
 	form!: FormGroup;
 
 	constructor(
 		private readonly jobTitleService: JobTitleService,
-		private readonly dialogRef: MatDialogRef<JobTitleManagementDialogFormComponent>,
+		private readonly dialogRef: MatDialogRef<JobTitleDialogFormComponent>,
 		private readonly formBuilder: FormBuilder,
 		@Inject(MAT_DIALOG_DATA) public data: JobTitle,
 	) {
@@ -69,6 +71,7 @@ export class JobTitleManagementDialogFormComponent implements OnInit {
 	private buildFormGroup(): void {
 		this.form = this.formBuilder.group({
 			name: ['', Validators.required],
+			description: ['', Validators.required]
 		});
 	}
 

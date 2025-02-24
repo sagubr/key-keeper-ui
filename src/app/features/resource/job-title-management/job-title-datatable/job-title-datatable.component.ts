@@ -2,12 +2,16 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import {
-	MatCell, MatCellDef,
+	MatCell,
+	MatCellDef,
 	MatColumnDef,
-	MatHeaderCell, MatHeaderCellDef,
-	MatHeaderRow, MatHeaderRowDef,
+	MatHeaderCell,
+	MatHeaderCellDef,
+	MatHeaderRow,
+	MatHeaderRowDef,
 	MatNoDataRow,
-	MatRow, MatRowDef,
+	MatRow,
+	MatRowDef,
 	MatTableDataSource
 } from "@angular/material/table";
 import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
@@ -15,19 +19,19 @@ import { finalize, Subscription } from "rxjs";
 import { JobTitle } from "@openapi/model/jobTitle";
 import { JobTitleService } from "@openapi/api/jobTitle.service";
 import { MatIcon } from "@angular/material/icon";
-import { MatIconButton } from "@angular/material/button";
+import { MatFabButton, MatIconButton } from "@angular/material/button";
 import { MatMenu, MatMenuItem, MatMenuTrigger } from "@angular/material/menu";
 import { MatProgressBar } from "@angular/material/progress-bar";
 import {
-	JobTitleManagementDialogFormComponent
-} from "@app/features/resource/job-title-management/job-title-management-dialog-form/job-title-management-dialog-form.component";
+	JobTitleDialogFormComponent
+} from "@app/features/resource/job-title-management/job-title-form-dialog/job-title-dialog-form.component";
 import { MatDialog } from "@angular/material/dialog";
-import {
-	JobTitleManagementService
-} from "@app/features/resource/job-title-management/job-title-management.service";
+import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";
+import { MatInput } from "@angular/material/input";
+import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
 
 @Component({
-    selector: 'app-job-title-management-datatable',
+	selector: 'app-job-title-datatable',
 	imports: [
 		MatCell,
 		MatColumnDef,
@@ -47,12 +51,19 @@ import {
 		MatHeaderCellDef,
 		MatCellDef,
 		MatHeaderRowDef,
-		MatRowDef
+		MatRowDef,
+		MatFabButton,
+		MatFormField,
+		MatInput,
+		MatLabel,
+		MatSuffix,
+		MatToolbar,
+		MatToolbarRow
 	],
-    templateUrl: './job-title-management-datatable.component.html',
-    styleUrl: './job-title-management-datatable.component.scss'
+	templateUrl: './job-title-datatable.component.html',
+	styleUrl: './job-title-datatable.component.scss'
 })
-export class JobTitleManagementDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
+export class JobTitleDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	@ViewChild(MatPaginator) paginator!: MatPaginator;
 	@ViewChild(MatSort) sort!: MatSort;
@@ -86,15 +97,12 @@ export class JobTitleManagementDatatableComponent implements OnInit, AfterViewIn
 
 	constructor(
 		private readonly jobTitleService: JobTitleService,
-		private readonly jobTitleManagementService: JobTitleManagementService,
 		private dialog: MatDialog
 	) {
 	}
 
 	ngOnInit(): void {
 		this.findAll();
-		this.onSearch();
-		this.onReload();
 	}
 
 	ngAfterViewInit(): void {
@@ -106,8 +114,26 @@ export class JobTitleManagementDatatableComponent implements OnInit, AfterViewIn
 		this.subscriptions.unsubscribe();
 	}
 
+	onSearch(event: Event) {
+		const value = (event.target as HTMLInputElement).value;
+		this.dataSource.filter = value.trim().toLowerCase();
+	}
+
+	onReload(): void {
+		this.findAll();
+	}
+
+	openCreateDialog(): void {
+		const dialogRef = this.dialog.open(JobTitleDialogFormComponent, {
+			data: {},
+		});
+		dialogRef.afterClosed().subscribe(() => {
+			this.onReload();
+		});
+	}
+
 	openEditDialog(data: JobTitle) {
-		const dialogRef = this.dialog.open(JobTitleManagementDialogFormComponent, {
+		const dialogRef = this.dialog.open(JobTitleDialogFormComponent, {
 			data,
 			width: '540px'
 		});
@@ -133,19 +159,6 @@ export class JobTitleManagementDatatableComponent implements OnInit, AfterViewIn
 					this.dataSource.data = JobTitle;
 				}
 			});
-	}
-
-	private onSearch(): void {
-		this.subscriptions = this.jobTitleManagementService.search$.subscribe(
-			(event) => {
-				this.dataSource.filter = event.trim().toLowerCase();
-			});
-	}
-
-	private onReload(): void {
-		this.subscriptions = this.jobTitleManagementService.reload$.subscribe(() => {
-			this.findAll();
-		})
 	}
 
 }

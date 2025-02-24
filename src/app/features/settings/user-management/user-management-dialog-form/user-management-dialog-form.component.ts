@@ -41,7 +41,6 @@ import { COMMA, ENTER } from "@angular/cdk/keycodes";
 		ClipboardModule,
 		MatDialogModule,
 		MatChipsModule,
-
 	],
 	templateUrl: './user-management-dialog-form.component.html',
 	styleUrl: './user-management-dialog-form.component.scss'

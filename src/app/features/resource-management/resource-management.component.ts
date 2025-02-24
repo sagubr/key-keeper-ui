@@ -9,24 +9,32 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 /*Custom Components*/
 import {
-	LocationManagementComponent
-} from "@app/features/resource-management/location-management/location-management.component";
-import {
 	JobTitleManagementComponent
 } from "@app/features/resource-management/job-title-management/job-title-management.component";
+import {
+	FacilityManagementDatatableComponent
+} from "@app/features/resource-management/facility-management/facility-management-datatable/facility-management-datatable.component";
+import {
+	LocationManagementDatatableComponent
+} from "@app/features/resource-management/location-management/location-management-datatable/location-management-datatable.component";
+import {
+	LocationTypeDatatableComponent
+} from "@app/features/resource-management/location-type/location-type-datatable/location-type-datatable.component";
 
 @Component({
-    selector: 'app-resource-management',
+	selector: 'app-resource-management',
 	imports: [
 		CommonModule,
 		MatTabsModule,
 		MatIconModule,
 		MatProgressBarModule,
-		LocationManagementComponent,
 		JobTitleManagementComponent,
+		FacilityManagementDatatableComponent,
+		LocationManagementDatatableComponent,
+		LocationTypeDatatableComponent,
 	],
-    templateUrl: './resource-management.component.html',
-    styleUrl: './resource-management.component.scss'
+	templateUrl: './resource-management.component.html',
+	styleUrl: './resource-management.component.scss'
 })
 export class ResourceManagementComponent {
 }

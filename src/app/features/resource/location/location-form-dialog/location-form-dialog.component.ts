@@ -69,6 +69,7 @@ export class LocationFormDialogComponent implements OnInit {
 		this.buildFormGroup();
 		this.findAllLocationTypes();
 		this.findAllFacilities();
+		this.findAllResponsibles();
 	}
 
 	ngOnInit(): void {
@@ -78,7 +79,7 @@ export class LocationFormDialogComponent implements OnInit {
 	onSubmit(): void {
 		this.validateForm()
 		if (this.data) {
-			this.locationService.addLocation(this.form.value).subscribe({
+			this.locationService.createLocation(this.form.value).subscribe({
 				next: () => {
 					this.form.reset();
 					this.dialogRef.close(true);
@@ -92,12 +93,12 @@ export class LocationFormDialogComponent implements OnInit {
 	}
 
 	private findAllLocationTypes(): void {
-		this.locationTypeService.findAllLocationTypeSummaries()
+		this.locationTypeService.findAllLocationType()
 			.subscribe((res) => this.locationTypes = res)
 	}
 
 	private findAllResponsibles(): void {
-		this.requesterService.findAllRequesters()
+		this.requesterService.findAllRequesterByResponsibleTrue()
 			.subscribe((res) => this.responsibles = res)
 	}
 
@@ -119,8 +120,9 @@ export class LocationFormDialogComponent implements OnInit {
 			isRestricted: [false],
 			openingTime: [null],
 			closingTime: [null],
-			responsibles: this.formBuilder.array([])
+			responsibles: [[]]
 		});
+		console.log('FormGroup:', this.form);
 	}
 
 }

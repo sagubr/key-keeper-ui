@@ -5,7 +5,7 @@
 	</button>
 </div>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
 	<mat-dialog-content>
 		<div class="row">
 			<div class="col">
@@ -16,7 +16,7 @@
 						maxlength="256"
 						formControlName="code"
 						[disabled]="true">
-					<mat-error *ngIf="form.get('code')?.invalid">Você deve inserir um valor</mat-error>
+					<mat-error *ngIf="formGroup.get('code')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
 			<div class="col">
@@ -34,7 +34,7 @@
 				<mat-form-field appearance="outline" class="full-width">
 					<mat-label>Descrição</mat-label>
 					<input matInput maxlength="256" formControlName="description">
-					<mat-error *ngIf="form.get('description')?.invalid">Você deve inserir um valor</mat-error>
+					<mat-error *ngIf="formGroup.get('description')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
 		</div>
@@ -42,11 +42,11 @@
 			<div class="col">
 				<mat-form-field appearance="outline" class="full-width">
 					<mat-label>Tipo de Chave</mat-label>
-					<mat-select formControlName="description" [compareWith]="compareById">
+					<mat-select formControlName="keyType" [compareWith]="compareById">
 						<mat-option [value]="TypeOfImportance.PRINCIPAL">{{ TypeOfImportance.PRINCIPAL }}</mat-option>
 						<mat-option [value]="TypeOfImportance.SECUNDARIA">{{ TypeOfImportance.SECUNDARIA }}</mat-option>
 					</mat-select>
-					<mat-error *ngIf="form.get('description')?.invalid">Você deve inserir um valor</mat-error>
+					<mat-error *ngIf="formGroup.get('keyType')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
 		</div>
@@ -60,7 +60,7 @@
 		</button>
 		<button mat-raised-button
 				class="button-primary"
-				type="submit" [disabled]="form.invalid">
+				type="submit" [disabled]="formGroup.invalid">
 			Salvar
 		</button>
 	</mat-dialog-actions>

@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
-import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
+import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
 import { finalize, Subscription } from "rxjs";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { UserDto } from "@openapi/model/userDto";
@@ -19,6 +19,8 @@ import { RequesterService } from "@openapi/api/requester.service";
 import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";
 import { MatInput } from "@angular/material/input";
 import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
+
+import { ConfigurationService } from "@openapi/api/configuration.service";
 
 @Component({
 	selector: 'app-requester-datatable',
@@ -52,7 +54,7 @@ export class RequesterDatatableComponent implements OnInit, AfterViewInit, OnDes
 	columns: Columns<Requester>[] = [
 		{
 			definition: 'name',
-			header: 'Name',
+			header: 'Nome do solicitante',
 			type: ColumnType.TEXT,
 			cell: (requester: Requester) => requester.name
 		},
@@ -65,7 +67,7 @@ export class RequesterDatatableComponent implements OnInit, AfterViewInit, OnDes
 		{
 			definition: 'email',
 			header: 'Email',
-			type: ColumnType.TEXT,
+			type: ColumnType.ARRAY,
 			cell: (requester: Requester) => requester.emails
 		}
 	];
@@ -77,6 +79,7 @@ export class RequesterDatatableComponent implements OnInit, AfterViewInit, OnDes
 
 	constructor(
 		private requesterService: RequesterService,
+		private swaggerService: ConfigurationService,
 		private dialog: MatDialog,
 	) {
 	}

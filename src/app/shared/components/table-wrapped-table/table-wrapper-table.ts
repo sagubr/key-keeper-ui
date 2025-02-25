@@ -21,6 +21,9 @@ import {
 } from '@angular/material/table';
 import { CurrencyPipe, DatePipe, UpperCasePipe } from "@angular/common";
 import { JoinPipe } from "@app/core/pipes/JoinPipe";
+import { MatIconModule } from "@angular/material/icon";
+import { MatTooltip } from "@angular/material/tooltip";
+import { isEmpty } from "rxjs";
 
 /**
  * Table component that accepts column and row definitions in its content to be registered to the
@@ -30,7 +33,7 @@ import { JoinPipe } from "@app/core/pipes/JoinPipe";
 	selector: 'table-wrapper-table',
 	templateUrl: 'table-wrapper-table.html',
 	styleUrl: 'table-wrapper-table.scss',
-	imports: [MatTableModule, MatSortModule, DatePipe, UpperCasePipe, CurrencyPipe, JoinPipe],
+	imports: [MatTableModule, MatSortModule, MatIconModule, DatePipe, UpperCasePipe, CurrencyPipe, JoinPipe, MatTooltip],
 	encapsulation: ViewEncapsulation.None
 })
 export class TableWrapperTable<T> implements AfterContentInit {
@@ -54,6 +57,7 @@ export class TableWrapperTable<T> implements AfterContentInit {
 	}
 
 	protected readonly ColumnType = ColumnType;
+	protected readonly isEmpty = isEmpty;
 }
 
 export interface Columns<T> {
@@ -61,6 +65,10 @@ export interface Columns<T> {
 	type: ColumnType;
 	header: string;
 	cell: (element: T) => any;
+	hasDescription?: boolean;
+	icon?: string;
+	description?: (element: T) => any;
+
 }
 
 export enum ColumnType {
@@ -68,5 +76,7 @@ export enum ColumnType {
 	DATE = 'DATE',
 	DATETIME = 'DATETIME',
 	CURRENCY = 'CURRENCY',
-	ARRAY = 'ARRAY'
+	ARRAY = 'ARRAY',
+	BOOLEAN = 'BOOLEAN',
+	NUMBER = 'NUMBER'
 }

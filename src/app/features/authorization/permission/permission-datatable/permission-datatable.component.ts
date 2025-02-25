@@ -18,7 +18,7 @@ import { MatMenuModule, MatMenuTrigger } from "@angular/material/menu";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatSort } from "@angular/material/sort";
-import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
+import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
 import { finalize, Subscription } from "rxjs";
 import { MatDialog } from "@angular/material/dialog";
 import { Permission } from "@openapi/model/permission";

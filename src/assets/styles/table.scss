@@ -31,3 +31,9 @@ table.mat-elevation-z8 {
 		text-align: center;
 	}
 }
+
+.cell-content-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}

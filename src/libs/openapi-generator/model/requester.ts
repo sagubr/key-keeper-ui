@@ -22,5 +22,6 @@ export interface Requester {
     register?: string;
     jobTitle?: JobTitle | null;
     responsible?: boolean;
+    blocked?: boolean;
 }
 

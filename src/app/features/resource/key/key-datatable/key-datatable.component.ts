@@ -1,64 +1,41 @@
 import { AfterViewInit, Component, input, InputSignal, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {
-	MatCell,
-	MatCellDef,
-	MatColumnDef,
-	MatHeaderCell,
-	MatHeaderCellDef,
-	MatHeaderRow,
-	MatHeaderRowDef,
-	MatNoDataRow,
-	MatRow,
-	MatRowDef,
-	MatTableDataSource
-} from "@angular/material/table";
+import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
-import { MatMenuModule, MatMenuTrigger } from "@angular/material/menu";
-import { MatPaginator } from "@angular/material/paginator";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { MatSort } from "@angular/material/sort";
-import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
+import { MatSort, MatSortModule } from "@angular/material/sort";
+import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
 import { finalize, Subscription } from "rxjs";
 import { Key } from "@openapi/model/key";
 import { Location } from "@openapi/model/location";
 import { KeyService } from "@openapi/api/key.service";
 import { MatDialog } from "@angular/material/dialog";
 import { KeyFormDialogComponent } from "@app/features/resource/key/key-form-dialog/key-form-dialog.component";
-import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";
-import { MatInput } from "@angular/material/input";
-import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { CommonModule } from "@angular/common";
 
 @Component({
-    selector: 'app-key-datatable',
+	selector: 'app-key-datatable',
 	imports: [
-		MatCell,
-		MatCellDef,
-		MatColumnDef,
-		MatHeaderCell,
-		MatHeaderRow,
-		MatHeaderRowDef,
+		MatTableModule,
 		MatIconModule,
 		MatMenuModule,
-		MatProgressBarModule,
 		MatButtonModule,
-		MatRow,
-		MatRowDef,
-		MatSort,
-		TableWrapperTable,
-		MatMenuTrigger,
-		MatHeaderCellDef,
-		MatNoDataRow,
-		MatPaginator,
-		MatFormField,
-		MatInput,
-		MatLabel,
-		MatSuffix,
-		MatToolbar,
-		MatToolbarRow
+		MatPaginatorModule,
+		MatProgressBarModule,
+		MatSortModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatToolbarModule,
+		CommonModule,
+		TableWrapperTable
 	],
-    templateUrl: './key-datatable.component.html',
-    styleUrl: './key-datatable.component.scss'
+	templateUrl: './key-datatable.component.html',
+	styleUrl: './key-datatable.component.scss'
 })
 export class KeyDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -70,10 +47,22 @@ export class KeyDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 	dataSource: MatTableDataSource<Key> = new MatTableDataSource<Key>([]);
 	columns: Columns<Key>[] = [
 		{
+			definition: 'code',
+			header: 'Código',
+			type: ColumnType.NUMBER,
+			cell: (element: Key) => element.code
+		},
+		{
 			definition: 'description',
 			header: 'Descrição',
 			type: ColumnType.TEXT,
 			cell: (element: Key) => element.description
+		},
+		{
+			definition: 'keyType',
+			header: 'Tipo de Chave',
+			type: ColumnType.TEXT,
+			cell: (element: Key) => element.keyType
 		}
 	];
 	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'star'];
@@ -107,21 +96,21 @@ export class KeyDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	onReload(): void {
-		//this.findAll();
+		this.findAll(this.location());
 	}
 
 	openCreateDialog(): void {
-		const dialogRef = this.dialog.open(KeyFormDialogComponent, {
-			data: {},
-		});
-
-		dialogRef.afterClosed().subscribe(() => {
+		this.dialog.open(KeyFormDialogComponent, {
+			data: {
+				location: this.location()
+			},
+		}).afterClosed().subscribe(() => {
 			this.onReload();
 		});
 	}
 
 	openEditDialog(data: Location) {
-		const dialogRef = this.dialog.open(KeyFormDialogComponent, {
+		this.dialog.open(KeyFormDialogComponent, {
 			data
 		});
 	}

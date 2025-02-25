@@ -20,17 +20,17 @@ tags:
     - name: Assignment
       description: Classe referência para Atribuição
     - name: LocationType
-      description: Operações relacionadas a entidade Tipos de Localização
+      description: Classe referência para Tipos de Ambiente
     - name: Requester
-      description: Operações relacionadas a entidade solicitantes
+      description: Classe referência para Solicitantes
     - name: Permission
       description: Operações relacionadas a entidade Permissão
     - name: Location
-      description: Operações relacionadas a entidade Localização
+      description: Classe referência para Localização
     - name: Key
       description: Operações relacionadas a entidade Chaves
     - name: Reservation
-      description: Operações relacionadas a entidade reservas
+      description: Classe referência para Reservas
 paths:
     /api/assignment:
         get:
@@ -501,7 +501,7 @@ paths:
             tags:
                 - Location
             summary: Criar novo registro na classe localização
-            operationId: addLocation
+            operationId: createLocation
             requestBody:
                 content:
                     application/json:
@@ -705,8 +705,39 @@ paths:
         get:
             tags:
                 - Requester
-            summary: Obter todos os solicitantes
+            summary: Obter todos os registros da classe solicitantes
             operationId: findAllRequesters
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Requester"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+    /api/requesters/responsible:
+        get:
+            tags:
+                - Requester
+            summary: Obter todos os registros da classe solicitantes filtrados por respinsável=true
+            operationId: findAllRequesterByResponsibleTrue
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -736,8 +767,8 @@ paths:
         post:
             tags:
                 - Requester
-            summary: Criar novo solicitante
-            operationId: addRequester
+            summary: Criar novo registro na classe solicitantes
+            operationId: createRequester
             requestBody:
                 content:
                     application/json:
@@ -771,7 +802,7 @@ paths:
         get:
             tags:
                 - Reservation
-            summary: Obter todas as reservas
+            summary: Obter todos os registros da classe reservas
             operationId: findAllReservation
             responses:
                 "200":
@@ -802,7 +833,7 @@ paths:
         post:
             tags:
                 - Reservation
-            summary: Obter todas as reservas
+            summary: Atualizar registro ativo na classe reservas
             operationId: updateActiveReservation
             requestBody:
                 content:
@@ -833,7 +864,7 @@ paths:
         post:
             tags:
                 - Reservation
-            summary: Obter todas as reservas
+            summary: Atualizar registro status na classe reservas
             operationId: changeStatusReservation
             requestBody:
                 content:
@@ -864,7 +895,7 @@ paths:
         post:
             tags:
                 - Reservation
-            summary: Obter todas as reservas
+            summary: Criar novo registro na classe reservas
             operationId: addReservation
             requestBody:
                 content:
@@ -899,7 +930,7 @@ paths:
         get:
             tags:
                 - Reservation
-            summary: Obter todas as reservas
+            summary: Obter todos os registros da classe reservas filtrados por status
             operationId: findAllByStatusReservation
             parameters:
                 - name: status
@@ -1201,10 +1232,10 @@ components:
                           type: boolean
                       openingTime:
                           type: string
-                          format: partial-time
+                          format: date-time
                       closingTime:
                           type: string
-                          format: partial-time
+                          format: date-time
                       responsibles:
                           type: array
                           items:
@@ -1331,6 +1362,8 @@ components:
                           allOf:
                               - $ref: "#/components/schemas/JobTitle"
                       responsible:
+                          type: boolean
+                      blocked:
                           type: boolean
         Reservation:
             required:

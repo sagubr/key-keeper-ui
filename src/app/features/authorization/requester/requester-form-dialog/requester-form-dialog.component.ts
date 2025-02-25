@@ -1,10 +1,7 @@
-import { Component, inject, Inject, OnInit, signal } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { Location } from "@openapi/model/location";
-import {
-	FacilityDialogFormComponent
-} from "@app/features/resource/facility/facility-dialog-form/facility-dialog-form.component";
 import { compareById } from "@app/core/utils/utils";
 import { JobTitle } from "@openapi/model/jobTitle";
 import { JobTitleService } from "@openapi/api/jobTitle.service";
@@ -16,9 +13,8 @@ import { CommonModule } from "@angular/common";
 import { MatRadioModule } from "@angular/material/radio";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { RequesterService } from "@openapi/api/requester.service";
-import { MatChipEditedEvent, MatChipInputEvent, MatChipsModule } from "@angular/material/chips";
+import { MatChipInputEvent, MatChipsModule } from "@angular/material/chips";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
-import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatTooltipModule } from "@angular/material/tooltip";
 
@@ -68,19 +64,19 @@ export class RequesterFormDialogComponent implements OnInit {
 	readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
 	removeKeyword(keyword: string): void {
-		const currentEmail = this.formGroup.get('email')!.value;
+		const currentEmail = this.formGroup.get('emails')!.value;
 		const index = currentEmail.indexOf(keyword);
 		if (index >= 0) {
 			currentEmail.splice(index, 1);
-			this.formGroup.get('email')!.setValue([...currentEmail]);
+			this.formGroup.get('emails')!.setValue([...currentEmail]);
 		}
 	}
 
 	add(event: MatChipInputEvent): void {
 		const value = (event.value || '').trim();
 		if (value) {
-			const currentEmail: string[] = this.formGroup.get('email')!.value;
-			this.formGroup.get('email')!.setValue([...currentEmail, value]);
+			const currentEmail: string[] = this.formGroup.get('emails')!.value;
+			this.formGroup.get('emails')!.setValue([...currentEmail, value]);
 		}
 		event.chipInput!.clear();
 	}
@@ -90,7 +86,7 @@ export class RequesterFormDialogComponent implements OnInit {
 		console.log(this.formGroup.value)
 		if (this.data) {
 			console.log(this.formGroup.value)
-			this.requesterService.addRequester(this.formGroup.value).subscribe({
+			this.requesterService.createRequester(this.formGroup.value).subscribe({
 				next: () => {
 					this.formGroup.reset();
 					this.dialogRef.close(true);
@@ -119,7 +115,7 @@ export class RequesterFormDialogComponent implements OnInit {
 	private buildFormGroup(): void {
 		this.formGroup = this.formBuilder.group({
 			name: ['', Validators.required],
-			email: [[]],
+			emails: [[]],
 			register: ['', Validators.required],
 			jobTitle: ['', Validators.required],
 			responsible: [false]

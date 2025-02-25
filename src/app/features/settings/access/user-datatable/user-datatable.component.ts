@@ -11,7 +11,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { UsersService } from '@openapi/api/users.service';
 import { User } from "@openapi/model/user";
-import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
+import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
 import { UserDto } from "@openapi/model/userDto";
 import { UserFormDialogComponent } from "@app/features/settings/access/user-form-dialog/user-form-dialog.component";
 import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";

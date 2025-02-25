@@ -20,8 +20,8 @@
 			<div class="col">
 				<mat-form-field appearance="outline" class="full-width">
 					<mat-label>E-mail(s)</mat-label>
-					<mat-chip-grid #chipGrid formControlName="email">
-						@for (keyword of this.formGroup.get('email')!.value; track keyword.id) {
+					<mat-chip-grid #chipGrid formControlName="emails">
+						@for (keyword of this.formGroup.get('emails')!.value; track keyword.id) {
 							<mat-chip-row (removed)="removeKeyword(keyword)">
 								{{ keyword }}
 								<button matChipRemove>

@@ -44,8 +44,7 @@ export enum TypeOfImportance {
 })
 export class KeyFormDialogComponent implements OnInit {
 
-	form!: FormGroup;
-	isEditing: boolean = false;
+	formGroup!: FormGroup;
 	timestampCode: number = 0;
 
 	protected readonly TypeOfImportance = TypeOfImportance;
@@ -62,17 +61,17 @@ export class KeyFormDialogComponent implements OnInit {
 
 	ngOnInit(): void {
 		if (this.data) {
-			this.form.patchValue(this.data);
+			this.formGroup.patchValue(this.data);
 		}
 	}
 
 	onSubmit(): void {
 		this.validateForm()
-
+		this.formGroup.get('code')?.enable()
 		if (this.data) {
-			this.keyService.addKey(this.form.value).subscribe({
+			this.keyService.addKey(this.formGroup.value).subscribe({
 				next: () => {
-					this.form.reset();
+					this.formGroup.reset();
 					this.dialogRef.close(true);
 				},
 				error: (err: any) => {
@@ -83,18 +82,19 @@ export class KeyFormDialogComponent implements OnInit {
 	}
 
 	private validateForm(): void {
-		if (this.form.valid) {
+		if (this.formGroup.valid) {
 			return;
 		}
-		this.form.markAllAsTouched();
+		this.formGroup.markAllAsTouched();
 		throw new Error();
 	}
 
 	private buildFormGroup(): void {
-		this.form = this.formBuilder.group({
-			code: [{ value: this.timestampCode, disabled: true }, Validators.required],
-			location: ['', Validators.required],
+		this.formGroup = this.formBuilder.group({
+			code: [{ value: this.timestampCode, disabled: true, }, Validators.required],
+			keyType: ['', Validators.required],
 			description: ['', Validators.required],
+			location: [this.data.location]
 		});
 	}
 

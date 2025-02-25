@@ -94,7 +94,7 @@ export class ReservationService {
     }
 
     /**
-     * Obter todas as reservas
+     * Criar novo registro na classe reservas
      * @param reservation 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -175,7 +175,7 @@ export class ReservationService {
     }
 
     /**
-     * Obter todas as reservas
+     * Atualizar registro status na classe reservas
      * @param reservation 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -256,7 +256,7 @@ export class ReservationService {
     }
 
     /**
-     * Obter todas as reservas
+     * Obter todos os registros da classe reservas filtrados por status
      * @param status 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -334,7 +334,7 @@ export class ReservationService {
     }
 
     /**
-     * Obter todas as reservas
+     * Obter todos os registros da classe reservas
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -401,7 +401,7 @@ export class ReservationService {
     }
 
     /**
-     * Obter todas as reservas
+     * Atualizar registro ativo na classe reservas
      * @param reservation 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.

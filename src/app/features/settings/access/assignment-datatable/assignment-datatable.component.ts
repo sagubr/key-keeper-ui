@@ -21,7 +21,7 @@ import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatToolbarModule, MatToolbarRow } from "@angular/material/toolbar";
-import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
+import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
 import { finalize, Subscription } from "rxjs";
 import { MatDialog } from "@angular/material/dialog";
 import { UserDto } from "@openapi/model/userDto";

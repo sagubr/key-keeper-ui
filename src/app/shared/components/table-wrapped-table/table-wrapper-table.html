@@ -1,0 +1,48 @@
+<table mat-table [dataSource]="dataSource()" class="mat-elevation-z8">
+	@for (column of columns(); track $index) {
+		<ng-container [matColumnDef]="column.definition">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header-cell h3">
+				{{ column.header }}
+			</th>
+
+			<td mat-cell *matCellDef="let element">
+				<div class="cell-content-wrapper">
+					@switch (column.type) {
+						@case (ColumnType.TEXT) {
+							{{ column.cell(element) | uppercase }}
+						}
+						@case (ColumnType.NUMBER) {
+							{{ column.cell(element) }}
+						}
+						@case (ColumnType.DATE) {
+							{{ column.cell(element) | date:'dd/MM/yyyy' }}
+						}
+						@case (ColumnType.DATETIME) {
+							{{ column.cell(element) | date:'dd/MM/yyyy \'às\' HH:mm' }}
+						}
+						@case (ColumnType.CURRENCY) {
+							{{ column.cell(element) | currency }}
+						}
+						@case (ColumnType.ARRAY) {
+							{{ column.cell(element) | join:', ' }}
+						}
+						@case (ColumnType.BOOLEAN) {
+							{{ column.cell(element) ? 'Sim' : 'Não' }}
+						}
+						@default {
+							Unknown column type
+						}
+					}
+					@if (column.hasDescription) {
+						<mat-icon class="icon-medium"
+								  [matTooltip]="column.description!(element) ?? 'Não há descrição'"
+								  matTooltipPosition="right">
+							{{ column.icon ?? "info" }}
+						</mat-icon>
+					}
+				</div>
+			</td>
+		</ng-container>
+	}
+	<ng-content></ng-content>
+</table>

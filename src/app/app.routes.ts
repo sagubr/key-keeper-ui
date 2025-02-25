@@ -4,16 +4,10 @@ import { LoginComponent } from './features/login/login.component';
 import { AuthenticationGuard } from './core/guards/authentication.guard';
 
 import { ResourceComponent } from '@app/features/resource/resource-component';
-import {
-	AuthorizationManagementComponent
-} from "@app/features/authorization/authorization-management.component";
-import {
-	TransactionsComponent
-} from "@app/features/transactions/transactions-component";
+import { AuthorizationManagementComponent } from "@app/features/authorization/authorization-management.component";
+import { TransactionsComponent } from "@app/features/transactions/transactions-component";
 import { SidenavComponent } from "@app/shared/components/sidenav/sidenav.component";
-import {
-	AccessComponent
-} from "@app/features/settings/access/access.component";
+import { AccessComponent } from "@app/features/settings/access/access.component";
 import { RegistersComponent } from "@app/features/settings/registers/registers.component";
 import { DefinitionsComponent } from "@app/features/settings/definitions/definitions.component";
 import {

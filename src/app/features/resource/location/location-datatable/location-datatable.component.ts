@@ -5,7 +5,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatSort, MatSortModule } from "@angular/material/sort";
-import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
+import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
 import { Location } from "@openapi/model/location";
 import { finalize, Subscription } from "rxjs";
 import { LocationService } from "@openapi/api/location.service";
@@ -44,31 +44,37 @@ export class LocationDatatableComponent implements OnInit, AfterViewInit, OnDest
 	@ViewChild(MatPaginator) paginator!: MatPaginator;
 	@ViewChild(MatSort) sort!: MatSort;
 
-	dataSource: MatTableDataSource<LocationDto> = new MatTableDataSource<LocationDto>([]);
-	columns: Columns<LocationDto>[] = [
+	dataSource: MatTableDataSource<Location> = new MatTableDataSource<Location>([]);
+	columns: Columns<Location>[] = [
 		{
 			definition: 'name',
 			header: 'Name',
 			type: ColumnType.TEXT,
-			cell: (element: LocationDto) => element.name
+			cell: (element: Location) => element.name,
+			hasDescription: true,
+			description: (element: Location) => element.description,
 		},
 		{
 			definition: 'facility',
 			header: 'Instalação',
 			type: ColumnType.TEXT,
-			cell: (element: LocationDto) => element.facility
+			cell: (element: Location) => element.facility.name,
+			hasDescription: true,
+			description: (element: Location) => element.facility.description,
 		},
 		{
 			definition: 'locationType',
 			header: 'Tipo de Local',
 			type: ColumnType.TEXT,
-			cell: (element: LocationDto) => element.locationType
+			cell: (element: Location) => element.locationType.name,
+			hasDescription: true,
+			description: (element: Location) => element.locationType.description,
 		},
 		{
-			definition: 'update_at',
-			header: 'Atualizado em',
-			type: ColumnType.DATE,
-			cell: (element: LocationDto) => element.restricted
+			definition: 'restricted',
+			header: 'Restrito',
+			type: ColumnType.BOOLEAN,
+			cell: (element: Location) => element.restricted
 		},
 	];
 	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'star'];
@@ -126,7 +132,7 @@ export class LocationDatatableComponent implements OnInit, AfterViewInit, OnDest
 
 	private findAll(): void {
 		this.loading = true;
-		this.locationService.findAllLocationSummaries()
+		this.locationService.findAllLocations()
 			.pipe(
 				finalize(() => this.loading = false)
 			).subscribe({

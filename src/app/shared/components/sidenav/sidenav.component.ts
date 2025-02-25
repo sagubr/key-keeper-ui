@@ -107,6 +107,6 @@ export const MENU_OPTIONS_SETTINGS: Section[] = [
 		icon: 'receipt_long',
 		route: '/configuracoes/registros',
 		disabled: true
-	}
+	},
 ];
 

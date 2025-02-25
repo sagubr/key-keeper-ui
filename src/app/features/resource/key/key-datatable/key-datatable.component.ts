@@ -101,9 +101,7 @@ export class KeyDatatableComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	openCreateDialog(): void {
 		this.dialog.open(KeyFormDialogComponent, {
-			data: {
-				location: this.location()
-			},
+			data: { location: this.location() },
 		}).afterClosed().subscribe(() => {
 			this.onReload();
 		});

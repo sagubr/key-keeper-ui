@@ -51,16 +51,10 @@ export class FacilityDatatableComponent implements OnInit, OnDestroy, AfterViewI
 			cell: (facility: Facility) => facility.name
 		},
 		{
-			definition: 'active',
-			header: 'Ativo',
+			definition: 'description',
+			header: 'Descrição',
 			type: ColumnType.TEXT,
-			cell: (facility: Facility) => facility.active ? 'Yes' : 'No'
-		},
-		{
-			definition: 'create_at',
-			header: 'Criado em',
-			type: ColumnType.DATE,
-			cell: (facility: Facility) => facility.createdAt
+			cell: (facility: Facility) => facility.description
 		},
 	];
 	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'star'];
@@ -99,26 +93,15 @@ export class FacilityDatatableComponent implements OnInit, OnDestroy, AfterViewI
 	}
 
 	openCreateDialog(): void {
-		const dialogRef = this.dialog.open(FacilityDialogFormComponent, {
+		this.dialog.open(FacilityDialogFormComponent, {
 			data: {},
-		});
-		dialogRef.afterClosed().subscribe(() => {
-			this.onReload();
-		});
+		}).afterClosed().subscribe(() => this.onReload());
 	}
 
 	openEditDialog(data: Location) {
-		const dialogRef = this.dialog.open(FacilityDialogFormComponent, {
+		this.dialog.open(FacilityDialogFormComponent, {
 			data
-		});
-
-		dialogRef.afterClosed().subscribe({
-			next: (val) => {
-				if (val) {
-					this.findAll();
-				}
-			}
-		});
+		}).afterClosed().subscribe(() => this.findAll());
 	}
 
 	rowClick(row: Facility) {

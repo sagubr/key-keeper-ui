@@ -18,6 +18,7 @@ import {
 	LocationTypeFormDialog
 } from "@app/features/resource/location-type/location-type-form-dialog/location-type-form-dialog";
 import { LocationTypeDto } from "@openapi/model/locationTypeDto";
+import { LocationType } from "@openapi/model/locationType";
 
 @Component({
 	selector: 'app-location-type-datatable',
@@ -42,13 +43,19 @@ export class LocationTypeDatatableComponent implements OnInit, AfterViewInit, On
 	@ViewChild(MatPaginator) paginator!: MatPaginator;
 	@ViewChild(MatSort) sort!: MatSort;
 
-	dataSource: MatTableDataSource<LocationTypeDto> = new MatTableDataSource<LocationTypeDto>([]);
-	columns: Columns<LocationTypeDto>[] = [
+	dataSource: MatTableDataSource<LocationType> = new MatTableDataSource<LocationType>([]);
+	columns: Columns<LocationType>[] = [
 		{
 			definition: 'name',
 			header: 'Tipo de Ambiente',
 			type: ColumnType.TEXT,
-			cell: (element: LocationTypeDto) => element.name
+			cell: (element: LocationType) => element.name,
+		},
+		{
+			definition: 'description',
+			header: 'Descrição',
+			type: ColumnType.TEXT,
+			cell: (element: LocationType) => element.description,
 		}
 	];
 	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'star'];

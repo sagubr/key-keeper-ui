@@ -122,7 +122,6 @@ export class LocationFormDialogComponent implements OnInit {
 			closingTime: [null],
 			responsibles: [[]]
 		});
-		console.log('FormGroup:', this.form);
 	}
 
 }

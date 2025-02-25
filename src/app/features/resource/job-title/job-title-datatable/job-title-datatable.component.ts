@@ -50,17 +50,11 @@ export class JobTitleDatatableComponent implements OnInit, AfterViewInit, OnDest
 			cell: (jobTitle: JobTitle) => jobTitle.name
 		},
 		{
-			definition: 'created_at',
-			header: 'Criado em',
-			type: ColumnType.DATE,
-			cell: (jobTitle: JobTitle) => jobTitle.createdAt
+			definition: 'descripttion',
+			header: 'Descrição',
+			type: ColumnType.TEXT,
+			cell: (jobTitle: JobTitle) => jobTitle.description
 		},
-		{
-			definition: 'update_at',
-			header: 'Atualizado em',
-			type: ColumnType.DATE,
-			cell: (jobTitle: JobTitle) => jobTitle.updatedAt
-		}
 	];
 	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'star'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
@@ -97,27 +91,16 @@ export class JobTitleDatatableComponent implements OnInit, AfterViewInit, OnDest
 	}
 
 	openCreateDialog(): void {
-		const dialogRef = this.dialog.open(JobTitleDialogFormComponent, {
+		this.dialog.open(JobTitleDialogFormComponent, {
 			data: {},
-		});
-		dialogRef.afterClosed().subscribe(() => {
-			this.onReload();
-		});
+		}).afterClosed().subscribe(() => this.onReload());
 	}
 
 	openEditDialog(data: JobTitle) {
-		const dialogRef = this.dialog.open(JobTitleDialogFormComponent, {
+		this.dialog.open(JobTitleDialogFormComponent, {
 			data,
 			width: '540px'
-		});
-
-		dialogRef.afterClosed().subscribe({
-			next: (val) => {
-				if (val) {
-					this.findAll();
-				}
-			}
-		});
+		}).afterClosed().subscribe(() => this.findAll());
 	}
 
 	private findAll(): void {

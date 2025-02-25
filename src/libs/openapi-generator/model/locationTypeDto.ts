@@ -8,19 +8,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { JobTitle } from './jobTitle';
 
 
-export interface Requester { 
-    id?: string | null;
-    version?: number;
-    active?: boolean;
-    createdAt?: string;
-    updatedAt?: string;
+export interface LocationTypeDto { 
     name: string;
-    emails?: Array<string>;
-    register?: string;
-    jobTitle?: JobTitle | null;
-    responsible?: boolean;
 }
 

@@ -23,9 +23,11 @@ import { MatSlideToggle, MatSlideToggleModule } from "@angular/material/slide-to
 import { MatTooltip, MatTooltipModule } from "@angular/material/tooltip";
 import { MatTimepickerModule } from "@angular/material/timepicker";
 import { provideNativeDateAdapter } from "@angular/material/core";
+import { Requester } from "@openapi/model/requester";
+import { RequesterService } from "@openapi/api/requester.service";
 
 @Component({
-    selector: 'app-location-form-dialog',
+	selector: 'app-location-form-dialog',
 	imports: [
 		CommonModule,
 		MatSelectModule,
@@ -42,8 +44,8 @@ import { provideNativeDateAdapter } from "@angular/material/core";
 		MatTimepickerModule
 	],
 	providers: [provideNativeDateAdapter()],
-    templateUrl: './location-form-dialog.component.html',
-    styleUrl: './location-form-dialog.component.scss'
+	templateUrl: './location-form-dialog.component.html',
+	styleUrl: './location-form-dialog.component.scss'
 })
 export class LocationFormDialogComponent implements OnInit {
 
@@ -52,6 +54,7 @@ export class LocationFormDialogComponent implements OnInit {
 	form!: FormGroup;
 	locationTypes: LocationType[] = [];
 	facilities: Facility[] = [];
+	responsibles: Requester[] = [];
 
 	constructor(
 		public dialogRef: MatDialogRef<LocationFormDialogComponent>,
@@ -59,6 +62,7 @@ export class LocationFormDialogComponent implements OnInit {
 		private readonly locationService: LocationService,
 		private readonly facilityService: FacilityService,
 		private readonly locationTypeService: LocationTypeService,
+		private readonly requesterService: RequesterService,
 		private readonly formBuilder: FormBuilder,
 		@Inject(MAT_DIALOG_DATA) public data: Location,
 	) {
@@ -73,7 +77,6 @@ export class LocationFormDialogComponent implements OnInit {
 
 	onSubmit(): void {
 		this.validateForm()
-
 		if (this.data) {
 			this.locationService.addLocation(this.form.value).subscribe({
 				next: () => {
@@ -83,29 +86,19 @@ export class LocationFormDialogComponent implements OnInit {
 			});
 		}
 	}
-
-	openDialogFacility(): void {
-		const dialogRef = this.dialog.open(FacilityDialogFormComponent, {
-			data: {},
-		});
-	}
-
 	private findAllFacilities(): void {
-		this.facilityService.findAllFacilities().subscribe({
-				next: (res: Facility[]) => {
-					this.facilities = res;
-				}
-			}
-		)
+		this.facilityService.findAllFacilities()
+			.subscribe((res) => this.facilities = res)
 	}
 
 	private findAllLocationTypes(): void {
-		this.locationTypeService.findAllLocationTypes().subscribe({
-				next: (res: LocationType[]) => {
-					this.locationTypes = res;
-				}
-			}
-		)
+		this.locationTypeService.findAllLocationTypeSummaries()
+			.subscribe((res) => this.locationTypes = res)
+	}
+
+	private findAllResponsibles(): void {
+		this.requesterService.findAllRequesters()
+			.subscribe((res) => this.responsibles = res)
 	}
 
 	private validateForm(): void {
@@ -119,8 +112,14 @@ export class LocationFormDialogComponent implements OnInit {
 	private buildFormGroup(): void {
 		this.form = this.formBuilder.group({
 			name: ['', Validators.required],
-			facility: ['', Validators.required],
-			locationType: ['', Validators.required]
+			description: [''],
+			facility: [null, Validators.required],
+			locationType: [null, Validators.required],
+			maxCapacity: [null, [Validators.min(1)]],
+			isRestricted: [false],
+			openingTime: [null],
+			closingTime: [null],
+			responsibles: this.formBuilder.array([])
 		});
 	}
 

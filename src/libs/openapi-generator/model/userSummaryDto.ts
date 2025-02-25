@@ -8,13 +8,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Assignment } from './assignment';
 
 
 export interface UserSummaryDto { 
     name: string;
     username: string;
     email: string;
-    assignment: Assignment;
+    assignment: string;
 }
 

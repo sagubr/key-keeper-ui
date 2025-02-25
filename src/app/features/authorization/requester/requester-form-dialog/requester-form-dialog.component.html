@@ -4,14 +4,14 @@
 		<mat-icon>close</mat-icon>
 	</button>
 </div>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
 	<mat-dialog-content>
 		<div class="row">
 			<div class="col">
 				<mat-form-field appearance="outline" class="full-width">
 					<mat-label>Nome Completo</mat-label>
 					<input matInput maxlength="256" formControlName="name">
-					<mat-error *ngIf="form.get('name')?.invalid">Você deve inserir um valor</mat-error>
+					<mat-error *ngIf="formGroup.get('name')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
 		</div>
@@ -19,28 +19,23 @@
 		<div class="row">
 			<div class="col">
 				<mat-form-field appearance="outline" class="full-width">
-					<mat-label>E-mail</mat-label>
-					<mat-chip-grid #chipGrid>
-						@for (fruit of fruits(); track fruit) {
-							<mat-chip-row
-								(removed)="remove(fruit)"
-								[editable]="true"
-								(edited)="edit(fruit, $event)"
-								[aria-description]="'press enter to edit ' + fruit"
-							>
-								{{ fruit }}
-								<button matChipRemove [attr.aria-label]="'remove ' + fruit">
+					<mat-label>E-mail(s)</mat-label>
+					<mat-chip-grid #chipGrid formControlName="email">
+						@for (keyword of this.formGroup.get('email')!.value; track keyword.id) {
+							<mat-chip-row (removed)="removeKeyword(keyword)">
+								{{ keyword }}
+								<button matChipRemove>
 									<mat-icon>cancel</mat-icon>
 								</button>
 							</mat-chip-row>
 						}
-						<input
-							[matChipInputFor]="chipGrid"
-							[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-							[matChipInputAddOnBlur]="addOnBlur"
-							(matChipInputTokenEnd)="add($event)"
-						/>
 					</mat-chip-grid>
+					<input
+						[matChipInputFor]="chipGrid"
+						[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+						[matChipInputAddOnBlur]="addOnBlur"
+						(matChipInputTokenEnd)="add($event)"
+					/>
 				</mat-form-field>
 			</div>
 		</div>
@@ -54,7 +49,7 @@
 							<mat-option [value]="element">{{ element.name }}</mat-option>
 						}
 					</mat-select>
-					<mat-error *ngIf="form.get('jobTitle')?.invalid">Você deve inserir um valor</mat-error>
+					<mat-error *ngIf="formGroup.get('jobTitle')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
 		</div>
@@ -64,7 +59,7 @@
 				<mat-form-field appearance="outline" class="full-width">
 					<mat-label>Registro/Identificação</mat-label>
 					<input matInput maxlength="256" formControlName="register">
-					<mat-error *ngIf="form.get('register')?.invalid">Você deve inserir um valor</mat-error>
+					<mat-error *ngIf="formGroup.get('register')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
 		</div>
@@ -92,7 +87,7 @@
 		</button>
 		<button mat-raised-button
 				class="button-primary"
-				type="submit" [disabled]="form.invalid">
+				type="submit" [disabled]="formGroup.invalid">
 			Salvar
 		</button>
 	</mat-dialog-actions>

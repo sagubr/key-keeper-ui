@@ -11,6 +11,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatRadioModule } from "@angular/material/radio";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { MatChipsModule } from "@angular/material/chips";
+import { LocationTypeService } from "@openapi/api/locationType.service";
 
 @Component({
   selector: 'app-location-type-form-dialog',
@@ -35,8 +36,8 @@ export class LocationTypeFormDialog implements OnInit {
 	form!: FormGroup;
 
 	constructor(
-		public dialogRef: MatDialogRef<LocationTypeFormDialog>,
-		private readonly userService: UsersService,
+		private readonly dialogRef: MatDialogRef<LocationTypeFormDialog>,
+		private readonly locationTypeService: LocationTypeService,
 		private readonly formBuilder: FormBuilder,
 		@Inject(MAT_DIALOG_DATA) public data: UserDto,
 	) {
@@ -47,20 +48,11 @@ export class LocationTypeFormDialog implements OnInit {
 		this.form.patchValue(this.data);
 	}
 
-	getErrorMessage() {
-		if (this.form.get('email')?.hasError('required')) {
-			return 'Você deve inserir um valor';
-		}
-		return this.form.get('email')?.hasError('email')
-			? 'Não é um e-mail válido'
-			: '';
-	}
-
 	onSubmit(): void {
 		this.validateForm()
 
 		if (this.data) {
-			this.userService.createUser(this.form.value).subscribe({
+			this.locationTypeService.createLocationType(this.form.value).subscribe({
 				next: () => {
 					this.form.reset();
 					this.dialogRef.close(true);

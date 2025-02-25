@@ -28,13 +28,14 @@ model/jobTitle.ts
 model/key.ts
 model/keyType.ts
 model/location.ts
+model/locationDto.ts
 model/locationType.ts
+model/locationTypeDto.ts
 model/loggingEvent.ts
 model/models.ts
 model/notifierEvent.ts
 model/permission.ts
 model/requester.ts
-model/requesterEmail.ts
 model/reservation.ts
 model/screen.ts
 model/sendRequest.ts

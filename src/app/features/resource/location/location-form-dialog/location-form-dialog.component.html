@@ -21,7 +21,7 @@
 				<mat-form-field appearance="outline" class="full-width">
 					<mat-label>Descrição</mat-label>
 					<input matInput maxlength="256" formControlName="name">
-					<mat-error *ngIf="form.get('name')?.invalid">Você deve inserir um valor</mat-error>
+					<mat-error *ngIf="form.get('description')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
 		</div>
@@ -56,14 +56,14 @@
 				<mat-form-field appearance="outline" class="full-width">
 					<mat-label>Responsáveis</mat-label>
 					<mat-select
-						formControlName="facility"
+						formControlName="responsibles"
 						[compareWith]="compareById"
 						multiple>
-						@for (element of facilities; track $index) {
+						@for (element of responsibles; track $index) {
 							<mat-option [value]="element">{{ element.name }}</mat-option>
 						}
 					</mat-select>
-					<mat-error *ngIf="form.get('facility')?.invalid">Você deve inserir um valor</mat-error>
+					<mat-error *ngIf="form.get('responsibles')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
 		</div>
@@ -78,15 +78,15 @@
 							<div class="col">
 								<mat-form-field appearance="outline" class="full-width">
 									<mat-label>Capacidade Máxima</mat-label>
-									<input matInput type="number" formControlName="name">
-									<mat-error *ngIf="form.get('name')?.invalid">Você deve inserir um valor</mat-error>
+									<input matInput type="number" formControlName="maxCapacity">
+									<mat-error *ngIf="form.get('maxCapacity')?.invalid">Você deve inserir um valor</mat-error>
 								</mat-form-field>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col">
 								<div class="slide-toggle-wrapper">
-									<mat-slide-toggle formControlName="name">
+									<mat-slide-toggle formControlName="isRestricted">
 										Sala restrita
 									</mat-slide-toggle>
 									<mat-icon class="icon-medium"
@@ -101,7 +101,7 @@
 							<div class="col">
 								<mat-form-field appearance="outline" class="full-width">
 									<mat-label>Abertura</mat-label>
-									<input matInput [matTimepicker]="pickerTimeStart">
+									<input matInput [matTimepicker]="pickerTimeStart" formControlName="openingTime">
 									<mat-timepicker-toggle matIconSuffix [for]="pickerTimeStart"/>
 									<mat-timepicker #pickerTimeStart/>
 								</mat-form-field>
@@ -109,7 +109,7 @@
 							<div class="col">
 								<mat-form-field appearance="outline" class="full-width">
 									<mat-label>Fechamento</mat-label>
-									<input matInput [matTimepicker]="pickerTimeEnd">
+									<input matInput [matTimepicker]="pickerTimeEnd" formControlName="closingTime">
 									<mat-timepicker-toggle matIconSuffix [for]="pickerTimeEnd"/>
 									<mat-timepicker #pickerTimeEnd/>
 								</mat-form-field>

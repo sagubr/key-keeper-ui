@@ -7,18 +7,12 @@ servers:
 security:
     - Authorization: []
 tags:
-    - name: Requester
-      description: Operações relacionadas a entidade solicitantes
     - name: JobTitle
       description: Operações relacionadas a entidade cargo
-    - name: Location
-      description: Operações relacionadas a entidade Localização
-    - name: Permission
-      description: Operações relacionadas a entidade Permissão
     - name: Facility
       description: Operações relacionadas a entidade lugar
-    - name: Key
-      description: Operações relacionadas a entidade Chaves
+    - name: Users
+      description: Classe referência para Usuário
     - name: Notifications
       description: Operações relacionadas a entidade Permissão
     - name: Logging
@@ -27,10 +21,16 @@ tags:
       description: Classe referência para Atribuição
     - name: LocationType
       description: Operações relacionadas a entidade Tipos de Localização
+    - name: Requester
+      description: Operações relacionadas a entidade solicitantes
+    - name: Permission
+      description: Operações relacionadas a entidade Permissão
+    - name: Location
+      description: Operações relacionadas a entidade Localização
+    - name: Key
+      description: Operações relacionadas a entidade Chaves
     - name: Reservation
       description: Operações relacionadas a entidade reservas
-    - name: Users
-      description: Classe referência para Usuário
 paths:
     /api/assignment:
         get:
@@ -372,7 +372,7 @@ paths:
         get:
             tags:
                 - Location
-            summary: Obter todas as localizações
+            summary: Obter todos os registros da classe localização
             operationId: findAllLocations
             responses:
                 "200":
@@ -403,8 +403,8 @@ paths:
         get:
             tags:
                 - LocationType
-            summary: Obter todos os tipos de localização
-            operationId: findAllLocationTypes
+            summary: Obter todos os registros da classe tipos de ambiente
+            operationId: findAllLocationType
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -430,11 +430,77 @@ paths:
                     content:
                         application/json:
                             schema: {}
+    /api/location-type/save:
+        post:
+            tags:
+                - LocationType
+            summary: Criar novo registro na classe tipos de ambiente
+            operationId: createLocationType
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/LocationType"
+                required: true
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/LocationType"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+    /api/location-type/summary:
+        get:
+            tags:
+                - LocationType
+            summary: Obter todos os registros da classe tipos de ambiente resumido
+            operationId: findAllLocationTypeSummaries
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/LocationTypeDto"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
     /api/location/save:
         post:
             tags:
                 - Location
-            summary: Criar nova localização
+            summary: Criar novo registro na classe localização
             operationId: addLocation
             requestBody:
                 content:
@@ -465,11 +531,42 @@ paths:
                     content:
                         application/json:
                             schema: {}
+    /api/location/summary:
+        get:
+            tags:
+                - Location
+            summary: Obter todos os registros da classe localização resumido
+            operationId: findAllLocationSummaries
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/LocationDto"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
     /api/location/{id}:
         get:
             tags:
                 - Location
-            summary: Obter detalhes de uma localização por ID
+            summary: Obter todos os registros da classe localização filtrados por id
             operationId: findByIdLocation
             parameters:
                 - name: id
@@ -1112,6 +1209,44 @@ components:
                           type: array
                           items:
                               $ref: "#/components/schemas/Requester"
+        LocationDto:
+            required:
+                - closingTime
+                - description
+                - facility
+                - id
+                - locationType
+                - maxCapacity
+                - name
+                - openingTime
+            type: object
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                name:
+                    type: string
+                description:
+                    type: string
+                facility:
+                    type: string
+                locationType:
+                    type: string
+                maxCapacity:
+                    type: integer
+                    format: int32
+                restricted:
+                    type: boolean
+                openingTime:
+                    type: string
+                    format: partial-time
+                closingTime:
+                    type: string
+                    format: partial-time
+                responsibles:
+                    type: array
+                    items:
+                        type: string
         LocationType:
             required:
                 - name
@@ -1123,6 +1258,13 @@ components:
                           type: string
                       description:
                           type: string
+        LocationTypeDto:
+            required:
+                - name
+            type: object
+            properties:
+                name:
+                    type: string
         LoggingEvent:
             required:
                 - level
@@ -1171,7 +1313,6 @@ components:
                           format: date-time
         Requester:
             required:
-                - emails
                 - name
             type: object
             allOf:
@@ -1182,7 +1323,7 @@ components:
                       emails:
                           type: array
                           items:
-                              $ref: "#/components/schemas/RequesterEmail"
+                              type: string
                       register:
                           type: string
                       jobTitle:
@@ -1191,19 +1332,6 @@ components:
                               - $ref: "#/components/schemas/JobTitle"
                       responsible:
                           type: boolean
-        RequesterEmail:
-            required:
-                - emails
-            type: object
-            allOf:
-                - $ref: "#/components/schemas/EntityPattern"
-                - properties:
-                      emails:
-                          type: string
-                      requester:
-                          nullable: true
-                          allOf:
-                              - $ref: "#/components/schemas/Requester"
         Reservation:
             required:
                 - endDateTime
@@ -1272,10 +1400,10 @@ components:
                           type: string
                       firstAccess:
                           type: boolean
-                      assignments:
-                          type: array
-                          items:
-                              $ref: "#/components/schemas/Assignment"
+                      assignment:
+                          nullable: true
+                          allOf:
+                              - $ref: "#/components/schemas/Assignment"
         UserSummaryDto:
             required:
                 - assignment
@@ -1291,7 +1419,7 @@ components:
                 email:
                     type: string
                 assignment:
-                    $ref: "#/components/schemas/Assignment"
+                    type: string
     securitySchemes:
         Authorization:
             type: http

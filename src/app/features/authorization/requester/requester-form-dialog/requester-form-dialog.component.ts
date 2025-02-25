@@ -1,5 +1,5 @@
 import { Component, inject, Inject, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { Location } from "@openapi/model/location";
 import {
@@ -45,8 +45,12 @@ export class RequesterFormDialogComponent implements OnInit {
 
 	compareById: (o1: any, o2: any) => boolean = compareById;
 
-	form!: FormGroup;
 	jobTitles: JobTitle[] = [];
+	formGroup!: FormGroup;
+
+	ngOnInit(): void {
+		this.formGroup.patchValue(this.data);
+	}
 
 	constructor(
 		public dialogRef: MatDialogRef<RequesterFormDialogComponent>,
@@ -54,84 +58,45 @@ export class RequesterFormDialogComponent implements OnInit {
 		private readonly requesterService: RequesterService,
 		private readonly jobTitleService: JobTitleService,
 		private readonly formBuilder: FormBuilder,
-		@Inject(MAT_DIALOG_DATA) public data: Location,
-	) {
+		@Inject(MAT_DIALOG_DATA) public data: Location) {
+
 		this.buildFormGroup();
 		this.findAllJobTitles();
 	}
 
-	ngOnInit(): void {
-		this.form.patchValue(this.data);
-	}
-
-
 	readonly addOnBlur = true;
 	readonly separatorKeysCodes = [ENTER, COMMA] as const;
-	readonly fruits = signal<String[]>([]);
-	readonly announcer = inject(LiveAnnouncer);
+
+	removeKeyword(keyword: string): void {
+		const currentEmail = this.formGroup.get('email')!.value;
+		const index = currentEmail.indexOf(keyword);
+		if (index >= 0) {
+			currentEmail.splice(index, 1);
+			this.formGroup.get('email')!.setValue([...currentEmail]);
+		}
+	}
 
 	add(event: MatChipInputEvent): void {
 		const value = (event.value || '').trim();
-
-		// Add our fruit
 		if (value) {
-			this.fruits.update(fruits => [...fruits, value]);
+			const currentEmail: string[] = this.formGroup.get('email')!.value;
+			this.formGroup.get('email')!.setValue([...currentEmail, value]);
 		}
-
-		// Clear the input value
 		event.chipInput!.clear();
-	}
-
-	remove(fruit: String): void {
-		this.fruits.update(fruits => {
-			const index = fruits.indexOf(fruit);
-			if (index < 0) {
-				return fruits;
-			}
-
-			fruits.splice(index, 1);
-			this.announcer.announce(`Removed ${ fruit }`);
-			return [...fruits];
-		});
-	}
-
-	edit(fruit: String, event: MatChipEditedEvent) {
-		const value = event.value.trim();
-
-		// Remove fruit if it no longer has a name
-		if (!value) {
-			this.remove(fruit);
-			return;
-		}
-
-		// Edit existing fruit
-		this.fruits.update(fruits => {
-			const index = fruits.indexOf(fruit);
-			if (index >= 0) {
-				fruits[index] = value;
-				return [...fruits];
-			}
-			return fruits;
-		});
 	}
 
 	onSubmit(): void {
 		this.validateForm()
-
+		console.log(this.formGroup.value)
 		if (this.data) {
-			this.requesterService.addRequester(this.form.value).subscribe({
+			console.log(this.formGroup.value)
+			this.requesterService.addRequester(this.formGroup.value).subscribe({
 				next: () => {
-					this.form.reset();
+					this.formGroup.reset();
 					this.dialogRef.close(true);
 				}
 			});
 		}
-	}
-
-	openDialogFacility(): void {
-		const dialogRef = this.dialog.open(FacilityDialogFormComponent, {
-			data: {},
-		});
 	}
 
 	private findAllJobTitles(): void {
@@ -144,20 +109,21 @@ export class RequesterFormDialogComponent implements OnInit {
 	}
 
 	private validateForm(): void {
-		if (this.form.valid) {
+		if (this.formGroup.valid) {
 			return;
 		}
-		this.form.markAllAsTouched();
+		this.formGroup.markAllAsTouched();
 		throw new Error();
 	}
 
 	private buildFormGroup(): void {
-		this.form = this.formBuilder.group({
+		this.formGroup = this.formBuilder.group({
 			name: ['', Validators.required],
-			email: [''],
+			email: [[]],
 			register: ['', Validators.required],
 			jobTitle: ['', Validators.required],
 			responsible: [false]
 		});
 	}
+
 }

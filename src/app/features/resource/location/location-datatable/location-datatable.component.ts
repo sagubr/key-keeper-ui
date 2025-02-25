@@ -1,22 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {
-	MatCell,
-	MatCellDef,
-	MatColumnDef,
-	MatHeaderCell,
-	MatHeaderCellDef,
-	MatHeaderRow,
-	MatHeaderRowDef,
-	MatNoDataRow,
-	MatRow,
-	MatRowDef,
-	MatTableDataSource
-} from "@angular/material/table";
+import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { MatIconModule } from "@angular/material/icon";
-import { MatMenuModule, MatMenuTrigger } from "@angular/material/menu";
-import { MatPaginator } from "@angular/material/paginator";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { MatSort } from "@angular/material/sort";
+import { MatSort, MatSortModule } from "@angular/material/sort";
 import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped/table-wrapper-table";
 import { Location } from "@openapi/model/location";
 import { finalize, Subscription } from "rxjs";
@@ -27,38 +15,26 @@ import {
 	LocationFormDialogComponent
 } from "@app/features/resource/location/location-form-dialog/location-form-dialog.component";
 import { MatButtonModule } from "@angular/material/button";
-import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";
-import { MatInput } from "@angular/material/input";
-import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatToolbarModule } from "@angular/material/toolbar";
 import { KeyComponent } from "@app/features/resource/key/key.component";
+import { LocationDto } from "@openapi/model/locationDto";
 
 @Component({
 	selector: 'app-location-datatable',
 	imports: [
-		MatCell,
-		MatCellDef,
-		MatColumnDef,
-		MatHeaderCell,
-		MatHeaderRow,
-		MatHeaderRowDef,
+		MatTableModule,
 		MatIconModule,
 		MatMenuModule,
 		MatButtonModule,
-		MatPaginator,
+		MatPaginatorModule,
 		MatProgressBarModule,
-		MatRow,
-		MatRowDef,
-		MatSort,
+		MatSortModule,
 		TableWrapperTable,
-		MatMenuTrigger,
-		MatHeaderCellDef,
-		MatNoDataRow,
-		MatFormField,
-		MatInput,
-		MatLabel,
-		MatSuffix,
-		MatToolbar,
-		MatToolbarRow
+		MatFormFieldModule,
+		MatInputModule,
+		MatToolbarModule,
 	],
 	templateUrl: './location-datatable.component.html',
 	styleUrl: './location-datatable.component.scss'
@@ -68,31 +44,31 @@ export class LocationDatatableComponent implements OnInit, AfterViewInit, OnDest
 	@ViewChild(MatPaginator) paginator!: MatPaginator;
 	@ViewChild(MatSort) sort!: MatSort;
 
-	dataSource: MatTableDataSource<Location> = new MatTableDataSource<Location>([]);
-	columns: Columns<Location>[] = [
+	dataSource: MatTableDataSource<LocationDto> = new MatTableDataSource<LocationDto>([]);
+	columns: Columns<LocationDto>[] = [
 		{
 			definition: 'name',
 			header: 'Name',
 			type: ColumnType.TEXT,
-			cell: (location: Location) => location.name
+			cell: (element: LocationDto) => element.name
 		},
 		{
 			definition: 'facility',
 			header: 'Instalação',
 			type: ColumnType.TEXT,
-			cell: (location: Location) => location.facility.name
+			cell: (element: LocationDto) => element.facility
 		},
 		{
 			definition: 'locationType',
 			header: 'Tipo de Local',
 			type: ColumnType.TEXT,
-			cell: (location: Location) => location.locationType.name
+			cell: (element: LocationDto) => element.locationType
 		},
 		{
 			definition: 'update_at',
 			header: 'Atualizado em',
 			type: ColumnType.DATE,
-			cell: (location: Location) => location.createdAt
+			cell: (element: LocationDto) => element.restricted
 		},
 	];
 	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'star'];
@@ -102,8 +78,8 @@ export class LocationDatatableComponent implements OnInit, AfterViewInit, OnDest
 	private subscriptions: Subscription = new Subscription();
 
 	constructor(
-		private locationService: LocationService,
-		private dialog: MatDialog,
+		private readonly locationService: LocationService,
+		private readonly dialog: MatDialog,
 	) {
 	}
 
@@ -130,47 +106,27 @@ export class LocationDatatableComponent implements OnInit, AfterViewInit, OnDest
 	}
 
 	openCreateDialog(): void {
-		const dialogRef = this.dialog.open(LocationFormDialogComponent, {
+		this.dialog.open(LocationFormDialogComponent, {
 			data: {},
-		});
-
-		dialogRef.afterClosed().subscribe(() => {
-			this.onReload();
-		});
+		}).afterClosed().subscribe(() => this.onReload());
 	}
 
 	openEditDialog(data: Location) {
-		const dialogRef = this.dialog.open(LocationFormDialogComponent, {
+		this.dialog.open(LocationFormDialogComponent, {
 			data
-		});
-
-		dialogRef.afterClosed().subscribe({
-			next: (val) => {
-				if (val) {
-					this.findAll();
-				}
-			}
-		});
+		}).afterClosed().subscribe(() => this.findAll());
 	}
 
 	openKeyDialog(data: Location) {
-		const dialogRef = this.dialog.open(KeyComponent, {
+		this.dialog.open(KeyComponent, {
 			data,
 			minWidth: '700px'
 		});
-
-		// dialogRef.afterClosed().subscribe({
-		// 	next: (val) => {
-		// 		if (val) {
-		// 			this.findAll();
-		// 		}
-		// 	}
-		// });
 	}
 
 	private findAll(): void {
 		this.loading = true;
-		this.locationService.findAllLocations()
+		this.locationService.findAllLocationSummaries()
 			.pipe(
 				finalize(() => this.loading = false)
 			).subscribe({

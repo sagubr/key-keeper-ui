@@ -22,6 +22,6 @@ export interface User {
     email: string;
     password: string;
     firstAccess: boolean;
-    assignments?: Array<Assignment>;
+    assignment?: Assignment | null;
 }
 

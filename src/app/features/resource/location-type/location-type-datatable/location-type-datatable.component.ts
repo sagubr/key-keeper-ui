@@ -1,22 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {
-	MatCell,
-	MatCellDef,
-	MatColumnDef,
-	MatHeaderCell,
-	MatHeaderCellDef,
-	MatHeaderRow,
-	MatHeaderRowDef,
-	MatNoDataRow,
-	MatRow,
-	MatRowDef,
-	MatTableDataSource
-} from "@angular/material/table";
+import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { MatButtonModule } from "@angular/material/button";
-import { MatFormFieldModule, MatLabel, MatSuffix } from "@angular/material/form-field";
+import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
-import { MatMenuModule, MatMenuTrigger } from "@angular/material/menu";
+import { MatMenuModule } from "@angular/material/menu";
 import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatSort, MatSortModule } from "@angular/material/sort";
@@ -25,37 +13,25 @@ import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/t
 import { Location } from "@openapi/model/location";
 import { finalize, Subscription } from "rxjs";
 import { MatDialog } from "@angular/material/dialog";
-import { LocationType } from "@openapi/model/locationType";
 import { LocationTypeService } from "@openapi/api/locationType.service";
 import {
 	LocationTypeFormDialog
 } from "@app/features/resource/location-type/location-type-form-dialog/location-type-form-dialog";
+import { LocationTypeDto } from "@openapi/model/locationTypeDto";
 
 @Component({
 	selector: 'app-location-type-datatable',
 	imports: [
-		MatCell,
-		MatCellDef,
-		MatColumnDef,
-		MatHeaderCell,
-		MatHeaderRow,
-		MatHeaderRowDef,
+		MatTableModule,
 		MatIconModule,
 		MatMenuModule,
 		MatButtonModule,
 		MatPaginatorModule,
 		MatProgressBarModule,
-		MatRow,
-		MatRowDef,
 		MatSortModule,
 		TableWrapperTable,
-		MatMenuTrigger,
-		MatHeaderCellDef,
-		MatNoDataRow,
 		MatFormFieldModule,
 		MatInputModule,
-		MatLabel,
-		MatSuffix,
 		MatToolbarModule,
 	],
 	templateUrl: './location-type-datatable.component.html',
@@ -66,13 +42,13 @@ export class LocationTypeDatatableComponent implements OnInit, AfterViewInit, On
 	@ViewChild(MatPaginator) paginator!: MatPaginator;
 	@ViewChild(MatSort) sort!: MatSort;
 
-	dataSource: MatTableDataSource<LocationType> = new MatTableDataSource<LocationType>([]);
-	columns: Columns<LocationType>[] = [
+	dataSource: MatTableDataSource<LocationTypeDto> = new MatTableDataSource<LocationTypeDto>([]);
+	columns: Columns<LocationTypeDto>[] = [
 		{
 			definition: 'name',
-			header: 'Name',
+			header: 'Tipo de Ambiente',
 			type: ColumnType.TEXT,
-			cell: (location: LocationType) => location.name
+			cell: (element: LocationTypeDto) => element.name
 		}
 	];
 	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'star'];
@@ -82,8 +58,8 @@ export class LocationTypeDatatableComponent implements OnInit, AfterViewInit, On
 	private subscriptions: Subscription = new Subscription();
 
 	constructor(
-		private locationTypeService: LocationTypeService,
-		private dialog: MatDialog,
+		private readonly locationTypeService: LocationTypeService,
+		private readonly dialog: MatDialog,
 	) {
 	}
 
@@ -110,37 +86,25 @@ export class LocationTypeDatatableComponent implements OnInit, AfterViewInit, On
 	}
 
 	openCreateDialog(): void {
-		const dialogRef = this.dialog.open(LocationTypeFormDialog, {
+		this.dialog.open(LocationTypeFormDialog, {
 			data: {},
-		});
-
-		dialogRef.afterClosed().subscribe(() => {
-			this.onReload();
-		});
+		}).afterClosed().subscribe(() => this.onReload());
 	}
 
 	openEditDialog(data: Location) {
-		const dialogRef = this.dialog.open(LocationTypeFormDialog, {
+		this.dialog.open(LocationTypeFormDialog, {
 			data
-		});
-
-		dialogRef.afterClosed().subscribe({
-			next: (val) => {
-				if (val) {
-					this.findAll();
-				}
-			}
-		});
+		}).afterClosed().subscribe(() => this.findAll());
 	}
 
 	private findAll(): void {
 		this.loading = true;
-		this.locationTypeService.findAllLocationTypes()
+		this.locationTypeService.findAllLocationTypeSummaries()
 			.pipe(
 				finalize(() => this.loading = false)
 			).subscribe({
-			next: (locations) => {
-				this.dataSource.data = locations;
+			next: (locationType) => {
+				this.dataSource.data = locationType;
 			}
 		});
 	}

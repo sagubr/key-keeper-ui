@@ -107,12 +107,10 @@ export class TransactionsDatatableProgressComponent implements OnInit, AfterView
 	}
 
 	openCreateDialog(): void {
-		const dialogRef = this.dialog.open(TransactionsFormDialogComponent, {
+		this.dialog.open(TransactionsFormDialogComponent, {
 			minWidth: '540px',
 			data: {},
-		});
-
-		dialogRef.afterClosed().subscribe(() => {
+		}).afterClosed().subscribe(() => {
 			this.onReload();
 		});
 	}
@@ -125,30 +123,20 @@ export class TransactionsDatatableProgressComponent implements OnInit, AfterView
 	}
 
 	openEditDialog(data: Reservation) {
-		// const dialogRef = this.dialog.open(, {
-		// 	data,
-		// 	width: '540px'
-		// });
-		//
-		// dialogRef.afterClosed().subscribe({
-		// 	next: (val) => {
-		// 		if (val) {
-		// 			this.findAll();
-		// 		}
-		// 	}
-		// });
+		this.dialog.open(TransactionsFormDialogComponent, {
+			minWidth: '540px',
+			data
+		}).afterClosed().subscribe(() => this.findAll());
 	}
 
 	private findAll(): void {
 		this.loading = true;
-		this.reservationService
-			.findAllByStatusReservation(this.status())
+		this.reservationService.findAllReservation()
 			.pipe(finalize(
 				() => this.loading = false
 			))
 			.subscribe({
 				next: (reservation) => {
-					console.log(1)
 					this.dataSource.data = reservation;
 				}
 			});

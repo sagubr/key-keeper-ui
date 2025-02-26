@@ -70,10 +70,10 @@ export class PermissionDatatableComponent implements OnInit, AfterViewInit, OnDe
 	dataSource: MatTableDataSource<Permission> = new MatTableDataSource<Permission>([]);
 	columns: Columns<Permission>[] = [
 		{
-			definition: 'description',
-			header: 'Descrição',
+			definition: 'requester',
+			header: 'Solicitante',
 			type: ColumnType.TEXT,
-			cell: (permission: Permission) => permission.description
+			cell: (permission: Permission) => permission.requester.name
 		},
 		{
 			definition: 'location',
@@ -82,22 +82,10 @@ export class PermissionDatatableComponent implements OnInit, AfterViewInit, OnDe
 			cell: (permission: Permission) => permission.location.name
 		},
 		{
-			definition: 'startDateTime',
-			header: 'Início da validade',
-			type: ColumnType.DATE,
-			cell: (permission: Permission) => permission.startDateTime
-		},
-		{
-			definition: 'endDateTime',
-			header: 'Fim da validade',
-			type: ColumnType.DATE,
-			cell: (permission: Permission) => permission.endDateTime
-		},
-		{
-			definition: 'requester',
-			header: 'Solicitante',
+			definition: 'description',
+			header: 'Descrição',
 			type: ColumnType.TEXT,
-			cell: (permission: Permission) => permission.requester.name
+			cell: (permission: Permission) => permission.description
 		},
 	];
 	displayedColumns: string[] = ['info', ...this.columns.map(c => c.definition), 'star'];
@@ -160,7 +148,7 @@ export class PermissionDatatableComponent implements OnInit, AfterViewInit, OnDe
 
 	private findAll(): void {
 		this.loading = true;
-		this.permissionService.findAllPermissions()
+		this.permissionService.findAllPermission()
 			.pipe(
 				finalize(() => this.loading = false)
 			).subscribe({

@@ -9,16 +9,6 @@
 		<div class="row">
 			<div class="col">
 				<mat-form-field appearance="outline" class="full-width">
-					<mat-label>Descrição da permissão</mat-label>
-					<input matInput maxlength="256" formControlName="description">
-					<mat-error *ngIf="form.get('description')?.invalid">Você deve inserir um valor</mat-error>
-				</mat-form-field>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col">
-				<mat-form-field appearance="outline" class="full-width">
 					<mat-label>Localização Ambiente/sala</mat-label>
 					<mat-select formControlName="location" [compareWith]="compareById">
 						@for (element of locations; track $index) {
@@ -40,6 +30,16 @@
 						}
 					</mat-select>
 					<mat-error *ngIf="form.get('requester')?.invalid">Você deve inserir um valor</mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Descrição da permissão</mat-label>
+					<input matInput maxlength="256" formControlName="description">
+					<mat-error *ngIf="form.get('description')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
 		</div>

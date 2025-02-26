@@ -22,7 +22,9 @@
 									{{ element.name }}
 								</mat-option>
 							</mat-select>
-							<mat-error *ngIf="form.get('requester')?.invalid">Você deve inserir um valor</mat-error>
+							@if (firstFormGroup.get('requester')?.invalid) {
+								<mat-error>Você deve inserir um valor</mat-error>
+							}
 						</mat-form-field>
 					</div>
 				</div>
@@ -35,7 +37,9 @@
 									<mat-option [value]="element.value">{{ element.label }}</mat-option>
 								}
 							</mat-select>
-							<mat-error *ngIf="form.get('status')?.invalid">Você deve inserir um valor</mat-error>
+							@if (firstFormGroup.get('status')?.invalid) {
+								<mat-error>Você deve inserir um valor</mat-error>
+							}
 						</mat-form-field>
 					</div>
 				</div>
@@ -45,14 +49,15 @@
 							<mat-label>Permissão</mat-label>
 							<mat-select
 								formControlName="permission"
-								[compareWith]="compareById"
-								[disabled]="!this.form.get('permission')">
-								<mat-option *ngFor="let element of permission" [value]="element">
+								[compareWith]="compareById">
+								<mat-option *ngFor="let element of permissions" [value]="element">
 									{{ element.location.name }} - {{ element.location.facility.name }}
 								</mat-option>
 							</mat-select>
-							<mat-error *ngIf="form.get('permission')?.invalid">Você deve inserir um valor
-							</mat-error>
+							@if (firstFormGroup.get('permission')?.invalid) {
+								<mat-error>Você deve inserir um valor</mat-error>
+							}
+
 						</mat-form-field>
 					</div>
 				</div>
@@ -68,7 +73,7 @@
 			</form>
 		</mat-step>
 		<mat-step [stepControl]="secondFormGroup">
-			<form [formGroup]="secondFormGroup">
+			<form [formGroup]="secondFormGroup" (ngSubmit)="onSubmit()">
 				<ng-template matStepLabel>Período</ng-template>
 				<div class="row">
 					<div class="col">
@@ -132,6 +137,7 @@
 					<button
 						mat-button
 						class="button-primary"
+						type="submit"
 						matStepperNext>
 						Salvar
 					</button>

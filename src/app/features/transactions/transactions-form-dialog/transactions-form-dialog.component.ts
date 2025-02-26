@@ -1,55 +1,27 @@
-import { ChangeDetectionStrategy, Component, inject, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
-import { MatButton, MatButtonModule } from "@angular/material/button";
-import {
-	MAT_DIALOG_DATA,
-	MatDialog,
-	MatDialogActions, MatDialogClose,
-	MatDialogContent, MatDialogModule,
-	MatDialogRef,
-	MatDialogTitle
-} from "@angular/material/dialog";
-import { MatError, MatFormField, MatFormFieldModule, MatHint, MatLabel, MatSuffix } from "@angular/material/form-field";
-import { MatIcon, MatIconModule } from "@angular/material/icon";
-import { MatInput, MatInputModule } from "@angular/material/input";
-import { MatNativeDateModule, MatOption, provideNativeDateAdapter } from "@angular/material/core";
-import { MatSelect, MatSelectModule } from "@angular/material/select";
-import { CommonModule, NgForOf, NgIf } from "@angular/common";
-import { LocationType } from "@openapi/model/locationType";
-import { Facility } from "@openapi/model/facility";
-import { LocationService } from "@openapi/api/location.service";
-import { FacilityService } from "@openapi/api/facility.service";
-import { LocationTypeService } from "@openapi/api/locationType.service";
+import { MatButtonModule } from "@angular/material/button";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { provideNativeDateAdapter } from "@angular/material/core";
+import { MatSelectModule } from "@angular/material/select";
+import { CommonModule } from "@angular/common";
 import { Location } from "@openapi/model/location";
-import {
-	FacilityDialogFormComponent
-} from "@app/features/resource/facility/facility-dialog-form/facility-dialog-form.component";
 import { compareById } from "@app/core/utils/utils";
 import { PermissionService } from "@openapi/api/permission.service";
 import { ReservationService } from "@openapi/api/reservation.service";
 import { Permission } from "@openapi/model/permission";
-import { Reservation } from "@openapi/model/reservation";
 import { RequesterService } from "@openapi/api/requester.service";
 import { Requester } from "@openapi/model/requester";
-import {
-	MatDatepicker,
-	MatDatepickerInput, MatDatepickerModule,
-	MatDatepickerToggle,
-	MatDateRangeInput,
-	MatDateRangePicker,
-	MatEndDate,
-	MatStartDate
-} from "@angular/material/datepicker";
-import {
-	MatTimepicker,
-	MatTimepickerInput,
-	MatTimepickerModule,
-	MatTimepickerToggle
-} from "@angular/material/timepicker";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatTimepickerModule } from "@angular/material/timepicker";
 import { MatRadioModule } from "@angular/material/radio";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { Status } from "@openapi/model/status";
-import { MatStep, MatStepperModule } from "@angular/material/stepper";
+import { MatStepperModule } from "@angular/material/stepper";
+import { Reservation } from "@openapi/model/reservation";
 
 export interface StatusEnum {
 	value?: Status,
@@ -83,23 +55,10 @@ export class TransactionsFormDialogComponent implements OnInit {
 
 	compareById: (o1: any, o2: any) => boolean = compareById;
 
+	firstFormGroup!: FormGroup;
+	secondFormGroup!: FormGroup;
 
-	private _formBuilder = inject(FormBuilder);
-
-	firstFormGroup = this._formBuilder.group({
-		requester: ['', Validators.required],
-		permission: [{ value: '', disabled: true }, Validators.required],
-		status: [Status.Loan, Validators.required],
-	});
-	secondFormGroup = this._formBuilder.group({
-		startDateTime: [new Date(), Validators.required],
-		endDateTime: [new Date(), Validators.required]
-	});
-
-
-	form!: FormGroup;
-	reservation: Reservation[] = [];
-	permission: Permission[] = [];
+	permissions: Permission[] = [];
 	requester: Requester[] = [];
 	status: StatusEnum[] = [
 		{
@@ -111,7 +70,6 @@ export class TransactionsFormDialogComponent implements OnInit {
 			label: "RESERVADO"
 		}
 	]
-	permissionsEnabled = false;
 
 	constructor(
 		public dialogRef: MatDialogRef<TransactionsFormDialogComponent>,
@@ -127,15 +85,26 @@ export class TransactionsFormDialogComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.form.patchValue(this.data);
+		this.firstFormGroup.patchValue(this.data);
+
 	}
 
+	// get permission(): Permission | null {
+	// 	return this.firstFormGroup.get('permission')?.value || null;
+	// }
+
 	onSubmit(): void {
-		this.validateForm()
+		this.validateForm();
+		const request = {
+			...this.firstFormGroup.value,
+			...this.secondFormGroup.value
+		};
+
+		console.log(request)
+
 		if (this.data) {
-			this.reservationService.addReservation(this.form.value).subscribe({
+			this.reservationService.createReservation(request as Reservation).subscribe({
 				next: () => {
-					this.form.reset();
 					this.dialogRef.close(true);
 				}
 			});
@@ -144,16 +113,16 @@ export class TransactionsFormDialogComponent implements OnInit {
 
 	onRequesterChange(selectedRequester: any): void {
 		if (selectedRequester) {
-			this.form.get('permission')?.enable();
+			this.firstFormGroup.get('permission')?.enable();
 			this.findAllPermissions(selectedRequester);
 		} else {
-			this.form.get('permission')?.disable();
-			this.permission = [];
+			this.firstFormGroup.get('permission')?.disable();
+			this.permissions = [];
 		}
 	}
 
 	private findAllRequesters(): void {
-		this.requesterService.findAllRequesters().subscribe({
+		this.requesterService.findAllRequesterByResponsibleTrue().subscribe({
 				next: (res: Requester[]) => {
 					this.requester = res;
 				}
@@ -162,27 +131,29 @@ export class TransactionsFormDialogComponent implements OnInit {
 	}
 
 	private findAllPermissions(requester: Requester): void {
-		this.permissionService.findByRequester(requester).subscribe({
+		this.permissionService.findByRequesterPermission(requester).subscribe({
 				next: (res: Permission[]) => {
-					this.permission = res;
+					this.permissions = res;
 				}
 			}
 		)
 	}
 
 	private validateForm(): void {
-		if (this.form.valid) {
+		if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
 			return;
 		}
-		this.form.markAllAsTouched();
+		this.secondFormGroup.markAllAsTouched();
 		throw new Error();
 	}
 
 	private buildFormGroup(): void {
-		this.form = this.formBuilder.group({
+		this.firstFormGroup = this.formBuilder.group({
 			requester: ['', Validators.required],
-			permission: [{ value: '', disabled: true }, Validators.required],
+			permission: ['', Validators.required],
 			status: [Status.Loan, Validators.required],
+		});
+		this.secondFormGroup = this.formBuilder.group({
 			startDateTime: [new Date(), Validators.required],
 			endDateTime: [new Date(), Validators.required]
 		});

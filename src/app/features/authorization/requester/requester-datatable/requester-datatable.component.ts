@@ -132,7 +132,7 @@ export class RequesterDatatableComponent implements OnInit, AfterViewInit, OnDes
 
 	private findAll(): void {
 		this.loading = true;
-		this.requesterService.findAllRequesters()
+		this.requesterService.findAllRequester()
 			.pipe(
 				finalize(() => this.loading = false)
 			).subscribe({

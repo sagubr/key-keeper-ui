@@ -106,7 +106,7 @@ export class LocationTypeDatatableComponent implements OnInit, AfterViewInit, On
 
 	private findAll(): void {
 		this.loading = true;
-		this.locationTypeService.findAllLocationTypeSummaries()
+		this.locationTypeService.findAllLocationType()
 			.pipe(
 				finalize(() => this.loading = false)
 			).subscribe({

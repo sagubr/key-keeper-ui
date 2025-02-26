@@ -57,7 +57,6 @@ export class TableWrapperTable<T> implements AfterContentInit {
 	}
 
 	protected readonly ColumnType = ColumnType;
-	protected readonly isEmpty = isEmpty;
 }
 
 export interface Columns<T> {
@@ -68,15 +67,15 @@ export interface Columns<T> {
 	hasDescription?: boolean;
 	icon?: string;
 	description?: (element: T) => any;
-
 }
 
 export enum ColumnType {
 	TEXT = 'TEXT',
 	DATE = 'DATE',
+	DATE_CONCAT = 'DATE_CONCAT',
 	DATETIME = 'DATETIME',
 	CURRENCY = 'CURRENCY',
 	ARRAY = 'ARRAY',
 	BOOLEAN = 'BOOLEAN',
-	NUMBER = 'NUMBER'
+	NUMBER = 'NUMBER',
 }

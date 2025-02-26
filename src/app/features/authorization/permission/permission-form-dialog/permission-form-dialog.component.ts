@@ -74,7 +74,7 @@ export class PermissionFormDialogComponent implements OnInit {
 		this.validateForm()
 
 		if (this.data) {
-			this.permissionService.addPermission(this.form.value).subscribe({
+			this.permissionService.createPermission(this.form.value).subscribe({
 				next: () => {
 					this.form.reset();
 					this.dialogRef.close(true);
@@ -84,13 +84,13 @@ export class PermissionFormDialogComponent implements OnInit {
 	}
 
 	openDialogFacility(): void {
-		const dialogRef = this.dialog.open(FacilityDialogFormComponent, {
+		this.dialog.open(FacilityDialogFormComponent, {
 			data: {},
 		});
 	}
 
 	private findAllRequesters(): void {
-		this.requesterService.findAllRequesters().subscribe({
+		this.requesterService.findAllRequester().subscribe({
 				next: (res: Requester[]) => {
 					this.requesters = res;
 				}
@@ -99,7 +99,7 @@ export class PermissionFormDialogComponent implements OnInit {
 	}
 
 	private findAllLocations(): void {
-		this.locationService.findAllLocations().subscribe({
+		this.locationService.findAllLocation().subscribe({
 				next: (res: Location[]) => {
 					this.locations = res;
 				}
@@ -117,7 +117,7 @@ export class PermissionFormDialogComponent implements OnInit {
 
 	private buildFormGroup(): void {
 		this.form = this.formBuilder.group({
-			description: ['', Validators.required],
+			description: [''],
 			location: ['', Validators.required],
 			requester: ['', Validators.required],
 			startDateTime: ['', Validators.required],
@@ -125,5 +125,4 @@ export class PermissionFormDialogComponent implements OnInit {
 		});
 	}
 
-	protected readonly range = range;
 }

@@ -132,7 +132,7 @@ export class LocationDatatableComponent implements OnInit, AfterViewInit, OnDest
 
 	private findAll(): void {
 		this.loading = true;
-		this.locationService.findAllLocations()
+		this.locationService.findAllLocation()
 			.pipe(
 				finalize(() => this.loading = false)
 			).subscribe({

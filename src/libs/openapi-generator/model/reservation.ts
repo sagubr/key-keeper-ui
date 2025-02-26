@@ -9,8 +9,10 @@
  * Do not edit the class manually.
  */
 import { Status } from './status';
+import { Requester } from './requester';
 import { User } from './user';
 import { Permission } from './permission';
+import { Location } from './location';
 
 
 export interface Reservation { 
@@ -19,12 +21,18 @@ export interface Reservation {
     active?: boolean;
     createdAt?: string;
     updatedAt?: string;
-    permission?: Permission | null;
+    overdue?: boolean;
+    startDateTimeFormatted?: string;
+    endDateTimeFormatted?: string;
+    permissions?: Permission | null;
+    requester?: Requester | null;
+    location?: Location | null;
     user?: User | null;
     notes?: string;
     startDateTime: string;
     endDateTime: string;
     status: Status;
+    notificationSent?: boolean;
 }
 export namespace Reservation {
 }

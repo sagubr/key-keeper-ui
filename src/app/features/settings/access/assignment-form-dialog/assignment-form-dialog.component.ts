@@ -13,7 +13,7 @@ import {
 	MatDialog,
 	MatDialogActions,
 	MatDialogClose,
-	MatDialogContent,
+	MatDialogContent, MatDialogRef,
 	MatDialogTitle
 } from "@angular/material/dialog";
 import { UserDto } from "@openapi/model/userDto";
@@ -41,6 +41,7 @@ export class AssignmentFormDialogComponent implements OnInit {
 	granted: Screen[] = [];
 
 	constructor(
+		private readonly dialogRef: MatDialogRef<AssignmentFormDialogComponent>,
 		private readonly dialog: MatDialog,
 		private readonly service: AssignmentService,
 		private readonly formBuilder: FormBuilder,
@@ -99,11 +100,12 @@ export class AssignmentFormDialogComponent implements OnInit {
 	}
 
 	private create(): void {
+		console.log(this.formGroup.value)
 		this.service.createAssignment(this.formGroup.value).subscribe(
 			{
 				next: (res: Assignment) => {
-					console.log(res);
-					this.dialog.closeAll();
+					this.formGroup.reset();
+					this.dialogRef.close(true);
 					this.openDialogFeedback(true);
 				},
 				error: (error) => {

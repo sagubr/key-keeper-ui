@@ -19,8 +19,8 @@ export interface Permission {
     active?: boolean;
     createdAt?: string;
     updatedAt?: string;
-    location: Location;
-    requester: Requester;
+    locations?: Array<Location>;
+    requesters?: Array<Requester>;
     user?: User | null;
     description?: string;
     startDateTime: string;

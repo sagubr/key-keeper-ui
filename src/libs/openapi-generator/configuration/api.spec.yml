@@ -7,29 +7,31 @@ servers:
 security:
     - Authorization: []
 tags:
-    - name: Reservation
-      description: Classe referência para Reservas
-    - name: JobTitle
-      description: Operações relacionadas a entidade cargo
-    - name: Location
-      description: Classe referência para Localização
-    - name: Facility
-      description: Operações relacionadas a entidade lugar
-    - name: Key
-      description: Operações relacionadas a entidade Chaves
-    - name: Users
-      description: Classe referência para Usuário
-    - name: Notifications
-      description: Operações relacionadas a entidade Permissão
-    - name: Logging
-      description: Operações relacionadas a entidade Permissão
-    - name: Assignment
-      description: Classe referência para Atribuição
+    - name: Email
+      description: Operações relacionadas a envio de e-mail
     - name: LocationType
       description: Classe referência para Tipos de Ambiente
     - name: Requester
       description: Classe referência para Solicitantes
     - name: Permission
+      description: Operações relacionadas a entidade Permissão
+    - name: Location
+      description: Classe referência para Localização
+    - name: Key
+      description: Operações relacionadas a entidade Chaves
+    - name: Reservation
+      description: Classe referência para Reservas
+    - name: Facility
+      description: Operações relacionadas a entidade lugar
+    - name: Assignment
+      description: Classe referência para Atribuição
+    - name: Users
+      description: Classe referência para Usuário
+    - name: JobTitle
+      description: Operações relacionadas a entidade cargo
+    - name: Notifications
+      description: Operações relacionadas a entidade Permissão
+    - name: Logging
       description: Operações relacionadas a entidade Permissão
 paths:
     /api/assignment:
@@ -1068,7 +1070,7 @@ paths:
                         application/json:
                             schema: {}
     /api/reservations/change-status:
-        post:
+        put:
             tags:
                 - Reservation
             summary: Atualizar status de uma reserva
@@ -1176,7 +1178,9 @@ paths:
                   in: query
                   required: true
                   schema:
-                      $ref: "#/components/schemas/Status"
+                      type: array
+                      items:
+                          $ref: "#/components/schemas/Status"
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -1384,6 +1388,8 @@ paths:
                                 $ref: "#/components/schemas/Event_LoggingEvent_"
     /mail/send:
         post:
+            tags:
+                - Email
             operationId: send
             requestBody:
                 content:
@@ -1405,6 +1411,8 @@ paths:
         get:
             tags:
                 - Notifications
+            summary: Endpoint para os clientes se inscreverem e receberem notificações.
+            description: Endpoint para os clientes se inscreverem e receberem notificações.
             operationId: streamNotifications
             responses:
                 "200":
@@ -1538,6 +1546,8 @@ components:
                       maxCapacity:
                           type: integer
                           format: int32
+                      public:
+                          type: boolean
                       restricted:
                           type: boolean
                       openingTime:
@@ -1574,27 +1584,29 @@ components:
         NotifierEvent:
             required:
                 - message
-                - recipient
+                - reservation
             type: object
             properties:
-                recipient:
-                    type: string
+                reservation:
+                    $ref: "#/components/schemas/Reservation"
                 message:
                     type: string
         Permission:
             required:
                 - endDateTime
-                - location
-                - requester
                 - startDateTime
             type: object
             allOf:
                 - $ref: "#/components/schemas/EntityPattern"
                 - properties:
-                      location:
-                          $ref: "#/components/schemas/Location"
-                      requester:
-                          $ref: "#/components/schemas/Requester"
+                      locations:
+                          type: array
+                          items:
+                              $ref: "#/components/schemas/Location"
+                      requesters:
+                          type: array
+                          items:
+                              $ref: "#/components/schemas/Requester"
                       user:
                           nullable: true
                           allOf:
@@ -1639,10 +1651,24 @@ components:
             allOf:
                 - $ref: "#/components/schemas/EntityPattern"
                 - properties:
-                      permission:
+                      overdue:
+                          type: boolean
+                      startDateTimeFormatted:
+                          type: string
+                      endDateTimeFormatted:
+                          type: string
+                      permissions:
                           nullable: true
                           allOf:
                               - $ref: "#/components/schemas/Permission"
+                      requester:
+                          nullable: true
+                          allOf:
+                              - $ref: "#/components/schemas/Requester"
+                      location:
+                          nullable: true
+                          allOf:
+                              - $ref: "#/components/schemas/Location"
                       user:
                           nullable: true
                           allOf:
@@ -1657,6 +1683,8 @@ components:
                           format: date-time
                       status:
                           $ref: "#/components/schemas/Status"
+                      notificationSent:
+                          type: boolean
         Screen:
             type: string
             enum:
@@ -1674,9 +1702,10 @@ components:
         Status:
             type: string
             enum:
-                - LOAN
-                - SCHEDULED
-                - COMPLETED
+                - EMPRESTIMO
+                - AGENDADO
+                - CANCELADO
+                - CONCLUIDO
         User:
             required:
                 - email

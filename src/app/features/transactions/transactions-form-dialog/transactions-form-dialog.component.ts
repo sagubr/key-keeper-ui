@@ -23,11 +23,6 @@ import { Status } from "@openapi/model/status";
 import { MatStepperModule } from "@angular/material/stepper";
 import { Reservation } from "@openapi/model/reservation";
 
-export interface StatusEnum {
-	value?: Status,
-	label?: string
-}
-
 @Component({
 	selector: 'app-transactions-form-dialog',
 	providers: [provideNativeDateAdapter()],
@@ -58,18 +53,9 @@ export class TransactionsFormDialogComponent implements OnInit {
 	firstFormGroup!: FormGroup;
 	secondFormGroup!: FormGroup;
 
-	permissions: Permission[] = [];
+	locations: Location[] = [];
 	requester: Requester[] = [];
-	status: StatusEnum[] = [
-		{
-			value: Status.Loan,
-			label: 'EMPRÉSTIMO'
-		},
-		{
-			value: Status.Scheduled,
-			label: "RESERVADO"
-		}
-	]
+	status: Status[] = Object.values(Status)
 
 	constructor(
 		public dialogRef: MatDialogRef<TransactionsFormDialogComponent>,
@@ -117,7 +103,6 @@ export class TransactionsFormDialogComponent implements OnInit {
 			this.findAllPermissions(selectedRequester);
 		} else {
 			this.firstFormGroup.get('permission')?.disable();
-			this.permissions = [];
 		}
 	}
 
@@ -133,7 +118,9 @@ export class TransactionsFormDialogComponent implements OnInit {
 	private findAllPermissions(requester: Requester): void {
 		this.permissionService.findByRequesterPermission(requester).subscribe({
 				next: (res: Permission[]) => {
-					this.permissions = res;
+					res.forEach( (permission) => {
+						permission.locations?.forEach( (location) => this.locations.push(location))
+					})
 				}
 			}
 		)
@@ -151,7 +138,7 @@ export class TransactionsFormDialogComponent implements OnInit {
 		this.firstFormGroup = this.formBuilder.group({
 			requester: ['', Validators.required],
 			permission: ['', Validators.required],
-			status: [Status.Loan, Validators.required],
+			status: [Status.Agendado, Validators.required],
 		});
 		this.secondFormGroup = this.formBuilder.group({
 			startDateTime: [new Date(), Validators.required],

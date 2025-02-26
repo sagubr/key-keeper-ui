@@ -42,22 +42,27 @@ export class TransactionsDatatableHistoryComponent implements OnInit, AfterViewI
 	@ViewChild(MatPaginator) paginator!: MatPaginator;
 	@ViewChild(MatSort) sort!: MatSort;
 
-	readonly status: InputSignal<Status> = input.required<Status>();
 	protected readonly Status = Status;
 
 	dataSource: MatTableDataSource<Reservation> = new MatTableDataSource<Reservation>([]);
 	columns: Columns<Reservation>[] = [
 		{
+			definition: 'status',
+			header: 'Situação',
+			type: ColumnType.TEXT,
+			cell: (reservation: Reservation) => reservation.status
+		},
+		{
 			definition: 'requester',
 			header: 'Solicitante',
 			type: ColumnType.TEXT,
-			cell: (reservation: Reservation) => reservation.permission?.requester.name
+			cell: (reservation: Reservation) => reservation.requester?.name
 		},
 		{
 			definition: 'name',
 			header: 'Localização',
 			type: ColumnType.TEXT,
-			cell: (reservation: Reservation) => reservation.permission?.location.name
+			cell: (reservation: Reservation) => reservation.location?.name
 		},
 		{
 			definition: 'start_date_time',
@@ -72,7 +77,7 @@ export class TransactionsDatatableHistoryComponent implements OnInit, AfterViewI
 			cell: (reservation: Reservation) => reservation.endDateTime
 		},
 	];
-	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'action', 'menu'];
+	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'menu'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
 
 	loading: boolean = false;
@@ -142,13 +147,12 @@ export class TransactionsDatatableHistoryComponent implements OnInit, AfterViewI
 	private findAll(): void {
 		this.loading = true;
 		this.reservationService
-			.findAllByStatusReservation(this.status())
+			.findAllByStatusReservation([Status.Emprestimo, Status.Agendado])
 			.pipe(finalize(
 				() => this.loading = false
 			))
 			.subscribe({
 				next: (reservation) => {
-					console.log(1)
 					this.dataSource.data = reservation;
 				}
 			});

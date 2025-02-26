@@ -10,11 +10,12 @@
  */
 
 
-export type Status = 'LOAN' | 'SCHEDULED' | 'COMPLETED';
+export type Status = 'EMPRESTIMO' | 'AGENDADO' | 'CANCELADO' | 'CONCLUIDO';
 
 export const Status = {
-    Loan: 'LOAN' as Status,
-    Scheduled: 'SCHEDULED' as Status,
-    Completed: 'COMPLETED' as Status
+    Emprestimo: 'EMPRESTIMO' as Status,
+    Agendado: 'AGENDADO' as Status,
+    Cancelado: 'CANCELADO' as Status,
+    Concluido: 'CONCLUIDO' as Status
 };
 

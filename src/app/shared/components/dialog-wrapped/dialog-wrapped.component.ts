@@ -44,7 +44,7 @@ export class DialogWrappedComponent implements OnInit {
 			(this.data.closeAfterSeconds || 3) * 1000);
 	}
 
-	close(result: any): void {
+	close(result: boolean): void {
 		this.dialogRef.close(result);
 	}
 

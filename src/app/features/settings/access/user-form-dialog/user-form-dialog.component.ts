@@ -90,8 +90,7 @@ export class UserFormDialogComponent implements OnInit {
 			name: ['', Validators.required],
 			username: ['', Validators.required],
 			email: ['', [Validators.required, Validators.email]],
-			assignment: ['', Validators.required],
-			active: [],
+			assignment: [''],
 		});
 	}
 

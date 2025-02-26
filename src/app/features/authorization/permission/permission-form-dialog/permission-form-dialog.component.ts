@@ -118,8 +118,8 @@ export class PermissionFormDialogComponent implements OnInit {
 	private buildFormGroup(): void {
 		this.form = this.formBuilder.group({
 			description: [''],
-			location: ['', Validators.required],
-			requester: ['', Validators.required],
+			locations: [[], Validators.required],
+			requesters: [[], Validators.required],
 			startDateTime: ['', Validators.required],
 			endDateTime: ['', Validators.required],
 		});

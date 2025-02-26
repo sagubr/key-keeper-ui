@@ -19,7 +19,7 @@ import {
 	FacilityDialogFormComponent
 } from "@app/features/resource/facility/facility-dialog-form/facility-dialog-form.component";
 import { MatExpansionModule } from "@angular/material/expansion";
-import { MatSlideToggle, MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatSlideToggle, MatSlideToggleChange, MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatTooltip, MatTooltipModule } from "@angular/material/tooltip";
 import { MatTimepickerModule } from "@angular/material/timepicker";
 import { provideNativeDateAdapter } from "@angular/material/core";
@@ -87,6 +87,7 @@ export class LocationFormDialogComponent implements OnInit {
 			});
 		}
 	}
+
 	private findAllFacilities(): void {
 		this.facilityService.findAllFacilities()
 			.subscribe((res) => this.facilities = res)
@@ -118,10 +119,17 @@ export class LocationFormDialogComponent implements OnInit {
 			locationType: [null, Validators.required],
 			maxCapacity: [null, [Validators.min(1)]],
 			isRestricted: [false],
+			isPublic: [false],
 			openingTime: [null],
 			closingTime: [null],
 			responsibles: [[]]
 		});
+	}
+
+	checkSlideToggleDisabled(event: MatSlideToggleChange, controlName: string): void {
+		event.checked
+			? this.form.get(controlName)?.disable()
+			: this.form.get(controlName)?.enable()
 	}
 
 }

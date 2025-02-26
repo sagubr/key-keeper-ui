@@ -3,7 +3,7 @@ README.md
 api.module.ts
 api/api.ts
 api/assignment.service.ts
-api/default.service.ts
+api/email.service.ts
 api/facility.service.ts
 api/jobTitle.service.ts
 api/key.service.ts

@@ -34,7 +34,7 @@
 							<mat-label>Status</mat-label>
 							<mat-select formControlName="status" [compareWith]="compareById">
 								@for (element of status; track $index) {
-									<mat-option [value]="element.value">{{ element.label }}</mat-option>
+									<mat-option [value]="element">{{ element }}</mat-option>
 								}
 							</mat-select>
 							@if (firstFormGroup.get('status')?.invalid) {
@@ -50,8 +50,8 @@
 							<mat-select
 								formControlName="permission"
 								[compareWith]="compareById">
-								<mat-option *ngFor="let element of permissions" [value]="element">
-									{{ element.location.name }} - {{ element.location.facility.name }}
+								<mat-option *ngFor="let element of locations" [value]="element">
+									{{ element.name }}
 								</mat-option>
 							</mat-select>
 							@if (firstFormGroup.get('permission')?.invalid) {

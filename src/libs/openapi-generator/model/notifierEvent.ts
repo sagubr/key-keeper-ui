@@ -8,10 +8,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Reservation } from './reservation';
 
 
 export interface NotifierEvent { 
-    recipient: string;
+    reservation: Reservation;
     message: string;
 }
 

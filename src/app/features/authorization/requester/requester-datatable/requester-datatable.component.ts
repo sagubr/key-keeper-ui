@@ -21,6 +21,7 @@ import { MatInput } from "@angular/material/input";
 import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
 
 import { ConfigurationService } from "@openapi/api/configuration.service";
+import { Status } from "@openapi/model/status";
 
 @Component({
 	selector: 'app-requester-datatable',
@@ -145,4 +146,5 @@ export class RequesterDatatableComponent implements OnInit, AfterViewInit, OnDes
 		});
 	}
 
+	protected readonly Status = Status;
 }

@@ -69,6 +69,22 @@
 		</div>
 		<div class="row">
 			<div class="col">
+				<div class="slide-toggle-wrapper">
+					<mat-slide-toggle
+						(change)="checkSlideToggleDisabled($event, 'isRestricted')"
+						formControlName="isPublic">
+						Sala pública
+					</mat-slide-toggle>
+					<mat-icon class="icon-medium"
+							  matTooltip="Sala pode ser acessada por qualquer solicitante"
+							  matTooltipPosition="right">
+						info
+					</mat-icon>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
 				<mat-accordion>
 					<mat-expansion-panel>
 						<mat-expansion-panel-header>
@@ -86,8 +102,10 @@
 						<div class="row">
 							<div class="col">
 								<div class="slide-toggle-wrapper">
-									<mat-slide-toggle formControlName="isRestricted">
-										Sala restrita
+									<mat-slide-toggle
+										(change)="checkSlideToggleDisabled($event, 'isPublic')"
+										formControlName="isRestricted">
+										Restringir sala para responsáveis
 									</mat-slide-toggle>
 									<mat-icon class="icon-medium"
 											  matTooltip="Sala restrita apenas para responsáveis"

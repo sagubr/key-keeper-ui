@@ -71,15 +71,15 @@ export class PermissionDatatableComponent implements OnInit, AfterViewInit, OnDe
 	columns: Columns<Permission>[] = [
 		{
 			definition: 'requester',
-			header: 'Solicitante',
-			type: ColumnType.TEXT,
-			cell: (permission: Permission) => permission.requester.name
+			header: 'Solicitantes',
+			type: ColumnType.ARRAY,
+			cell: (permission: Permission) => permission.requesters?.map((it) => it.name).filter(name => name)
 		},
 		{
 			definition: 'location',
 			header: 'Localização',
-			type: ColumnType.TEXT,
-			cell: (permission: Permission) => permission.location.name
+			type: ColumnType.ARRAY,
+			cell: (permission: Permission) => permission.locations?.map((it) => it.name).filter(name => name)
 		},
 		{
 			definition: 'description',

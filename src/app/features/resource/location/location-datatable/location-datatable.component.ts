@@ -48,7 +48,7 @@ export class LocationDatatableComponent implements OnInit, AfterViewInit, OnDest
 	columns: Columns<Location>[] = [
 		{
 			definition: 'name',
-			header: 'Name',
+			header: 'Nome da Sala',
 			type: ColumnType.TEXT,
 			cell: (element: Location) => element.name,
 			hasDescription: true,
@@ -58,17 +58,17 @@ export class LocationDatatableComponent implements OnInit, AfterViewInit, OnDest
 			definition: 'facility',
 			header: 'Instalação',
 			type: ColumnType.TEXT,
-			cell: (element: Location) => element.facility.name,
+			cell: (element: Location) => element.facility?.name || 'N/A',
 			hasDescription: true,
-			description: (element: Location) => element.facility.description,
+			description: (element: Location) => element.facility?.description || 'Sem descrição',
 		},
 		{
 			definition: 'locationType',
 			header: 'Tipo de Local',
 			type: ColumnType.TEXT,
-			cell: (element: Location) => element.locationType.name,
+			cell: (element: Location) => element.locationType?.name || 'N/A',
 			hasDescription: true,
-			description: (element: Location) => element.locationType.description,
+			description: (element: Location) => element.locationType?.description || 'Sem descrição',
 		},
 		{
 			definition: 'restricted',

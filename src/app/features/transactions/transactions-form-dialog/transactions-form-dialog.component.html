@@ -18,7 +18,7 @@
 								formControlName="requester"
 								[compareWith]="compareById"
 								(selectionChange)="onRequesterChange($event.value)">
-								<mat-option *ngFor="let element of requester" [value]="element">
+								<mat-option *ngFor="let element of requesters" [value]="element">
 									{{ element.name }}
 								</mat-option>
 							</mat-select>
@@ -50,14 +50,13 @@
 							<mat-select
 								formControlName="permission"
 								[compareWith]="compareById">
-								<mat-option *ngFor="let element of locations" [value]="element">
-									{{ element.name }}
+								<mat-option *ngFor="let element of permissions" [value]="element">
+									{{ element.location.name }}
 								</mat-option>
 							</mat-select>
 							@if (firstFormGroup.get('permission')?.invalid) {
 								<mat-error>Você deve inserir um valor</mat-error>
 							}
-
 						</mat-form-field>
 					</div>
 				</div>
@@ -66,6 +65,7 @@
 					<button
 						mat-button
 						class="button-primary"
+						[disabled]="firstFormGroup.invalid"
 						matStepperNext>
 						Avançar
 					</button>

@@ -7,8 +7,6 @@ servers:
 security:
     - Authorization: []
 tags:
-    - name: Requester
-      description: Classe referência para Solicitantes
     - name: Reservation
       description: Classe referência para Reservas
     - name: Email
@@ -17,6 +15,8 @@ tags:
       description: Operações relacionadas a entidade cargo
     - name: Location
       description: Classe referência para Localização
+    - name: Permission
+      description: Operações relacionadas a entidade Permissão
     - name: Facility
       description: Operações relacionadas a entidade lugar
     - name: Key
@@ -31,8 +31,8 @@ tags:
       description: Classe referência para Atribuição
     - name: LocationType
       description: Classe referência para Tipos de Ambiente
-    - name: Permission
-      description: Operações relacionadas a entidade Permissão
+    - name: Requester
+      description: Classe referência para Solicitantes
 paths:
     /api/assignment:
         get:
@@ -570,7 +570,7 @@ paths:
         get:
             tags:
                 - Location
-            summary: Obter todos os registros da classe localização filtrados por id
+            summary: Obter todos os registros da classe localização filtrados por permissionId
             operationId: findByIdLocation
             parameters:
                 - name: id
@@ -664,18 +664,20 @@ paths:
                     content:
                         application/json:
                             schema: {}
-    /api/permissions/requester:
-        post:
+    /api/permissions/requester/{id}:
+        get:
             tags:
                 - Permission
-            summary: Obter todas as permissões por solicitante
-            operationId: findByRequesterPermission
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Requester"
-                required: true
+            summary: Obter todas as permissões por solicitantes
+            operationId: findByRequestersIdAndEndDateTimeAfter
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      minLength: 1
+                      type: string
+                      format: uuid
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -684,7 +686,7 @@ paths:
                             schema:
                                 type: array
                                 items:
-                                    $ref: "#/components/schemas/Permission"
+                                    $ref: "#/components/schemas/PermissionLocationSummaryDto"
                 "401":
                     description: Falha de autenticação
                 "403":
@@ -840,20 +842,12 @@ paths:
                     content:
                         application/json:
                             schema: {}
-    /api/permissions/{id}/locations/distinct:
+    /api/requesters:
         get:
             tags:
-                - Permission
-            summary: Obter todas as permissões por solicitante distintos por localização
-            operationId: findAllPermissionByRequestersIdAndOverdueFalse
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                      minLength: 1
-                      type: string
-                      format: uuid
+                - Requester
+            summary: Obter todos os registros da classe solicitantes
+            operationId: findAllRequester
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -862,7 +856,7 @@ paths:
                             schema:
                                 type: array
                                 items:
-                                    $ref: "#/components/schemas/Location"
+                                    $ref: "#/components/schemas/Requester"
                 "401":
                     description: Falha de autenticação
                 "403":
@@ -879,12 +873,12 @@ paths:
                     content:
                         application/json:
                             schema: {}
-    /api/requesters:
+    /api/requesters/blocked-false:
         get:
             tags:
                 - Requester
-            summary: Obter todos os registros da classe solicitantes
-            operationId: findAllRequester
+            summary: Obter todos os registros da classe solicitantes filtrados por bloqueado=false
+            operationId: findByBlockedFalse
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -1173,7 +1167,7 @@ paths:
                         application/json:
                             schema: {}
     /api/reservations/change-status:
-        put:
+        post:
             tags:
                 - Reservation
             summary: Atualizar status de uma reserva
@@ -1182,7 +1176,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/Reservation"
+                            $ref: "#/components/schemas/ReservationChangeStatusCommand"
                 required: true
             responses:
                 "200":
@@ -1245,7 +1239,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/Reservation"
+                            $ref: "#/components/schemas/ReservationCommand"
                 required: true
             responses:
                 "200":
@@ -1275,7 +1269,7 @@ paths:
             tags:
                 - Reservation
             summary: Obter todas as reservas filtradas por status
-            operationId: findAllByStatusReservation
+            operationId: findByActiveTrueAndStatusIn
             parameters:
                 - name: status
                   in: query
@@ -1722,9 +1716,30 @@ components:
                       endDateTime:
                           type: string
                           format: date-time
+        PermissionLocationSummaryDto:
+            required:
+                - endDateTime
+                - location
+                - permissionId
+                - startDateTime
+            type: object
+            properties:
+                permissionId:
+                    type: string
+                    format: uuid
+                location:
+                    $ref: "#/components/schemas/Location"
+                startDateTime:
+                    type: string
+                    format: date-time
+                endDateTime:
+                    type: string
+                    format: date-time
         Requester:
             required:
+                - blocked
                 - name
+                - responsible
             type: object
             allOf:
                 - $ref: "#/components/schemas/EntityPattern"
@@ -1760,7 +1775,7 @@ components:
                           type: string
                       endDateTimeFormatted:
                           type: string
-                      permissions:
+                      permission:
                           nullable: true
                           allOf:
                               - $ref: "#/components/schemas/Permission"
@@ -1788,6 +1803,38 @@ components:
                           $ref: "#/components/schemas/Status"
                       notificationSent:
                           type: boolean
+        ReservationChangeStatusCommand:
+            required:
+                - reservationId
+                - status
+            type: object
+            properties:
+                reservationId:
+                    type: string
+                    format: uuid
+                status:
+                    $ref: "#/components/schemas/Status"
+        ReservationCommand:
+            required:
+                - endDateTime
+                - permission
+                - requester
+                - startDateTime
+                - status
+            type: object
+            properties:
+                requester:
+                    $ref: "#/components/schemas/Requester"
+                status:
+                    $ref: "#/components/schemas/Status"
+                permission:
+                    $ref: "#/components/schemas/PermissionLocationSummaryDto"
+                startDateTime:
+                    type: string
+                    format: date-time
+                endDateTime:
+                    type: string
+                    format: date-time
         Screen:
             type: string
             enum:

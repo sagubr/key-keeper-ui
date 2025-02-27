@@ -38,7 +38,25 @@
 			<div class="table-wrapper">
 				<table-wrapper-table [dataSource]="dataSource" [columns]="columns"
 									 matSort #sort="matSort">
+					<ng-container matColumnDef="screens">
+						<th mat-header-cell *matHeaderCellDef class="mat-header-cell h3">Pode Executar</th>
 
+						<td mat-cell *matCellDef="let element">
+							<div class="cell-content-wrapper">
+								<span>{{ screens(element).displayText }}</span>
+
+								@if (screens(element).showMore) {
+									<mat-chip-set>
+										<mat-chip
+											(click)="openShowMoreDialog(screens(element).array)">
+											+{{ (screens(element).array.length) - 2 }} itens
+										</mat-chip>
+									</mat-chip-set>
+								}
+							</div>
+						</td>
+
+					</ng-container>
 					<ng-container matColumnDef="star" stickyEnd>
 						<th mat-header-cell *matHeaderCellDef class="mat-header-cell">
 							Ações

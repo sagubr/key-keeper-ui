@@ -47,7 +47,7 @@
 									<mat-chip-set>
 										<mat-chip
 											(click)="openShowMoreDialog(requesters(element).array)">
-											+{{ requesters(element).array.length }} itens
+											+{{ (requesters(element).array.length) - 2 }} itens
 										</mat-chip>
 									</mat-chip-set>
 								}
@@ -66,7 +66,7 @@
 									<mat-chip-set>
 										<mat-chip
 											(click)="openShowMoreDialog(locations(element).array)">
-											+{{ locations(element).array.length }} itens
+											+{{ (locations(element).array.length) - 2 }} itens
 										</mat-chip>
 									</mat-chip-set>
 								}

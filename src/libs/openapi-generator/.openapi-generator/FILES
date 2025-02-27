@@ -33,8 +33,11 @@ model/loggingEvent.ts
 model/models.ts
 model/notifierEvent.ts
 model/permission.ts
+model/permissionLocationSummaryDto.ts
 model/requester.ts
 model/reservation.ts
+model/reservationChangeStatusCommand.ts
+model/reservationCommand.ts
 model/screen.ts
 model/sendRequest.ts
 model/status.ts

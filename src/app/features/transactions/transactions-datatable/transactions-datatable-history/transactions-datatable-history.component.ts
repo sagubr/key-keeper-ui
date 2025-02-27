@@ -112,21 +112,10 @@ export class TransactionsDatatableHistoryComponent implements OnInit, AfterViewI
 	}
 
 	openCreateDialog(): void {
-		const dialogRef = this.dialog.open(TransactionsFormDialogComponent, {
+		this.dialog.open(TransactionsFormDialogComponent, {
 			minWidth: '540px',
 			data: {},
-		});
-
-		dialogRef.afterClosed().subscribe(() => {
-			this.onReload();
-		});
-	}
-
-	changeStatus(element: Reservation): void {
-		this.reservationService.changeStatusReservation(element).subscribe({
-			next: (response) => console.log('Requisição bem-sucedida:', response),
-			error: (err) => console.error('Erro na requisição:', err),
-		});
+		}).afterClosed().subscribe(() => this.onReload());
 	}
 
 	openEditDialog(data: Reservation) {
@@ -147,7 +136,7 @@ export class TransactionsDatatableHistoryComponent implements OnInit, AfterViewI
 	private findAll(): void {
 		this.loading = true;
 		this.reservationService
-			.findAllByStatusReservation([Status.Emprestimo, Status.Agendado])
+			.findByActiveTrueAndStatusIn([Status.Concluido, Status.Cancelado])
 			.pipe(finalize(
 				() => this.loading = false
 			))

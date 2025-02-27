@@ -40,18 +40,18 @@
 					<ng-container matColumnDef="info">
 						<th mat-header-cell *matHeaderCellDef class="mat-header-cell">Situação</th>
 						<td mat-cell *matCellDef="let element">
-							@switch (element.status) {
-								@case (Status.Agendado) {
-									<button mat-menu-item>
+							<div class="cell-content-wrapper">
+								@switch (element.status) {
+									@case (Status.Agendado) {
+										<span>{{ Status.Agendado | uppercase }}</span>
 										<mat-icon>event_busy</mat-icon>
-									</button>
-								}
-								@case (Status.Emprestimo) {
-									<button mat-menu-item>
+									}
+									@case (Status.Emprestimo) {
+										<span>{{ Status.Emprestimo | uppercase }}</span>
 										<mat-icon>access_time</mat-icon>
-									</button>
+									}
 								}
-							}
+							</div>
 						</td>
 					</ng-container>
 					<ng-container matColumnDef="action">

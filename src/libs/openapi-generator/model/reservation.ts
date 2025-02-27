@@ -24,7 +24,7 @@ export interface Reservation {
     overdue?: boolean;
     startDateTimeFormatted?: string;
     endDateTimeFormatted?: string;
-    permissions?: Permission | null;
+    permission?: Permission | null;
     requester?: Requester | null;
     location?: Location | null;
     user?: User | null;

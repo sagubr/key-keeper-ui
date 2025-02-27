@@ -19,6 +19,8 @@ import {
 	TransactionsFormDialogComponent
 } from "@app/features/transactions/transactions-form-dialog/transactions-form-dialog.component";
 import { DialogData, DialogWrappedComponent } from "@app/shared/components/dialog-wrapped/dialog-wrapped.component";
+import { ReservationChangeStatusCommand } from "@openapi/model/reservationChangeStatusCommand";
+import { UpperCasePipe } from "@angular/common";
 
 @Component({
 	selector: 'app-transactions-datatable-progress',
@@ -34,6 +36,7 @@ import { DialogData, DialogWrappedComponent } from "@app/shared/components/dialo
 		MatFormFieldModule,
 		MatInputModule,
 		MatToolbarModule,
+		UpperCasePipe,
 	],
 	templateUrl: './transactions-datatable-progress.component.html',
 	styleUrl: './transactions-datatable-progress.component.scss'
@@ -130,8 +133,11 @@ export class TransactionsDatatableProgressComponent implements OnInit, AfterView
 	}
 
 	private changeStatus(element: Reservation, status: Status): void {
-		element.status = status;
-		this.reservationService.changeStatusReservation(element).subscribe({
+		const command: ReservationChangeStatusCommand = {
+			reservationId: element.id!,
+			status: status
+		}
+		this.reservationService.changeStatusReservation(command).subscribe({
 			next: (response) => this.openDialogFeedback(),
 			error: (err) => this.openDialogFeedback({
 				message: "Não foi possível alterar o status da solicitação",
@@ -149,8 +155,7 @@ export class TransactionsDatatableProgressComponent implements OnInit, AfterView
 
 	private findAll(): void {
 		this.loading = true;
-//		this.reservationService.findAllByStatusReservation([Status.Emprestimo, Status.Agendado])
-		this.reservationService.findAllReservation()
+		this.reservationService.findByActiveTrueAndStatusIn([Status.Emprestimo, Status.Agendado])
 			.pipe(finalize(
 				() => this.loading = false
 			))

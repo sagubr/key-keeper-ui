@@ -21,7 +21,7 @@ export interface Requester {
     emails?: Array<string>;
     register?: string;
     jobTitle?: JobTitle | null;
-    responsible?: boolean;
-    blocked?: boolean;
+    responsible: boolean;
+    blocked: boolean;
 }
 

@@ -25,12 +25,16 @@ import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/t
 import { finalize, Subscription } from "rxjs";
 import { MatDialog } from "@angular/material/dialog";
 import { UserDto } from "@openapi/model/userDto";
-import { DialogWrappedComponent } from "@app/shared/components/dialog-wrapped/dialog-wrapped.component";
 import {
 	AssignmentFormDialogComponent
 } from "@app/features/settings/access/assignment-form-dialog/assignment-form-dialog.component";
 import { Assignment } from "@openapi/model/assignment";
 import { AssignmentService } from "@openapi/api/assignment.service";
+import { MatChipsModule } from "@angular/material/chips";
+import { Screen } from "@openapi/model/screen";
+import {
+	AssignmentShowMoreDialogComponent
+} from "@app/features/settings/access/assignment-show-more-dialog/assignment-show-more-dialog.component";
 
 @Component({
 	selector: 'app-assignment-datatable',
@@ -38,7 +42,6 @@ import { AssignmentService } from "@openapi/api/assignment.service";
 		MatCell,
 		MatCellDef,
 		MatColumnDef,
-
 		MatFormFieldModule,
 		MatHeaderCell,
 		MatHeaderRow,
@@ -59,7 +62,8 @@ import { AssignmentService } from "@openapi/api/assignment.service";
 		MatNoDataRow,
 		MatHeaderCellDef,
 		MatFabButton,
-		MatIconButton
+		MatIconButton,
+		MatChipsModule,
 	],
 	templateUrl: './assignment-datatable.component.html',
 	styleUrl: './assignment-datatable.component.scss'
@@ -77,14 +81,8 @@ export class AssignmentDatatableComponent implements OnInit, AfterViewInit, OnDe
 			type: ColumnType.TEXT,
 			cell: (element: Assignment) => element.name
 		},
-		{
-			definition: 'screens',
-			header: 'Pode executar',
-			type: ColumnType.ARRAY,
-			cell: (element: Assignment) => element.screens
-		},
 	];
-	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'star'];
+	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'screens', 'star'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
 
 	loading: boolean = false;
@@ -129,6 +127,20 @@ export class AssignmentDatatableComponent implements OnInit, AfterViewInit, OnDe
 		this.dialog.open(AssignmentFormDialogComponent, {
 			data
 		}).afterClosed().subscribe(() => this.findAll());
+	}
+
+	openShowMoreDialog(data: string[]) {
+		this.dialog.open(AssignmentShowMoreDialogComponent, {
+			data: { array: data }
+		}).afterClosed().subscribe(() => this.findAll());
+	}
+
+	screens(assignment: Assignment, limit: number = 2): { displayText: string; showMore: boolean; array: string[] } {
+		const names = assignment.screens?.map(it => it) || [];
+		const displayText = names.length > limit
+			? `${ names.slice(0, limit).join(', ') }`
+			: names.join(', ');
+		return { displayText, showMore: names.length > limit, array: names };
 	}
 
 	private findAll(): void {

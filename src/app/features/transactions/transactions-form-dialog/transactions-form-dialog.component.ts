@@ -12,7 +12,6 @@ import { Location } from "@openapi/model/location";
 import { compareById } from "@app/core/utils/utils";
 import { PermissionService } from "@openapi/api/permission.service";
 import { ReservationService } from "@openapi/api/reservation.service";
-import { Permission } from "@openapi/model/permission";
 import { RequesterService } from "@openapi/api/requester.service";
 import { Requester } from "@openapi/model/requester";
 import { MatDatepickerModule } from "@angular/material/datepicker";
@@ -21,7 +20,9 @@ import { MatRadioModule } from "@angular/material/radio";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { Status } from "@openapi/model/status";
 import { MatStepperModule } from "@angular/material/stepper";
-import { Reservation } from "@openapi/model/reservation";
+import { PermissionLocationSummaryDto } from "@openapi/model/permissionLocationSummaryDto";
+import { ReservationCommand } from "@openapi/model/reservationCommand";
+import { LocationService } from "@openapi/api/location.service";
 
 @Component({
 	selector: 'app-transactions-form-dialog',
@@ -53,8 +54,8 @@ export class TransactionsFormDialogComponent implements OnInit {
 	firstFormGroup!: FormGroup;
 	secondFormGroup!: FormGroup;
 
-	locations: Location[] = [];
-	requester: Requester[] = [];
+	permissions: PermissionLocationSummaryDto[] = [];
+	requesters: Requester[] = [];
 	status: Status[] = Object.values(Status)
 
 	constructor(
@@ -62,22 +63,18 @@ export class TransactionsFormDialogComponent implements OnInit {
 		private readonly dialog: MatDialog,
 		private readonly reservationService: ReservationService,
 		private readonly permissionService: PermissionService,
+		private readonly locationService: LocationService,
 		private readonly requesterService: RequesterService,
 		private readonly formBuilder: FormBuilder,
 		@Inject(MAT_DIALOG_DATA) public data: Location,
 	) {
 		this.buildFormGroup();
-		this.findAllRequesters();
+		this.findRequester();
 	}
 
 	ngOnInit(): void {
 		this.firstFormGroup.patchValue(this.data);
-
 	}
-
-	// get permission(): Permission | null {
-	// 	return this.firstFormGroup.get('permission')?.value || null;
-	// }
 
 	onSubmit(): void {
 		this.validateForm();
@@ -86,42 +83,39 @@ export class TransactionsFormDialogComponent implements OnInit {
 			...this.secondFormGroup.value
 		};
 
-		console.log(request)
-
 		if (this.data) {
-			this.reservationService.createReservation(request as Reservation).subscribe({
-				next: () => {
-					this.dialogRef.close(true);
-				}
-			});
+			this.reservationService.createReservation(request as ReservationCommand)
+				.subscribe(() => this.dialogRef.close());
 		}
 	}
 
 	onRequesterChange(selectedRequester: any): void {
-		if (selectedRequester) {
-			this.firstFormGroup.get('permission')?.enable();
-			this.findAllPermissions(selectedRequester);
-		}
+		this.firstFormGroup.get('permission')?.reset()
+		this.firstFormGroup.get('permission')?.enable();
+		this.findAllPermissions(selectedRequester);
+		this.findByRestrictedFalseAndPublicTrue();
 	}
 
-	private findAllRequesters(): void {
-		this.requesterService.findAllRequesterByResponsibleTrue().subscribe({
-				next: (res: Requester[]) => {
-					this.requester = res;
-				}
-			}
-		)
+	private findRequester(): void {
+		this.requesterService.findByBlockedFalse()
+			.subscribe((res) => this.requesters = res)
 	}
 
 	private findAllPermissions(requester: Requester): void {
-		this.permissionService.findByRequesterPermission(requester).subscribe({
-				next: (res: Permission[]) => {
-					res.forEach( (permission) => {
-						permission.locations?.forEach( (location) => this.locations.push(location))
-					})
-				}
-			}
-		)
+		this.permissionService.findByRequestersIdAndEndDateTimeAfter(requester.id!)
+			.subscribe((res) => this.permissions = res);
+	}
+
+	private findByRestrictedFalseAndPublicTrue(): void {
+		this.locationService.findByRestrictedFalseAndPublicTrue()
+			.subscribe((res) => {
+				res.forEach(it => {
+					const alreadyAdded = this.permissions.some(p => p.location.id === it.id);
+					if (!alreadyAdded) {
+						this.permissions.push({ location: it } as PermissionLocationSummaryDto);
+					}
+				});
+			});
 	}
 
 	private validateForm(): void {

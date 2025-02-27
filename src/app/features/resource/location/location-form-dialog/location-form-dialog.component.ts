@@ -78,6 +78,7 @@ export class LocationFormDialogComponent implements OnInit {
 
 	onSubmit(): void {
 		this.validateForm()
+		console.log(this.form.value)
 		if (this.data) {
 			this.locationService.createLocation(this.form.value).subscribe({
 				next: () => {
@@ -118,8 +119,8 @@ export class LocationFormDialogComponent implements OnInit {
 			facility: [null, Validators.required],
 			locationType: [null, Validators.required],
 			maxCapacity: [null, [Validators.min(1)]],
-			isRestricted: [false],
-			isPublic: [false],
+			restricted: [false],
+			publicAccess: [false],
 			openingTime: [null],
 			closingTime: [null],
 			responsibles: [[]]

@@ -467,6 +467,70 @@ paths:
                     content:
                         application/json:
                             schema: {}
+    /api/location/not-restricted:
+        get:
+            tags:
+                - Location
+            summary: Obter todos os registros da classe localização que não sejam restritos
+                e que não sejam publicos
+            operationId: findByRestrictedFalseAndPublicFalse
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Location"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+    /api/location/public:
+        get:
+            tags:
+                - Location
+            summary: Obter todos os registros da classe localização que não sejam restritos
+                e que sejam publicos
+            operationId: findByRestrictedFalseAndPublicTrue
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Location"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
     /api/location/save:
         post:
             tags:
@@ -1546,7 +1610,7 @@ components:
                       maxCapacity:
                           type: integer
                           format: int32
-                      public:
+                      publicAccess:
                           type: boolean
                       restricted:
                           type: boolean

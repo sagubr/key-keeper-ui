@@ -37,9 +37,10 @@
 				<table-wrapper-table [dataSource]="dataSource" [columns]="columns"
 									 matSort #sort="matSort">
 					<ng-container matColumnDef="requester">
-						<th mat-header-cell *matHeaderCellDef class="mat-header-cell">Solicitantes</th>
-						<div class="cell-content-wrapper">
-							<td mat-cell *matCellDef="let element">
+						<th mat-header-cell *matHeaderCellDef class="mat-header-cell h3">Solicitantes</th>
+
+						<td mat-cell *matCellDef="let element">
+							<div class="cell-content-wrapper">
 								<span>{{ requesters(element).displayText }}</span>
 
 								@if (requesters(element).showMore) {
@@ -50,13 +51,15 @@
 										</mat-chip>
 									</mat-chip-set>
 								}
-							</td>
-						</div>
+							</div>
+						</td>
+
 					</ng-container>
 					<ng-container matColumnDef="location">
-						<th mat-header-cell *matHeaderCellDef class="mat-header-cell">Salas</th>
-						<div class="cell-content-wrapper">
-							<td mat-cell *matCellDef="let element">
+						<th mat-header-cell *matHeaderCellDef class="mat-header-cell h3">Salas</th>
+
+						<td mat-cell *matCellDef="let element">
+							<div class="cell-content-wrapper">
 								<span>{{ locations(element).displayText }}</span>
 
 								@if (locations(element).showMore) {
@@ -67,8 +70,9 @@
 										</mat-chip>
 									</mat-chip-set>
 								}
-							</td>
-						</div>
+							</div>
+						</td>
+
 					</ng-container>
 					<ng-container matColumnDef="star" stickyEnd>
 						<th mat-header-cell

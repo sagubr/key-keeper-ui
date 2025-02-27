@@ -62,7 +62,6 @@ export class PermissionShowMoreDialogComponent implements OnInit, AfterViewInit 
 			data.toLowerCase();
 	};
 
-
 	ngAfterViewInit(): void {
 		this.dataSource.paginator = this.paginator;
 		this.dataSource.sort = this.sort;
@@ -72,6 +71,5 @@ export class PermissionShowMoreDialogComponent implements OnInit, AfterViewInit 
 		const value = (event.target as HTMLInputElement).value.trim().toLowerCase();
 		this.dataSource.filter = value;
 	}
-
 
 }

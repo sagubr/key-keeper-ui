@@ -71,8 +71,8 @@
 			<div class="col">
 				<div class="slide-toggle-wrapper">
 					<mat-slide-toggle
-						(change)="checkSlideToggleDisabled($event, 'isRestricted')"
-						formControlName="isPublic">
+						(change)="checkSlideToggleDisabled($event, 'restricted')"
+						formControlName="publicAccess">
 						Sala pública
 					</mat-slide-toggle>
 					<mat-icon class="icon-medium"
@@ -103,8 +103,8 @@
 							<div class="col">
 								<div class="slide-toggle-wrapper">
 									<mat-slide-toggle
-										(change)="checkSlideToggleDisabled($event, 'isPublic')"
-										formControlName="isRestricted">
+										(change)="checkSlideToggleDisabled($event, 'publicAccess')"
+										formControlName="restricted">
 										Restringir sala para responsáveis
 									</mat-slide-toggle>
 									<mat-icon class="icon-medium"

@@ -24,25 +24,25 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatTimepickerModule } from "@angular/material/timepicker";
 
 @Component({
-    selector: 'app-permission-form-dialog',
-    imports: [
-        CommonModule,
-        MatSelectModule,
-        MatInputModule,
-        MatIconModule,
-        MatButtonModule,
-        MatRadioModule,
-        ReactiveFormsModule,
-        ClipboardModule,
-        MatDialogModule,
+	selector: 'app-permission-form-dialog',
+	imports: [
+		CommonModule,
+		MatSelectModule,
+		MatInputModule,
+		MatIconModule,
+		MatButtonModule,
+		MatRadioModule,
+		ReactiveFormsModule,
+		ClipboardModule,
+		MatDialogModule,
 		MatFormFieldModule,
 		MatTimepickerModule,
 		MatDatepickerModule,
 		FormsModule,
-    ],
-    providers: [provideNativeDateAdapter()],
-    templateUrl: './permission-form-dialog.component.html',
-    styleUrl: './permission-form-dialog.component.scss'
+	],
+	providers: [provideNativeDateAdapter()],
+	templateUrl: './permission-form-dialog.component.html',
+	styleUrl: './permission-form-dialog.component.scss'
 })
 export class PermissionFormDialogComponent implements OnInit {
 
@@ -83,28 +83,14 @@ export class PermissionFormDialogComponent implements OnInit {
 		}
 	}
 
-	openDialogFacility(): void {
-		this.dialog.open(FacilityDialogFormComponent, {
-			data: {},
-		});
-	}
-
 	private findAllRequesters(): void {
-		this.requesterService.findAllRequester().subscribe({
-				next: (res: Requester[]) => {
-					this.requesters = res;
-				}
-			}
-		)
+		this.requesterService.findAllRequester()
+			.subscribe((res) => this.requesters = res)
 	}
 
 	private findAllLocations(): void {
-		this.locationService.findAllLocation().subscribe({
-				next: (res: Location[]) => {
-					this.locations = res;
-				}
-			}
-		)
+		this.locationService.findByRestrictedFalseAndPublicFalse()
+			.subscribe((res) => this.locations = res)
 	}
 
 	private validateForm(): void {

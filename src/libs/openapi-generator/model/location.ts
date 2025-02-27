@@ -24,7 +24,7 @@ export interface Location {
     facility: Facility;
     locationType: LocationType;
     maxCapacity?: number;
-    _public?: boolean;
+    publicAccess?: boolean;
     restricted?: boolean;
     openingTime?: string;
     closingTime?: string;

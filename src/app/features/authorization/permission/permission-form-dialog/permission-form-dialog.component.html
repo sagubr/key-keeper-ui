@@ -15,7 +15,7 @@
 								multiple
 					>
 						@for (element of locations; track $index) {
-							<mat-option [value]="element">{{ element.name }}</mat-option>
+							<mat-option [value]="element">{{ element.name }} - {{ element.facility.name }}</mat-option>
 						}
 					</mat-select>
 					<mat-error *ngIf="form.get('location')?.invalid">Você deve inserir um valor</mat-error>

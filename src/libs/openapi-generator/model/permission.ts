@@ -19,6 +19,7 @@ export interface Permission {
     active?: boolean;
     createdAt?: string;
     updatedAt?: string;
+    overdue?: boolean;
     locations?: Array<Location>;
     requesters?: Array<Requester>;
     user?: User | null;

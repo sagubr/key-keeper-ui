@@ -101,8 +101,6 @@ export class TransactionsFormDialogComponent implements OnInit {
 		if (selectedRequester) {
 			this.firstFormGroup.get('permission')?.enable();
 			this.findAllPermissions(selectedRequester);
-		} else {
-			this.firstFormGroup.get('permission')?.disable();
 		}
 	}
 

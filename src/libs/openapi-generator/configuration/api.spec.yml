@@ -7,31 +7,31 @@ servers:
 security:
     - Authorization: []
 tags:
-    - name: Email
-      description: Operações relacionadas a envio de e-mail
-    - name: LocationType
-      description: Classe referência para Tipos de Ambiente
     - name: Requester
       description: Classe referência para Solicitantes
-    - name: Permission
-      description: Operações relacionadas a entidade Permissão
-    - name: Location
-      description: Classe referência para Localização
-    - name: Key
-      description: Operações relacionadas a entidade Chaves
     - name: Reservation
       description: Classe referência para Reservas
-    - name: Facility
-      description: Operações relacionadas a entidade lugar
-    - name: Assignment
-      description: Classe referência para Atribuição
-    - name: Users
-      description: Classe referência para Usuário
+    - name: Email
+      description: Operações relacionadas a envio de e-mail
     - name: JobTitle
       description: Operações relacionadas a entidade cargo
+    - name: Location
+      description: Classe referência para Localização
+    - name: Facility
+      description: Operações relacionadas a entidade lugar
+    - name: Key
+      description: Operações relacionadas a entidade Chaves
+    - name: Users
+      description: Classe referência para Usuário
     - name: Notifications
       description: Operações relacionadas a entidade Permissão
     - name: Logging
+      description: Operações relacionadas a entidade Permissão
+    - name: Assignment
+      description: Classe referência para Atribuição
+    - name: LocationType
+      description: Classe referência para Tipos de Ambiente
+    - name: Permission
       description: Operações relacionadas a entidade Permissão
 paths:
     /api/assignment:
@@ -840,6 +840,45 @@ paths:
                     content:
                         application/json:
                             schema: {}
+    /api/permissions/{id}/locations/distinct:
+        get:
+            tags:
+                - Permission
+            summary: Obter todas as permissões por solicitante distintos por localização
+            operationId: findAllPermissionByRequestersIdAndOverdueFalse
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      minLength: 1
+                      type: string
+                      format: uuid
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Location"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
     /api/requesters:
         get:
             tags:
@@ -1475,8 +1514,6 @@ paths:
         get:
             tags:
                 - Notifications
-            summary: Endpoint para os clientes se inscreverem e receberem notificações.
-            description: Endpoint para os clientes se inscreverem e receberem notificações.
             operationId: streamNotifications
             responses:
                 "200":
@@ -1663,6 +1700,8 @@ components:
             allOf:
                 - $ref: "#/components/schemas/EntityPattern"
                 - properties:
+                      overdue:
+                          type: boolean
                       locations:
                           type: array
                           items:

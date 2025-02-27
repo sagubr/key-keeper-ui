@@ -1,23 +1,11 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {
-	MatCell,
-	MatCellDef,
-	MatColumnDef,
-	MatHeaderCell,
-	MatHeaderCellDef,
-	MatHeaderRow,
-	MatHeaderRowDef,
-	MatNoDataRow,
-	MatRow,
-	MatRowDef,
-	MatTableDataSource
-} from "@angular/material/table";
+import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
-import { MatMenuModule, MatMenuTrigger } from "@angular/material/menu";
-import { MatPaginator } from "@angular/material/paginator";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { MatSort } from "@angular/material/sort";
+import { MatSort, MatSortModule } from "@angular/material/sort";
 import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
 import { finalize, Subscription } from "rxjs";
 import { MatDialog } from "@angular/material/dialog";
@@ -26,38 +14,30 @@ import {
 	PermissionFormDialogComponent
 } from "@app/features/authorization/permission/permission-form-dialog/permission-form-dialog.component";
 import { PermissionService } from "@openapi/api/permission.service";
-import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";
-import { MatInput } from "@angular/material/input";
-import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import {
+	PermissionShowMoreDialogComponent
+} from "@app/features/authorization/permission/permission-show-more-dialog/permission-show-more-dialog.component";
+import { MatChipsModule } from "@angular/material/chips";
 
 
 @Component({
 	selector: 'app-permission-datatable',
 	imports: [
-		MatCell,
-		MatCellDef,
-		MatColumnDef,
-		MatHeaderCell,
-		MatHeaderRow,
-		MatHeaderRowDef,
+		MatTableModule,
 		MatIconModule,
 		MatMenuModule,
 		MatButtonModule,
-		MatPaginator,
+		MatPaginatorModule,
 		MatProgressBarModule,
-		MatRow,
-		MatRowDef,
-		MatSort,
+		MatSortModule,
 		TableWrapperTable,
-		MatMenuTrigger,
-		MatHeaderCellDef,
-		MatNoDataRow,
-		MatFormField,
-		MatInput,
-		MatLabel,
-		MatSuffix,
-		MatToolbar,
-		MatToolbarRow,
+		MatFormFieldModule,
+		MatInputModule,
+		MatToolbarModule,
+		MatChipsModule
 	],
 	templateUrl: './permission-datatable.component.html',
 	styleUrl: './permission-datatable.component.scss'
@@ -70,25 +50,13 @@ export class PermissionDatatableComponent implements OnInit, AfterViewInit, OnDe
 	dataSource: MatTableDataSource<Permission> = new MatTableDataSource<Permission>([]);
 	columns: Columns<Permission>[] = [
 		{
-			definition: 'requester',
-			header: 'Solicitantes',
-			type: ColumnType.ARRAY,
-			cell: (permission: Permission) => permission.requesters?.map((it) => it.name).filter(name => name)
-		},
-		{
-			definition: 'location',
-			header: 'Localização',
-			type: ColumnType.ARRAY,
-			cell: (permission: Permission) => permission.locations?.map((it) => it.name).filter(name => name)
-		},
-		{
 			definition: 'description',
 			header: 'Descrição',
 			type: ColumnType.TEXT,
 			cell: (permission: Permission) => permission.description
 		},
 	];
-	displayedColumns: string[] = ['info', ...this.columns.map(c => c.definition), 'star'];
+	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'requester', 'location', 'star'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
 
 	loading: boolean = false;
@@ -123,28 +91,41 @@ export class PermissionDatatableComponent implements OnInit, AfterViewInit, OnDe
 	}
 
 	openCreateDialog(): void {
-		const dialogRef = this.dialog.open(PermissionFormDialogComponent, {
+		this.dialog.open(PermissionFormDialogComponent, {
 			data: {},
-		});
-
-		dialogRef.afterClosed().subscribe(() => {
-			this.onReload();
-		});
+		}).afterClosed().subscribe(() => this.onReload());
 	}
 
 	openEditDialog(data: Permission) {
-		const dialogRef = this.dialog.open(PermissionFormDialogComponent, {
+		this.dialog.open(PermissionFormDialogComponent, {
 			data
-		});
-
-		dialogRef.afterClosed().subscribe({
-			next: (val) => {
-				if (val) {
-					this.findAll();
-				}
-			}
-		});
+		}).afterClosed().subscribe(() => this.findAll());
 	}
+
+	openShowMoreDialog(data: string[]) {
+		this.dialog.open(PermissionShowMoreDialogComponent, {
+			data: { array: data }
+		}).afterClosed().subscribe(() => this.findAll());
+	}
+
+	requesters(permission: Permission, limit: number = 2): { displayText: string; showMore: boolean; array: string[] } {
+		const names = permission.requesters?.map(it => it.name).filter(name => name) || [];
+		const displayText = names.length > limit
+			? `${ names.slice(0, limit).join(', ') }`
+			: names.join(', ');
+
+		return { displayText, showMore: names.length > limit, array: names };
+	}
+
+	locations(permission: Permission, limit: number = 2): { displayText: string; showMore: boolean; array: string[] } {
+		const names = permission.locations?.map(it => it.name).filter(name => name) || [];
+		const displayText = names.length > limit
+			? `${ names.slice(0, limit).join(', ') }`
+			: names.join(', ');
+
+		return { displayText, showMore: names.length > limit, array: names };
+	}
+
 
 	private findAll(): void {
 		this.loading = true;

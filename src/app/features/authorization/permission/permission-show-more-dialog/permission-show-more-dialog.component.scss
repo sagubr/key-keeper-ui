@@ -1,0 +1,31 @@
+@use 'forms';
+@use 'fonts';
+@use 'buttons';
+
+.toolbar-row {
+	align-items: flex-start;
+	padding: 0;
+	margin-bottom: 10px;
+}
+
+.dialog-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+
+	button {
+		margin-left: auto;
+	}
+}
+
+.dialog-footer {
+	margin: 16px;
+}
+
+.slide-toggle-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+

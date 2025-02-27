@@ -1,0 +1,44 @@
+<div class="dialog-header">
+	<h2 class="h2" mat-dialog-title>Mais detalhes</h2>
+	<button mat-icon-button mat-dialog-close>
+		<mat-icon>close</mat-icon>
+	</button>
+</div>
+<mat-dialog-content>
+	<mat-toolbar>
+		<mat-toolbar-row class="toolbar-row">
+			<mat-form-field appearance="outline">
+				<mat-label>Buscar</mat-label>
+				<input class="input" matInput (keyup)="onSearch($event)" placeholder="Pesquisar usuários...">
+				<mat-icon matSuffix>search</mat-icon>
+			</mat-form-field>
+			<span class="spacer"></span>
+		</mat-toolbar-row>
+	</mat-toolbar>
+	<div tabindex="0" class="full-width">
+		<div class="container mat-elevation-z8">
+			<div class="mat-table-container">
+				<div class="table-wrapper">
+					<table-wrapper-table [dataSource]="dataSource" [columns]="columns"
+										 matSort #sort="matSort">
+
+						<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+						<tr mat-row
+							class="mat-row"
+							*matRowDef="let row; columns: displayedColumns;"></tr>
+
+						<tr class="mat-row-no-data" *matNoDataRow>
+							<td colspan="7">Não há permissões cadastrados</td>
+						</tr>
+					</table-wrapper-table>
+				</div>
+			</div>
+		</div>
+		<div class="paginator">
+			<mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons
+						   aria-label="Selecione a página dos usuários"></mat-paginator>
+		</div>
+	</div>
+</mat-dialog-content>
+
+

@@ -23,7 +23,6 @@ import { CurrencyPipe, DatePipe, UpperCasePipe } from "@angular/common";
 import { JoinPipe } from "@app/core/pipes/JoinPipe";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltip } from "@angular/material/tooltip";
-import { isEmpty } from "rxjs";
 
 /**
  * Table component that accepts column and row definitions in its content to be registered to the

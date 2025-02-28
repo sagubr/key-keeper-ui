@@ -9,6 +9,9 @@ import {
 	TransactionsDatatableHistoryComponent
 } from "@app/features/transactions/transactions-datatable/transactions-datatable-history/transactions-datatable-history.component";
 import { MatTableModule } from "@angular/material/table";
+import { Action } from "rxjs/internal/scheduler/Action";
+import { ActionsService } from "@app/core/services/actions.service";
+import { Permissions } from "@openapi/model/permissions";
 
 @Component({
 	selector: 'app-transactions',
@@ -27,40 +30,15 @@ export class TransactionsComponent {
 	activeTabIndex = 0;
 	tabs = ['in-progress', 'scheduled', 'completed'];
 
+	constructor(private readonly action: ActionsService) {
+	}
+
 	onTabChange(index: number): void {
 		this.activeTabIndex = index;
 		const activeTab = this.tabs[index];
-		this.loadDataForTab(activeTab);
 	}
 
-	loadDataForTab(tab: string): void {
-		console.log(`Carregando dados para a aba: ${ tab }`);
-		switch (tab) {
-			case 'in-progress':
-				this.fetchInProgressData();
-				break;
-			case 'scheduled':
-				this.fetchScheduledData();
-				break;
-			case 'completed':
-				this.fetchCompletedData();
-				break;
-			default:
-				console.warn('Tab desconhecida!');
-		}
+	hasPermission(permission: Permissions[]): boolean {
+		return this.action.hasAnyPermission(permission);
 	}
-
-	fetchInProgressData(): void {
-		console.log('Buscando dados de empréstimos em andamento...');
-	}
-
-	fetchScheduledData(): void {
-		console.log('Buscando dados de reservas agendadas...');
-	}
-
-	fetchCompletedData(): void {
-		console.log('Buscando dados do histórico de reservas...');
-	}
-
-	protected readonly Status = Status;
 }

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { LoginComponent } from './features/login/login.component';
+import { LoginComponent } from '@app/login/login.component';
 import { AuthenticationGuard } from './core/guards/authentication.guard';
 
 import { ResourceComponent } from '@app/features/resource/resource-component';
@@ -17,6 +17,8 @@ import {
 	PermissionDatatableComponent
 } from "@app/features/authorization/permission/permission-datatable/permission-datatable.component";
 import { AuthenticationResolver } from "@app/core/guards/authentication.resolver";
+import { Permissions } from '@openapi/model/permissions';
+import { UnauthorizedComponent } from "@app/unauthorized/unauthorized.component";
 
 export const routes: Routes = [
 	{
@@ -32,29 +34,59 @@ export const routes: Routes = [
 				path: 'recursos',
 				component: ResourceComponent,
 				canActivate: [AuthenticationGuard],
+				data: {
+					permissions: [
+						Permissions.VerSalas,
+						Permissions.EditarSalas,
+						Permissions.VerTipoAmbiente,
+						Permissions.EditarTipoAmbiente,
+						Permissions.VerInstalacoes,
+						Permissions.EditarInstalacoes,
+						Permissions.VerCargos,
+						Permissions.EditarCargos
+					]
+				},
 				resolve: { isAuthenticated: AuthenticationResolver }
 			},
 			{
 				path: 'autorizacoes',
 				component: AuthorizationManagementComponent,
 				canActivate: [AuthenticationGuard],
+				data: {
+					permissions: [
+						Permissions.VerSolicitantes,
+						Permissions.EditarSolicitantes,
+						Permissions.VerPermissoes,
+						Permissions.EditarPermissoes
+					]
+				},
 				children: [
 					{
 						path: 'solicitantes',
 						component: RequesterDatatableComponent,
-						canActivate: [AuthenticationGuard]
+						canActivate: [AuthenticationGuard],
+						data: { permissions: [Permissions.VerSolicitantes, Permissions.EditarSolicitantes] }
 					},
 					{
 						path: 'permissoes',
 						component: PermissionDatatableComponent,
-						canActivate: [AuthenticationGuard]
+						canActivate: [AuthenticationGuard],
+						data: { permissions: [Permissions.VerPermissoes, Permissions.EditarPermissoes] }
 					}
 				]
 			},
 			{
 				path: 'transacoes',
 				component: TransactionsComponent,
-				canActivate: [AuthenticationGuard]
+				canActivate: [AuthenticationGuard],
+				data: {
+					permissions: [
+						Permissions.VerEmprestimos,
+						Permissions.EditarEmprestimos,
+						Permissions.VerHistoricos,
+						Permissions.EditarHistoricos
+					]
+				}
 			},
 			{
 				path: 'configuracoes',
@@ -63,18 +95,24 @@ export const routes: Routes = [
 					{
 						path: 'definicoes',
 						component: DefinitionsComponent,
-						canActivate: [AuthenticationGuard]
+						canActivate: [AuthenticationGuard],
+						data: { permissions: [Permissions.VerConfiguracao, Permissions.EditarConfiguracao] }
 					},
-					{ path: 'acessos', component: AccessComponent, canActivate: [AuthenticationGuard] },
-					{ path: 'registros', component: RegistersComponent, canActivate: [AuthenticationGuard] }
+					{
+						path: 'acessos',
+						component: AccessComponent,
+						canActivate: [AuthenticationGuard],
+						data: { permissions: [Permissions.VerUsuarios, Permissions.EditarUsuarios] }
+					},
+					{
+						path: 'registros',
+						component: RegistersComponent,
+						canActivate: [AuthenticationGuard]
+					}
 				]
 			},
-			{ path: '', redirectTo: 'recursos', pathMatch: 'full' }
+			{ path: 'nao-autorizado', component: UnauthorizedComponent }
 		]
 	},
-	// {
-	// 	path: 'unauthorized',
-	// 	component: UnauthorizedComponent
-	// },
-	{ path: '**', redirectTo: 'login' }
+	{ path: '**', redirectTo: 'nao-autorizado' }
 ];

@@ -1,0 +1,16 @@
+@use 'colors';
+@use 'fonts';
+
+.container {
+	text-align: center;
+	padding: 50px;
+}
+
+.danger {
+	color: var(--danger);
+}
+
+.icon-blocked {
+	font-size: 100px;
+	color: var(--danger);
+}

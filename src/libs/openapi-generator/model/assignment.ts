@@ -8,7 +8,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Screen } from './screen';
+import { Permissions } from './permissions';
 
 
 export interface Assignment { 
@@ -18,6 +18,6 @@ export interface Assignment {
     createdAt?: string;
     updatedAt?: string;
     name: string;
-    screens?: Array<Screen>;
+    permissions?: Array<Permissions>;
 }
 

@@ -8,51 +8,62 @@ import {
 	ReactiveFormsModule,
 	Validators
 } from "@angular/forms";
-import {
-	MAT_DIALOG_DATA,
-	MatDialog,
-	MatDialogActions,
-	MatDialogClose,
-	MatDialogContent, MatDialogRef,
-	MatDialogTitle
-} from "@angular/material/dialog";
-import { UserDto } from "@openapi/model/userDto";
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
-import { MatButton, MatIconButton } from "@angular/material/button";
-import { MatIcon } from "@angular/material/icon";
-import { MatError, MatFormField, MatLabel } from "@angular/material/form-field";
-import { MatInput } from "@angular/material/input";
-import { NgIf } from "@angular/common";
-import { Screen } from "@openapi/model/screen";
-import { Assignment } from "@openapi/model/assignment";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { AssignmentService } from "@openapi/api/assignment.service";
+import { Assignment } from "@openapi/model/assignment";
 import { DialogWrappedComponent } from "@app/shared/components/dialog-wrapped/dialog-wrapped.component";
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
+import { MatButtonModule, MatIconButton } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { Permissions } from "@openapi/model/permissions";
+import { ACTIONS_MAP } from "@app/core/services/actions.service";
 
 @Component({
 	selector: 'app-assignment-form-dialog',
-	imports: [CdkDropList, CdkDrag, FormsModule, MatButton, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle, MatIcon, MatIconButton, ReactiveFormsModule, MatError, MatFormField, MatInput, MatLabel, NgIf],
+	imports: [CdkDropList,
+		CdkDrag,
+		FormsModule,
+		MatButtonModule,
+		MatDialogModule,
+		MatIconModule,
+		MatIconButton,
+		ReactiveFormsModule,
+		MatFormFieldModule,
+		MatInputModule,
+	],
 	templateUrl: './assignment-form-dialog.component.html',
-	styleUrl: './assignment-form-dialog.component.scss'
+	styleUrls: ['./assignment-form-dialog.component.scss']
 })
 export class AssignmentFormDialogComponent implements OnInit {
 
 	formGroup!: FormGroup;
-	notGranted: Screen[] = Object.values(Screen);
-	granted: Screen[] = [];
+	notGranted: [Permissions, string][] = Array.from(ACTIONS_MAP.entries());
+	granted: [Permissions, string][] = [];
 
 	constructor(
 		private readonly dialogRef: MatDialogRef<AssignmentFormDialogComponent>,
 		private readonly dialog: MatDialog,
 		private readonly service: AssignmentService,
 		private readonly formBuilder: FormBuilder,
-		@Inject(MAT_DIALOG_DATA) public data: UserDto,
+		@Inject(MAT_DIALOG_DATA) public data: Assignment,
 	) {
 		this.buildFormGroup();
 	}
 
 	ngOnInit(): void {
 		this.formGroup.patchValue(this.data);
+
+		if (this.data.permissions && this.data.permissions.length > 0) {
+			this.granted = Array.from(ACTIONS_MAP.entries())
+				.filter(([permissionKey, _]) => this.data.permissions?.includes(permissionKey));
+
+			this.notGranted = this.notGranted.filter(([permissionKey, _]) =>
+				!this.granted.some(([grantedPermissionKey, _]) => grantedPermissionKey === permissionKey));
+		}
 	}
+
 
 	onSubmit(): void {
 		this.validateForm();
@@ -61,11 +72,11 @@ export class AssignmentFormDialogComponent implements OnInit {
 		}
 	}
 
-	get screens(): FormArray {
-		return this.formGroup.get('screens') as FormArray;
+	get permissions(): FormArray {
+		return this.formGroup.get('permissions') as FormArray;
 	}
 
-	drop(event: CdkDragDrop<Screen[]>): void {
+	drop(event: CdkDragDrop<[Permissions, string][]>): void {
 		if (event.previousContainer === event.container) {
 			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 		} else {
@@ -76,12 +87,14 @@ export class AssignmentFormDialogComponent implements OnInit {
 				event.currentIndex
 			);
 		}
-		this.updateScreens();
+		this.updatePermissions();
 	}
 
-	private updateScreens(): void {
-		this.screens.clear();
-		this.granted.forEach((role) => this.screens.push(new FormControl(role)));
+	private updatePermissions(): void {
+		this.permissions.clear();
+		this.granted.forEach(([permission, description]) => {
+			this.permissions.push(new FormControl(permission));
+		});
 	}
 
 	private validateForm(): void {
@@ -95,53 +108,47 @@ export class AssignmentFormDialogComponent implements OnInit {
 	private buildFormGroup(): void {
 		this.formGroup = this.formBuilder.group({
 			name: ['', Validators.required],
-			screens: this.formBuilder.array([], Validators.required),
+			permissions: this.formBuilder.array([], Validators.required),
 		});
 	}
 
 	private create(): void {
-		console.log(this.formGroup.value)
 		this.service.createAssignment(this.formGroup.value).subscribe(
 			{
-				next: (res: Assignment) => {
+				next: () => {
 					this.formGroup.reset();
 					this.dialogRef.close(true);
 					this.openDialogFeedback(true);
 				},
-				error: (error) => {
-					console.error(error)
-					this.openDialogFeedback(true);
+				error: () => {
+					this.openDialogFeedback(false);
 				}
 			}
-		)
+		);
 	}
 
-	private openDialogFeedback(arg: boolean): void {
-		if (arg) {
-			this.dialog.open(DialogWrappedComponent, {
-				data: {
-					title: 'Atribuição salva com sucesso',
-					message: `Este registro já pode ser atribuído para usuários da aplicação.`,
-					icon: 'success',
-					color: 'primary',
-					confirmText: 'Confirmar',
-					hideCancel: false,
-				},
-				width: '400px'
-			});
-		} else {
-			this.dialog.open(DialogWrappedComponent, {
-				data: {
-					title: 'Não foi possível concluir o registro',
-					message: `Tente novamente mais tarde.`,
-					icon: 'danger',
-					color: 'primary',
-					confirmText: 'Confirmar',
-					hideCancel: false,
-				},
-				width: '400px'
-			});
-		}
+	private openDialogFeedback(success: boolean): void {
+		const dialogData = success
+			? {
+				title: 'Atribuição salva com sucesso',
+				message: 'Este registro já pode ser atribuído para usuários da aplicação.',
+				icon: 'success',
+				color: 'primary',
+				confirmText: 'Confirmar',
+				hideCancel: false,
+			}
+			: {
+				title: 'Não foi possível concluir o registro',
+				message: 'Tente novamente mais tarde.',
+				icon: 'danger',
+				color: 'primary',
+				confirmText: 'Confirmar',
+				hideCancel: false,
+			};
+		this.dialog.open(DialogWrappedComponent, {
+			data: dialogData,
+			width: '400px'
+		});
 	}
 
 }

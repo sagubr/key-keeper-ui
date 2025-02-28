@@ -62,5 +62,9 @@ export const routes: Routes = [
 			{ path: '', redirectTo: 'recursos', pathMatch: 'full' }
 		]
 	},
+	// {
+	// 	path: 'unauthorized',
+	// 	component: UnauthorizedComponent
+	// },
 	{ path: '**', redirectTo: 'login' }
 ];

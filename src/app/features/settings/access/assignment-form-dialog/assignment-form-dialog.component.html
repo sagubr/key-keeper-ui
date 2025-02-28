@@ -13,7 +13,9 @@
 				<mat-form-field appearance="outline" class="full-width">
 					<mat-label>Atribução</mat-label>
 					<input matInput maxlength="256" formControlName="name">
-					<mat-error *ngIf="formGroup.get('name')?.invalid">Você deve inserir um valor</mat-error>
+					@if (formGroup.get('name')?.invalid) {
+						<mat-error>Você deve inserir um valor</mat-error>
+					}
 				</mat-form-field>
 			</div>
 		</div>
@@ -30,7 +32,7 @@
 					(cdkDropListDropped)="drop($event)">
 					@for (item of notGranted; track item) {
 						<div class="box" cdkDrag>
-							{{ item }}
+							{{ item[1] }}
 							<mat-icon>drag_indicator</mat-icon>
 						</div>
 					}
@@ -49,7 +51,7 @@
 					(cdkDropListDropped)="drop($event)">
 					@for (item of granted; track item) {
 						<div class="box" cdkDrag>
-							{{ item }}
+							{{ item[1] }}
 							<mat-icon>drag_indicator</mat-icon>
 						</div>
 					}

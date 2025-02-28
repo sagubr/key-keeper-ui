@@ -4,50 +4,61 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-
-const PATH_API_URL = environment.apiUrl;
+import { Permissions } from "@openapi/model/permissions";
 
 @Injectable({
 	providedIn: 'root',
 })
 export class AuthenticationService {
+	private readonly TOKEN_KEY = 'Authorization';
 
 	constructor(private http: HttpClient, private router: Router) {
 	}
 
 	login(username: string, password: string): Observable<string> {
-		const url = `${ PATH_API_URL }/login`;
+		const url = `${ environment.apiUrl }/login`;
 		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-		const body = { username, password };
 
-		return this.http.post<{ access_token: string }>(url, body, { headers }).pipe(
+		return this.http.post<{ access_token: string }>(url, { username, password }, { headers }).pipe(
 			map((response) => {
-				const token = response.access_token;
-				this.setToken(token);
+				this.setToken(response.access_token);
 				this.router.navigate(['/recursos']);
-				return token;
+				return response.access_token;
 			}),
-			catchError(() => {
-				return throwError(() => new Error('Login failed'));
-			})
+			catchError(() => throwError(() => new Error('Login falhou')))
 		);
 	}
 
-	private setToken(token: string): void {
-		localStorage.setItem('Authorization', token);
-	}
-
-	getToken(): string | null {
-		return localStorage.getItem('Authorization');
-	}
-
 	isAuthenticated(): boolean {
-		const token = this.getToken();
-		return !!token;
+		return !!this.getToken();
 	}
 
 	logout(): void {
-		localStorage.removeItem('Authorization');
+		sessionStorage.removeItem(this.TOKEN_KEY);
 		this.router.navigate(['/login']);
 	}
+
+	getToken(): string | null {
+		if (typeof window !== 'undefined' && sessionStorage) {
+			return sessionStorage.getItem(this.TOKEN_KEY);
+		}
+		return null;
+	}
+
+	getRoles(): string[] {
+		const token = this.getToken();
+		if (!token) return [];
+
+		try {
+			const payload = JSON.parse(atob(token.split('.')[1]));
+			return payload.roles || [];
+		} catch (e) {
+			return [];
+		}
+	}
+
+	private setToken(token: string): void {
+		sessionStorage.setItem(this.TOKEN_KEY, token);
+	}
+
 }

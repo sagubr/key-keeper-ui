@@ -13,7 +13,7 @@ import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/t
 import { MatToolbarModule } from "@angular/material/toolbar";
 
 @Component({
-	selector: 'app-permission-show-more-dialog',
+	selector: 'app-assignment-show-more-dialog',
 	imports: [
 		MatTableModule,
 		MatIconModule,

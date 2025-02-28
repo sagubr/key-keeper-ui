@@ -17,7 +17,7 @@
 
 	<mat-menu #userMenu="matMenu">
 		<button mat-menu-item>
-			 Alterar Perfil
+			Alterar Perfil
 			<mat-icon>settings</mat-icon>
 		</button>
 		<button mat-menu-item>
@@ -35,28 +35,31 @@
 				<div mat-subheader>Gestão de Processos</div>
 			}
 			@for (option of menuOptions; track option) {
-				@if (opened) {
-					<mat-list-item [routerLink]="option.route"
-								   routerLinkActive="active"
-								   [disabled]="option.disabled"
-								   [matTooltip]=option.description
-								   matTooltipPosition="right"
-					>
-						<mat-icon
-							color="#212121"
-							matListItemIcon>{{ option.icon }}</mat-icon>
-						<div matListItemTitle>{{ option.title }}</div>
-					</mat-list-item>
-				} @else {
-					<mat-list-item [routerLink]="option.route"
-								   routerLinkActive="active"
-								   [disabled]="option.disabled">
-						<mat-icon matListItemIcon
-								  [matTooltip]=option.title
-								  matTooltipPosition="right"
-						>{{ option.icon }}
-						</mat-icon>
-					</mat-list-item>
+				@if (hasPermission(option.permission)) {
+					@if (opened) {
+						<mat-list-item [routerLink]="option.route"
+									   routerLinkActive="active"
+									   [disabled]="option.disabled"
+									   [matTooltip]=option.description
+									   matTooltipPosition="right"
+						>
+							<mat-icon
+								color="#212121"
+								matListItemIcon>{{ option.icon }}
+							</mat-icon>
+							<div matListItemTitle>{{ option.title }}</div>
+						</mat-list-item>
+					} @else {
+						<mat-list-item [routerLink]="option.route"
+									   routerLinkActive="active"
+									   [disabled]="option.disabled">
+							<mat-icon matListItemIcon
+									  [matTooltip]=option.title
+									  matTooltipPosition="right"
+							>{{ option.icon }}
+							</mat-icon>
+						</mat-list-item>
+					}
 				}
 			}
 			@if (opened) {

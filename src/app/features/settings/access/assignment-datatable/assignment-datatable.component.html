@@ -43,13 +43,13 @@
 
 						<td mat-cell *matCellDef="let element">
 							<div class="cell-content-wrapper">
-								<span>{{ screens(element).displayText }}</span>
+								<span>{{ permissions(element).displayText | uppercase }}</span>
 
-								@if (screens(element).showMore) {
+								@if (permissions(element).showMore) {
 									<mat-chip-set>
 										<mat-chip
-											(click)="openShowMoreDialog(screens(element).array)">
-											+{{ (screens(element).array.length) - 2 }} itens
+											(click)="openShowMoreDialog(permissions(element).array)">
+											+{{ (permissions(element).array.length) - 2 }} itens
 										</mat-chip>
 									</mat-chip-set>
 								}

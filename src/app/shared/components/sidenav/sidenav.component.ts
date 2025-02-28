@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import { MatSidenav, MatSidenavModule } from "@angular/material/sidenav";
@@ -10,6 +10,9 @@ import { RouterLink, RouterOutlet } from "@angular/router";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatMenuModule } from "@angular/material/menu";
+import { AuthenticationService } from "@app/core/services/authentication.service";
+import { Permissions } from "@openapi/model/permissions";
+import { ActionsService } from "@app/core/services/actions.service";
 
 @Component({
 	selector: 'app-sidenav',
@@ -30,7 +33,7 @@ import { MatMenuModule } from "@angular/material/menu";
 	templateUrl: './sidenav.component.html',
 	styleUrl: './sidenav.component.scss'
 })
-export class SidenavComponent {
+export class SidenavComponent implements OnInit {
 
 	@ViewChild('drawer') sidenav!: MatSidenav;
 
@@ -38,8 +41,27 @@ export class SidenavComponent {
 	menuOptions: Section[] = MENU_OPTIONS;
 	menuOptionsSettings: Section[] = MENU_OPTIONS_SETTINGS;
 
+	grantedScreens: string[] = [];
+
+	constructor(
+		private readonly service: AuthenticationService,
+		private readonly actions: ActionsService
+	) {
+	}
+
+	ngOnInit(): void {
+		console.log(this.service.getRoles())
+	}
+
 	toggleDrawer(): void {
 		this.opened = !this.opened;
+	}
+
+	hasPermission(permission?: Permissions): boolean {
+		if(!permission){
+			return true;
+		}
+		return this.actions.hasPermission(permission);
 	}
 
 }
@@ -49,7 +71,7 @@ export interface Section {
 	description?: string,
 	icon: string,
 	route: string,
-	permission?: string[],
+	permission?: Permissions,
 	disabled?: boolean
 }
 
@@ -85,6 +107,7 @@ export const MENU_OPTIONS: Section[] = [
 		description: 'Gestão de recursos',
 		icon: 'inventory',
 		route: '/recursos',
+		permission: "CARGOS"
 	},
 ];
 

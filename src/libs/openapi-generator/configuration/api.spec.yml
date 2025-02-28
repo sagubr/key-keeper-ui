@@ -7,32 +7,32 @@ servers:
 security:
     - Authorization: []
 tags:
-    - name: Reservation
-      description: Classe referência para Reservas
+    - name: Requester
+      description: Classe referência para Solicitantes
     - name: Email
       description: Operações relacionadas a envio de e-mail
     - name: JobTitle
       description: Operações relacionadas a entidade cargo
     - name: Location
       description: Classe referência para Localização
-    - name: Permission
-      description: Operações relacionadas a entidade Permissão
     - name: Facility
       description: Operações relacionadas a entidade lugar
     - name: Key
       description: Operações relacionadas a entidade Chaves
+    - name: Logging
+      description: Operações relacionadas a entidade Permissão
+    - name: LocationType
+      description: Classe referência para Tipos de Ambiente
+    - name: Permission
+      description: Operações relacionadas a entidade Permissão
+    - name: Reservation
+      description: Classe referência para Reservas
+    - name: Assignment
+      description: Classe referência para Atribuição
     - name: Users
       description: Classe referência para Usuário
     - name: Notifications
       description: Operações relacionadas a entidade Permissão
-    - name: Logging
-      description: Operações relacionadas a entidade Permissão
-    - name: Assignment
-      description: Classe referência para Atribuição
-    - name: LocationType
-      description: Classe referência para Tipos de Ambiente
-    - name: Requester
-      description: Classe referência para Solicitantes
 paths:
     /api/assignment:
         get:
@@ -506,6 +506,44 @@ paths:
             summary: Obter todos os registros da classe localização que não sejam restritos
                 e que sejam publicos
             operationId: findByRestrictedFalseAndPublicTrue
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Location"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+    /api/location/responsible/{requesterId}:
+        get:
+            tags:
+                - Location
+            summary: Obter todos os registros da classe localização filtrados por requesterId
+            operationId: findByResponsiblesId
+            parameters:
+                - name: requesterId
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -1508,6 +1546,8 @@ paths:
         get:
             tags:
                 - Notifications
+            summary: Endpoint para os clientes se inscreverem e receberem notificações.
+            description: Endpoint para os clientes se inscreverem e receberem notificações.
             operationId: streamNotifications
             responses:
                 "200":
@@ -1527,10 +1567,10 @@ components:
                 - properties:
                       name:
                           type: string
-                      screens:
+                      permissions:
                           type: array
                           items:
-                              $ref: "#/components/schemas/Screen"
+                              $ref: "#/components/schemas/Permissions"
         EntityPattern:
             type: object
             properties:
@@ -1735,6 +1775,25 @@ components:
                 endDateTime:
                     type: string
                     format: date-time
+        Permissions:
+            type: string
+            enum:
+                - MENU_EMPRESTIMOS
+                - MENU_AUTORIZACOES
+                - MENU_RECURSOS
+                - MENU_PARAMETRIZACOES
+                - MENU_GESTAO_ACESSOS
+                - EMPRESTIMOS
+                - HISTORICO
+                - SOLICITANTES
+                - PERMISSOES
+                - SALAS
+                - TIPO_AMBIENTE
+                - INSTALACOES
+                - CARGOS
+                - CONFIGURACAO
+                - USUARIOS
+                - ATRIBUICOES
         Requester:
             required:
                 - blocked
@@ -1835,20 +1894,6 @@ components:
                 endDateTime:
                     type: string
                     format: date-time
-        Screen:
-            type: string
-            enum:
-                - EMPRESTIMOS
-                - HISTORICO
-                - SOLICITANTES
-                - PERMISSOES
-                - SALAS
-                - TIPO_AMBIENTE
-                - INSTALACOES
-                - CARGOS
-                - CONFIGURACAO
-                - USUARIOS
-                - ATRIBUICOES
         Status:
             type: string
             enum:

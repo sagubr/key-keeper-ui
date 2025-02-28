@@ -31,10 +31,11 @@ import {
 import { Assignment } from "@openapi/model/assignment";
 import { AssignmentService } from "@openapi/api/assignment.service";
 import { MatChipsModule } from "@angular/material/chips";
-import { Screen } from "@openapi/model/screen";
 import {
 	AssignmentShowMoreDialogComponent
 } from "@app/features/settings/access/assignment-show-more-dialog/assignment-show-more-dialog.component";
+import { ACTIONS_MAP, ActionsService } from "@app/core/services/actions.service";
+import { UpperCasePipe } from "@angular/common";
 
 @Component({
 	selector: 'app-assignment-datatable',
@@ -64,6 +65,7 @@ import {
 		MatFabButton,
 		MatIconButton,
 		MatChipsModule,
+		UpperCasePipe,
 	],
 	templateUrl: './assignment-datatable.component.html',
 	styleUrl: './assignment-datatable.component.scss'
@@ -90,6 +92,7 @@ export class AssignmentDatatableComponent implements OnInit, AfterViewInit, OnDe
 
 	constructor(
 		private readonly service: AssignmentService,
+		private readonly actionService: ActionsService,
 		private readonly dialog: MatDialog,
 	) {
 	}
@@ -125,7 +128,8 @@ export class AssignmentDatatableComponent implements OnInit, AfterViewInit, OnDe
 
 	openEditDialog(data: UserDto) {
 		this.dialog.open(AssignmentFormDialogComponent, {
-			data
+			data,
+			minWidth: '780px'
 		}).afterClosed().subscribe(() => this.findAll());
 	}
 
@@ -135,8 +139,16 @@ export class AssignmentDatatableComponent implements OnInit, AfterViewInit, OnDe
 		}).afterClosed().subscribe(() => this.findAll());
 	}
 
-	screens(assignment: Assignment, limit: number = 2): { displayText: string; showMore: boolean; array: string[] } {
-		const names = assignment.screens?.map(it => it) || [];
+	permissions(assignment: Assignment, limit: number = 2): {
+		displayText: string;
+		showMore: boolean;
+		array: string[]
+	} {
+		const names = (assignment.permissions || []).map(permission => {
+			const description = ACTIONS_MAP.get(permission);
+			return description ? description : permission.toString();
+		});
+
 		const displayText = names.length > limit
 			? `${ names.slice(0, limit).join(', ') }`
 			: names.join(', ');

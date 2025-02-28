@@ -11,7 +11,7 @@
 	</button>
 
 	<button mat-button [matMenuTriggerFor]="userMenu" class="user-menu">
-		Gustavo Garcia
+		{{ getUser() ?? 'Não definido' }}
 		<mat-icon>arrow_drop_down</mat-icon>
 	</button>
 
@@ -36,12 +36,13 @@
 			}
 			@for (option of menuOptions; track option) {
 				@if (opened) {
-					<mat-list-item [routerLink]="!(!hasAnyPermission(option.permissions) || option.isDisabled) ? option.route : null"
-								   routerLinkActive="active"
-								   [disabled]="!hasAnyPermission(option.permissions) || option.isDisabled"
-								   [hidden]="option.isHidden"
-								   [matTooltip]=option.description
-								   matTooltipPosition="right"
+					<mat-list-item
+						[routerLink]="!(!hasAnyPermission(option.permissions) || option.isDisabled) ? option.route : null"
+						routerLinkActive="active"
+						[disabled]="!hasAnyPermission(option.permissions) || option.isDisabled"
+						[hidden]="option.isHidden"
+						[matTooltip]=option.description
+						matTooltipPosition="right"
 					>
 						<mat-icon
 							color="#212121"
@@ -50,9 +51,10 @@
 						<div matListItemTitle>{{ option.title }}</div>
 					</mat-list-item>
 				} @else {
-					<mat-list-item [routerLink]="!(!hasAnyPermission(option.permissions) || option.isDisabled) ? option.route : null"
-								   routerLinkActive="active"
-								   [disabled]="!hasAnyPermission(option.permissions) || option.isDisabled">
+					<mat-list-item
+						[routerLink]="!(!hasAnyPermission(option.permissions) || option.isDisabled) ? option.route : null"
+						routerLinkActive="active"
+						[disabled]="!hasAnyPermission(option.permissions) || option.isDisabled">
 						<mat-icon matListItemIcon
 								  [matTooltip]=option.title
 								  matTooltipPosition="right"
@@ -68,19 +70,21 @@
 			@for (option of menuOptionsSettings; track option) {
 
 				@if (opened) {
-					<mat-list-item [routerLink]="!(!hasAnyPermission(option.permissions) || option.isDisabled) ? option.route : null"
-								   routerLinkActive="active"
-								   [disabled]="!hasAnyPermission(option.permissions) || option.isDisabled"
-								   [matTooltip]=option.description
-								   matTooltipPosition="right"
+					<mat-list-item
+						[routerLink]="!(!hasAnyPermission(option.permissions) || option.isDisabled) ? option.route : null"
+						routerLinkActive="active"
+						[disabled]="!hasAnyPermission(option.permissions) || option.isDisabled"
+						[matTooltip]=option.description
+						matTooltipPosition="right"
 					>
 						<mat-icon matListItemIcon>{{ option.icon }}</mat-icon>
 						<div matListItemTitle>{{ option.title }}</div>
 					</mat-list-item>
 				} @else {
-					<mat-list-item [routerLink]="!(!hasAnyPermission(option.permissions) || option.isDisabled) ? option.route : null"
-								   routerLinkActive="active"
-								   [disabled]="!hasAnyPermission(option.permissions) || option.isDisabled">
+					<mat-list-item
+						[routerLink]="!(!hasAnyPermission(option.permissions) || option.isDisabled) ? option.route : null"
+						routerLinkActive="active"
+						[disabled]="!hasAnyPermission(option.permissions) || option.isDisabled">
 						<mat-icon matListItemIcon
 								  [matTooltip]=option.title
 								  matTooltipPosition="right"

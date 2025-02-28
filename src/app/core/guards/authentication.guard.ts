@@ -14,7 +14,8 @@ export class AuthenticationGuard implements CanActivate {
 		private readonly authentication: AuthenticationService,
 		private readonly actionsService: ActionsService,
 		private readonly router: Router
-	) {}
+	) {
+	}
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
 		return this.authentication.isAuthenticated().pipe(

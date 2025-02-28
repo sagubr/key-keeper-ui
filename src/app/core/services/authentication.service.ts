@@ -61,6 +61,18 @@ export class AuthenticationService {
 		return null;
 	}
 
+	getUser(): string | undefined{
+		const token = this.getToken();
+		if (!token) return undefined;
+
+		try {
+			const payload = JSON.parse(atob(token.split('.')[1]));
+			return payload.name || [];
+		} catch (e) {
+			return undefined;
+		}
+	}
+
 	getRoles(): string[] {
 		const token = this.getToken();
 		if (!token) return [];

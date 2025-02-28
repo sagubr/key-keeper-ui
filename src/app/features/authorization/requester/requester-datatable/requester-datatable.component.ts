@@ -70,6 +70,12 @@ export class RequesterDatatableComponent implements OnInit, AfterViewInit, OnDes
 			header: 'Email',
 			type: ColumnType.ARRAY,
 			cell: (requester: Requester) => requester.emails
+		},
+		{
+			definition: 'responsible',
+			header: 'Responsável',
+			type: ColumnType.BOOLEAN,
+			cell: (requester: Requester) => requester.responsible
 		}
 	];
 	displayedColumns: string[] = ['info', ...this.columns.map(c => c.definition), 'star'];

@@ -13,6 +13,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { AuthenticationService } from "@app/core/services/authentication.service";
 import { Permissions } from "@openapi/model/permissions";
 import { ActionsService } from "@app/core/services/actions.service";
+import { serverRoutes } from "@app/app.routes.server";
 
 @Component({
 	selector: 'app-sidenav',
@@ -60,6 +61,10 @@ export class SidenavComponent {
 			return true;
 		}
 		return this.actions.hasAnyPermission(permission);
+	}
+
+	getUser(): string | undefined{
+		return this.service.getUser();
 	}
 
 }

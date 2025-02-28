@@ -5,13 +5,13 @@ import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-import { HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { CustomConfiguration } from '@openapi/configuration/custom-configuration';
 import { Configuration as GRClientConfiguration } from '@openapi/configuration';
 import { MAT_DATE_LOCALE } from "@angular/material/core";
 import { MatPaginatorIntl } from "@angular/material/paginator";
 import { CustomPaginatorIntl } from "@app/shared/material-locale-pt";
-import { AuthenticationInterceptor } from "@app/core/interceptors/authentication.interceptor";
+import { httpAuthErrorsInterceptor } from "@app/core/interceptors/authentication.interceptor";
 
 export const appConfig: ApplicationConfig = {
 	providers: [
@@ -20,7 +20,10 @@ export const appConfig: ApplicationConfig = {
 		provideClientHydration(withEventReplay()),
 		provideAnimationsAsync(),
 		provideHttpClient(withFetch()),
-		{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor },
+		provideHttpClient(
+			withFetch(),
+			withInterceptors([httpAuthErrorsInterceptor])
+		),
 		{ provide: GRClientConfiguration, useClass: CustomConfiguration },
 		{ provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
 		{ provide: MatPaginatorIntl, useClass: CustomPaginatorIntl }

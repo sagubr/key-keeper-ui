@@ -76,6 +76,12 @@ export class LocationDatatableComponent implements OnInit, AfterViewInit, OnDest
 			type: ColumnType.BOOLEAN,
 			cell: (element: Location) => element.restricted
 		},
+		{
+			definition: 'publicAccess',
+			header: 'Público',
+			type: ColumnType.BOOLEAN,
+			cell: (element: Location) => element.publicAccess
+		},
 	];
 	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'star'];
 	pageSizeOptions = [5, 10, 20, 50, 100];

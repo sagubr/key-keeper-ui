@@ -35,7 +35,6 @@ export const ACTIONS_MAP: { permission: Permissions; description: string; route:
 		permission: Permissions.VerEmprestimos,
 		description: 'Visualizar Empréstimos',
 		route: '/transacoes',
-		warning: 'Acesso concedido apenas ao Visualizar empréstimos.'
 	},
 	{
 		permission: Permissions.EditarEmprestimos,

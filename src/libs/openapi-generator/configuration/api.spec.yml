@@ -100,6 +100,41 @@ paths:
                     content:
                         application/json:
                             schema: {}
+    /api/assignment/update:
+        post:
+            tags:
+                - Assignment
+            summary: Criar novo registro na classe atribuição
+            operationId: updateAssignmentId
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/AssignmentCommand"
+                required: true
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Assignment"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
     /api/facility:
         get:
             tags:
@@ -1571,6 +1606,22 @@ components:
                           type: array
                           items:
                               $ref: "#/components/schemas/Permissions"
+        AssignmentCommand:
+            required:
+                - assignmentId
+                - name
+                - permissions
+            type: object
+            properties:
+                assignmentId:
+                    type: string
+                    format: uuid
+                name:
+                    type: string
+                permissions:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/Permissions"
         EntityPattern:
             type: object
             properties:

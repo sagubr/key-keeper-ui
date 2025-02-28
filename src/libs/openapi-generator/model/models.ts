@@ -1,4 +1,5 @@
 export * from './assignment';
+export * from './assignmentCommand';
 export * from './entityPattern';
 export * from './eventLoggingEvent';
 export * from './eventNotifierEvent';

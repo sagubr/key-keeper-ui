@@ -58,7 +58,7 @@ export class SidenavComponent implements OnInit {
 	}
 
 	hasPermission(permission?: Permissions): boolean {
-		if(!permission){
+		if (!permission) {
 			return true;
 		}
 		return this.actions.hasPermission(permission);
@@ -107,7 +107,7 @@ export const MENU_OPTIONS: Section[] = [
 		description: 'Gestão de recursos',
 		icon: 'inventory',
 		route: '/recursos',
-		permission: "CARGOS"
+		permission: "MENU_RECURSOS"
 	},
 ];
 

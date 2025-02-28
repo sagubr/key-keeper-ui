@@ -64,10 +64,11 @@ export class AssignmentFormDialogComponent implements OnInit {
 		}
 	}
 
-
 	onSubmit(): void {
 		this.validateForm();
-		if (this.data) {
+		if (this.data && this.data.id) {
+			this.edit();
+		} else {
 			this.create();
 		}
 	}
@@ -114,6 +115,27 @@ export class AssignmentFormDialogComponent implements OnInit {
 
 	private create(): void {
 		this.service.createAssignment(this.formGroup.value).subscribe(
+			{
+				next: () => {
+					this.formGroup.reset();
+					this.dialogRef.close(true);
+					this.openDialogFeedback(true);
+				},
+				error: () => {
+					this.openDialogFeedback(false);
+				}
+			}
+		);
+	}
+
+	private edit(): void {
+
+		const command = {
+			...this.formGroup.value,
+			assignmentId: this.data.id
+		}
+
+		this.service.updateAssignmentId(command).subscribe(
 			{
 				next: () => {
 					this.formGroup.reset();

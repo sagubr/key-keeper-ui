@@ -20,6 +20,7 @@ encoder.ts
 git_push.sh
 index.ts
 model/assignment.ts
+model/assignmentCommand.ts
 model/entityPattern.ts
 model/eventLoggingEvent.ts
 model/eventNotifierEvent.ts

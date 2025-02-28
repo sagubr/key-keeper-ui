@@ -25,4 +25,5 @@ export const ACTIONS_MAP = new Map<Permissions, string>([
 	[Permissions.Solicitantes, 'Solicitantes'],
 	[Permissions.TipoAmbiente, 'Tipo Ambiente'],
 	[Permissions.MenuEmprestimos, 'Menu de Empréstimos'],
+	[Permissions.MenuRecursos, 'Menu de Recursos'],
 ]);

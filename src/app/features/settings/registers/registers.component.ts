@@ -1,8 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { LoggingService } from "@openapi/api/logging.service";
-import { EventLoggingEvent } from "@openapi/model/eventLoggingEvent";
-import { HttpEvent, HttpEventType, HttpResponse } from "@angular/common/http";
-import * as console from "node:console";
+
 import { Subscription } from "rxjs";
 import { EventStreamService } from "@app/core/services/event-stream.service";
 
@@ -15,7 +12,8 @@ import { EventStreamService } from "@app/core/services/event-stream.service";
 export class RegistersComponent implements OnInit, OnDestroy {
 	private eventSubscription!: Subscription;
 
-	constructor(private eventService: EventStreamService) {}
+	constructor(private eventService: EventStreamService) {
+	}
 
 	eventData: any[] = [];
 

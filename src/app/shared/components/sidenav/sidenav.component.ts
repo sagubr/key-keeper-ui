@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import { MatSidenav, MatSidenavModule } from "@angular/material/sidenav";
@@ -33,7 +33,7 @@ import { ActionsService } from "@app/core/services/actions.service";
 	templateUrl: './sidenav.component.html',
 	styleUrl: './sidenav.component.scss'
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent {
 
 	@ViewChild('drawer') sidenav!: MatSidenav;
 
@@ -41,27 +41,25 @@ export class SidenavComponent implements OnInit {
 	menuOptions: Section[] = MENU_OPTIONS;
 	menuOptionsSettings: Section[] = MENU_OPTIONS_SETTINGS;
 
-	grantedScreens: string[] = [];
-
 	constructor(
 		private readonly service: AuthenticationService,
 		private readonly actions: ActionsService
 	) {
 	}
 
-	ngOnInit(): void {
-		console.log(this.service.getRoles())
-	}
-
 	toggleDrawer(): void {
 		this.opened = !this.opened;
 	}
 
-	hasPermission(permission?: Permissions): boolean {
+	logout(): void {
+		this.service.logout();
+	}
+
+	hasAnyPermission(permission?: Permissions[]): boolean {
 		if (!permission) {
 			return true;
 		}
-		return this.actions.hasPermission(permission);
+		return this.actions.hasAnyPermission(permission);
 	}
 
 }
@@ -71,8 +69,9 @@ export interface Section {
 	description?: string,
 	icon: string,
 	route: string,
-	permission?: Permissions,
-	disabled?: boolean
+	permissions?: Permissions[],
+	isDisabled?: boolean;
+	isHidden?: boolean;
 }
 
 export const MENU_OPTIONS: Section[] = [
@@ -81,33 +80,35 @@ export const MENU_OPTIONS: Section[] = [
 		description: 'Gestão de solicitações',
 		icon: 'assignment_return',
 		route: '/transacoes',
+		permissions: ["VER_EMPRESTIMOS", "EDITAR_EMPRESTIMOS", "VER_HISTORICOS", "EDITAR_HISTORICOS"]
 	},
 	{
 		title: 'Agendamentos',
 		description: 'Calendário de eventos',
 		icon: 'event',
 		route: '.',
-		disabled: true
+		isDisabled: true,
 	},
 	{
 		title: 'Autorizações',
 		description: 'Gestão de solicitações',
 		icon: 'verified_user',
 		route: '/autorizacoes',
+		permissions: ["VER_SOLICITANTES", "EDITAR_SOLICITANTES", "VER_PERMISSOES", "EDITAR_PERMISSOES"]
 	},
 	{
 		title: 'Relatórios',
 		description: 'Relatórios de uso',
 		icon: 'bar_chart',
 		route: '.',
-		disabled: true
+		isDisabled: true
 	},
 	{
 		title: 'Recursos',
 		description: 'Gestão de recursos',
 		icon: 'inventory',
 		route: '/recursos',
-		permission: "MENU_RECURSOS"
+		permissions: ["VER_SALAS", "EDITAR_SALAS", "VER_TIPO_AMBIENTE", "EDITAR_TIPO_AMBIENTE", "VER_INSTALACOES", "EDITAR_INSTALACOES", "VER_CARGOS", "EDITAR_CARGOS"]
 	},
 ];
 
@@ -117,19 +118,22 @@ export const MENU_OPTIONS_SETTINGS: Section[] = [
 		description: 'Configurações da aplicação',
 		icon: 'tune',
 		route: '/configuracoes/definicoes',
+		permissions: ["VER_CONFIGURACAO", "EDITAR_CONFIGURACAO"]
 	},
 	{
 		title: 'Gestão de Acessos',
 		description: 'Configurações de usuários e suas permissões de acesso',
 		icon: 'admin_panel_settings',
 		route: '/configuracoes/acessos',
+		permissions: ["VER_USUARIOS", "EDITAR_USUARIOS"]
 	},
 	{
 		title: 'Registros',
 		description: 'Armazena registros de eventos',
 		icon: 'receipt_long',
 		route: '/configuracoes/registros',
-		disabled: true
+		isDisabled: true,
+		permissions: []
 	},
 ];
 

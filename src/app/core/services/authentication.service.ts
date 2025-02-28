@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { Permissions } from "@openapi/model/permissions";
+import { ACTIONS_MAP } from "@app/core/services/actions.service";
 
 @Injectable({
 	providedIn: 'root',
 })
 export class AuthenticationService {
+
 	private readonly TOKEN_KEY = 'Authorization';
+	private TOKEN: string = '';
 
 	constructor(private http: HttpClient, private router: Router) {
 	}
@@ -22,15 +24,29 @@ export class AuthenticationService {
 		return this.http.post<{ access_token: string }>(url, { username, password }, { headers }).pipe(
 			map((response) => {
 				this.setToken(response.access_token);
-				this.router.navigate(['/recursos']);
+				const roles = this.getRoles();
+				const firstPermission = roles[0];
+				const action = ACTIONS_MAP.find(action => action.permission === firstPermission);
+
+				if (this.isSuper() && ACTIONS_MAP[0]?.route) {
+					this.router.navigate([ACTIONS_MAP[0].route]);
+					return response.access_token;
+				}
+
+				if (action?.route) {
+					this.router.navigate([action.route]);
+				}
+
 				return response.access_token;
 			}),
 			catchError(() => throwError(() => new Error('Login falhou')))
 		);
 	}
 
-	isAuthenticated(): boolean {
-		return !!this.getToken();
+	isAuthenticated(): Observable<boolean> {
+		const token = this.getToken();
+		if (!token) return of(false);
+		return of(true);
 	}
 
 	logout(): void {
@@ -57,7 +73,15 @@ export class AuthenticationService {
 		}
 	}
 
+	isSuper(): boolean {
+		if (this.getRoles().includes("SUPER_USER")) {
+			return true;
+		}
+		return false;
+	}
+
 	private setToken(token: string): void {
+		this.TOKEN = token;
 		sessionStorage.setItem(this.TOKEN_KEY, token);
 	}
 

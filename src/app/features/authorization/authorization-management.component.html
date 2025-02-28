@@ -1,16 +1,20 @@
 <div class="content h2">
 	Gerenciamento de Autorizações
 </div>
-<mat-tab-group mat-stretch-tabs [class]="'stretched-tabs mat-elevation-z2 selected-tab-{{tabGroup.selectedIndex}}'"
-			   [color]="'warn'">
-	<mat-tab>
+<mat-tab-group mat-stretch-tabs
+			   [class]="'stretched-tabs mat-elevation-z2 selected-tab-{{tabGroup.selectedIndex}}'"
+			   [color]="'warn'"
+			   [selectedIndex]="getSelectedIndex()"
+			   (selectedIndexChange)="onTabChange($event)"
+>
+	<mat-tab [routerLink]="['/autorizacoes/solicitantes']">
 		<ng-template mat-tab-label>
 			<mat-icon class="tab-icon">room_preferences</mat-icon>
 			Solicitantes
 		</ng-template>
 		<app-requester-datatable></app-requester-datatable>
 	</mat-tab>
-	<mat-tab>
+	<mat-tab [routerLink]="['/autorizacoes/permissoes']">
 		<ng-template mat-tab-label>
 			<mat-icon class="tab-icon">badge</mat-icon>
 			Permissões

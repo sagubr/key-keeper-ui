@@ -11,12 +11,14 @@
 import { Status } from './status';
 import { PermissionLocationSummaryDto } from './permissionLocationSummaryDto';
 import { Requester } from './requester';
+import { Key } from './key';
 
 
 export interface ReservationCommand { 
     requester: Requester;
     status: Status;
     permission: PermissionLocationSummaryDto;
+    key: Key;
     startDateTime: string;
     endDateTime: string;
 }

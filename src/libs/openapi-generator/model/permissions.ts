@@ -10,24 +10,28 @@
  */
 
 
-export type Permissions = 'MENU_EMPRESTIMOS' | 'MENU_AUTORIZACOES' | 'MENU_RECURSOS' | 'MENU_PARAMETRIZACOES' | 'MENU_GESTAO_ACESSOS' | 'EMPRESTIMOS' | 'HISTORICO' | 'SOLICITANTES' | 'PERMISSOES' | 'SALAS' | 'TIPO_AMBIENTE' | 'INSTALACOES' | 'CARGOS' | 'CONFIGURACAO' | 'USUARIOS' | 'ATRIBUICOES';
+export type Permissions = 'VER_EMPRESTIMOS' | 'EDITAR_EMPRESTIMOS' | 'VER_HISTORICOS' | 'EDITAR_HISTORICOS' | 'VER_SOLICITANTES' | 'EDITAR_SOLICITANTES' | 'VER_PERMISSOES' | 'EDITAR_PERMISSOES' | 'VER_SALAS' | 'EDITAR_SALAS' | 'VER_TIPO_AMBIENTE' | 'EDITAR_TIPO_AMBIENTE' | 'VER_INSTALACOES' | 'EDITAR_INSTALACOES' | 'VER_CARGOS' | 'EDITAR_CARGOS' | 'VER_CONFIGURACAO' | 'EDITAR_CONFIGURACAO' | 'VER_USUARIOS' | 'EDITAR_USUARIOS';
 
 export const Permissions = {
-    MenuEmprestimos: 'MENU_EMPRESTIMOS' as Permissions,
-    MenuAutorizacoes: 'MENU_AUTORIZACOES' as Permissions,
-    MenuRecursos: 'MENU_RECURSOS' as Permissions,
-    MenuParametrizacoes: 'MENU_PARAMETRIZACOES' as Permissions,
-    MenuGestaoAcessos: 'MENU_GESTAO_ACESSOS' as Permissions,
-    Emprestimos: 'EMPRESTIMOS' as Permissions,
-    Historico: 'HISTORICO' as Permissions,
-    Solicitantes: 'SOLICITANTES' as Permissions,
-    Permissoes: 'PERMISSOES' as Permissions,
-    Salas: 'SALAS' as Permissions,
-    TipoAmbiente: 'TIPO_AMBIENTE' as Permissions,
-    Instalacoes: 'INSTALACOES' as Permissions,
-    Cargos: 'CARGOS' as Permissions,
-    Configuracao: 'CONFIGURACAO' as Permissions,
-    Usuarios: 'USUARIOS' as Permissions,
-    Atribuicoes: 'ATRIBUICOES' as Permissions
+    VerEmprestimos: 'VER_EMPRESTIMOS' as Permissions,
+    EditarEmprestimos: 'EDITAR_EMPRESTIMOS' as Permissions,
+    VerHistoricos: 'VER_HISTORICOS' as Permissions,
+    EditarHistoricos: 'EDITAR_HISTORICOS' as Permissions,
+    VerSolicitantes: 'VER_SOLICITANTES' as Permissions,
+    EditarSolicitantes: 'EDITAR_SOLICITANTES' as Permissions,
+    VerPermissoes: 'VER_PERMISSOES' as Permissions,
+    EditarPermissoes: 'EDITAR_PERMISSOES' as Permissions,
+    VerSalas: 'VER_SALAS' as Permissions,
+    EditarSalas: 'EDITAR_SALAS' as Permissions,
+    VerTipoAmbiente: 'VER_TIPO_AMBIENTE' as Permissions,
+    EditarTipoAmbiente: 'EDITAR_TIPO_AMBIENTE' as Permissions,
+    VerInstalacoes: 'VER_INSTALACOES' as Permissions,
+    EditarInstalacoes: 'EDITAR_INSTALACOES' as Permissions,
+    VerCargos: 'VER_CARGOS' as Permissions,
+    EditarCargos: 'EDITAR_CARGOS' as Permissions,
+    VerConfiguracao: 'VER_CONFIGURACAO' as Permissions,
+    EditarConfiguracao: 'EDITAR_CONFIGURACAO' as Permissions,
+    VerUsuarios: 'VER_USUARIOS' as Permissions,
+    EditarUsuarios: 'EDITAR_USUARIOS' as Permissions
 };
 

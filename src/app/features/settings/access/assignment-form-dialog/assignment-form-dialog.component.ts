@@ -19,10 +19,12 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { Permissions } from "@openapi/model/permissions";
 import { ACTIONS_MAP } from "@app/core/services/actions.service";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @Component({
 	selector: 'app-assignment-form-dialog',
-	imports: [CdkDropList,
+	imports: [
+		CdkDropList,
 		CdkDrag,
 		FormsModule,
 		MatButtonModule,
@@ -32,6 +34,7 @@ import { ACTIONS_MAP } from "@app/core/services/actions.service";
 		ReactiveFormsModule,
 		MatFormFieldModule,
 		MatInputModule,
+		MatTooltipModule
 	],
 	templateUrl: './assignment-form-dialog.component.html',
 	styleUrls: ['./assignment-form-dialog.component.scss']
@@ -39,8 +42,8 @@ import { ACTIONS_MAP } from "@app/core/services/actions.service";
 export class AssignmentFormDialogComponent implements OnInit {
 
 	formGroup!: FormGroup;
-	notGranted: [Permissions, string][] = Array.from(ACTIONS_MAP.entries());
-	granted: [Permissions, string][] = [];
+	notGranted: { permission: Permissions, description: string, route: string, warning?: string }[] = ACTIONS_MAP;
+	granted: { permission: Permissions, description: string, route: string, warning?: string }[] = [];
 
 	constructor(
 		private readonly dialogRef: MatDialogRef<AssignmentFormDialogComponent>,
@@ -49,18 +52,23 @@ export class AssignmentFormDialogComponent implements OnInit {
 		private readonly formBuilder: FormBuilder,
 		@Inject(MAT_DIALOG_DATA) public data: Assignment,
 	) {
+		this.notGranted = ACTIONS_MAP
 		this.buildFormGroup();
 	}
 
 	ngOnInit(): void {
+		this.granted = [];
+		this.notGranted = [...ACTIONS_MAP];
 		this.formGroup.patchValue(this.data);
 
 		if (this.data.permissions && this.data.permissions.length > 0) {
-			this.granted = Array.from(ACTIONS_MAP.entries())
-				.filter(([permissionKey, _]) => this.data.permissions?.includes(permissionKey));
+			this.granted = ACTIONS_MAP.filter(action =>
+				this.data.permissions?.includes(action.permission)
+			);
 
-			this.notGranted = this.notGranted.filter(([permissionKey, _]) =>
-				!this.granted.some(([grantedPermissionKey, _]) => grantedPermissionKey === permissionKey));
+			this.notGranted = this.notGranted.filter(action =>
+				!this.granted.some(grantedAction => grantedAction.permission === action.permission)
+			);
 		}
 	}
 
@@ -77,7 +85,12 @@ export class AssignmentFormDialogComponent implements OnInit {
 		return this.formGroup.get('permissions') as FormArray;
 	}
 
-	drop(event: CdkDragDrop<[Permissions, string][]>): void {
+	drop(event: CdkDragDrop<{
+		permission: Permissions,
+		description: string,
+		route: string,
+		warning?: string
+	}[]>): void {
 		if (event.previousContainer === event.container) {
 			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 		} else {
@@ -93,8 +106,8 @@ export class AssignmentFormDialogComponent implements OnInit {
 
 	private updatePermissions(): void {
 		this.permissions.clear();
-		this.granted.forEach(([permission, description]) => {
-			this.permissions.push(new FormControl(permission));
+		this.granted.forEach(action => {
+			this.permissions.push(new FormControl(action.permission));
 		});
 	}
 
@@ -129,12 +142,10 @@ export class AssignmentFormDialogComponent implements OnInit {
 	}
 
 	private edit(): void {
-
 		const command = {
 			...this.formGroup.value,
 			assignmentId: this.data.id
 		}
-
 		this.service.updateAssignmentId(command).subscribe(
 			{
 				next: () => {

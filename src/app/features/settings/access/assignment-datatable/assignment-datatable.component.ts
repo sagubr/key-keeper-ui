@@ -145,8 +145,8 @@ export class AssignmentDatatableComponent implements OnInit, AfterViewInit, OnDe
 		array: string[]
 	} {
 		const names = (assignment.permissions || []).map(permission => {
-			const description = ACTIONS_MAP.get(permission);
-			return description ? description : permission.toString();
+			const action = ACTIONS_MAP.find(action => action.permission === permission);
+			return action ? action.description : permission.toString();
 		});
 
 		const displayText = names.length > limit

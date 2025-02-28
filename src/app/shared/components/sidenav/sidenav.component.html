@@ -20,7 +20,7 @@
 			Alterar Perfil
 			<mat-icon>settings</mat-icon>
 		</button>
-		<button mat-menu-item>
+		<button mat-menu-item (click)="logout()">
 			Sair
 			<mat-icon>logout</mat-icon>
 		</button>
@@ -35,41 +35,42 @@
 				<div mat-subheader>Gestão de Processos</div>
 			}
 			@for (option of menuOptions; track option) {
-				@if (hasPermission(option.permission)) {
-					@if (opened) {
-						<mat-list-item [routerLink]="option.route"
-									   routerLinkActive="active"
-									   [disabled]="option.disabled"
-									   [matTooltip]=option.description
-									   matTooltipPosition="right"
-						>
-							<mat-icon
-								color="#212121"
-								matListItemIcon>{{ option.icon }}
-							</mat-icon>
-							<div matListItemTitle>{{ option.title }}</div>
-						</mat-list-item>
-					} @else {
-						<mat-list-item [routerLink]="option.route"
-									   routerLinkActive="active"
-									   [disabled]="option.disabled">
-							<mat-icon matListItemIcon
-									  [matTooltip]=option.title
-									  matTooltipPosition="right"
-							>{{ option.icon }}
-							</mat-icon>
-						</mat-list-item>
-					}
+				@if (opened) {
+					<mat-list-item [routerLink]="!(!hasAnyPermission(option.permissions) || option.isDisabled) ? option.route : null"
+								   routerLinkActive="active"
+								   [disabled]="!hasAnyPermission(option.permissions) || option.isDisabled"
+								   [hidden]="option.isHidden"
+								   [matTooltip]=option.description
+								   matTooltipPosition="right"
+					>
+						<mat-icon
+							color="#212121"
+							matListItemIcon>{{ option.icon }}
+						</mat-icon>
+						<div matListItemTitle>{{ option.title }}</div>
+					</mat-list-item>
+				} @else {
+					<mat-list-item [routerLink]="!(!hasAnyPermission(option.permissions) || option.isDisabled) ? option.route : null"
+								   routerLinkActive="active"
+								   [disabled]="!hasAnyPermission(option.permissions) || option.isDisabled">
+						<mat-icon matListItemIcon
+								  [matTooltip]=option.title
+								  matTooltipPosition="right"
+						>{{ option.icon }}
+						</mat-icon>
+					</mat-list-item>
 				}
+
 			}
 			@if (opened) {
 				<div mat-subheader>Configurações</div>
 			}
 			@for (option of menuOptionsSettings; track option) {
+
 				@if (opened) {
-					<mat-list-item [routerLink]="option.route"
+					<mat-list-item [routerLink]="!(!hasAnyPermission(option.permissions) || option.isDisabled) ? option.route : null"
 								   routerLinkActive="active"
-								   [disabled]="option.disabled"
+								   [disabled]="!hasAnyPermission(option.permissions) || option.isDisabled"
 								   [matTooltip]=option.description
 								   matTooltipPosition="right"
 					>
@@ -77,9 +78,9 @@
 						<div matListItemTitle>{{ option.title }}</div>
 					</mat-list-item>
 				} @else {
-					<mat-list-item [routerLink]="option.route"
+					<mat-list-item [routerLink]="!(!hasAnyPermission(option.permissions) || option.isDisabled) ? option.route : null"
 								   routerLinkActive="active"
-								   [disabled]="option.disabled">
+								   [disabled]="!hasAnyPermission(option.permissions) || option.isDisabled">
 						<mat-icon matListItemIcon
 								  [matTooltip]=option.title
 								  matTooltipPosition="right"

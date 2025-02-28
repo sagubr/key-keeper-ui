@@ -11,21 +11,26 @@
 		<mat-card>
 			<mat-card-title>Autenticação</mat-card-title>
 			<mat-card-content>
-				<!--\\TODO: Adicionar form builder -->
-				<form (ngSubmit)="login()">
+				<form [formGroup]="formGroup" (ngSubmit)="login()">
 					<mat-form-field appearance="outline" class="full-width">
 						<mat-label>Nome de usuário</mat-label>
-						<input matInput [(ngModel)]="username" name="username" placeholder="nome.sobrenome" required/>
+						<input matInput formControlName="username" placeholder="nome.sobrenome" required/>
+						<mat-error *ngIf="username?.invalid && (username?.dirty)">
+							Nome de usuário é obrigatório
+						</mat-error>
 					</mat-form-field>
 
 					<mat-form-field appearance="outline" class="full-width">
 						<mat-label>Senha</mat-label>
-						<input matInput type="password" [(ngModel)]="password" name="password" [type]="hide ? 'password' : 'text'"
+						<input matInput formControlName="password" [type]="hide ? 'password' : 'text'"
 							   placeholder="Insira sua senha" required/>
 						<button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Exibir senha'"
 								[attr.aria-pressed]="hide">
 							<mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
 						</button>
+						<mat-error *ngIf="password?.invalid && (password?.dirty)">
+							Senha é obrigatória
+						</mat-error>
 					</mat-form-field>
 
 					<div *ngIf="errorMessage" class="error-message">
@@ -34,10 +39,10 @@
 
 					<a href="#" class="forgot-password">esqueceu a senha?</a>
 
-					<button mat-raised-button color="primary" type="submit" class="login-button">
+					<button mat-raised-button color="primary" type="submit" class="login-button"
+							[disabled]="formGroup.invalid">
 						Login
 					</button>
-
 				</form>
 			</mat-card-content>
 		</mat-card>

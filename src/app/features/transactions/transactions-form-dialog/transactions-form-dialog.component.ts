@@ -23,6 +23,10 @@ import { MatStepperModule } from "@angular/material/stepper";
 import { PermissionLocationSummaryDto } from "@openapi/model/permissionLocationSummaryDto";
 import { ReservationCommand } from "@openapi/model/reservationCommand";
 import { LocationService } from "@openapi/api/location.service";
+import { KeyService } from "@openapi/api/key.service";
+import { Key } from "@openapi/model/key";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { finalize } from "rxjs";
 
 @Component({
 	selector: 'app-transactions-form-dialog',
@@ -42,6 +46,7 @@ import { LocationService } from "@openapi/api/location.service";
 		MatTimepickerModule,
 		FormsModule,
 		MatStepperModule,
+		MatProgressSpinnerModule
 	],
 	templateUrl: './transactions-form-dialog.component.html',
 	styleUrl: './transactions-form-dialog.component.scss',
@@ -56,13 +61,21 @@ export class TransactionsFormDialogComponent implements OnInit {
 
 	permissions: PermissionLocationSummaryDto[] = [];
 	requesters: Requester[] = [];
+	keys: Key[] = [];
 	status: Status[] = Object.values(Status)
+
+	loadings: { permissions?: boolean, requesters?: boolean, keys?: boolean } = {
+		permissions: false,
+		requesters: false,
+		keys: false
+	}
 
 	constructor(
 		public dialogRef: MatDialogRef<TransactionsFormDialogComponent>,
 		private readonly dialog: MatDialog,
 		private readonly reservationService: ReservationService,
 		private readonly permissionService: PermissionService,
+		private readonly keyService: KeyService,
 		private readonly locationService: LocationService,
 		private readonly requesterService: RequesterService,
 		private readonly formBuilder: FormBuilder,
@@ -96,18 +109,30 @@ export class TransactionsFormDialogComponent implements OnInit {
 		this.findByRestrictedFalseAndPublicTrue();
 	}
 
+	onPermissionChange(selectedPermission: any): void {
+		this.firstFormGroup.get('key')?.reset()
+		this.firstFormGroup.get('key')?.enable();
+		this.findByLocation(selectedPermission);
+	}
+
 	private findRequester(): void {
+		this.loadings.requesters = true;
 		this.requesterService.findByBlockedFalse()
+			.pipe(finalize(() => this.loadings.requesters = false))
 			.subscribe((res) => this.requesters = res)
 	}
 
 	private findAllPermissions(requester: Requester): void {
+		this.loadings.permissions = true;
 		this.permissionService.findByRequestersIdAndEndDateTimeAfter(requester.id!)
+			.pipe(finalize(() => this.loadings.permissions = false))
 			.subscribe((res) => this.permissions = res);
 	}
 
 	private findByRestrictedFalseAndPublicTrue(): void {
+		this.loadings.permissions = true;
 		this.locationService.findByRestrictedFalseAndPublicTrue()
+			.pipe(finalize(() => this.loadings.permissions = false))
 			.subscribe((res) => {
 				res.forEach(it => {
 					const alreadyAdded = this.permissions.some(p => p.location.id === it.id);
@@ -116,6 +141,13 @@ export class TransactionsFormDialogComponent implements OnInit {
 					}
 				});
 			});
+	}
+
+	private findByLocation(location: Location): void {
+		this.loadings.keys = true;
+		this.keyService.findByLocation(location)
+			.pipe(finalize(() => this.loadings.keys = false))
+			.subscribe((res) => this.keys = res);
 	}
 
 	private validateForm(): void {
@@ -129,7 +161,8 @@ export class TransactionsFormDialogComponent implements OnInit {
 	private buildFormGroup(): void {
 		this.firstFormGroup = this.formBuilder.group({
 			requester: ['', Validators.required],
-			permission: ['', Validators.required],
+			permission: [{ value: [], disabled: true }, Validators.required],
+			key: [{ value: [], disabled: true }, Validators.required],
 			status: [Status.Agendado, Validators.required],
 		});
 		this.secondFormGroup = this.formBuilder.group({

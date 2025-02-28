@@ -12,6 +12,7 @@ import { Status } from './status';
 import { Requester } from './requester';
 import { User } from './user';
 import { Permission } from './permission';
+import { Key } from './key';
 import { Location } from './location';
 
 
@@ -28,6 +29,7 @@ export interface Reservation {
     requester?: Requester | null;
     location?: Location | null;
     user?: User | null;
+    key?: Key | null;
     notes?: string;
     startDateTime: string;
     endDateTime: string;

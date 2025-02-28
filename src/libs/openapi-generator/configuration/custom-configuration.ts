@@ -22,12 +22,12 @@ export class CustomConfiguration extends Configuration {
         return service;
     }
 
-    private _getAccessToken(): string {
-        const token = this._getAuthenticationService().getToken();
-        if (!token) {
-            throw new Error('Token not found');
-        }
+	private _getAccessToken(): string | undefined {
+		const token = this._getAuthenticationService().getToken();
+		if (!token) {
+			return undefined;
+		}
+		return token;
+	}
 
-        return token;
-    }
 }

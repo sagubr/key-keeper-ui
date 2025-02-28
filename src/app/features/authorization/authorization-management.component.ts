@@ -9,6 +9,7 @@ import {
 import {
 	RequesterDatatableComponent
 } from "@app/features/authorization/requester/requester-datatable/requester-datatable.component";
+import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 
 @Component({
 	selector: 'app-authorization-management',
@@ -19,10 +20,25 @@ import {
 		MatProgressBarModule,
 		PermissionDatatableComponent,
 		RequesterDatatableComponent,
+		RouterModule,
 	],
 	templateUrl: './authorization-management.component.html',
 	styleUrl: './authorization-management.component.scss'
 })
 export class AuthorizationManagementComponent {
+
+	constructor(private router: Router, private route: ActivatedRoute) {
+	}
+
+	getSelectedIndex(): number {
+		const path = this.router.url;
+		if (path.includes('permissoespermissoes')) return 1;
+		return 0;
+	}
+
+	onTabChange(index: number): void {
+		const tabRoutes = ['solicitantes', 'permissoes'];
+		this.router.navigate(['autorizacoes', tabRoutes[index]]);
+	}
 
 }

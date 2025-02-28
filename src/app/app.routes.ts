@@ -16,6 +16,7 @@ import {
 import {
 	PermissionDatatableComponent
 } from "@app/features/authorization/permission/permission-datatable/permission-datatable.component";
+import { AuthenticationResolver } from "@app/core/guards/authentication.resolver";
 
 export const routes: Routes = [
 	{
@@ -27,7 +28,12 @@ export const routes: Routes = [
 		component: SidenavComponent,
 		canActivate: [AuthenticationGuard],
 		children: [
-			{ path: 'recursos', component: ResourceComponent, canActivate: [AuthenticationGuard] },
+			{
+				path: 'recursos',
+				component: ResourceComponent,
+				canActivate: [AuthenticationGuard],
+				resolve: { isAuthenticated: AuthenticationResolver }
+			},
 			{
 				path: 'autorizacoes',
 				component: AuthorizationManagementComponent,
@@ -45,7 +51,11 @@ export const routes: Routes = [
 					}
 				]
 			},
-			{ path: 'transacoes', component: TransactionsComponent, canActivate: [AuthenticationGuard] },
+			{
+				path: 'transacoes',
+				component: TransactionsComponent,
+				canActivate: [AuthenticationGuard]
+			},
 			{
 				path: 'configuracoes',
 				canActivate: [AuthenticationGuard],

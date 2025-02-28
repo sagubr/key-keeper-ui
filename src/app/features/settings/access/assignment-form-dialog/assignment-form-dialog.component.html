@@ -32,7 +32,7 @@
 					(cdkDropListDropped)="drop($event)">
 					@for (item of notGranted; track item) {
 						<div class="box" cdkDrag>
-							{{ item[1] }}
+							{{ item.description }}
 							<mat-icon>drag_indicator</mat-icon>
 						</div>
 					}
@@ -51,7 +51,17 @@
 					(cdkDropListDropped)="drop($event)">
 					@for (item of granted; track item) {
 						<div class="box" cdkDrag>
-							{{ item[1] }}
+							<div class="slide-toggle-wrapper">
+								{{ item.description }}
+								@if (item?.warning) {
+									<mat-icon
+										[matTooltip]="item.warning"
+										matTooltipPosition="right"
+										style="color: #f44336;"
+										>info
+									</mat-icon>
+								}
+							</div>
 							<mat-icon>drag_indicator</mat-icon>
 						</div>
 					}

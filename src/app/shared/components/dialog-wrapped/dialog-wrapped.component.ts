@@ -1,19 +1,8 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
-
-export interface DialogData {
-	title: string;
-	message: string;
-	confirmText?: string;
-	cancelText?: string;
-	icon?: 'info' | 'danger' | 'warning' | 'success';
-	color?: 'primary' | 'accent' | 'warn';
-	hideCancel?: boolean;
-	autoClose?: boolean;
-	closeAfterSeconds?: number;
-}
+import { DialogWrappedInfo } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
 
 @Component({
 	selector: 'app-dialog-wrapped',
@@ -29,7 +18,7 @@ export class DialogWrappedComponent implements OnInit {
 
 	constructor(
 		private dialogRef: MatDialogRef<DialogWrappedComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: DialogData
+		@Inject(MAT_DIALOG_DATA) public data: DialogWrappedInfo
 	) {
 	}
 
@@ -37,11 +26,6 @@ export class DialogWrappedComponent implements OnInit {
 		if (this.data.autoClose) {
 			this.autoClose();
 		}
-	}
-
-	private autoClose(): void {
-		setTimeout(() => this.dialogRef.close(true),
-			(this.data.closeAfterSeconds || 3) * 1000);
 	}
 
 	close(result: boolean): void {
@@ -60,6 +44,11 @@ export class DialogWrappedComponent implements OnInit {
 
 	getIconClass(): string {
 		return this.data.icon ? `icon-${ this.data.icon }` : '';
+	}
+
+	private autoClose(): void {
+		setTimeout(() => this.dialogRef.close(true),
+			(this.data.closeAfterSeconds || 3) * 1000);
 	}
 
 }

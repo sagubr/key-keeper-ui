@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, input, InputSignal, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
@@ -6,7 +6,7 @@ import { Reservation } from "@openapi/model/reservation";
 import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
 import { finalize, Subscription } from "rxjs";
 import { ReservationService } from "@openapi/api/reservation.service";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { MatDialog } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatMenuModule } from "@angular/material/menu";
@@ -18,9 +18,9 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import {
 	TransactionsFormDialogComponent
 } from "@app/features/transactions/transactions-form-dialog/transactions-form-dialog.component";
-import { DialogData, DialogWrappedComponent } from "@app/shared/components/dialog-wrapped/dialog-wrapped.component";
 import { ReservationChangeStatusCommand } from "@openapi/model/reservationChangeStatusCommand";
 import { UpperCasePipe } from "@angular/common";
+import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
 
 @Component({
 	selector: 'app-transactions-datatable-progress',
@@ -83,7 +83,8 @@ export class TransactionsDatatableProgressComponent implements OnInit, AfterView
 
 	constructor(
 		private readonly reservationService: ReservationService,
-		private dialog: MatDialog
+		private readonly dialog: MatDialog,
+		private readonly dialogWrapped: DialogWrappedService
 	) {
 	}
 
@@ -119,12 +120,12 @@ export class TransactionsDatatableProgressComponent implements OnInit, AfterView
 	}
 
 	openDialogConfirmChangeStatus(element: Reservation, status: Status): void {
-		this.openDialogFeedback(
+		this.dialogWrapped.openFeedback(
 			{
 				title: "Confirmação de Mudança de Status",
 				message: `O registro da ${ element.location?.name } para ${ element.requester?.name } terá o seu status alterado. Você confirma essa ação?`,
 				icon: "warning"
-			} as DialogData
+			} as DialogWrappedInfo
 		).afterClosed().subscribe((res) => {
 			if (res) {
 				this.changeStatus(element, status);
@@ -138,11 +139,11 @@ export class TransactionsDatatableProgressComponent implements OnInit, AfterView
 			status: status
 		}
 		this.reservationService.changeStatusReservation(command).subscribe({
-			next: (response) => this.openDialogFeedback(),
-			error: (err) => this.openDialogFeedback({
+			next: (response) => this.dialogWrapped.openFeedback(),
+			error: (err) => this.dialogWrapped.openFeedback({
 				message: "Não foi possível alterar o status da solicitação",
 				icon: "danger"
-			} as DialogData),
+			} as DialogWrappedInfo),
 		});
 	}
 
@@ -164,21 +165,6 @@ export class TransactionsDatatableProgressComponent implements OnInit, AfterView
 					this.dataSource.data = reservation;
 				}
 			});
-	}
-
-	private openDialogFeedback(data?: DialogData): MatDialogRef<DialogWrappedComponent, boolean> {
-		const dialogRef = this.dialog.open(DialogWrappedComponent, {
-			data: {
-				title: data?.title ?? 'Atualização no status da solicitação',
-				message: data?.message ?? `Houve uma mudança no status da solicitação de empréstimo`,
-				icon: data?.icon ?? 'success',
-				color: data?.color ?? 'primary',
-				confirmText: data?.confirmText ?? 'Confirmar',
-				hideCancel: data?.hideCancel ?? false,
-			},
-			width: '400px'
-		});
-		return dialogRef;
 	}
 
 }

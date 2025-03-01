@@ -10,16 +10,14 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { UsersService } from '@openapi/api/users.service';
-import { User } from "@openapi/model/user";
 import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
 import { UserDto } from "@openapi/model/userDto";
 import { UserFormDialogComponent } from "@app/features/settings/access/user-form-dialog/user-form-dialog.component";
 import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";
 import { MatInput } from "@angular/material/input";
 import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
-import { DialogWrappedComponent } from "@app/shared/components/dialog-wrapped/dialog-wrapped.component";
-import { AssignmentService } from "@openapi/api/assignment.service";
 import { UserSummaryDto } from "@openapi/model/userSummaryDto";
+import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
 
 @Component({
 	selector: 'app-user-datatable',
@@ -85,6 +83,7 @@ export class UserDatatableComponent implements OnInit, AfterViewInit, OnDestroy 
 	constructor(
 		private readonly service: UsersService,
 		private readonly dialog: MatDialog,
+		private readonly dialogWrapped: DialogWrappedService
 	) {
 	}
 
@@ -123,37 +122,21 @@ export class UserDatatableComponent implements OnInit, AfterViewInit, OnDestroy 
 	}
 
 	openResetPasswordDialog(element: UserDto): void {
-		this.dialog.open(DialogWrappedComponent,
+		this.dialogWrapped.openFeedback(
 			{
-				data: {
-					title: 'Tem certeza que deseja redefinir a senha?',
-					message: `A senha atual será redefinida e a nova senha será enviada para o e-mail cadastrado: ${ element.email }`,
-					icon: 'warning',
-					color: 'warn',
-					confirmText: 'Confirmar',
-					hideCancel: true
-				},
-				width: '400px'
-			}).afterClosed().subscribe(res => {
-			console.log(res);
-		})
+				title: "Tem certeza que deseja redefinir a senha?",
+				message: `A senha atual será redefinida e a nova senha será enviada para o e-mail cadastrado: ${ element.email }`,
+				icon: "warning"
+			} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 	}
 
 	openBlockUserDialog(element: UserDto): void {
-		this.dialog.open(DialogWrappedComponent,
+		this.dialogWrapped.openFeedback(
 			{
-				data: {
-					title: 'Tem certeza que deseja bloquear o usuário?',
-					message: `O usuário ${ element.username } não consiguirá acessar a aplicação. Esta ação só poderá ser revertida via banco de dados.`,
-					icon: 'warning',
-					color: 'warn',
-					confirmText: 'Confirmar',
-					hideCancel: true
-				},
-				width: '400px'
-			}).afterClosed().subscribe(res => {
-			console.log(res);
-		})
+				title: "Tem certeza que deseja bloquear o usuário?",
+				message: `O usuário ${ element.username } não consiguirá acessar a aplicação. Esta ação só poderá ser revertida via banco de dados.`,
+				icon: "warning"
+			} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 	}
 
 	private findAll(): void {

@@ -127,6 +127,7 @@ export class TransactionsFormDialogComponent implements OnInit {
 		this.permissionService.findByRequestersIdAndEndDateTimeAfter(requester.id!)
 			.pipe(finalize(() => this.loadings.permissions = false))
 			.subscribe((res) => this.permissions = res);
+		console.log("com permissao", this.permissions)
 	}
 
 	private findByRestrictedFalseAndPublicTrue(): void {
@@ -139,15 +140,18 @@ export class TransactionsFormDialogComponent implements OnInit {
 					if (!alreadyAdded) {
 						this.permissions.push({ location: it } as PermissionLocationSummaryDto);
 					}
+					console.log("publica", this.permissions)
 				});
 			});
 	}
 
 	private findByLocation(location: Location): void {
 		this.loadings.keys = true;
+
 		this.keyService.findByLocation(location)
 			.pipe(finalize(() => this.loadings.keys = false))
 			.subscribe((res) => this.keys = res);
+		console.log("res", this.keys)
 	}
 
 	private validateForm(): void {

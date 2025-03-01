@@ -8,10 +8,9 @@ import {
 	ReactiveFormsModule,
 	Validators
 } from "@angular/forms";
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { AssignmentService } from "@openapi/api/assignment.service";
 import { Assignment } from "@openapi/model/assignment";
-import { DialogWrappedComponent } from "@app/shared/components/dialog-wrapped/dialog-wrapped.component";
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
 import { MatButtonModule, MatIconButton } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
@@ -20,6 +19,7 @@ import { MatInputModule } from "@angular/material/input";
 import { Permissions } from "@openapi/model/permissions";
 import { ACTIONS_MAP } from "@app/core/services/actions.service";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
 
 @Component({
 	selector: 'app-assignment-form-dialog',
@@ -47,7 +47,7 @@ export class AssignmentFormDialogComponent implements OnInit {
 
 	constructor(
 		private readonly dialogRef: MatDialogRef<AssignmentFormDialogComponent>,
-		private readonly dialog: MatDialog,
+		private readonly dialogWrapped: DialogWrappedService,
 		private readonly service: AssignmentService,
 		private readonly formBuilder: FormBuilder,
 		@Inject(MAT_DIALOG_DATA) public data: Assignment,
@@ -132,10 +132,20 @@ export class AssignmentFormDialogComponent implements OnInit {
 				next: () => {
 					this.formGroup.reset();
 					this.dialogRef.close(true);
-					this.openDialogFeedback(true);
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Atribuição atualizada com sucesso',
+							message: 'Este registro já pode ser atribuído para usuários da aplicação.',
+							icon: 'success',
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 				},
 				error: () => {
-					this.openDialogFeedback(false);
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Não foi possível concluir o registro',
+							message: 'Tente novamente mais tarde.',
+							icon: 'danger',
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 				}
 			}
 		);
@@ -151,37 +161,23 @@ export class AssignmentFormDialogComponent implements OnInit {
 				next: () => {
 					this.formGroup.reset();
 					this.dialogRef.close(true);
-					this.openDialogFeedback(true);
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Atribuição atualizada com sucesso',
+							message: 'Este registro já pode ser atribuído para usuários da aplicação.',
+							icon: 'success',
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 				},
 				error: () => {
-					this.openDialogFeedback(false);
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Não foi possível concluir o registro',
+							message: 'Tente novamente mais tarde.',
+							icon: 'danger',
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 				}
 			}
 		);
-	}
-
-	private openDialogFeedback(success: boolean): void {
-		const dialogData = success
-			? {
-				title: 'Atribuição salva com sucesso',
-				message: 'Este registro já pode ser atribuído para usuários da aplicação.',
-				icon: 'success',
-				color: 'primary',
-				confirmText: 'Confirmar',
-				hideCancel: false,
-			}
-			: {
-				title: 'Não foi possível concluir o registro',
-				message: 'Tente novamente mais tarde.',
-				icon: 'danger',
-				color: 'primary',
-				confirmText: 'Confirmar',
-				hideCancel: false,
-			};
-		this.dialog.open(DialogWrappedComponent, {
-			data: dialogData,
-			width: '400px'
-		});
 	}
 
 }

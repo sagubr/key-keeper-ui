@@ -17,6 +17,7 @@ import { MatChipInputEvent, MatChipsModule } from "@angular/material/chips";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
 
 @Component({
 	selector: 'app-requester-form-dialog',
@@ -50,7 +51,7 @@ export class RequesterFormDialogComponent implements OnInit {
 
 	constructor(
 		public dialogRef: MatDialogRef<RequesterFormDialogComponent>,
-		private readonly dialog: MatDialog,
+		private readonly dialogWrapped: DialogWrappedService,
 		private readonly requesterService: RequesterService,
 		private readonly jobTitleService: JobTitleService,
 		private readonly formBuilder: FormBuilder,
@@ -83,13 +84,25 @@ export class RequesterFormDialogComponent implements OnInit {
 
 	onSubmit(): void {
 		this.validateForm()
-		console.log(this.formGroup.value)
 		if (this.data) {
-			console.log(this.formGroup.value)
 			this.requesterService.createRequester(this.formGroup.value).subscribe({
 				next: () => {
 					this.formGroup.reset();
 					this.dialogRef.close(true);
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Salvo com sucesso',
+							message: ``,
+							icon: "success"
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
+				},
+				error: () => {
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Não foi possível concluir o registro',
+							message: ``,
+							icon: "warning"
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 				}
 			});
 		}

@@ -6,15 +6,16 @@ import { MatInputModule } from "@angular/material/input";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Key } from "@openapi/model/key";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatNativeDateModule, MatOption, MatOptionModule } from "@angular/material/core";
+import { MatNativeDateModule, MatOptionModule } from "@angular/material/core";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { KeyService } from "@openapi/api/key.service";
-import { MatSelect, MatSelectModule } from "@angular/material/select";
+import { MatSelectModule } from "@angular/material/select";
 import { NgIf } from "@angular/common";
 import { compareById } from "@app/core/utils/utils";
+import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
 
 export enum TypeOfImportance {
 	PRINCIPAL = 'PRINCIPAL',
@@ -51,6 +52,7 @@ export class KeyFormDialogComponent implements OnInit {
 
 	constructor(
 		private readonly keyService: KeyService,
+		private readonly dialogWrapped: DialogWrappedService,
 		private readonly dialogRef: MatDialogRef<KeyFormDialogComponent>,
 		private readonly formBuilder: FormBuilder,
 		@Inject(MAT_DIALOG_DATA) public data: Key,
@@ -73,9 +75,21 @@ export class KeyFormDialogComponent implements OnInit {
 				next: () => {
 					this.formGroup.reset();
 					this.dialogRef.close(true);
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Salvo com sucesso',
+							message: ``,
+							icon: "success"
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 				},
 				error: (err: any) => {
 					console.error(err);
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Não foi possível concluir o registro',
+							message: ``,
+							icon: "warning"
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 				},
 			});
 		}

@@ -14,7 +14,7 @@ export const httpAuthErrorsInterceptor: HttpInterceptorFn = (req, next) => {
 		catchError((error) => {
 			if (error.status === 401) {
 				snackBar.open('Seu token de acesso foi expirado', 'Fechar', {
-					duration: 5000,
+					duration: 10000,
 				});
 				authentication.logout();
 			}

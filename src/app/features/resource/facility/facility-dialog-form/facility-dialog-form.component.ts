@@ -12,6 +12,7 @@ import { FacilityService } from "@openapi/api/facility.service";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
 
 @Component({
 	selector: 'app-facility-dialog-form',
@@ -38,6 +39,7 @@ export class FacilityDialogFormComponent implements OnInit {
 
 	constructor(
 		private readonly facilityService: FacilityService,
+		private readonly dialogWrapped: DialogWrappedService,
 		private readonly dialogRef: MatDialogRef<FacilityDialogFormComponent>,
 		private readonly formBuilder: FormBuilder,
 		@Inject(MAT_DIALOG_DATA) public data: Facility,
@@ -58,12 +60,24 @@ export class FacilityDialogFormComponent implements OnInit {
 
 		if (this.data) {
 			this.facilityService.addFacility(this.form.value).subscribe({
-				next: () => {
+				next: (res) => {
 					this.form.reset();
 					this.dialogRef.close(true);
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Salvo com sucesso',
+							message: ``,
+							icon: "success"
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 				},
 				error: (err: any) => {
 					console.error(err);
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Não foi possível concluir o registro',
+							message: ``,
+							icon: "warning"
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 				},
 			});
 		}

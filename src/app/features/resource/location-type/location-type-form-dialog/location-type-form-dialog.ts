@@ -12,6 +12,7 @@ import { MatRadioModule } from "@angular/material/radio";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { MatChipsModule } from "@angular/material/chips";
 import { LocationTypeService } from "@openapi/api/locationType.service";
+import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
 
 @Component({
   selector: 'app-location-type-form-dialog',
@@ -36,6 +37,7 @@ export class LocationTypeFormDialog implements OnInit {
 	form!: FormGroup;
 
 	constructor(
+		private readonly dialogWrapped: DialogWrappedService,
 		private readonly dialogRef: MatDialogRef<LocationTypeFormDialog>,
 		private readonly locationTypeService: LocationTypeService,
 		private readonly formBuilder: FormBuilder,
@@ -56,9 +58,21 @@ export class LocationTypeFormDialog implements OnInit {
 				next: () => {
 					this.form.reset();
 					this.dialogRef.close(true);
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Salvo com sucesso',
+							message: ``,
+							icon: "success"
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 				},
 				error: (err: any) => {
 					console.error(err);
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Não foi possível concluir o registro',
+							message: ``,
+							icon: "warning"
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 				},
 			});
 		}

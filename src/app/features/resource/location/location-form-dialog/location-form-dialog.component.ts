@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
@@ -15,16 +15,14 @@ import { Facility } from "@openapi/model/facility";
 import { LocationTypeService } from "@openapi/api/locationType.service";
 import { Location } from "@openapi/model/location";
 import { compareById } from "@app/core/utils/utils";
-import {
-	FacilityDialogFormComponent
-} from "@app/features/resource/facility/facility-dialog-form/facility-dialog-form.component";
 import { MatExpansionModule } from "@angular/material/expansion";
-import { MatSlideToggle, MatSlideToggleChange, MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { MatTooltip, MatTooltipModule } from "@angular/material/tooltip";
+import { MatSlideToggleChange, MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatTimepickerModule } from "@angular/material/timepicker";
 import { provideNativeDateAdapter } from "@angular/material/core";
 import { Requester } from "@openapi/model/requester";
 import { RequesterService } from "@openapi/api/requester.service";
+import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
 
 @Component({
 	selector: 'app-location-form-dialog',
@@ -58,7 +56,7 @@ export class LocationFormDialogComponent implements OnInit {
 
 	constructor(
 		public dialogRef: MatDialogRef<LocationFormDialogComponent>,
-		private readonly dialog: MatDialog,
+		private readonly dialogWrapped: DialogWrappedService,
 		private readonly locationService: LocationService,
 		private readonly facilityService: FacilityService,
 		private readonly locationTypeService: LocationTypeService,
@@ -84,6 +82,20 @@ export class LocationFormDialogComponent implements OnInit {
 				next: () => {
 					this.form.reset();
 					this.dialogRef.close(true);
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Salvo com sucesso',
+							message: ``,
+							icon: "success"
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
+				},
+				error: () => {
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Não foi possível concluir o registro',
+							message: ``,
+							icon: "warning"
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 				}
 			});
 		}

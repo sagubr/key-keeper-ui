@@ -10,6 +10,7 @@ import { MatInputModule } from "@angular/material/input";
 import { JobTitle } from "@openapi/model/jobTitle";
 import { JobTitleService } from "@openapi/api/jobTitle.service";
 import { MatIcon } from "@angular/material/icon";
+import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
 
 @Component({
 	selector: 'app-job-title-form-dialog',
@@ -33,6 +34,7 @@ export class JobTitleDialogFormComponent implements OnInit {
 
 	constructor(
 		private readonly jobTitleService: JobTitleService,
+		private readonly dialogWrapped: DialogWrappedService,
 		private readonly dialogRef: MatDialogRef<JobTitleDialogFormComponent>,
 		private readonly formBuilder: FormBuilder,
 		@Inject(MAT_DIALOG_DATA) public data: JobTitle,
@@ -52,9 +54,21 @@ export class JobTitleDialogFormComponent implements OnInit {
 				next: () => {
 					this.form.reset();
 					this.dialogRef.close(true);
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Salvo com sucesso',
+							message: ``,
+							icon: "success"
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 				},
 				error: (err: any) => {
 					console.error(err);
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Não foi possível concluir o registro',
+							message: ``,
+							icon: "warning"
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 				},
 			});
 		}

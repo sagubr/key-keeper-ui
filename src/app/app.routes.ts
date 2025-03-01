@@ -16,7 +16,6 @@ import {
 import {
 	PermissionDatatableComponent
 } from "@app/features/authorization/permission/permission-datatable/permission-datatable.component";
-import { AuthenticationResolver } from "@app/core/guards/authentication.resolver";
 import { Permissions } from '@openapi/model/permissions';
 import { UnauthorizedComponent } from "@app/unauthorized/unauthorized.component";
 
@@ -45,8 +44,7 @@ export const routes: Routes = [
 						Permissions.VerCargos,
 						Permissions.EditarCargos
 					]
-				},
-				resolve: { isAuthenticated: AuthenticationResolver }
+				}
 			},
 			{
 				path: 'autorizacoes',

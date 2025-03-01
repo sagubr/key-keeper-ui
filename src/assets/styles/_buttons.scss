@@ -1,20 +1,20 @@
 @mixin button(
-	$bgColor: #3A86FF, // Azul claro
+	$bgColor: #3A86FF,
 	$textColor: #fff,
 	$hoverColor: darken($bgColor, 10%),
 	$border: none
 ) {
-	background-color: $bgColor;
-	color: $textColor;
-	border: $border;
-	border-radius: 8px;
-	padding: 8px 16px;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
+	//background-color: $bgColor;
+	//color: $textColor;
+	//border: $border;
+	//border-radius: 8px;
+	//padding: 8px 16px;
+	//cursor: pointer;
+	//transition: background-color 0.3s ease;
 
-	&:hover {
-		background-color: $hoverColor;
-	}
+	//&:hover {
+	//	background-color: $hoverColor;
+	//}
 
 	&:disabled {
 		opacity: 0.6;

@@ -1,0 +1,21 @@
+/* used for both internal and external spinner versions */
+.deferred-select-placeholder-container {
+	display: flex;
+	align-items: center;
+}
+
+/* used for both internal and external spinner versions */
+.deferred-select-placeholder-container > span {
+	flex: 1;
+}
+
+/* only needed if using internal loading spinner */
+::ng-deep .hide-deferred-select-dummy-option {
+	display: none !important;
+}
+
+.internal-spinner {
+	display: inline-block;
+	position: absolute;
+	right: 25px;
+}

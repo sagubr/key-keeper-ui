@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
@@ -10,18 +10,15 @@ import { MatRadioModule } from "@angular/material/radio";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { LocationService } from "@openapi/api/location.service";
 import { Location } from "@openapi/model/location";
-import {
-	FacilityDialogFormComponent
-} from "@app/features/resource/facility/facility-dialog-form/facility-dialog-form.component";
 import { compareById } from "@app/core/utils/utils";
 import { RequesterService } from "@openapi/api/requester.service";
 import { PermissionService } from "@openapi/api/permission.service";
 import { Requester } from "@openapi/model/requester";
 import { provideNativeDateAdapter } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { range } from "rxjs";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatTimepickerModule } from "@angular/material/timepicker";
+import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
 
 @Component({
 	selector: 'app-permission-form-dialog',
@@ -54,7 +51,7 @@ export class PermissionFormDialogComponent implements OnInit {
 
 	constructor(
 		public dialogRef: MatDialogRef<PermissionFormDialogComponent>,
-		private readonly dialog: MatDialog,
+		private readonly dialogWrapped: DialogWrappedService,
 		private readonly permissionService: PermissionService,
 		private readonly requesterService: RequesterService,
 		private readonly locationService: LocationService,
@@ -78,6 +75,20 @@ export class PermissionFormDialogComponent implements OnInit {
 				next: () => {
 					this.form.reset();
 					this.dialogRef.close(true);
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Salvo com sucesso',
+							message: ``,
+							icon: "success"
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
+				},
+				error: () => {
+					this.dialogWrapped.openFeedback(
+						{
+							title: 'Não foi possível concluir o registro',
+							message: ``,
+							icon: "warning"
+						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 				}
 			});
 		}

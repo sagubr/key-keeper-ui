@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
@@ -27,6 +27,7 @@ import { KeyService } from "@openapi/api/key.service";
 import { Key } from "@openapi/model/key";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { finalize } from "rxjs";
+import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
 
 @Component({
 	selector: 'app-transactions-form-dialog',
@@ -72,7 +73,7 @@ export class TransactionsFormDialogComponent implements OnInit {
 
 	constructor(
 		public dialogRef: MatDialogRef<TransactionsFormDialogComponent>,
-		private readonly dialog: MatDialog,
+		private readonly dialogWrapped: DialogWrappedService,
 		private readonly reservationService: ReservationService,
 		private readonly permissionService: PermissionService,
 		private readonly keyService: KeyService,
@@ -98,7 +99,25 @@ export class TransactionsFormDialogComponent implements OnInit {
 
 		if (this.data) {
 			this.reservationService.createReservation(request as ReservationCommand)
-				.subscribe(() => this.dialogRef.close());
+				.subscribe({
+					next: () => {
+						this.dialogRef.close()
+						this.dialogWrapped.openFeedback(
+							{
+								title: 'Salvo com sucesso',
+								message: ``,
+								icon: "success"
+							} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
+					},
+					error: () => {
+						this.dialogWrapped.openFeedback(
+							{
+								title: 'Não foi possível concluir o registro',
+								message: ``,
+								icon: "warning"
+							} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
+					}
+				});
 		}
 	}
 

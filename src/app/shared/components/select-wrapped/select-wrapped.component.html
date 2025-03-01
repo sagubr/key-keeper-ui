@@ -1,1 +1,15 @@
-<p>select-wrapped works!</p>
+<mat-form-field appearance="outline" class="full-width">
+	<mat-label>Atribuição</mat-label>
+	<mat-select [compareWith]="compareById">
+		@for (element of options(); track $index) {
+			<mat-option [value]="element">{{ element }}</mat-option>
+		}
+	</mat-select>
+	<mat-spinner *ngIf="isLoading" class="spinner internal-spinner" diameter="20"></mat-spinner>
+	@if (selected.invalid) {
+		<mat-error>{{ getErrorMessage() }}</mat-error>
+	}
+	<mat-hint>{{ hint }}</mat-hint>
+</mat-form-field>
+
+

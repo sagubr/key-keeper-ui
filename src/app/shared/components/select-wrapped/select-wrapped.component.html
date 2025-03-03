@@ -2,15 +2,11 @@
 	<mat-label>{{ placeholder() }}</mat-label>
 
 	<mat-select
+		class="select"
 		[value]="selected.value"
 		(selectionChange)="selectOption($event.value)"
 		[disabled]="isLoading()"
 	>
-		<mat-option *ngIf="isLoading()" disabled>
-			<mat-spinner diameter="20"></mat-spinner>
-			Loading...
-		</mat-option>
-
 		<mat-option *ngFor="let option of options()" [value]="option">
 			{{ displayFn()(option) }}
 		</mat-option>
@@ -21,4 +17,10 @@
 	<mat-error *ngIf="selected.invalid">
 		{{ getErrorMessage() }}
 	</mat-error>
+
+	<ng-container *ngIf="isLoading()">
+		<div matSuffix class="internal-spinner">
+			<mat-spinner diameter="20"></mat-spinner>
+		</div>
+	</ng-container>
 </mat-form-field>

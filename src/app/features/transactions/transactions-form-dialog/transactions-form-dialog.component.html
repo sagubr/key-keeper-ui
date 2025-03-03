@@ -38,7 +38,10 @@
 					<div class="col">
 						<mat-form-field appearance="outline" class="full-width">
 							<mat-label>Sala</mat-label>
-							<mat-select formControlName="permission" [compareWith]="compareById">
+							<mat-select
+								formControlName="permission"
+								(selectionChange)="onPermissionChange($event.value)"
+								[compareWith]="compareById">
 								<mat-option *ngFor="let element of permissions" [value]="element">
 									{{ element.location.name }}
 								</mat-option>
@@ -54,8 +57,7 @@
 					<div class="col">
 						<mat-form-field appearance="outline" class="full-width">
 							<mat-label>Chave</mat-label>
-							<mat-select formControlName="key" [compareWith]="compareById"
-										(selectionChange)="onPermissionChange($event.value)">
+							<mat-select formControlName="key" [compareWith]="compareById">
 								<mat-option *ngFor="let element of keys" [value]="element">
 									{{ element.code }} - {{ element.description }}
 								</mat-option>
@@ -75,10 +77,76 @@
 			</form>
 		</mat-step>
 
-		<!-- Segundo passo -->
 		<mat-step [stepControl]="secondFormGroup">
 			<form [formGroup]="secondFormGroup" (ngSubmit)="onSubmit()">
-				<!-- Campos adicionais aqui -->
+				<ng-template matStepLabel>Período</ng-template>
+				<div class="row">
+					<div class="col">
+						<mat-form-field appearance="outline" class="full-width">
+							<mat-label>Data de início</mat-label>
+							<input matInput
+								   [matDatepicker]="datepickerStartDateTime"
+								   formControlName="startDateTime">
+							<mat-datepicker #datepickerStartDateTime/>
+							<mat-datepicker-toggle [for]="datepickerStartDateTime" matSuffix/>
+						</mat-form-field>
+					</div>
+					<div class="col">
+						<mat-form-field appearance="outline" class="full-width">
+							<mat-label>Horário de início</mat-label>
+							<input matInput
+								   [matTimepicker]="timepickerStartDateTime"
+								   formControlName="startDateTime"
+								   matTimepickerMin="06:00"
+								   matTimepickerMax="23:00"
+							>
+							<mat-timepicker #timepickerStartDateTime/>
+							<mat-timepicker-toggle [for]="timepickerStartDateTime" matSuffix/>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col">
+						<mat-form-field appearance="outline" class="full-width">
+							<mat-label>Data final</mat-label>
+							<input matInput
+								   [matDatepicker]="datepickerEndDateTime"
+								   formControlName="endDateTime">
+							<mat-datepicker #datepickerEndDateTime/>
+							<mat-datepicker-toggle [for]="datepickerEndDateTime" matSuffix/>
+						</mat-form-field>
+					</div>
+					<div class="col">
+						<mat-form-field appearance="outline" class="full-width">
+							<mat-label>Horário final</mat-label>
+							<input matInput
+								   [matTimepicker]="timepickerEndDateTime"
+								   formControlName="endDateTime"
+								   matTimepickerMin="06:00"
+								   matTimepickerMax="23:00"
+							>
+							<mat-timepicker #timepickerEndDateTime/>
+							<mat-timepicker-toggle [for]="timepickerEndDateTime" matSuffix/>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="align-end">
+					<button
+						mat-button
+						class="button-secondary"
+						matStepperPrevious>
+						Voltar
+					</button>
+					<button
+						mat-button
+						class="button-primary"
+						type="submit"
+						matStepperNext>
+						Salvar
+					</button>
+				</div>
 			</form>
 		</mat-step>
 	</mat-stepper>

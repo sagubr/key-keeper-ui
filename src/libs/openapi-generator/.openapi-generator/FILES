@@ -23,7 +23,6 @@ model/assignment.ts
 model/assignmentCommand.ts
 model/entityPattern.ts
 model/eventLoggingEvent.ts
-model/eventNotifierEvent.ts
 model/facility.ts
 model/jobTitle.ts
 model/key.ts
@@ -32,7 +31,7 @@ model/location.ts
 model/locationType.ts
 model/loggingEvent.ts
 model/models.ts
-model/notifierEvent.ts
+model/notification.ts
 model/permission.ts
 model/permissionLocationSummaryDto.ts
 model/permissions.ts

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import { MatSidenav, MatSidenavModule } from "@angular/material/sidenav";
@@ -13,7 +13,9 @@ import { MatMenuModule } from "@angular/material/menu";
 import { AuthenticationService } from "@app/core/services/authentication.service";
 import { Permissions } from "@openapi/model/permissions";
 import { ActionsService } from "@app/core/services/actions.service";
-import { serverRoutes } from "@app/app.routes.server";
+import { NotificationsService } from "@openapi/api/notifications.service";
+import { Notification } from "@openapi/model/notification";
+import { interval, Subscription, switchMap } from "rxjs";
 
 @Component({
 	selector: 'app-sidenav',
@@ -34,7 +36,7 @@ import { serverRoutes } from "@app/app.routes.server";
 	templateUrl: './sidenav.component.html',
 	styleUrl: './sidenav.component.scss'
 })
-export class SidenavComponent {
+export class SidenavComponent implements OnInit, OnDestroy {
 
 	@ViewChild('drawer') sidenav!: MatSidenav;
 
@@ -42,10 +44,33 @@ export class SidenavComponent {
 	menuOptions: Section[] = MENU_OPTIONS;
 	menuOptionsSettings: Section[] = MENU_OPTIONS_SETTINGS;
 
+	notifications: Notification[] = [];
+	private subscription?: Subscription;
+
 	constructor(
-		private readonly service: AuthenticationService,
+		private readonly authentication: AuthenticationService,
+		private readonly notification: NotificationsService,
 		private readonly actions: ActionsService
 	) {
+	}
+
+	ngOnInit(): void {
+		this.startNotificationPolling();
+	}
+
+	ngOnDestroy(): void {
+		this.subscription?.unsubscribe();
+	}
+
+	startNotificationPolling(): void {
+		this.notification.findByReadFalse().subscribe(res => this.notifications = res);
+		this.subscription = interval(300000)
+			.pipe(switchMap(() => this.notification.findByReadFalse()))
+			.subscribe(res => this.notifications = res);
+	}
+
+	showNotifications(): void {
+		console.log(this.notifications)
 	}
 
 	toggleDrawer(): void {
@@ -53,7 +78,7 @@ export class SidenavComponent {
 	}
 
 	logout(): void {
-		this.service.logout();
+		this.authentication.logout();
 	}
 
 	hasAnyPermission(permission?: Permissions[]): boolean {
@@ -63,8 +88,8 @@ export class SidenavComponent {
 		return this.actions.hasAnyPermission(permission);
 	}
 
-	getUser(): string | undefined{
-		return this.service.getUser();
+	getUser(): string | undefined {
+		return this.authentication.getUser();
 	}
 
 }

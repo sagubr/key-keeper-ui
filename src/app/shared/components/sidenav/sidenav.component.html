@@ -6,8 +6,12 @@
 	<span class="h2">Guardião de Chaves</span>
 	<span class="spacer"></span>
 
-	<button mat-icon-button class="icon-extra-large">
-		<mat-icon matBadge="15">notifications</mat-icon>
+	<button
+		(click)="showNotifications()"
+		mat-icon-button
+		class="icon-extra-large"
+	>
+		<mat-icon [matBadge]="notifications.length">notifications</mat-icon>
 	</button>
 
 	<button mat-button [matMenuTriggerFor]="userMenu" class="user-menu">

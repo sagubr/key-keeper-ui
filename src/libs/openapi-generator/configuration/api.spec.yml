@@ -9,30 +9,30 @@ security:
 tags:
     - name: Requester
       description: Classe referência para Solicitantes
+    - name: Reservation
+      description: Classe referência para Reservas
     - name: Email
       description: Operações relacionadas a envio de e-mail
     - name: JobTitle
       description: Operações relacionadas a entidade cargo
     - name: Location
       description: Classe referência para Localização
-    - name: Facility
-      description: Operações relacionadas a entidade lugar
-    - name: Logging
-      description: Operações relacionadas a entidade Permissão
-    - name: LocationType
-      description: Classe referência para Tipos de Ambiente
     - name: Permission
       description: Operações relacionadas a entidade Permissão
+    - name: Facility
+      description: Operações relacionadas a entidade lugar
     - name: Key
       description: Operações relacionadas a entidade Chaves
-    - name: Reservation
-      description: Classe referência para Reservas
-    - name: Assignment
-      description: Classe referência para Atribuição
     - name: Users
       description: Classe referência para Usuário
-    - name: Notifications
+    - name: Logging
       description: Operações relacionadas a entidade Permissão
+    - name: Assignment
+      description: Classe referência para Atribuição
+    - name: LocationType
+      description: Classe referência para Tipos de Ambiente
+    - name: Notifications
+      description: Operações relacionadas a entidade Notificação
 paths:
     /api/assignment:
         get:
@@ -1581,16 +1581,70 @@ paths:
         get:
             tags:
                 - Notifications
-            summary: Endpoint para os clientes se inscreverem e receberem notificações.
-            description: Endpoint para os clientes se inscreverem e receberem notificações.
-            operationId: streamNotifications
+            summary: Obter todos os registros da classe notificação que não tenham sido
+                lidos
+            operationId: findByReadFalse
             responses:
                 "200":
-                    description: streamNotifications 200 response
+                    description: Operação bem sucedida
                     content:
-                        text/event-stream:
+                        application/json:
                             schema:
-                                $ref: "#/components/schemas/Event_NotifierEvent_"
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Notification"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
+    /notifications/read/{notificationId}:
+        post:
+            tags:
+                - Notifications
+            summary: Marcar o registro de notificação como lida
+            operationId: markAsRead
+            parameters:
+                - name: notificationId
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            responses:
+                "200":
+                    description: Operação bem sucedida
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Notification"
+                "401":
+                    description: Falha de autenticação
+                "403":
+                    description: Acesso não autorizado
+                "404":
+                    description: Recurso não encontrado
+                "422":
+                    description: Erro de validação
+                    content:
+                        application/json:
+                            schema: {}
+                "500":
+                    description: Erro
+                    content:
+                        application/json:
+                            schema: {}
 components:
     schemas:
         Assignment:
@@ -1645,19 +1699,6 @@ components:
             properties:
                 data:
                     $ref: "#/components/schemas/LoggingEvent"
-                id:
-                    type: string
-                name:
-                    type: string
-                comment:
-                    type: string
-                retry:
-                    type: string
-        Event_NotifierEvent_:
-            type: object
-            properties:
-                data:
-                    $ref: "#/components/schemas/NotifierEvent"
                 id:
                     type: string
                 name:
@@ -1767,16 +1808,27 @@ components:
                     type: string
                 message:
                     type: string
-        NotifierEvent:
+        Notification:
             required:
-                - message
-                - reservation
+                - name
             type: object
-            properties:
-                reservation:
-                    $ref: "#/components/schemas/Reservation"
-                message:
-                    type: string
+            allOf:
+                - $ref: "#/components/schemas/EntityPattern"
+                - properties:
+                      name:
+                          type: string
+                      reservation:
+                          nullable: true
+                          allOf:
+                              - $ref: "#/components/schemas/Reservation"
+                      metadata:
+                          type: object
+                          additionalProperties:
+                              type: string
+                      read:
+                          type: boolean
+                      send:
+                          type: boolean
         Permission:
             required:
                 - endDateTime
@@ -1919,7 +1971,7 @@ components:
                           format: date-time
                       status:
                           $ref: "#/components/schemas/Status"
-                      notificationSent:
+                      notification:
                           type: boolean
         ReservationChangeStatusCommand:
             required:

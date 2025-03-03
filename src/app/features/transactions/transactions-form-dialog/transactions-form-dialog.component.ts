@@ -128,10 +128,10 @@ export class TransactionsFormDialogComponent implements OnInit {
 		this.findByRestrictedFalseAndPublicTrue();
 	}
 
-	onPermissionChange(selectedPermission: any): void {
+	onPermissionChange(selectedPermission: PermissionLocationSummaryDto): void {
 		this.firstFormGroup.get('key')?.reset()
 		this.firstFormGroup.get('key')?.enable();
-		this.findByLocation(selectedPermission);
+		this.findByLocation(selectedPermission.location);
 	}
 
 	private findRequester(): void {
@@ -147,6 +147,23 @@ export class TransactionsFormDialogComponent implements OnInit {
 			.pipe(finalize(() => this.loadings.permissions = false))
 			.subscribe((res) => this.permissions = res);
 		console.log("com permissao", this.permissions)
+		this.findByRequestersIdRestrictedTrue(requester)
+	}
+
+	private findByRequestersIdRestrictedTrue(requester: Requester): void {
+		this.loadings.permissions = true;
+		this.locationService.findByResponsiblesId(requester.id!)
+			.pipe(finalize(() => this.loadings.permissions = false))
+			.subscribe((res) => {
+				res.forEach(it => {
+					const alreadyAdded = this.permissions.some(p => p.location.id === it.id);
+					if (!alreadyAdded) {
+						this.permissions.push({ location: it } as PermissionLocationSummaryDto);
+					}
+					console.log("restrita", this.permissions)
+				});
+				}
+			);
 	}
 
 	private findByRestrictedFalseAndPublicTrue(): void {

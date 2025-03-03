@@ -34,7 +34,7 @@ export interface Reservation {
     startDateTime: string;
     endDateTime: string;
     status: Status;
-    notificationSent?: boolean;
+    notification?: boolean;
 }
 export namespace Reservation {
 }

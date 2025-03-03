@@ -22,31 +22,28 @@
 
 				<div class="row">
 					<div class="col">
-						<mat-form-field appearance="outline" class="full-width">
-							<mat-label>Status</mat-label>
-							<mat-select formControlName="status" [compareWith]="compareById">
-								<mat-option *ngFor="let element of status" [value]="element">{{ element }}</mat-option>
-							</mat-select>
-							<mat-error *ngIf="firstFormGroup.get('status')?.invalid">
-								Você deve inserir um valor
-							</mat-error>
-						</mat-form-field>
+
+						<app-select-wrapped
+							formControlName="permission"
+							(change)="onPermissionChange($event)"
+							[options]="permissions"
+							[isLoading]="loadings.permissions!"
+							[displayFn]="userDisplay"
+							placeholder="Sala"
+							hint="Selecione uma sala para empŕestimo"
+						></app-select-wrapped>
+
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col">
 						<mat-form-field appearance="outline" class="full-width">
-							<mat-label>Sala</mat-label>
-							<mat-select
-								formControlName="permission"
-								(selectionChange)="onPermissionChange($event.value)"
-								[compareWith]="compareById">
-								<mat-option *ngFor="let element of permissions" [value]="element">
-									{{ element.location.name }}
-								</mat-option>
+							<mat-label>Status</mat-label>
+							<mat-select formControlName="status" [compareWith]="compareById">
+								<mat-option *ngFor="let element of status" [value]="element">{{ element }}</mat-option>
 							</mat-select>
-							<mat-error *ngIf="firstFormGroup.get('permission')?.invalid">
+							<mat-error *ngIf="firstFormGroup.get('status')?.invalid">
 								Você deve inserir um valor
 							</mat-error>
 						</mat-form-field>

@@ -1,15 +1,24 @@
 <mat-form-field appearance="outline" class="full-width">
-	<mat-label>Atribuição</mat-label>
-	<mat-select [compareWith]="compareById">
-		@for (element of options(); track $index) {
-			<mat-option [value]="element">{{ element }}</mat-option>
-		}
+	<mat-label>{{ placeholder() }}</mat-label>
+
+	<mat-select
+		[value]="selected.value"
+		(selectionChange)="selectOption($event.value)"
+		[disabled]="isLoading()"
+	>
+		<mat-option *ngIf="isLoading()" disabled>
+			<mat-spinner diameter="20"></mat-spinner>
+			Loading...
+		</mat-option>
+
+		<mat-option *ngFor="let option of options()" [value]="option">
+			{{ displayFn()(option) }}
+		</mat-option>
 	</mat-select>
-	<mat-spinner *ngIf="isLoading" class="spinner internal-spinner" diameter="20"></mat-spinner>
-	@if (selected.invalid) {
-		<mat-error>{{ getErrorMessage() }}</mat-error>
-	}
-	<mat-hint>{{ hint }}</mat-hint>
+
+	<mat-hint>{{ hint() }}</mat-hint>
+
+	<mat-error *ngIf="selected.invalid">
+		{{ getErrorMessage() }}
+	</mat-error>
 </mat-form-field>
-
-

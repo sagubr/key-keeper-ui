@@ -28,6 +28,7 @@ import { Key } from "@openapi/model/key";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { finalize } from "rxjs";
 import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
+import { SelectWrappedComponent } from "@app/shared/components/select-wrapped/select-wrapped.component";
 
 @Component({
 	selector: 'app-transactions-form-dialog',
@@ -47,7 +48,9 @@ import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/
 		MatTimepickerModule,
 		FormsModule,
 		MatStepperModule,
-		MatProgressSpinnerModule
+		MatProgressSpinnerModule,
+		SelectWrappedComponent,
+		SelectWrappedComponent
 	],
 	templateUrl: './transactions-form-dialog.component.html',
 	styleUrl: './transactions-form-dialog.component.scss',
@@ -70,6 +73,8 @@ export class TransactionsFormDialogComponent implements OnInit {
 		requesters: false,
 		keys: false
 	}
+
+	userDisplay = (user: PermissionLocationSummaryDto) => user.location.name;
 
 	constructor(
 		public dialogRef: MatDialogRef<TransactionsFormDialogComponent>,
@@ -109,12 +114,13 @@ export class TransactionsFormDialogComponent implements OnInit {
 								icon: "success"
 							} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 					},
-					error: () => {
+					error: (err) => {
+						console.log(err)
 						this.dialogWrapped.openFeedback(
 							{
 								title: 'Não foi possível concluir o registro',
-								message: ``,
-								icon: "warning"
+								message: `${err.error.details}`,
+								icon: "danger"
 							} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 					}
 				});

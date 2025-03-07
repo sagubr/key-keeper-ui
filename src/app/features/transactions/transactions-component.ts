@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { MatIcon, MatIconModule } from "@angular/material/icon";
-import { MatTab, MatTabGroup, MatTabLabel, MatTabsModule } from "@angular/material/tabs";
-import { Status } from "@openapi/model/status";
+import { MatIconModule } from "@angular/material/icon";
+import { MatTabsModule } from "@angular/material/tabs";
 import {
 	TransactionsDatatableProgressComponent
 } from "@app/features/transactions/transactions-datatable/transactions-datatable-progress/transactions-datatable-progress.component";
@@ -9,7 +8,6 @@ import {
 	TransactionsDatatableHistoryComponent
 } from "@app/features/transactions/transactions-datatable/transactions-datatable-history/transactions-datatable-history.component";
 import { MatTableModule } from "@angular/material/table";
-import { Action } from "rxjs/internal/scheduler/Action";
 import { ActionsService } from "@app/core/services/actions.service";
 import { Permissions } from "@openapi/model/permissions";
 

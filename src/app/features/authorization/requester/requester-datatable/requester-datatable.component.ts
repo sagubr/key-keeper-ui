@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
-import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
+import { Columns, ColumnType, TableWrapper } from "@app/shared/components/table-wrapped/table-wrapper";
 import { finalize, Subscription } from "rxjs";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { UserDto } from "@openapi/model/userDto";
@@ -35,7 +35,7 @@ import { Status } from "@openapi/model/status";
 		MatIconModule,
 		MatButtonModule,
 		MatSort,
-		TableWrapperTable,
+		TableWrapper,
 		MatFormField,
 		MatInput,
 		MatLabel,

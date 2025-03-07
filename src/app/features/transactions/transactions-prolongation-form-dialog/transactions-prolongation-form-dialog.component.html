@@ -1,0 +1,63 @@
+<div class="dialog-header">
+	<h2 class="h2" mat-dialog-title>Prorrogação do Empréstimo</h2>
+	<button mat-icon-button mat-dialog-close>
+		<mat-icon>close</mat-icon>
+	</button>
+</div>
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+	<mat-dialog-content>
+
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Data final</mat-label>
+					<input matInput
+						   [matDatepicker]="datepickerEndDateTime"
+						   formControlName="endDateTime">
+					<mat-datepicker #datepickerEndDateTime/>
+					<mat-datepicker-toggle [for]="datepickerEndDateTime" matSuffix/>
+				</mat-form-field>
+			</div>
+			<div class="col">
+				<mat-form-field appearance="outline" class="full-width">
+					<mat-label>Horário final</mat-label>
+					<input matInput
+						   [matTimepicker]="timepickerEndDateTime"
+						   formControlName="endDateTime"
+						   matTimepickerMin="06:00"
+						   matTimepickerMax="23:00"
+					>
+					<mat-timepicker #timepickerEndDateTime/>
+					<mat-timepicker-toggle [for]="timepickerEndDateTime" matSuffix/>
+				</mat-form-field>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<mat-chip-set aria-label="Fish selection">
+					<mat-chip (click)="addTimeToEndDateTime(30)">+ 30m</mat-chip>
+					<mat-chip (click)="addTimeToEndDateTime(60)">+ 1h</mat-chip>
+					<mat-chip (click)="addTimeToEndDateTime(90)">+ 1h 30m</mat-chip>
+					<mat-chip (click)="addTimeToEndDateTime(120)">+ 2h</mat-chip>
+					<mat-chip (click)="addTimeToEndDateTime(150)">+ 2h 30m</mat-chip>
+					<mat-chip (click)="addTimeToEndDateTime(180)">+ 3h</mat-chip>
+				</mat-chip-set>
+			</div>
+		</div>
+
+		<div class="align-end">
+			<button
+				mat-button
+				class="button-secondary">
+				Voltar
+			</button>
+			<button
+				mat-button
+				class="button-primary"
+				type="submit">
+				Salvar
+			</button>
+		</div>
+	</mat-dialog-content>
+</form>

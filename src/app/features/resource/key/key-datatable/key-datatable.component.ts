@@ -6,7 +6,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatSort, MatSortModule } from "@angular/material/sort";
-import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
+import { Columns, ColumnType, TableWrapper } from "@app/shared/components/table-wrapped/table-wrapper";
 import { finalize, Subscription } from "rxjs";
 import { Key } from "@openapi/model/key";
 import { Location } from "@openapi/model/location";
@@ -32,7 +32,7 @@ import { CommonModule } from "@angular/common";
 		MatInputModule,
 		MatToolbarModule,
 		CommonModule,
-		TableWrapperTable
+		TableWrapper
 	],
 	templateUrl: './key-datatable.component.html',
 	styleUrl: './key-datatable.component.scss'

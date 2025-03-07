@@ -1,4 +1,17 @@
-import { Component, forwardRef, input, InputSignal, OnDestroy, OnInit, output, OutputEmitterRef } from '@angular/core';
+import {
+	booleanAttribute,
+	Component, effect,
+	EnvironmentInjector,
+	forwardRef,
+	inject,
+	input,
+	InputSignal,
+	OnDestroy,
+	OnInit,
+	output,
+	OutputEmitterRef,
+	runInInjectionContext
+} from '@angular/core';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import {
 	ControlValueAccessor,
@@ -11,20 +24,23 @@ import {
 import { MatOptionModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { NgForOf, NgIf } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { compareById } from "@app/core/utils/utils";
+import { MatInputModule } from "@angular/material/input";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
 	selector: 'app-select-wrapped',
 	imports: [
 		MatFormFieldModule,
 		FormsModule,
+		MatInputModule,
 		MatOptionModule,
 		MatSelectModule,
 		ReactiveFormsModule,
 		MatProgressSpinnerModule,
-		NgIf,
-		NgForOf
+		MatIconModule,
+		NgClass
 	],
 	providers: [
 		{
@@ -34,20 +50,21 @@ import { compareById } from "@app/core/utils/utils";
 		},
 	],
 	templateUrl: './select-wrapped.component.html',
-	styleUrl: './select-wrapped.component.scss'
+	styleUrl: './select-wrapped.component.scss',
 })
 export class SelectWrappedComponent<T> implements ControlValueAccessor, OnInit, OnDestroy {
 
-
-	readonly hint: InputSignal<string> = input.required<string>();
+	readonly hint: InputSignal<string | undefined> = input<string>();
 	readonly placeholder: InputSignal<string> = input.required<string>();
-	readonly isLoading: InputSignal<boolean> = input.required<boolean>();
+	readonly isLoading = input(false, { transform: booleanAttribute });
 	readonly options: InputSignal<T[]> = input.required<T[]>();
 	readonly displayFn = input<(option: T) => string>(
 		(option) => (option ? option.toString() : '')
 	);
-
 	readonly change: OutputEmitterRef<T> = output<T>();
+
+	searchTerm: string = '';
+	filteredOptions: T[] = [];
 
 	selected = new FormControl<T | null>(null, [Validators.required]);
 
@@ -56,6 +73,14 @@ export class SelectWrappedComponent<T> implements ControlValueAccessor, OnInit, 
 
 	private onTouched: () => void = () => {
 	};
+
+	constructor() {
+		effect(() => {
+			this.filteredOptions = this.options();
+			this.filterOptions();
+			console.log('carregou', this.filteredOptions)
+		});
+	}
 
 	ngOnInit(): void {
 	}
@@ -86,8 +111,16 @@ export class SelectWrappedComponent<T> implements ControlValueAccessor, OnInit, 
 	}
 
 	getErrorMessage(): string {
-		return this.selected.hasError('required') ? 'This field is required' : '';
+		return this.selected.hasError('required') ? 'Este campo é obrigatório' : '';
 	}
+
+	filterOptions(): void {
+		const search = this.searchTerm.toLowerCase();
+		this.filteredOptions = this.options().filter((option) =>
+			this.displayFn()(option).toLowerCase().includes(search)
+		);
+	}
+
 
 	protected readonly compareById = compareById;
 

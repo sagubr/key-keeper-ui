@@ -16,6 +16,7 @@ import { ActionsService } from "@app/core/services/actions.service";
 import { NotificationsService } from "@openapi/api/notifications.service";
 import { Notification } from "@openapi/model/notification";
 import { interval, Subscription, switchMap } from "rxjs";
+import { MatCardModule } from "@angular/material/card";
 
 @Component({
 	selector: 'app-sidenav',
@@ -31,7 +32,8 @@ import { interval, Subscription, switchMap } from "rxjs";
 		RouterOutlet,
 		RouterLink,
 		MatTooltipModule,
-		MatMenuModule
+		MatMenuModule,
+		MatCardModule
 	],
 	templateUrl: './sidenav.component.html',
 	styleUrl: './sidenav.component.scss'
@@ -44,6 +46,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
 	menuOptions: Section[] = MENU_OPTIONS;
 	menuOptionsSettings: Section[] = MENU_OPTIONS_SETTINGS;
 
+
+	notificationsVisible = false;
 	notifications: Notification[] = [];
 	private subscription?: Subscription;
 
@@ -64,14 +68,25 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
 	startNotificationPolling(): void {
 		this.notification.findByReadFalse().subscribe(res => this.notifications = res);
-		this.subscription = interval(300000)
+		this.subscription = interval(60*1000)
 			.pipe(switchMap(() => this.notification.findByReadFalse()))
 			.subscribe(res => this.notifications = res);
 	}
 
-	showNotifications(): void {
-		console.log(this.notifications)
+	toggleNotifications() {
+		this.notificationsVisible = !this.notificationsVisible;
 	}
+
+	markAsRead(notification: Notification) {
+		this.notification.markAsRead(notification.id!).subscribe({
+				next: () => {
+					this.notifications = this.notifications.filter(it => it.id !== notification.id)
+				}
+			}
+		)
+
+	}
+
 
 	toggleDrawer(): void {
 		this.opened = !this.opened;

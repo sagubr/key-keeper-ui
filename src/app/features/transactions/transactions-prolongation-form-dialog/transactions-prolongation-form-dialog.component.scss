@@ -1,0 +1,26 @@
+@use 'forms';
+@use 'fonts';
+@use 'buttons';
+
+.dialog-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+
+	button {
+		margin-left: auto;
+	}
+}
+
+.dialog-footer {
+	margin: 16px;
+}
+
+.align-end {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	padding-top: 16px;
+}
+

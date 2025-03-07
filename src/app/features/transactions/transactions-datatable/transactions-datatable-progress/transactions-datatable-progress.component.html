@@ -34,23 +34,38 @@
 	<div class="container mat-elevation-z8">
 		<div class="mat-table-container">
 			<div class="table-wrapper">
-				<table-wrapper-table [dataSource]="dataSource" [columns]="columns"
-									 matSort #sort="matSort">
+				<table-wrapper [dataSource]="dataSource" [columns]="columns"
+							   matSort #sort="matSort">
 
 					<ng-container matColumnDef="info">
 						<th mat-header-cell *matHeaderCellDef class="mat-header-cell">Situação</th>
 						<td mat-cell *matCellDef="let element">
 							<div class="cell-content-wrapper">
-								@switch (element.status) {
-									@case (Status.Agendado) {
-										<span>{{ Status.Agendado | uppercase }}</span>
-										<mat-icon>event_busy</mat-icon>
+								<mat-chip-set>
+									@switch (element.status) {
+										@case (Status.Agendado) {
+											<mat-chip color="primary">
+												<mat-icon matChipTrailingIcon>event_busy</mat-icon>
+												{{ Status.Agendado | uppercase }}
+											</mat-chip>
+										}
+										@case (Status.Emprestimo) {
+											<mat-chip selected color="primary">
+												<mat-icon matChipTrailingIcon>access_time</mat-icon>
+												{{ Status.Emprestimo | uppercase }}
+											</mat-chip>
+										}
+										@case (Status.Atrasado) {
+											<mat-chip
+												selected
+												class="custom-chip"
+												color="primary">
+												<mat-icon matChipTrailingIcon>hourglass_bottom</mat-icon>
+												{{ Status.Atrasado | uppercase }}
+											</mat-chip>
+										}
 									}
-									@case (Status.Emprestimo) {
-										<span>{{ Status.Emprestimo | uppercase }}</span>
-										<mat-icon>access_time</mat-icon>
-									}
-								}
+								</mat-chip-set>
 							</div>
 						</td>
 					</ng-container>
@@ -62,17 +77,26 @@
 						<td mat-cell *matCellDef="let element">
 							@switch (element.status) {
 								@case (Status.Agendado) {
-									<button mat-menu-item
+									<button mat-flat-button
+											color="primary"
 											(click)="openDialogConfirmChangeStatus(element, Status.Emprestimo)">
 										<mat-icon>play_arrow</mat-icon>
-										<span>Iniciar</span>
+										Iniciar
 									</button>
 								}
 								@case (Status.Emprestimo) {
-									<button mat-menu-item
+									<button mat-flat-button
+											color="warn"
 											(click)="openDialogConfirmChangeStatus(element, Status.Concluido)">
 										<mat-icon>check_circle</mat-icon>
-										<span>Devolver</span>
+										Concluir
+									</button>
+								}
+								@case (Status.Atrasado) {
+									<button mat-flat-button
+											(click)="openDialogConfirmChangeStatus(element, Status.Concluido)">
+										<mat-icon>check_circle</mat-icon>
+										Concluir
 									</button>
 								}
 							}
@@ -93,7 +117,9 @@
 									<mat-icon>help</mat-icon>
 									<span>Mais informações</span>
 								</button>
-								<button mat-menu-item>
+								<button mat-menu-item
+										(click)="openProlongationDialog(element)"
+								>
 									<mat-icon>more_time</mat-icon>
 									<span>Prorrogar</span>
 								</button>
@@ -113,7 +139,7 @@
 					<tr class="mat-row-no-data" *matNoDataRow>
 						<td colspan="7">Não há usuários cadastrados</td>
 					</tr>
-				</table-wrapper-table>
+				</table-wrapper>
 			</div>
 		</div>
 	</div>

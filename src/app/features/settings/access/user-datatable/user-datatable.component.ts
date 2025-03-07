@@ -10,7 +10,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { UsersService } from '@openapi/api/users.service';
-import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
+import { Columns, ColumnType, TableWrapper } from "@app/shared/components/table-wrapped/table-wrapper";
 import { UserDto } from "@openapi/model/userDto";
 import { UserFormDialogComponent } from "@app/features/settings/access/user-form-dialog/user-form-dialog.component";
 import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";
@@ -31,7 +31,7 @@ import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/
 		MatIconModule,
 		MatButtonModule,
 		MatSort,
-		TableWrapperTable,
+		TableWrapper,
 		MatFormField,
 		MatInput,
 		MatLabel,

@@ -3,7 +3,7 @@ import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { Reservation } from "@openapi/model/reservation";
-import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
+import { Columns, ColumnType, TableWrapper } from "@app/shared/components/table-wrapped/table-wrapper";
 import { finalize, Subscription } from "rxjs";
 import { ReservationService } from "@openapi/api/reservation.service";
 import { MatDialog } from "@angular/material/dialog";
@@ -21,6 +21,10 @@ import {
 import { ReservationChangeStatusCommand } from "@openapi/model/reservationChangeStatusCommand";
 import { UpperCasePipe } from "@angular/common";
 import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
+import {
+	TransactionsProlongationFormDialogComponent
+} from "@app/features/transactions/transactions-prolongation-form-dialog/transactions-prolongation-form-dialog.component";
+import { MatChipsModule } from "@angular/material/chips";
 
 @Component({
 	selector: 'app-transactions-datatable-progress',
@@ -32,10 +36,11 @@ import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/
 		MatPaginatorModule,
 		MatProgressBarModule,
 		MatSortModule,
-		TableWrapperTable,
+		TableWrapper,
 		MatFormFieldModule,
 		MatInputModule,
 		MatToolbarModule,
+		MatChipsModule,
 		UpperCasePipe,
 	],
 	templateUrl: './transactions-datatable-progress.component.html',
@@ -63,19 +68,13 @@ export class TransactionsDatatableProgressComponent implements OnInit, AfterView
 			cell: (reservation: Reservation) => reservation.location?.name
 		},
 		{
-			definition: 'start_date_time',
-			header: 'Início',
-			type: ColumnType.DATETIME,
-			cell: (reservation: Reservation) => reservation.startDateTime
-		},
-		{
-			definition: 'end_date_time',
-			header: 'Fim',
-			type: ColumnType.DATETIME,
-			cell: (reservation: Reservation) => reservation.endDateTime
-		},
+			definition: 'formatted_period',
+			header: 'Período',
+			type: ColumnType.TEXT,
+			cell: (reservation: Reservation) => reservation.formattedPeriod
+		}
 	];
-	displayedColumns: string[] = ['info', ...this.columns.map(c => c.definition), 'action', 'menu'];
+	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'info', 'action', 'menu'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
 
 	loading: boolean = false;
@@ -119,6 +118,15 @@ export class TransactionsDatatableProgressComponent implements OnInit, AfterView
 		});
 	}
 
+	openProlongationDialog(element: Reservation): void {
+		this.dialog.open(TransactionsProlongationFormDialogComponent, {
+			minWidth: '540px',
+			data: element,
+		}).afterClosed().subscribe(() => {
+			this.onReload();
+		});
+	}
+
 	openDialogConfirmChangeStatus(element: Reservation, status: Status): void {
 		this.dialogWrapped.openFeedback(
 			{
@@ -139,11 +147,13 @@ export class TransactionsDatatableProgressComponent implements OnInit, AfterView
 			status: status
 		}
 		this.reservationService.changeStatusReservation(command).subscribe({
-			next: (response) => this.dialogWrapped.openFeedback(),
+			next: (response) => {
+				this.dialogWrapped.openFeedback().afterClosed().subscribe(() => this.findAll());
+			},
 			error: (err) => this.dialogWrapped.openFeedback({
 				message: "Não foi possível alterar o status da solicitação",
 				icon: "danger"
-			} as DialogWrappedInfo),
+			} as DialogWrappedInfo).afterClosed().subscribe(() => this.findAll())
 		});
 	}
 
@@ -156,7 +166,7 @@ export class TransactionsDatatableProgressComponent implements OnInit, AfterView
 
 	private findAll(): void {
 		this.loading = true;
-		this.reservationService.findByActiveTrueAndStatusIn([Status.Emprestimo, Status.Agendado])
+		this.reservationService.findByActiveTrueAndStatusIn([Status.Emprestimo, Status.Agendado, Status.Atrasado])
 			.pipe(finalize(
 				() => this.loading = false
 			))

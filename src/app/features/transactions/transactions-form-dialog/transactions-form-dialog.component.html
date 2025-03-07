@@ -1,3 +1,9 @@
+<div class="dialog-header">
+	<h2 class="h2" mat-dialog-title>Informações do Empréstimo</h2>
+	<button mat-icon-button mat-dialog-close>
+		<mat-icon>close</mat-icon>
+	</button>
+</div>
 <mat-dialog-content>
 	<mat-stepper linear #stepper>
 		<mat-step [stepControl]="firstFormGroup">
@@ -5,34 +11,27 @@
 				<ng-template matStepLabel>Informações</ng-template>
 				<div class="row">
 					<div class="col">
-						<mat-form-field appearance="outline" class="full-width">
-							<mat-label>Solicitante</mat-label>
-							<mat-select formControlName="requester" [compareWith]="compareById"
-										(selectionChange)="onRequesterChange($event.value)">
-								<mat-option *ngFor="let element of requesters" [value]="element">
-									{{ element.name }}
-								</mat-option>
-							</mat-select>
-							<mat-error *ngIf="firstFormGroup.get('requester')?.invalid">
-								Você deve inserir um valor
-							</mat-error>
-						</mat-form-field>
+						<app-select-wrapped
+							formControlName="requester"
+							(change)="onRequesterChange($event)"
+							[options]="requesters"
+							[isLoading]="loadings.requesters"
+							[displayFn]="requesterDisplay"
+							placeholder="Solicitante"
+						></app-select-wrapped>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col">
-
 						<app-select-wrapped
 							formControlName="permission"
 							(change)="onPermissionChange($event)"
 							[options]="permissions"
-							[isLoading]="loadings.permissions!"
-							[displayFn]="userDisplay"
+							[isLoading]="loadings.permissions"
+							[displayFn]="permissionDisplay"
 							placeholder="Sala"
-							hint="Selecione uma sala para empŕestimo"
 						></app-select-wrapped>
-
 					</div>
 				</div>
 
@@ -52,17 +51,15 @@
 
 				<div class="row">
 					<div class="col">
-						<mat-form-field appearance="outline" class="full-width">
-							<mat-label>Chave</mat-label>
-							<mat-select formControlName="key" [compareWith]="compareById">
-								<mat-option *ngFor="let element of keys" [value]="element">
-									{{ element.code }} - {{ element.description }}
-								</mat-option>
-							</mat-select>
-							<mat-error *ngIf="firstFormGroup.get('key')?.invalid">
-								Você deve inserir um valor
-							</mat-error>
-						</mat-form-field>
+
+						<app-select-wrapped
+							formControlName="key"
+							[options]="keys"
+							[isLoading]="loadings.keys"
+							[displayFn]="keyDisplay"
+							placeholder="Chave"
+						></app-select-wrapped>
+
 					</div>
 				</div>
 
@@ -137,7 +134,7 @@
 						Voltar
 					</button>
 					<button
-						mat-button
+						mat-flat-button
 						class="button-primary"
 						type="submit"
 						matStepperNext>

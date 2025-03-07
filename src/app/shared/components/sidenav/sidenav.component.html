@@ -7,11 +7,13 @@
 	<span class="spacer"></span>
 
 	<button
-		(click)="showNotifications()"
+		(click)="toggleNotifications()"
 		mat-icon-button
 		class="icon-extra-large"
 	>
-		<mat-icon [matBadge]="notifications.length">notifications</mat-icon>
+		<mat-icon [matBadge]="notifications.length" matBadgePosition="above after" matBadgeColor="accent">
+			notifications
+		</mat-icon>
 	</button>
 
 	<button mat-button [matMenuTriggerFor]="userMenu" class="user-menu">
@@ -30,6 +32,36 @@
 		</button>
 	</mat-menu>
 </mat-toolbar>
+
+@if (notificationsVisible) {
+
+
+	<div class="notifications-container">
+		<div class="card-notifications">
+			<span class="h2">Notificações</span>
+		</div>
+
+		@for (notification of notifications; track notification.id) {
+			<div class="card-notifications">
+				<mat-card appearance="outlined">
+					<mat-card-header>
+						<mat-card-title>{{ notification.name }}</mat-card-title>
+					</mat-card-header>
+
+					<mat-card-content>
+						<p>A {{ notification.reservation?.location?.name }} reservada no período {{notification.reservation?.formattedPeriod}} está com a devolução atrasada.
+						</p>
+					</mat-card-content>
+
+					<mat-card-actions align="end">
+						<button mat-button (click)="markAsRead(notification)">Marcar como lido</button>
+					</mat-card-actions>
+				</mat-card>
+			</div>
+		}
+	</div>
+
+}
 
 <mat-drawer-container class="sidenav-container" autosize>
 	<!-- Menu Lateral -->

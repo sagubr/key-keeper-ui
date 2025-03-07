@@ -2,15 +2,20 @@
 	Gerenciamento de Solicitações de Empréstimo
 </div>
 <mat-tab-group (selectedIndexChange)="onTabChange($event)"
-			   [(selectedIndex)]="activeTabIndex">
-	<mat-tab [disabled]="!hasPermission(['VER_EMPRESTIMOS', 'EDITAR_EMPRESTIMOS'])">
+			   [(selectedIndex)]="activeTabIndex"
+>
+	<mat-tab
+		[disabled]="!hasPermission(['VER_EMPRESTIMOS', 'EDITAR_EMPRESTIMOS'])"
+	>
 		<ng-template mat-tab-label>
-			<mat-icon class="tab-icon">room_preferences</mat-icon>
+			<mat-icon class="tab-icon">assignment_returned</mat-icon>
 			Empŕestimos
 		</ng-template>
 		<app-transactions-datatable-progress></app-transactions-datatable-progress>
 	</mat-tab>
-	<mat-tab [disabled]="!hasPermission(['VER_HISTORICOS', 'EDITAR_HISTORICOS'])">
+	<mat-tab
+		[disabled]="!hasPermission(['VER_HISTORICOS', 'EDITAR_HISTORICOS'])"
+	>
 		<ng-template mat-tab-label>
 			<mat-icon class="tab-icon">history</mat-icon>
 			Histórico

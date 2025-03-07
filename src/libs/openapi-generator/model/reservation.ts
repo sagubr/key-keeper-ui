@@ -23,8 +23,7 @@ export interface Reservation {
     createdAt?: string;
     updatedAt?: string;
     overdue?: boolean;
-    startDateTimeFormatted?: string;
-    endDateTimeFormatted?: string;
+    formattedPeriod?: string;
     permission?: Permission | null;
     requester?: Requester | null;
     location?: Location | null;

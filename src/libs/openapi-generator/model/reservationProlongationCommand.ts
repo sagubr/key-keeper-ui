@@ -10,13 +10,9 @@
  */
 
 
-export type Status = 'EMPRESTIMO' | 'AGENDADO' | 'ATRASADO' | 'CANCELADO' | 'CONCLUIDO';
-
-export const Status = {
-    Emprestimo: 'EMPRESTIMO' as Status,
-    Agendado: 'AGENDADO' as Status,
-    Atrasado: 'ATRASADO' as Status,
-    Cancelado: 'CANCELADO' as Status,
-    Concluido: 'CONCLUIDO' as Status
-};
+export interface ReservationProlongationCommand { 
+    reservationId: string;
+    startDateTime: string;
+    endDateTime: string;
+}
 

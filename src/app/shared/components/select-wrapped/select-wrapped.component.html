@@ -3,24 +3,49 @@
 
 	<mat-select
 		class="select"
-		[value]="selected.value"
+		[ngClass]="{ 'loading-state': isLoading() }"
 		(selectionChange)="selectOption($event.value)"
-		[disabled]="isLoading()"
+		[disabled]="isLoading() || options().length === 0"
+		panelClass="custom-select-panel"
 	>
-		<mat-option *ngFor="let option of options()" [value]="option">
-			{{ displayFn()(option) }}
-		</mat-option>
+
+		<div class="search-container">
+			<mat-icon class="search-icon">search</mat-icon>
+			<input
+				matInput
+				placeholder="Buscar..."
+				[(ngModel)]="searchTerm"
+				(input)="filterOptions()"
+				class="search-input"
+				(click)="$event.stopPropagation()"
+			/>
+		</div>
+
+		@for (option of filteredOptions; track $index) {
+			<mat-option [value]="option">
+				{{ displayFn()(option) }}
+			</mat-option>
+		}
+
+		@if (filteredOptions.length === 0) {
+			<mat-option disabled>
+				Nenhuma opção encontrada
+			</mat-option>
+		}
+
 	</mat-select>
 
 	<mat-hint>{{ hint() }}</mat-hint>
 
-	<mat-error *ngIf="selected.invalid">
-		{{ getErrorMessage() }}
-	</mat-error>
+	@if (selected.invalid) {
+		<mat-error>
+			{{ getErrorMessage() }}
+		</mat-error>
+	}
 
-	<ng-container *ngIf="isLoading()">
-		<div matSuffix class="internal-spinner">
-			<mat-spinner diameter="20"></mat-spinner>
+	@if (isLoading()) {
+		<div class="internal-spinner">
+			<mat-spinner matSuffix diameter="20"></mat-spinner>
 		</div>
-	</ng-container>
+	}
 </mat-form-field>

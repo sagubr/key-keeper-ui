@@ -107,7 +107,7 @@ export class UserFormDialogComponent implements OnInit {
 	}
 
 	private findAllAssignment(): void {
-		this.assignmentService.findAllAssignment().subscribe({
+		this.assignmentService.findByActiveTrueAssignment().subscribe({
 			next: (res) => {
 				this.assignment = res;
 			},

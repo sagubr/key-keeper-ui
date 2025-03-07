@@ -34,7 +34,7 @@
 	<div class="container mat-elevation-z8">
 		<div class="mat-table-container">
 			<div class="table-wrapper">
-				<table-wrapper-table [dataSource]="dataSource" [columns]="columns"
+				<table-wrapper [dataSource]="dataSource" [columns]="columns"
 									 matSort #sort="matSort">
 					<ng-container matColumnDef="requester">
 						<th mat-header-cell *matHeaderCellDef class="mat-header-cell h3">Solicitantes</th>
@@ -104,7 +104,7 @@
 					<tr class="mat-row-no-data" *matNoDataRow>
 						<td colspan="7">Não há permissões cadastrados</td>
 					</tr>
-				</table-wrapper-table>
+				</table-wrapper>
 			</div>
 		</div>
 	</div>

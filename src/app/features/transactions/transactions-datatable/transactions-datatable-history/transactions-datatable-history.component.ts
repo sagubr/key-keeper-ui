@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, input, InputSignal, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { Reservation } from "@openapi/model/reservation";
-import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
+import { Columns, ColumnType, TableWrapper } from "@app/shared/components/table-wrapped/table-wrapper";
 import { finalize, Subscription } from "rxjs";
 import { ReservationService } from "@openapi/api/reservation.service";
 import { MatDialog } from "@angular/material/dialog";
@@ -18,6 +18,8 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import {
 	TransactionsFormDialogComponent
 } from "@app/features/transactions/transactions-form-dialog/transactions-form-dialog.component";
+import { UpperCasePipe } from "@angular/common";
+import { MatChipsModule } from "@angular/material/chips";
 
 @Component({
 	selector: 'app-transactions-datatable-history',
@@ -29,10 +31,12 @@ import {
 		MatPaginatorModule,
 		MatProgressBarModule,
 		MatSortModule,
-		TableWrapperTable,
+		TableWrapper,
 		MatFormFieldModule,
 		MatInputModule,
 		MatToolbarModule,
+		UpperCasePipe,
+		MatChipsModule,
 	],
 	templateUrl: './transactions-datatable-history.component.html',
 	styleUrl: './transactions-datatable-history.component.scss'
@@ -47,12 +51,6 @@ export class TransactionsDatatableHistoryComponent implements OnInit, AfterViewI
 	dataSource: MatTableDataSource<Reservation> = new MatTableDataSource<Reservation>([]);
 	columns: Columns<Reservation>[] = [
 		{
-			definition: 'status',
-			header: 'Situação',
-			type: ColumnType.TEXT,
-			cell: (reservation: Reservation) => reservation.status
-		},
-		{
 			definition: 'requester',
 			header: 'Solicitante',
 			type: ColumnType.TEXT,
@@ -65,19 +63,13 @@ export class TransactionsDatatableHistoryComponent implements OnInit, AfterViewI
 			cell: (reservation: Reservation) => reservation.location?.name
 		},
 		{
-			definition: 'start_date_time',
-			header: 'Início',
-			type: ColumnType.DATETIME,
-			cell: (reservation: Reservation) => reservation.startDateTime
-		},
-		{
-			definition: 'end_date_time',
-			header: 'Fim',
-			type: ColumnType.DATETIME,
-			cell: (reservation: Reservation) => reservation.endDateTime
-		},
+			definition: 'formatted_period',
+			header: 'Período',
+			type: ColumnType.TEXT,
+			cell: (reservation: Reservation) => reservation.formattedPeriod
+		}
 	];
-	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'menu'];
+	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'info', 'menu'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
 
 	loading: boolean = false;

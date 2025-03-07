@@ -3,7 +3,7 @@ import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatSort, MatSortModule } from "@angular/material/sort";
-import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
+import { Columns, ColumnType, TableWrapper } from "@app/shared/components/table-wrapped/table-wrapper";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { Facility } from "@openapi/model/facility";
 import { finalize, Subscription } from "rxjs";
@@ -29,7 +29,7 @@ import { Location } from "@openapi/model/location";
 		MatPaginatorModule,
 		MatProgressBarModule,
 		MatSortModule,
-		TableWrapperTable,
+		TableWrapper,
 		MatFormFieldModule,
 		MatInputModule,
 		MatToolbarModule,

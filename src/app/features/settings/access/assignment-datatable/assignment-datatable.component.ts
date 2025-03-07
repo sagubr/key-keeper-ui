@@ -21,7 +21,7 @@ import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatToolbarModule, MatToolbarRow } from "@angular/material/toolbar";
-import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
+import { Columns, ColumnType, TableWrapper } from "@app/shared/components/table-wrapped/table-wrapper";
 import { finalize, Subscription } from "rxjs";
 import { MatDialog } from "@angular/material/dialog";
 import { UserDto } from "@openapi/model/userDto";
@@ -59,7 +59,7 @@ import { UpperCasePipe } from "@angular/common";
 		MatSuffix,
 		MatToolbarModule,
 		MatToolbarRow,
-		TableWrapperTable,
+		TableWrapper,
 		MatNoDataRow,
 		MatHeaderCellDef,
 		MatFabButton,
@@ -157,7 +157,7 @@ export class AssignmentDatatableComponent implements OnInit, AfterViewInit, OnDe
 
 	private findAll(): void {
 		this.loading = true;
-		this.service.findAllAssignment()
+		this.service.findByActiveTrueAssignment()
 			.pipe(
 				finalize(() => this.loading = false)
 			).subscribe({

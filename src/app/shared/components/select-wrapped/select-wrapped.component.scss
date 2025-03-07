@@ -1,18 +1,39 @@
 @use '@angular/material' as mat;
 
+.loading-state .mat-mdc-select-arrow-wrapper {
+	display: none !important;
+}
 
 .internal-spinner {
 	display: inline-block;
 	position: absolute;
 	right: 25px;
+	text-align: center;
+}
 
+.search-container {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: 100%;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
 
+.search-icon {
+	padding-left: 10px;
+	color: rgba(0, 0, 0, 0.54);
+}
+
+.search-input {
+	flex: 1;
+	width: 80%;
+	font-size: 14px;
 }
 
 .select{
 
 	@include mat.select-overrides((
-		panel-background-color: orange,
 		enabled-trigger-text-color: red,
 	));
 }

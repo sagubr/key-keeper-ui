@@ -33,7 +33,7 @@
 	<div class="container mat-elevation-z8">
 		<div class="mat-table-container">
 			<div class="table-wrapper">
-				<table-wrapper-table [dataSource]="dataSource" [columns]="columns"
+				<table-wrapper [dataSource]="dataSource" [columns]="columns"
 									 matSort #sort="matSort">
 
 					<ng-container matColumnDef="star" stickyEnd>
@@ -69,7 +69,7 @@
 					<tr class="mat-row-no-data" *matNoDataRow>
 						<td class="mat-cell" colspan="7">Não há usuários cadastrados</td>
 					</tr>
-				</table-wrapper-table>
+				</table-wrapper>
 			</div>
 		</div>
 	</div>

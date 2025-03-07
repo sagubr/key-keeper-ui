@@ -1,4 +1,5 @@
 @use 'buttons';
+@use "icons";
 
 .toolbar-row {
 	align-items: flex-start;
@@ -35,3 +36,9 @@
 .paginator {
 	border-radius: 10px;
 }
+
+.custom-chip {
+	background-color: #4caf50; /* Cor de fundo personalizada */
+	color: #7e0007 !important; /* Cor do texto */
+}
+

@@ -9,8 +9,6 @@ security:
 tags:
     - name: Requester
       description: Classe referência para Solicitantes
-    - name: Reservation
-      description: Classe referência para Reservas
     - name: Email
       description: Operações relacionadas a envio de e-mail
     - name: JobTitle
@@ -31,6 +29,8 @@ tags:
       description: Classe referência para Atribuição
     - name: LocationType
       description: Classe referência para Tipos de Ambiente
+    - name: Reservation
+      description: Classe referência para Reservas
     - name: Notifications
       description: Operações relacionadas a entidade Notificação
 paths:
@@ -39,7 +39,7 @@ paths:
             tags:
                 - Assignment
             summary: Obter todos os registros da classe atribuição
-            operationId: findAllAssignment
+            operationId: findByActiveTrueAssignment
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -105,7 +105,7 @@ paths:
             tags:
                 - Assignment
             summary: Criar novo registro na classe atribuição
-            operationId: updateAssignmentId
+            operationId: updateAssignment
             requestBody:
                 content:
                     application/json:
@@ -1182,7 +1182,7 @@ paths:
             tags:
                 - Reservation
             summary: Obter todos os registros da classe reservas
-            operationId: findAllReservation
+            operationId: findByActiveTrueReservation
             responses:
                 "200":
                     description: Operação bem sucedida
@@ -1386,7 +1386,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/Reservation"
+                            $ref: "#/components/schemas/ReservationProlongationCommand"
                 required: true
             responses:
                 "200":
@@ -1937,9 +1937,7 @@ components:
                 - properties:
                       overdue:
                           type: boolean
-                      startDateTimeFormatted:
-                          type: string
-                      endDateTimeFormatted:
+                      formattedPeriod:
                           type: string
                       permission:
                           nullable: true
@@ -2008,11 +2006,28 @@ components:
                 endDateTime:
                     type: string
                     format: date-time
+        ReservationProlongationCommand:
+            required:
+                - endDateTime
+                - reservationId
+                - startDateTime
+            type: object
+            properties:
+                reservationId:
+                    type: string
+                    format: uuid
+                startDateTime:
+                    type: string
+                    format: date-time
+                endDateTime:
+                    type: string
+                    format: date-time
         Status:
             type: string
             enum:
                 - EMPRESTIMO
                 - AGENDADO
+                - ATRASADO
                 - CANCELADO
                 - CONCLUIDO
         User:

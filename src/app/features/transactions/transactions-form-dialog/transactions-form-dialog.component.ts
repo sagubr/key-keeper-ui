@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
@@ -26,7 +26,7 @@ import { LocationService } from "@openapi/api/location.service";
 import { KeyService } from "@openapi/api/key.service";
 import { Key } from "@openapi/model/key";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { finalize } from "rxjs";
+import { finalize, forkJoin } from "rxjs";
 import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
 import { SelectWrappedComponent } from "@app/shared/components/select-wrapped/select-wrapped.component";
 
@@ -50,11 +50,9 @@ import { SelectWrappedComponent } from "@app/shared/components/select-wrapped/se
 		MatStepperModule,
 		MatProgressSpinnerModule,
 		SelectWrappedComponent,
-		SelectWrappedComponent
 	],
 	templateUrl: './transactions-form-dialog.component.html',
-	styleUrl: './transactions-form-dialog.component.scss',
-	changeDetection: ChangeDetectionStrategy.OnPush,
+	styleUrl: './transactions-form-dialog.component.scss'
 })
 export class TransactionsFormDialogComponent implements OnInit {
 
@@ -66,15 +64,17 @@ export class TransactionsFormDialogComponent implements OnInit {
 	permissions: PermissionLocationSummaryDto[] = [];
 	requesters: Requester[] = [];
 	keys: Key[] = [];
-	status: Status[] = Object.values(Status)
+	status: Status[] = ["AGENDADO", "EMPRESTIMO"]
 
-	loadings: { permissions?: boolean, requesters?: boolean, keys?: boolean } = {
+	loadings: { permissions: boolean, requesters: boolean, keys: boolean } = {
 		permissions: false,
 		requesters: false,
 		keys: false
 	}
 
-	userDisplay = (user: PermissionLocationSummaryDto) => user.location.name;
+	permissionDisplay = (permission: PermissionLocationSummaryDto) => `${ permission.location.name } (${ permission.location.facility.name })`;
+	requesterDisplay = (requester: Requester) => requester.name;
+	keyDisplay = (key: Key) => `${ key.code } - ${ key.description }`;
 
 	constructor(
 		public dialogRef: MatDialogRef<TransactionsFormDialogComponent>,
@@ -119,7 +119,7 @@ export class TransactionsFormDialogComponent implements OnInit {
 						this.dialogWrapped.openFeedback(
 							{
 								title: 'Não foi possível concluir o registro',
-								message: `${err.error.details}`,
+								message: `${ err.error.details }`,
 								icon: "danger"
 							} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
 					}
@@ -130,8 +130,7 @@ export class TransactionsFormDialogComponent implements OnInit {
 	onRequesterChange(selectedRequester: any): void {
 		this.firstFormGroup.get('permission')?.reset()
 		this.firstFormGroup.get('permission')?.enable();
-		this.findAllPermissions(selectedRequester);
-		this.findByRestrictedFalseAndPublicTrue();
+		this.findAllLocationsByRequester(selectedRequester);
 	}
 
 	onPermissionChange(selectedPermission: PermissionLocationSummaryDto): void {
@@ -143,48 +142,35 @@ export class TransactionsFormDialogComponent implements OnInit {
 	private findRequester(): void {
 		this.loadings.requesters = true;
 		this.requesterService.findByBlockedFalse()
-			.pipe(finalize(() => this.loadings.requesters = false))
-			.subscribe((res) => this.requesters = res)
+			.pipe(finalize(() => {
+				this.loadings.requesters = false;
+			}))
+			.subscribe((res) => this.requesters = res);
 	}
 
-	private findAllPermissions(requester: Requester): void {
+	private findAllLocationsByRequester(requester: Requester): void {
 		this.loadings.permissions = true;
-		this.permissionService.findByRequestersIdAndEndDateTimeAfter(requester.id!)
-			.pipe(finalize(() => this.loadings.permissions = false))
-			.subscribe((res) => this.permissions = res);
-		console.log("com permissao", this.permissions)
-		this.findByRequestersIdRestrictedTrue(requester)
-	}
 
-	private findByRequestersIdRestrictedTrue(requester: Requester): void {
-		this.loadings.permissions = true;
-		this.locationService.findByResponsiblesId(requester.id!)
-			.pipe(finalize(() => this.loadings.permissions = false))
-			.subscribe((res) => {
-				res.forEach(it => {
-					const alreadyAdded = this.permissions.some(p => p.location.id === it.id);
-					if (!alreadyAdded) {
-						this.permissions.push({ location: it } as PermissionLocationSummaryDto);
-					}
-					console.log("restrita", this.permissions)
-				});
-				}
-			);
-	}
+		const permissions$ = this.permissionService.findByRequestersIdAndEndDateTimeAfter(requester.id!);
+		const restrictedLocations$ = this.locationService.findByResponsiblesId(requester.id!);
+		const publicLocations$ = this.locationService.findByRestrictedFalseAndPublicTrue();
 
-	private findByRestrictedFalseAndPublicTrue(): void {
-		this.loadings.permissions = true;
-		this.locationService.findByRestrictedFalseAndPublicTrue()
+		forkJoin([permissions$, restrictedLocations$, publicLocations$])
 			.pipe(finalize(() => this.loadings.permissions = false))
-			.subscribe((res) => {
-				res.forEach(it => {
-					const alreadyAdded = this.permissions.some(p => p.location.id === it.id);
-					if (!alreadyAdded) {
-						this.permissions.push({ location: it } as PermissionLocationSummaryDto);
-					}
-					console.log("publica", this.permissions)
-				});
+			.subscribe(([permissions, restricted, publicLocations]) => {
+				const combinedPermissions = [
+					...permissions,
+					...restricted.map(location => ({ location } as PermissionLocationSummaryDto)),
+					...publicLocations.map(location => ({ location } as PermissionLocationSummaryDto))
+				];
+				this.permissions = this.removeDuplicatesById(combinedPermissions);
 			});
+	}
+
+	private removeDuplicatesById(array: PermissionLocationSummaryDto[]): PermissionLocationSummaryDto[] {
+		return array.filter((item, index, self) =>
+			index === self.findIndex((t) => t.location.id === item.location.id)
+		);
 	}
 
 	private findByLocation(location: Location): void {

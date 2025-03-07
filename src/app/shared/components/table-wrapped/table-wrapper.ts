@@ -29,13 +29,13 @@ import { MatTooltip } from "@angular/material/tooltip";
  * table.
  */
 @Component({
-	selector: 'table-wrapper-table',
-	templateUrl: 'table-wrapper-table.html',
-	styleUrl: 'table-wrapper-table.scss',
+	selector: 'table-wrapper',
+	templateUrl: 'table-wrapper.html',
+	styleUrl: 'table-wrapper.scss',
 	imports: [MatTableModule, MatSortModule, MatIconModule, DatePipe, UpperCasePipe, CurrencyPipe, JoinPipe, MatTooltip],
 	encapsulation: ViewEncapsulation.None
 })
-export class TableWrapperTable<T> implements AfterContentInit {
+export class TableWrapper<T> implements AfterContentInit {
 
 	@ContentChildren(MatHeaderRowDef) headerRowDefs!: QueryList<MatHeaderRowDef>;
 	@ContentChildren(MatRowDef) rowDefs!: QueryList<MatRowDef<T>>;
@@ -71,7 +71,6 @@ export interface Columns<T> {
 export enum ColumnType {
 	TEXT = 'TEXT',
 	DATE = 'DATE',
-	DATE_CONCAT = 'DATE_CONCAT',
 	DATETIME = 'DATETIME',
 	CURRENCY = 'CURRENCY',
 	ARRAY = 'ARRAY',

@@ -156,7 +156,7 @@ export class AssignmentFormDialogComponent implements OnInit {
 			...this.formGroup.value,
 			assignmentId: this.data.id
 		}
-		this.service.updateAssignmentId(command).subscribe(
+		this.service.updateAssignment(command).subscribe(
 			{
 				next: () => {
 					this.formGroup.reset();

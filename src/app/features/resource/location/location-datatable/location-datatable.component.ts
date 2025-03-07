@@ -5,7 +5,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatSort, MatSortModule } from "@angular/material/sort";
-import { Columns, ColumnType, TableWrapperTable } from "@app/shared/components/table-wrapped-table/table-wrapper-table";
+import { Columns, ColumnType, TableWrapper } from "@app/shared/components/table-wrapped/table-wrapper";
 import { Location } from "@openapi/model/location";
 import { finalize, Subscription } from "rxjs";
 import { LocationService } from "@openapi/api/location.service";
@@ -31,7 +31,7 @@ import { LocationDto } from "@openapi/model/locationDto";
 		MatPaginatorModule,
 		MatProgressBarModule,
 		MatSortModule,
-		TableWrapperTable,
+		TableWrapper,
 		MatFormFieldModule,
 		MatInputModule,
 		MatToolbarModule,

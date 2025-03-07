@@ -17,6 +17,7 @@ export * from './requester';
 export * from './reservation';
 export * from './reservationChangeStatusCommand';
 export * from './reservationCommand';
+export * from './reservationProlongationCommand';
 export * from './sendRequest';
 export * from './status';
 export * from './user';

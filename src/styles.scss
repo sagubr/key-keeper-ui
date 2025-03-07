@@ -15,9 +15,30 @@ body {
 	width: 100%;
 }
 
+/*
+* https://material.angular.io/guide/theming#getting-started
+ */
 html {
+
 	@include mat.theme((
-		typography: Poppins,
+		color: (
+			primary: mat.$blue-palette,
+			theme-type: light,
+		),
+		typography: (
+			plain-family: Poppins,
+			bold-weight: 900,
+			medium-weight: 500,
+			regular-weight: 300,
+		),
 		density: 0
 	));
+
 }
+
+body {
+	background: var(--mat-sys-surface);
+	color: var(--mat-sys-on-surface);
+}
+
+

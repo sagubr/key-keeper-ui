@@ -39,6 +39,7 @@ model/requester.ts
 model/reservation.ts
 model/reservationChangeStatusCommand.ts
 model/reservationCommand.ts
+model/reservationProlongationCommand.ts
 model/sendRequest.ts
 model/status.ts
 model/user.ts

@@ -1,66 +1,66 @@
-@mixin button(
-	$bgColor: #3A86FF,
-	$textColor: #fff,
-	$hoverColor: darken($bgColor, 10%),
-	$border: none
-) {
-	//background-color: $bgColor;
-	//color: $textColor;
-	//border: $border;
-	//border-radius: 8px;
-	//padding: 8px 16px;
-	//cursor: pointer;
-	//transition: background-color 0.3s ease;
-
-	//&:hover {
-	//	background-color: $hoverColor;
-	//}
-
-	&:disabled {
-		opacity: 0.6;
-		cursor: not-allowed;
-	}
-}
-
-.button-warning {
-	@include button(#FFBB33, #000);
-}
-
-.button-danger {
-	@include button(#FF4C4C, #fff);
-}
-
-.button-info {
-	@include button(#17A2B8, #fff);
-}
-
-.button-secondary {
-	@include button(#EFF2F1, #0E151C, #d3d8d7);
-}
-
-.button-primary {
-	@include button(#3A86FF, #fff);
-}
-
-.button-cancel {
-	@include button(#EFF2F1, #0E151C);
-}
-
-.button-success {
-	@include button(#28A745, #fff);
-}
-
-.button-link {
-	@include button(transparent, #3A86FF, rgba(58, 134, 255, 0.1));
-}
-
-.button-small {
-	@include button(#3A86FF, #fff);
-	padding: 4px 8px;
-	font-size: 12px;
-}
-
-.button-disabled {
-	@include button(#b0bec5, #fff);
-	pointer-events: none;
-}
+//@mixin button(
+//	$bgColor: #3A86FF,
+//	$textColor: #fff,
+//	$hoverColor: darken($bgColor, 10%),
+//	$border: none
+//) {
+//	//background-color: $bgColor;
+//	//color: $textColor;
+//	//border: $border;
+//	//border-radius: 8px;
+//	//padding: 8px 16px;
+//	//cursor: pointer;
+//	//transition: background-color 0.3s ease;
+//
+//	&:hover {
+//		background-color: $hoverColor;
+//	}
+//
+//	&:disabled {
+//		opacity: 0.6;
+//		cursor: not-allowed;
+//	}
+//}
+//
+//.button-warning {
+//	@include button(#FFBB33, #000);
+//}
+//
+//.button-danger {
+//	@include button(#FF4C4C, #fff);
+//}
+//
+//.button-info {
+//	@include button(#17A2B8, #fff);
+//}
+//
+//.button-secondary {
+//	@include button(#EFF2F1, #0E151C, #d3d8d7);
+//}
+//
+//.button-primary {
+//	@include button(#3A86FF, #fff);
+//}
+//
+//.button-cancel {
+//	@include button(#EFF2F1, #0E151C);
+//}
+//
+//.button-success {
+//	@include button(#28A745, #fff);
+//}
+//
+//.button-link {
+//	@include button(transparent, #3A86FF, rgba(58, 134, 255, 0.1));
+//}
+//
+//.button-small {
+//	@include button(#3A86FF, #fff);
+//	padding: 4px 8px;
+//	font-size: 12px;
+//}
+//
+//.button-disabled {
+//	@include button(#b0bec5, #fff);
+//	pointer-events: none;
+//}

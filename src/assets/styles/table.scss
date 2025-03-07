@@ -1,29 +1,29 @@
 @use '@angular/material' as mat;
-@use 'colors';
+@use 'theme-colors' as custom-theme;
 
 table.mat-elevation-z8 {
-
 	width: 100%;
-	border: 1px solid var(--border);
+	border: 1px solid map-get(custom-theme.$primary-palette-palette, 60);
 	border-radius: 10px;
 	overflow: hidden;
 	margin-bottom: 10px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	box-sizing: border-box;
 
 	.mat-header-cell {
-		background-color: var(--header-background);
+		background-color: map-get(custom-theme.$primary-palette-palette, 60);
+		color: map-get(custom-theme.$primary-palette-palette, 100);
 	}
 
 	.mat-row:nth-child(odd) {
-		background-color: var(--row-odd-bg);
+		background-color: map-get(custom-theme.$primary-palette-palette, 98);
 	}
 
 	.mat-row:nth-child(even) {
-		background-color: var(--row-even-bg);
+		background-color: map-get(custom-theme.$primary-palette-palette, 99);
 	}
 
 	.mat-row:hover {
-		background-color: var(--row-hover);
+		background-color: map-get(custom-theme.$primary-palette-palette, 80);
 	}
 
 	.mat-row-no-data {

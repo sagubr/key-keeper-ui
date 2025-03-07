@@ -43,7 +43,7 @@
 							<div class="cell-content-wrapper">
 								@switch (element.status) {
 									@case (Status.Concluido) {
-										<mat-chip class="custom-chip">
+										<mat-chip class="custom-chip" [color]="'primary'">
 											<mat-icon matChipTrailingIcon>check_circle</mat-icon>
 											{{ Status.Concluido | uppercase }}
 										</mat-chip>

@@ -1,22 +1,22 @@
 @mixin theme-colors() {
-	//--border: #4B4B4B;
-	//--primary: #3A86FF;
-	//--primary-light: #6EC4FF;
-	//--primary-dark: #2277CC;
-	//--secondary: #2E2E2E;
-	//--accent: #FF9F00;
-	//--danger: #FF4C4C;
-	//--warning: #FFBB33;
-	//--success: #28A745;
-	//--info: #17A2B8;
-	//--background: #F8F9FA;
-	//--text-primary: #212121;
-	//--text-secondary: #757575;
-	//--tooltip-text: #FFFFFF;
-	//--header-background: #6EC4FF;
-	//--row-hover: #A6D8FF;
-	//--row-odd-bg: #F1F1F1;
-	//--row-even-bg: #FFFFFF;
+	//--border: #4B4B4B; // Cor da borda (não foi alterada)
+	//--primary: #006A6A; // Cor primária - #006A6A
+	//--primary-light: #4DDBDB; // Cor primária clara (aproximadamente)
+	//--primary-dark: #004C4C; // Cor primária escura (aproximadamente)
+	//--secondary: #FF7043; // Cor secundária - #FF7043
+	//--accent: #B0BEC5; // Cor terciária (cinza suave) - #B0BEC5
+	//--danger: #FF4C4C; // Cor de perigo
+	//--warning: #FFBB33; // Cor de aviso
+	//--success: #28A745; // Cor de sucesso
+	//--info: #17A2B8; // Cor de informação
+	//--background: #F8F9FA; // Cor de fundo
+	//--text-primary: #212121; // Cor do texto principal
+	//--text-secondary: #757575; // Cor do texto secundário
+	//--tooltip-text: #FFFFFF; // Cor do texto de tooltip
+	//--header-background: #006A6A; // Cor do fundo do cabeçalho
+	//--row-hover: #A6D8FF; // Cor do hover na linha
+	//--row-odd-bg: #F1F1F1; // Cor de fundo das linhas ímpares
+	//--row-even-bg: #FFFFFF; // Cor de fundo das linhas pares
 }
 
 :root {

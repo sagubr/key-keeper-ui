@@ -41,31 +41,26 @@
 						<th mat-header-cell *matHeaderCellDef class="mat-header-cell">Situação</th>
 						<td mat-cell *matCellDef="let element">
 							<div class="cell-content-wrapper">
-								<mat-chip-set>
-									@switch (element.status) {
-										@case (Status.Agendado) {
-											<mat-chip color="primary">
-												<mat-icon matChipTrailingIcon>event_busy</mat-icon>
-												{{ Status.Agendado | uppercase }}
-											</mat-chip>
-										}
-										@case (Status.Emprestimo) {
-											<mat-chip selected color="primary">
-												<mat-icon matChipTrailingIcon>access_time</mat-icon>
-												{{ Status.Emprestimo | uppercase }}
-											</mat-chip>
-										}
-										@case (Status.Atrasado) {
-											<mat-chip
-												selected
-												class="custom-chip"
-												color="primary">
-												<mat-icon matChipTrailingIcon>hourglass_bottom</mat-icon>
-												{{ Status.Atrasado | uppercase }}
-											</mat-chip>
-										}
+								@switch (element.status) {
+									@case (Status.Agendado) {
+										<button mat-flat-button class="tag agendado" disabled>
+											<mat-icon>event_busy</mat-icon>
+											{{ Status.Agendado | uppercase }}
+										</button>
 									}
-								</mat-chip-set>
+									@case (Status.Emprestimo) {
+										<button mat-flat-button class="tag em-andamento" disabled>
+											<mat-icon> access_time</mat-icon>
+											{{ Status.Emprestimo | uppercase }}
+										</button>
+									}
+									@case (Status.Atrasado) {
+										<button mat-flat-button class="tag atrasado" disabled>
+											<mat-icon>hourglass_bottom</mat-icon>
+											{{ Status.Atrasado | uppercase }}
+										</button>
+									}
+								}
 							</div>
 						</td>
 					</ng-container>

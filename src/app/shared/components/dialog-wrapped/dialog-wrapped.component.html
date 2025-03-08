@@ -10,7 +10,7 @@
 
 <div class="dialog-title">
 	<span mat-dialog-title
-		class="h2"
+		  class="h2"
 	> {{ data.title }}</span>
 </div>
 
@@ -26,7 +26,7 @@
 				{{ data.cancelText || 'Cancelar' }}
 			</button>
 		}
-		<button mat-raised-button
+		<button mat-flat-button
 				class="button-primary"
 				(click)="close(true)">
 			{{ data.confirmText || 'Confirmar' }}

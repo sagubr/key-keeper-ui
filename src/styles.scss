@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @use '@angular/material' as mat;
-@use 'theme-colors';
+@use 'theme-colors' as custom-theme;
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap');
 
@@ -24,7 +24,7 @@ html {
 
 	@include mat.theme((
 		color: (
-			primary: theme-colors.$primary-palette-palette,
+			primary: custom-theme.$primary-palette,
 			theme-type: light,
 		),
 		typography: (

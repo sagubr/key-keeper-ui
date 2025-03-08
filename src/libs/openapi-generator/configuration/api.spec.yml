@@ -9,6 +9,8 @@ security:
 tags:
     - name: Requester
       description: Classe referência para Solicitantes
+    - name: Reservation
+      description: Classe referência para Reservas
     - name: Email
       description: Operações relacionadas a envio de e-mail
     - name: JobTitle
@@ -23,16 +25,14 @@ tags:
       description: Operações relacionadas a entidade Chaves
     - name: Users
       description: Classe referência para Usuário
-    - name: Logging
-      description: Operações relacionadas a entidade Permissão
-    - name: Assignment
-      description: Classe referência para Atribuição
-    - name: LocationType
-      description: Classe referência para Tipos de Ambiente
-    - name: Reservation
-      description: Classe referência para Reservas
     - name: Notifications
       description: Operações relacionadas a entidade Notificação
+    - name: Logging
+      description: Operações relacionadas a entidade Permissão
+    - name: LocationType
+      description: Classe referência para Tipos de Ambiente
+    - name: Assignment
+      description: Classe referência para Atribuição
 paths:
     /api/assignment:
         get:
@@ -101,7 +101,7 @@ paths:
                         application/json:
                             schema: {}
     /api/assignment/update:
-        post:
+        put:
             tags:
                 - Assignment
             summary: Criar novo registro na classe atribuição

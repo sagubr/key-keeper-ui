@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { Location } from "@openapi/model/location";
 import { compareById } from "@app/core/utils/utils";
 import { JobTitle } from "@openapi/model/jobTitle";
@@ -18,6 +18,7 @@ import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
+import { Requester } from "@openapi/model/requester";
 
 @Component({
 	selector: 'app-requester-form-dialog',
@@ -84,28 +85,62 @@ export class RequesterFormDialogComponent implements OnInit {
 
 	onSubmit(): void {
 		this.validateForm()
-		if (this.data) {
-			this.requesterService.createRequester(this.formGroup.value).subscribe({
-				next: () => {
-					this.formGroup.reset();
-					this.dialogRef.close(true);
-					this.dialogWrapped.openFeedback(
-						{
-							title: 'Salvo com sucesso',
-							message: ``,
-							icon: "success"
-						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
-				},
-				error: () => {
-					this.dialogWrapped.openFeedback(
-						{
-							title: 'Não foi possível concluir o registro',
-							message: ``,
-							icon: "warning"
-						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
-				}
-			});
+		if (this.data && this.data.id) {
+			this.edit();
+		} else {
+			this.create();
 		}
+	}
+
+	private create(): void {
+		this.requesterService.createRequester(this.formGroup.value).subscribe({
+			next: () => {
+				this.formGroup.reset();
+				this.dialogRef.close(true);
+				this.dialogWrapped.openFeedback(
+					{
+						title: 'Salvo com sucesso',
+						message: ``,
+						icon: "success"
+					} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
+			},
+			error: () => {
+				this.dialogWrapped.openFeedback(
+					{
+						title: 'Não foi possível concluir o registro',
+						message: ``,
+						icon: "warning"
+					} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
+			}
+		});
+	}
+
+	private edit(): void {
+		const request = {
+			...this.formGroup.value,
+			id: this.data.id
+		} as Requester
+
+		this.requesterService.updateRequester(request).subscribe({
+			next: () => {
+				this.formGroup.reset();
+				this.dialogRef.close(true);
+				this.dialogWrapped.openFeedback(
+					{
+						title: 'Salvo com sucesso',
+						message: ``,
+						icon: "success"
+					} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
+			},
+			error: () => {
+				this.dialogWrapped.openFeedback(
+					{
+						title: 'Não foi possível concluir o registro',
+						message: ``,
+						icon: "warning"
+					} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
+			}
+		});
 	}
 
 	private findAllJobTitles(): void {

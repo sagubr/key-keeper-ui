@@ -19,7 +19,6 @@ import {
 	TransactionsFormDialogComponent
 } from "@app/features/transactions/transactions-form-dialog/transactions-form-dialog.component";
 import { UpperCasePipe } from "@angular/common";
-import { MatChipsModule } from "@angular/material/chips";
 
 @Component({
 	selector: 'app-transactions-datatable-history',
@@ -36,7 +35,6 @@ import { MatChipsModule } from "@angular/material/chips";
 		MatInputModule,
 		MatToolbarModule,
 		UpperCasePipe,
-		MatChipsModule,
 	],
 	templateUrl: './transactions-datatable-history.component.html',
 	styleUrl: './transactions-datatable-history.component.scss'
@@ -69,7 +67,7 @@ export class TransactionsDatatableHistoryComponent implements OnInit, AfterViewI
 			cell: (reservation: Reservation) => reservation.formattedPeriod
 		}
 	];
-	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'info', 'menu'];
+	displayedColumns: string[] = ['info', ...this.columns.map(c => c.definition), 'menu'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
 
 	loading: boolean = false;

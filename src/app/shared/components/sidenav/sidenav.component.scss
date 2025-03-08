@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 @use 'fonts';
 @use 'icons';
-@use 'colors';
+@use 'theme-colors' as custom-theme;
 
 .spacer {
 	flex: 1 1 auto;
@@ -15,7 +15,7 @@
 	z-index: 1000;
 
 	@include mat.toolbar-overrides((
-		container-background-color: var(--primary),
+		container-background-color: map-get(custom-theme.$primary-palette, 60),
 	));
 }
 
@@ -33,7 +33,7 @@
 
 	@include mat.sidenav-overrides((
 		container-shape: none,
-		container-background-color: var(--primary),
+		container-background-color: map-get(custom-theme.$primary-palette, 60),
 		container-width: 250px
 	));
 

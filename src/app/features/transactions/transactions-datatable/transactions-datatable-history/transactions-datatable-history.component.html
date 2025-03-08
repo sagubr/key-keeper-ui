@@ -43,16 +43,16 @@
 							<div class="cell-content-wrapper">
 								@switch (element.status) {
 									@case (Status.Concluido) {
-										<mat-chip class="custom-chip" [color]="'primary'">
+										<button mat-flat-button class="tag concluido" disabled>
 											<mat-icon matChipTrailingIcon>check_circle</mat-icon>
 											{{ Status.Concluido | uppercase }}
-										</mat-chip>
+										</button>
 									}
 									@case (Status.Cancelado) {
-										<mat-chip class="custom-chip">
+										<button mat-flat-button class="tag cancelado" disabled>
 											<mat-icon matChipTrailingIcon>cancel</mat-icon>
 											{{ Status.Cancelado | uppercase }}
-										</mat-chip>
+										</button>
 									}
 								}
 							</div>

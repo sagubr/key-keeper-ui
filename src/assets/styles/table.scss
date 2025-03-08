@@ -3,27 +3,27 @@
 
 table.mat-elevation-z8 {
 	width: 100%;
-	border: 1px solid map-get(custom-theme.$primary-palette-palette, 60);
+	border: 1px solid map-get(custom-theme.$primary-palette, 10);
 	border-radius: 10px;
 	overflow: hidden;
 	margin-bottom: 10px;
 	box-sizing: border-box;
 
 	.mat-header-cell {
-		background-color: map-get(custom-theme.$primary-palette-palette, 60);
-		color: map-get(custom-theme.$primary-palette-palette, 100);
+		background-color: map-get(custom-theme.$primary-palette, 60);
+		color: map-get(custom-theme.$primary-palette, 100);
 	}
 
 	.mat-row:nth-child(odd) {
-		background-color: map-get(custom-theme.$primary-palette-palette, 98);
+		background-color: map-get(custom-theme.$primary-palette, 99);
 	}
 
 	.mat-row:nth-child(even) {
-		background-color: map-get(custom-theme.$primary-palette-palette, 99);
+		background-color: map-get(custom-theme.$primary-palette, 100);
 	}
 
 	.mat-row:hover {
-		background-color: map-get(custom-theme.$primary-palette-palette, 80);
+		background-color: map-get(custom-theme.$primary-palette, 95);
 	}
 
 	.mat-row-no-data {

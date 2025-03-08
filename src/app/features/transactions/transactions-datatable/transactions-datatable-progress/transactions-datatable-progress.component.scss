@@ -1,3 +1,6 @@
+@use 'theme-colors' as custom-theme;
+@use '@angular/material' as mat;
+
 @use 'buttons';
 @use "icons";
 
@@ -37,8 +40,25 @@
 	border-radius: 10px;
 }
 
-.custom-chip {
-	background-color: #4caf50; /* Cor de fundo personalizada */
-	color: #7e0007 !important; /* Cor do texto */
+.tag {
+	color: #000000;
+	border-radius: 5px;
+	padding: 8px 16px;
 }
+
+.atrasado {
+	background-color: #ffd6d1;
+}
+
+.em-andamento {
+	background-color: #fff9c4;
+}
+
+.agendado {
+	background-color: #e3f2fd;
+}
+
+
+
+
 

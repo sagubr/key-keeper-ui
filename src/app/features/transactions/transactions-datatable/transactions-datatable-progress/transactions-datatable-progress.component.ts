@@ -24,7 +24,6 @@ import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/
 import {
 	TransactionsProlongationFormDialogComponent
 } from "@app/features/transactions/transactions-prolongation-form-dialog/transactions-prolongation-form-dialog.component";
-import { MatChipsModule } from "@angular/material/chips";
 
 @Component({
 	selector: 'app-transactions-datatable-progress',
@@ -40,7 +39,6 @@ import { MatChipsModule } from "@angular/material/chips";
 		MatFormFieldModule,
 		MatInputModule,
 		MatToolbarModule,
-		MatChipsModule,
 		UpperCasePipe,
 	],
 	templateUrl: './transactions-datatable-progress.component.html',
@@ -74,7 +72,7 @@ export class TransactionsDatatableProgressComponent implements OnInit, AfterView
 			cell: (reservation: Reservation) => reservation.formattedPeriod
 		}
 	];
-	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'info', 'action', 'menu'];
+	displayedColumns: string[] = ['info', ...this.columns.map(c => c.definition), 'action', 'menu'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
 
 	loading: boolean = false;

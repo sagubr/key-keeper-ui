@@ -21,6 +21,7 @@ import {
 	PermissionShowMoreDialogComponent
 } from "@app/features/authorization/permission/permission-show-more-dialog/permission-show-more-dialog.component";
 import { MatChipsModule } from "@angular/material/chips";
+import { DialogWrappedInfo, DialogWrappedService } from "@app/shared/components/dialog-wrapped/dialog-wrapped.service";
 
 
 @Component({
@@ -56,7 +57,7 @@ export class PermissionDatatableComponent implements OnInit, AfterViewInit, OnDe
 			cell: (permission: Permission) => permission.description
 		},
 	];
-	displayedColumns: string[] = [...this.columns.map(c => c.definition), 'requester', 'location', 'star'];
+	displayedColumns: string[] = ['requester', 'location', ...this.columns.map(c => c.definition), 'star'];
 	pageSizeOptions = [5, 10, 20, 50, 100];
 
 	loading: boolean = false;
@@ -65,6 +66,7 @@ export class PermissionDatatableComponent implements OnInit, AfterViewInit, OnDe
 	constructor(
 		private permissionService: PermissionService,
 		private dialog: MatDialog,
+		private dialogWrapped: DialogWrappedService
 	) {
 	}
 
@@ -88,6 +90,45 @@ export class PermissionDatatableComponent implements OnInit, AfterViewInit, OnDe
 
 	onReload(): void {
 		this.findAll();
+	}
+
+	openDeleteDialog(element: Permission): void {
+
+		this.dialogWrapped.openFeedback(
+			{
+				title: 'Você tem certeza que deseja excluir essa permissão?',
+				message: `A ação realizará uma exclusão lógica desse registro e não será mais possível atribuir para novos empŕestimos.`,
+				hideCancel: true,
+				icon: "warning"
+			} as DialogWrappedInfo).afterClosed().subscribe(
+			{
+				next: (res) => {
+					if (res) {
+						this.permissionService.deleteByIdPermission(element.id!)
+							.subscribe(
+								{
+									next: () => {
+										this.dialogWrapped.openFeedback(
+											{
+												title: 'O registro foi excluído com suceso',
+												message: `Esta permissão ainda se manterá no histórico dos empŕestimos já ocorridos.`,
+												icon: "success"
+											} as DialogWrappedInfo).afterClosed().subscribe(() => this.onReload());
+									},
+									error: () => {
+										this.dialogWrapped.openFeedback(
+											{
+												title: 'Não foi possível concluir o registro',
+												message: ``,
+												icon: "danger"
+											} as DialogWrappedInfo).afterClosed().subscribe();
+									},
+								}
+							)
+					}
+				}
+			}
+		);
 	}
 
 	openCreateDialog(): void {

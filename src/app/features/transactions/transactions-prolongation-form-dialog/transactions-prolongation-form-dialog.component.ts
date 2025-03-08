@@ -49,7 +49,6 @@ export class TransactionsProlongationFormDialogComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		console.log(this.data)
 		this.formGroup.patchValue(this.data);
 	}
 

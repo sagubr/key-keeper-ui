@@ -81,13 +81,13 @@
 	</mat-dialog-content>
 	<mat-dialog-actions align="end">
 		<button mat-raised-button
-				class="button-secondary"
-				type="button" [mat-dialog-close]="true">
+				type="button"
+				[mat-dialog-close]="true">
 			Cancelar
 		</button>
-		<button mat-raised-button
-				class="button-primary"
-				type="submit" [disabled]="formGroup.invalid">
+		<button mat-flat-button
+				type="submit"
+				[disabled]="formGroup.invalid">
 			Salvar
 		</button>
 	</mat-dialog-actions>

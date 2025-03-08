@@ -45,7 +45,7 @@ export class PermissionFormDialogComponent implements OnInit {
 
 	compareById: (o1: any, o2: any) => boolean = compareById;
 
-	form!: FormGroup;
+	formGroup!: FormGroup;
 	locations: Location[] = [];
 	requesters: Requester[] = [];
 
@@ -64,34 +64,67 @@ export class PermissionFormDialogComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.form.patchValue(this.data);
+		this.formGroup.patchValue(this.data);
 	}
 
 	onSubmit(): void {
 		this.validateForm()
-
-		if (this.data) {
-			this.permissionService.createPermission(this.form.value).subscribe({
-				next: () => {
-					this.form.reset();
-					this.dialogRef.close(true);
-					this.dialogWrapped.openFeedback(
-						{
-							title: 'Salvo com sucesso',
-							message: ``,
-							icon: "success"
-						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
-				},
-				error: () => {
-					this.dialogWrapped.openFeedback(
-						{
-							title: 'Não foi possível concluir o registro',
-							message: ``,
-							icon: "warning"
-						} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
-				}
-			});
+		if (this.data && this.data.id) {
+			this.edit();
+		} else {
+			this.create();
 		}
+	}
+
+	private create(): void {
+		this.permissionService.createPermission(this.formGroup.value).subscribe({
+			next: () => {
+				this.formGroup.reset();
+				this.dialogRef.close(true);
+				this.dialogWrapped.openFeedback(
+					{
+						title: 'Salvo com sucesso',
+						message: ``,
+						icon: "success"
+					} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
+			},
+			error: () => {
+				this.dialogWrapped.openFeedback(
+					{
+						title: 'Não foi possível concluir o registro',
+						message: ``,
+						icon: "warning"
+					} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
+			}
+		});
+	}
+
+	private edit(): void {
+		const request = {
+			...this.formGroup.value,
+			id: this.data.id
+		}
+
+		this.permissionService.updatePermission(request).subscribe({
+			next: () => {
+				this.formGroup.reset();
+				this.dialogRef.close(true);
+				this.dialogWrapped.openFeedback(
+					{
+						title: 'Salvo com sucesso',
+						message: ``,
+						icon: "success"
+					} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
+			},
+			error: () => {
+				this.dialogWrapped.openFeedback(
+					{
+						title: 'Não foi possível concluir o registro',
+						message: ``,
+						icon: "warning"
+					} as DialogWrappedInfo).afterClosed().subscribe(res => console.log(res));
+			}
+		});
 	}
 
 	private findAllRequesters(): void {
@@ -105,15 +138,15 @@ export class PermissionFormDialogComponent implements OnInit {
 	}
 
 	private validateForm(): void {
-		if (this.form.valid) {
+		if (this.formGroup.valid) {
 			return;
 		}
-		this.form.markAllAsTouched();
+		this.formGroup.markAllAsTouched();
 		throw new Error();
 	}
 
 	private buildFormGroup(): void {
-		this.form = this.formBuilder.group({
+		this.formGroup = this.formBuilder.group({
 			description: [''],
 			locations: [[], Validators.required],
 			requesters: [[], Validators.required],

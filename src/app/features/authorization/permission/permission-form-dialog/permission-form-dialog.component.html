@@ -4,7 +4,7 @@
 		<mat-icon>close</mat-icon>
 	</button>
 </div>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
 	<mat-dialog-content>
 		<div class="row">
 			<div class="col">
@@ -18,7 +18,7 @@
 							<mat-option [value]="element">{{ element.name }} - {{ element.facility.name }}</mat-option>
 						}
 					</mat-select>
-					<mat-error *ngIf="form.get('location')?.invalid">Você deve inserir um valor</mat-error>
+					<mat-error *ngIf="formGroup.get('location')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
 		</div>
@@ -36,7 +36,7 @@
 							<mat-option [value]="element">{{ element.name }}</mat-option>
 						}
 					</mat-select>
-					<mat-error *ngIf="form.get('requesters')?.invalid">Você deve inserir um valor</mat-error>
+					<mat-error *ngIf="formGroup.get('requesters')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
 		</div>
@@ -46,7 +46,7 @@
 				<mat-form-field appearance="outline" class="full-width">
 					<mat-label>Descrição da permissão</mat-label>
 					<input matInput maxlength="256" formControlName="description">
-					<mat-error *ngIf="form.get('description')?.invalid">Você deve inserir um valor</mat-error>
+					<mat-error *ngIf="formGroup.get('description')?.invalid">Você deve inserir um valor</mat-error>
 				</mat-form-field>
 			</div>
 		</div>
@@ -63,10 +63,10 @@
 					<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
 					<mat-date-range-picker #picker></mat-date-range-picker>
 
-					@if (form.get('startDateTime')?.invalid) {
+					@if (formGroup.get('startDateTime')?.invalid) {
 						<mat-error>Início inválido</mat-error>
 					}
-					@if (form.get('endDateTime')?.invalid) {
+					@if (formGroup.get('endDateTime')?.invalid) {
 						<mat-error>Fim inválido</mat-error>
 					}
 				</mat-form-field>
@@ -81,7 +81,7 @@
 		</button>
 		<button mat-raised-button
 				class="button-primary"
-				type="submit" [disabled]="form.invalid">
+				type="submit" [disabled]="formGroup.invalid">
 			Salvar
 		</button>
 	</mat-dialog-actions>

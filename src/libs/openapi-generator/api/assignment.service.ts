@@ -308,7 +308,7 @@ export class AssignmentService {
         }
 
         let localVarPath = `/api/assignment/update`;
-        return this.httpClient.request<Assignment>('post', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<Assignment>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: assignmentCommand,
